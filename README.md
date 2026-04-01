@@ -104,5 +104,5 @@ All loaded via CDN (no npm/build step):
 
 - **Concept:** Jan Purzel, ZMO
 - **Content:** Dr Sonja Hegasy, ZMO
-- **Development:** [Frédérick Madore](https://www.frederickmadore.com/)
+- **Development:** [Frédérick Madore](https://www.frederickmadore.com/), University of Bayreuth
 - [www.zmo.de](http://www.zmo.de)
