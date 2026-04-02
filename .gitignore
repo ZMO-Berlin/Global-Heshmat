@@ -1,0 +1,20 @@
+# Claude
+.claude/settings.local.json
+
+# Dependencies
+node_modules
+
+# Build
+svelte-app/.svelte-kit
+svelte-app/build
+svelte-app/dist
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+svelte-app/.vscode/extensions.json
