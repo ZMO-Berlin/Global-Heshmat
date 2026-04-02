@@ -2,103 +2,127 @@
 
 **Following the Egyptian Sculptor Hassan Heshmat around the world** — an interactive map of artworks in public spaces.
 
-Built with [Leaflet.js](https://leafletjs.com/) and vanilla JavaScript. No build tools required.
+Built with [SvelteKit](https://svelte.dev/), [MapLibre GL JS](https://maplibre.org/), and TypeScript.
 
-## Live demo
+## About
 
-Open `index.html` in any modern browser, or deploy to GitHub Pages / any static host.
+Global Heshmat is a cartographic web application that traces the public artworks of the Egyptian sculptor Hassan Heshmat (1920–2006) across the globe. The project currently tracks **30 artwork locations** across **8 countries** (Egypt, Belgium, France, Germany, Netherlands, Poland, Sweden, and the USA).
+
+A project by the [Leibniz-Zentrum Moderner Orient (ZMO)](http://www.zmo.de), Berlin.
+
+## Tech stack
+
+- **Framework:** [SvelteKit](https://svelte.dev/) (Svelte 5 with runes)
+- **Map:** [MapLibre GL JS](https://maplibre.org/) with CartoDB Voyager vector tiles
+- **Language:** TypeScript
+- **Build:** Vite
+- **Lint/Format:** ESLint + Prettier (with Svelte plugins)
 
 ## Project structure
 
 ```
 Global-Heshmat/
-├── index.html          # Main page — layout, header, sidebar, modals
-├── css/
-│   ├── style.css       # Core layout, markers, sidebar, responsive
-│   └── gallery.css     # Gallery thumbnails & lightbox viewer
-├── js/
-│   ├── data.js         # Artwork entries — the single source of truth
-│   ├── gallery.js      # Gallery/lightbox module (self-contained)
-│   └── app.js          # Map init, markers, sidebar, filters, search
-├── images/             # Artwork photos (referenced by data.js)
-└── README.md
+└── svelte-app/
+    ├── src/
+    │   ├── lib/
+    │   │   ├── components/           # Svelte components
+    │   │   │   ├── MapView.svelte          # MapLibre map, markers, clusters, relocation lines
+    │   │   │   ├── Sidebar.svelte          # Artwork detail panel
+    │   │   │   ├── Gallery.svelte          # Image carousel with thumbnails
+    │   │   │   ├── Lightbox.svelte         # Full-screen image viewer
+    │   │   │   ├── FilterBar.svelte        # Country/status filters + search
+    │   │   │   ├── Header.svelte           # Top navigation bar
+    │   │   │   ├── Legend.svelte            # Map legend
+    │   │   │   ├── AboutModal.svelte        # Project info & credits overlay
+    │   │   │   └── Seo.svelte              # Dynamic meta tags & JSON-LD
+    │   │   ├── data/
+    │   │   │   ├── types.ts                # TypeScript interfaces
+    │   │   │   ├── artworks.ts             # Aggregated artwork export
+    │   │   │   ├── about.ts                # About modal content
+    │   │   │   └── artworks/               # One file per artwork (auto-loaded)
+    │   │   │       ├── _template.ts        # Copy this to add a new artwork
+    │   │   │       ├── index.ts            # Auto-imports via import.meta.glob
+    │   │   │       └── 001-*.ts … 030-*.ts # 30 artwork data files
+    │   │   └── stores/
+    │   │       ├── map.svelte.ts           # Shared reactive state (Svelte 5 runes)
+    │   │       └── url.svelte.ts           # Bidirectional URL ↔ state sync
+    │   ├── routes/
+    │   │   ├── +layout.svelte              # Global styles & fonts
+    │   │   └── +page.svelte                # Main page composing all components
+    │   ├── app.html
+    │   └── app.d.ts
+    ├── static/
+    │   └── images/                         # Artwork photos
+    ├── package.json
+    ├── svelte.config.js
+    ├── tsconfig.json
+    └── vite.config.ts
 ```
-
-### Architecture
-
-| File | Responsibility |
-|------|---------------|
-| `data.js` | Pure data — array of artwork objects. Edit this to add/update locations. |
-| `gallery.js` | Self-contained gallery module (`Gallery.render()`, lightbox). No dependencies on app.js. |
-| `app.js` | Leaflet map, marker clustering, sidebar rendering, search, filters. Calls `Gallery.render()` for image display. |
-| `style.css` | Everything except the image gallery. |
-| `gallery.css` | Gallery thumbnails, navigation arrows, full-screen lightbox. |
-
-## Adding content
-
-### Add a new artwork location
-
-1. Open `js/data.js`
-2. Copy an existing entry and change the `id` (must be unique)
-3. Fill in coordinates, description, and other fields
-4. See the field reference in the comments at the top of `data.js`
-
-### Add images
-
-**Single image:**
-```js
-{
-  id: 99,
-  name: "Example Artwork",
-  image: "example.jpg",          // drop file into images/
-  imageCaption: "Photo: J. Doe",
-  // ...
-}
-```
-
-**Multiple images (gallery with lightbox):**
-```js
-{
-  id: 99,
-  name: "Example Artwork",
-  images: [
-    { src: "example-1.jpg", caption: "Front view" },
-    { src: "example-2.jpg", caption: "Detail" },
-    { src: "example-3.jpg", caption: "Historical photo" }
-  ],
-  // ...
-}
-```
-
-When `images` is present, the sidebar shows a gallery with:
-- Thumbnail strip for quick navigation
-- Previous / next arrows
-- Image counter (e.g. "2 / 5")
-- Click-to-expand full-screen lightbox with keyboard navigation (← → Esc)
-
-### Add a new country filter
-
-1. Add a filter chip in `index.html` inside `#filters`
-2. Use the country name that matches your data entries
 
 ## Features
 
-- **Interactive map** with marker clustering (Leaflet + MarkerCluster)
-- **Country & status filters** — filter by location or "To be found"
-- **Real-time search** across artwork names, cities, and addresses
-- **Sidebar** with artwork details, metadata tags, and external links
-- **Multi-image gallery** with thumbnail strip and full-screen lightbox
-- **Relocation visualisation** — dashed lines and ghost markers for moved artworks
-- **YouTube video embeds** in sidebar
+- **Interactive WebGL map** — MapLibre GL JS with CartoDB Voyager basemap
+- **Marker clustering** — groups nearby markers, click to zoom in
+- **Three marker types** — located (teal), to-be-found (orange), ghost markers for relocated artworks (dashed outline)
+- **Relocation visualisation** — dashed lines connecting original and current locations
+- **Country & status filters** — filter chips auto-generated from data
+- **Real-time search** — searches across names, cities, countries, and addresses
+- **Sidebar detail view** — images, description, status tags, address, external links
+- **Multi-image gallery** — thumbnail strip, prev/next navigation, image counter
+- **Full-screen lightbox** — keyboard navigation (arrow keys, Escape)
+- **YouTube video embeds** — inline in the sidebar
+- **URL state sync** — `?artwork=<id>` parameter for deep-linking and sharing
+- **SEO & structured data** — Open Graph, Twitter Cards, and JSON-LD (Schema.org VisualArtwork)
 - **Responsive design** — works on mobile and desktop
-- **Keyboard navigation** — Escape to close, arrow keys in lightbox
+- **Keyboard navigation** — Escape to close panels, arrow keys in lightbox
 
-## Dependencies
+## Development
 
-All loaded via CDN (no npm/build step):
+```bash
+cd svelte-app
+npm install
+npm run dev
+```
 
-- [Leaflet 1.9.4](https://leafletjs.com/)
-- [Leaflet.markercluster 1.5.3](https://github.com/Leaflet/Leaflet.markercluster)
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+| `npm run check` | Type-check with svelte-check |
+| `npm run lint` | Run ESLint |
+| `npm run format` | Format with Prettier |
+
+## Adding a new artwork
+
+1. Copy `src/lib/data/artworks/_template.ts`
+2. Rename it (e.g., `031-new-artwork.ts`)
+3. Fill in the fields (see the template for documentation)
+4. Drop any images into `static/images/`
+5. Done — `index.ts` auto-imports all artwork files via `import.meta.glob`
+
+### Data schema
+
+Each artwork file exports a single object with these fields:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `id` | `number` | Yes | Unique identifier |
+| `name` | `string` | Yes | Artwork or site name |
+| `lat`, `lng` | `number` | Yes | Coordinates (decimal degrees) |
+| `country` | `string` | Yes | Country (used for filter chips) |
+| `city` | `string` | Yes | City or locality |
+| `status` | `'located' \| 'search'` | Yes | Whether the artwork has been found |
+| `address` | `string` | Yes | Street address or Plus Code |
+| `desc` | `string` | Yes | Description (HTML allowed) |
+| `image` | `string` | No | Single image filename in `static/images/` |
+| `imageCaption` | `string` | No | Credit line for single image |
+| `images` | `ArtworkImage[]` | No | Multiple images with captions |
+| `links` | `ArtworkLink[]` | No | External reference URLs |
+| `video` | `string` | No | YouTube URL (auto-embedded) |
+| `movement` | `ArtworkMovement` | No | Relocation data (from-coordinates, year) |
 
 ## Credits
 

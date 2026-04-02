@@ -7,7 +7,7 @@ Built with [SvelteKit](https://svelte.dev/), [MapLibre GL JS](https://maplibre.o
 ## Tech stack
 
 - **Framework:** SvelteKit (Svelte 5 with runes)
-- **Map:** MapLibre GL JS with vector tiles (OpenFreeMap)
+- **Map:** MapLibre GL JS with CartoDB Voyager vector tiles
 - **Language:** TypeScript 6
 - **Build:** Vite 8
 - **Lint:** ESLint + eslint-plugin-svelte
@@ -27,10 +27,12 @@ svelte-app/
 │   │   │   ├── FilterBar.svelte    # Country/status filters + search
 │   │   │   ├── Header.svelte       # Top navigation bar
 │   │   │   ├── Legend.svelte       # Map legend
-│   │   │   └── AboutModal.svelte   # About overlay
+│   │   │   ├── AboutModal.svelte   # About overlay
+│   │   │   └── Seo.svelte          # Dynamic meta tags & JSON-LD
 │   │   ├── data/
 │   │   │   ├── types.ts            # TypeScript interfaces
 │   │   │   ├── artworks.ts         # Aggregated export
+│   │   │   ├── about.ts            # About modal content
 │   │   │   └── artworks/           # One file per artwork (auto-loaded)
 │   │   │       ├── _template.ts    # Copy this to add a new artwork
 │   │   │       ├── index.ts        # Auto-imports all artwork files
@@ -38,7 +40,8 @@ svelte-app/
 │   │   │       ├── 002-museum-of-modern-egyptian-art.ts
 │   │   │       └── ...             # 30 artwork files total
 │   │   └── stores/
-│   │       └── map.svelte.ts       # Shared reactive state (Svelte 5 runes)
+│   │       ├── map.svelte.ts       # Shared reactive state (Svelte 5 runes)
+│   │       └── url.svelte.ts       # Bidirectional URL ↔ state sync
 │   ├── routes/
 │   │   ├── +layout.svelte          # Global styles (CSS variables)
 │   │   └── +page.svelte            # Main page assembling all components
@@ -88,6 +91,8 @@ npm run dev
 - **Multi-image gallery** with thumbnail strip and full-screen lightbox
 - **Relocation visualisation** — dashed lines and ghost markers for moved artworks
 - **YouTube video embeds** in sidebar
+- **URL state sync** — `?artwork=<id>` for deep-linking and sharing
+- **SEO & structured data** — Open Graph, Twitter Cards, JSON-LD (Schema.org)
 - **Responsive design** — works on mobile and desktop
 - **Keyboard navigation** — Escape to close, arrow keys in lightbox
 - **CSS variables** for consistent theming
