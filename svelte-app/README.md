@@ -70,16 +70,16 @@ npm run dev
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server |
-| `npm run build` | Production build |
-| `npm run preview` | Preview production build |
-| `npm run check` | Type-check with svelte-check |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Run ESLint with auto-fix |
-| `npm run format` | Format with Prettier |
-| `npm run format:check` | Check formatting |
+| Command                | Description                  |
+| ---------------------- | ---------------------------- |
+| `npm run dev`          | Start dev server             |
+| `npm run build`        | Production build             |
+| `npm run preview`      | Preview production build     |
+| `npm run check`        | Type-check with svelte-check |
+| `npm run lint`         | Run ESLint                   |
+| `npm run lint:fix`     | Run ESLint with auto-fix     |
+| `npm run format`       | Format with Prettier         |
+| `npm run format:check` | Check formatting             |
 
 ## Features
 

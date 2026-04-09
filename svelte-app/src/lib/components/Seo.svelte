@@ -10,9 +10,7 @@
 	const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 	const title = $derived(
-		store.selectedArtwork
-			? `${store.selectedArtwork.name} — Global Heshmat`
-			: BASE_TITLE
+		store.selectedArtwork ? `${store.selectedArtwork.name} — Global Heshmat` : BASE_TITLE
 	);
 
 	const description = $derived(
@@ -22,9 +20,7 @@
 	);
 
 	const canonicalUrl = $derived(
-		store.selectedArtwork
-			? `${SITE_URL}?artwork=${store.selectedArtwork.id}`
-			: SITE_URL
+		store.selectedArtwork ? `${SITE_URL}?artwork=${store.selectedArtwork.id}` : SITE_URL
 	);
 
 	// JSON-LD structured data

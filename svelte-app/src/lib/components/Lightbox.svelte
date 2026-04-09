@@ -51,11 +51,7 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div
-	class="lightbox-overlay"
-	bind:this={overlayEl}
-	onclick={handleOverlayClick}
->
+<div class="lightbox-overlay" bind:this={overlayEl} onclick={handleOverlayClick}>
 	<button class="lightbox-close" onclick={onclose} aria-label="Close">&times;</button>
 
 	{#if multi}

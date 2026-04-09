@@ -99,18 +99,18 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	// ── Required fields ──────────────────────────────────
 	id: 31,
-	name: "Sphinx Avenue Relief",
+	name: 'Sphinx Avenue Relief',
 	lat: 30.045,
 	lng: 31.235,
-	country: "Egypt",
-	city: "Cairo (Downtown)",
+	country: 'Egypt',
+	city: 'Cairo (Downtown)',
 	status: 'located',
-	address: "123 Tahrir Square, Downtown Cairo, Cairo Governorate",
-	desc: "A large bronze relief commissioned in 1975 for the entrance hall of the National Bank. The work depicts a procession of sphinxes and was unveiled by President Sadat. See also the <a href=\"https://example.com\">museum catalogue</a>.",
+	address: '123 Tahrir Square, Downtown Cairo, Cairo Governorate',
+	desc: 'A large bronze relief commissioned in 1975 for the entrance hall of the National Bank. The work depicts a procession of sphinxes and was unveiled by President Sadat. See also the <a href="https://example.com">museum catalogue</a>.',
 
 	// ── Single image (use this OR images[], not both) ────
-	image: "Story map II.jpg",
-	imageCaption: "Photo: Sonja Hegasy, 2019",
+	image: 'Story map II.jpg',
+	imageCaption: 'Photo: Sonja Hegasy, 2019',
 
 	// ── Multiple images (use this OR image, not both) ────
 	// images: [
@@ -127,12 +127,12 @@ const artwork: Artwork = {
 	// ── External links ───────────────────────────────────
 	links: [
 		{
-			label: "Museum catalogue entry",
-			url: "https://example.com/catalogue/sphinx-avenue"
+			label: 'Museum catalogue entry',
+			url: 'https://example.com/catalogue/sphinx-avenue'
 		},
 		{
-			label: "Wikimedia Commons",
-			url: "https://commons.wikimedia.org/wiki/File:Sphinx_Avenue.jpg"
+			label: 'Wikimedia Commons',
+			url: 'https://commons.wikimedia.org/wiki/File:Sphinx_Avenue.jpg'
 		}
 	],
 
@@ -141,11 +141,11 @@ const artwork: Artwork = {
 
 	// ── Relocation info (only if the artwork was moved) ──
 	movement: {
-		fromLat: 30.050,
-		fromLng: 31.240,
-		fromName: "Original location, Heliopolis",
+		fromLat: 30.05,
+		fromLng: 31.24,
+		fromName: 'Original location, Heliopolis',
 		year: 2010
-	},
+	}
 };
 
 export default artwork;

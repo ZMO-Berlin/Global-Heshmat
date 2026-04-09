@@ -1,0 +1,67 @@
+version: 2
+updates:
+  # Keep npm dependencies for the SvelteKit app up to date.
+  - package-ecosystem: npm
+    directory: /svelte-app
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 10
+    labels:
+      - dependencies
+      - npm
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    groups:
+      svelte:
+        patterns:
+          - svelte
+          - "@sveltejs/*"
+          - svelte-*
+          - prettier-plugin-svelte
+          - eslint-plugin-svelte
+      lint-and-format:
+        patterns:
+          - eslint
+          - "@eslint/*"
+          - typescript-eslint
+          - eslint-config-*
+          - prettier
+          - globals
+      types:
+        patterns:
+          - "@types/*"
+      dev-dependencies:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      production-dependencies:
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
+
+  # Keep GitHub Actions referenced in workflows pinned to current major versions.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      actions:
+        patterns:
+          - "*"
