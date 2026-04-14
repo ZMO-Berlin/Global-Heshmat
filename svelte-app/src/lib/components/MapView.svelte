@@ -108,10 +108,13 @@
 			container: mapContainer,
 			style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
 			center: [20, 35],
-			zoom: 3
+			zoom: 3,
+			attributionControl: false
 		});
 
 		map.addControl(new maplibregl.NavigationControl(), 'top-right');
+		map.addControl(new maplibregl.GlobeControl(), 'top-right');
+		map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
 
 		map.on('load', () => {
 			// Artwork points source
@@ -301,7 +304,7 @@
 	.map-container {
 		position: absolute;
 		top: calc(var(--header-height) + var(--filter-height));
-		bottom: 0;
+		bottom: var(--footer-height);
 		left: 0;
 		right: 0;
 		z-index: 1;

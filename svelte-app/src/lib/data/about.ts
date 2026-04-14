@@ -36,7 +36,7 @@ export const aboutContent = {
 	contactEmail: 'sonja.hegasy@zmo.de',
 
 	impressum: {
-		concept: 'Jan Purzel, ZMO',
+		concept: 'Jan Purtzel, ZMO',
 		content: 'Dr Sonja Hegasy, ZMO',
 		development: {
 			name: 'Fr\u00e9d\u00e9rick Madore',

@@ -4,6 +4,7 @@
 	import MapView from '$lib/components/MapView.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Legend from '$lib/components/Legend.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 	import AboutModal from '$lib/components/AboutModal.svelte';
 	import Seo from '$lib/components/Seo.svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
@@ -40,4 +41,5 @@
 <MapView bind:this={mapView} />
 <Sidebar />
 <Legend />
+<Footer />
 <AboutModal />
