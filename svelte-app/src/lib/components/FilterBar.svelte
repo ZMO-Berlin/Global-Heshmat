@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Search } from '@lucide/svelte';
 	import { artworks, countries } from '$lib/data/artworks';
 	import type { Artwork } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
@@ -78,15 +79,7 @@
 	</button>
 
 	<div class="search-wrapper">
-		<svg
-			class="search-icon"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2.5"
-		>
-			<circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
-		</svg>
+		<Search class="search-icon" size={14} strokeWidth={2.5} />
 		<input
 			type="text"
 			class="search-input"

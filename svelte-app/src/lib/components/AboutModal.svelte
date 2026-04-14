@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { X } from '@lucide/svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import { aboutContent as about } from '$lib/data/about';
 
@@ -18,9 +19,9 @@
 		<div class="about-modal" onclick={(e) => e.stopPropagation()}>
 			<div class="about-header">
 				<h2>{about.title}</h2>
-				<button class="sidebar-close" onclick={() => (store.aboutOpen = false)} aria-label="Close"
-					>&times;</button
-				>
+				<button class="sidebar-close" onclick={() => (store.aboutOpen = false)} aria-label="Close">
+					<X size={20} strokeWidth={2.25} />
+				</button>
 			</div>
 			<div class="about-body">
 				<p>

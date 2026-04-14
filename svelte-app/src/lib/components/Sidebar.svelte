@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ImageOff, X } from '@lucide/svelte';
 	import Gallery from './Gallery.svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
 
@@ -31,7 +32,9 @@
 	{#if artwork}
 		<div class="sidebar-header">
 			<h2>{artwork.name}</h2>
-			<button class="sidebar-close" onclick={close} aria-label="Close">&times;</button>
+			<button class="sidebar-close" onclick={close} aria-label="Close">
+				<X size={20} strokeWidth={2.25} />
+			</button>
 		</div>
 		<div class="sidebar-body">
 			{#if images.length > 0}
@@ -39,34 +42,7 @@
 			{:else}
 				<div class="sidebar-image">
 					<div class="sidebar-image-placeholder">
-						<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<rect
-								x="8"
-								y="16"
-								width="48"
-								height="36"
-								rx="3"
-								stroke="currentColor"
-								stroke-width="2"
-								fill="none"
-							/>
-							<circle cx="22" cy="30" r="5" stroke="currentColor" stroke-width="2" />
-							<path
-								d="M8 44l14-10 8 6 12-10 14 10"
-								stroke="currentColor"
-								stroke-width="2"
-								fill="none"
-								stroke-linejoin="round"
-							/>
-							<path
-								d="M28 8l4-4 4 4"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-							<line x1="32" y1="4" x2="32" y2="16" stroke="currentColor" stroke-width="2" />
-						</svg>
+						<ImageOff size={44} strokeWidth={1.75} />
 						<span>Image coming soon</span>
 					</div>
 				</div>

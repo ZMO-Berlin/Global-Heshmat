@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -52,18 +53,13 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="lightbox-overlay" bind:this={overlayEl} onclick={handleOverlayClick}>
-	<button class="lightbox-close" onclick={onclose} aria-label="Close">&times;</button>
+	<button class="lightbox-close" onclick={onclose} aria-label="Close">
+		<X size={22} strokeWidth={2} />
+	</button>
 
 	{#if multi}
 		<button class="lightbox-nav lightbox-nav-prev" onclick={prev} aria-label="Previous">
-			<svg
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2.5"
-				stroke-linecap="round"
-				stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg
-			>
+			<ChevronLeft size={22} strokeWidth={2.5} />
 		</button>
 	{/if}
 
@@ -79,14 +75,7 @@
 
 	{#if multi}
 		<button class="lightbox-nav lightbox-nav-next" onclick={next} aria-label="Next">
-			<svg
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2.5"
-				stroke-linecap="round"
-				stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg
-			>
+			<ChevronRight size={22} strokeWidth={2.5} />
 		</button>
 
 		<div class="lightbox-thumbs">

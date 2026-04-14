@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ChevronLeft, ChevronRight, Maximize2 } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
 	import Lightbox from './Lightbox.svelte';
 
@@ -44,14 +45,7 @@
 				}}
 				aria-label="Previous image"
 			>
-				<svg
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg
-				>
+				<ChevronLeft size={16} strokeWidth={2.5} />
 			</button>
 			<button
 				class="gallery-arrow gallery-arrow-next"
@@ -61,14 +55,7 @@
 				}}
 				aria-label="Next image"
 			>
-				<svg
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg
-				>
+				<ChevronRight size={16} strokeWidth={2.5} />
 			</button>
 		{/if}
 
@@ -80,16 +67,7 @@
 			}}
 			aria-label="View full screen"
 		>
-			<svg
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-			</svg>
+			<Maximize2 size={16} strokeWidth={2} />
 		</button>
 
 		{#if images[current].caption}
