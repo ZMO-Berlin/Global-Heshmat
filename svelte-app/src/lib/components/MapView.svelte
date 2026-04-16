@@ -103,7 +103,21 @@
 		}
 	});
 
+	// Read brand colours from the design-token CSS variables so the map
+	// stays in sync with the legend and the rest of the UI. MapLibre paint
+	// values are JSON (not CSS), so we resolve them to strings once on mount.
+	function readToken(name: string): string {
+		return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+	}
+
 	onMount(() => {
+		const colorPrimary = readToken('--color-primary');
+		const colorPrimaryRgb = readToken('--color-primary-rgb');
+		const colorSearch = readToken('--color-search');
+		const colorAccent = readToken('--color-accent');
+		const colorOnDark = readToken('--color-on-dark');
+		const colorTextMuted = readToken('--color-text-muted');
+
 		map = new maplibregl.Map({
 			container: mapContainer,
 			style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
@@ -133,11 +147,11 @@
 				source: 'artworks',
 				filter: ['has', 'point_count'],
 				paint: {
-					'circle-color': '#1a8a7d',
+					'circle-color': colorPrimary,
 					'circle-radius': ['step', ['get', 'point_count'], 18, 5, 24, 10, 30],
 					'circle-opacity': 0.85,
 					'circle-stroke-width': 3,
-					'circle-stroke-color': 'rgba(26,138,125,0.25)'
+					'circle-stroke-color': `rgba(${colorPrimaryRgb.replace(/\s+/g, ',')},0.25)`
 				}
 			});
 
@@ -153,7 +167,7 @@
 					'text-size': 13
 				},
 				paint: {
-					'text-color': '#ffffff'
+					'text-color': colorOnDark
 				}
 			});
 
@@ -164,10 +178,10 @@
 				source: 'artworks',
 				filter: ['all', ['!', ['has', 'point_count']], ['==', ['get', 'status'], 'located']],
 				paint: {
-					'circle-color': '#1a8a7d',
+					'circle-color': colorPrimary,
 					'circle-radius': 8,
 					'circle-stroke-width': 2.5,
-					'circle-stroke-color': '#ffffff'
+					'circle-stroke-color': colorOnDark
 				}
 			});
 
@@ -178,10 +192,10 @@
 				source: 'artworks',
 				filter: ['all', ['!', ['has', 'point_count']], ['==', ['get', 'status'], 'search']],
 				paint: {
-					'circle-color': '#d4842a',
+					'circle-color': colorSearch,
 					'circle-radius': 8,
 					'circle-stroke-width': 2.5,
-					'circle-stroke-color': '#ffffff'
+					'circle-stroke-color': colorOnDark
 				}
 			});
 
@@ -196,7 +210,7 @@
 				type: 'line',
 				source: 'relocations',
 				paint: {
-					'line-color': '#c9963b',
+					'line-color': colorAccent,
 					'line-width': 2,
 					'line-dasharray': [4, 3],
 					'line-opacity': 0.8
@@ -217,7 +231,7 @@
 					'circle-color': 'transparent',
 					'circle-radius': 7,
 					'circle-stroke-width': 2.5,
-					'circle-stroke-color': '#999',
+					'circle-stroke-color': colorTextMuted,
 					'circle-stroke-opacity': 0.8
 				}
 			});
@@ -307,6 +321,6 @@
 		bottom: var(--footer-height);
 		left: 0;
 		right: 0;
-		z-index: 1;
+		z-index: var(--z-map);
 	}
 </style>

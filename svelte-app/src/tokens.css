@@ -3,7 +3,10 @@
    ═══════════════════════════════════════════ */
 :root {
 	/* Brand — RGB triplets are the source of truth so any alpha
-	   variant can derive from the same value via rgb(var(--x-rgb) / a). */
+	   variant can derive from the same value via rgb(var(--x-rgb) / a).
+	   The *-light variants below are handpicked (not alpha-derived) because
+	   they read warmer/cleaner on the off-white surfaces than a translucent
+	   overlay would. Keep them in visual sync with their parent colour. */
 	--color-primary-rgb: 26 138 125;
 	--color-primary: rgb(var(--color-primary-rgb));
 	--color-primary-light: #e8f5f2;
@@ -13,7 +16,8 @@
 	--color-search-rgb: 198 107 61;
 	--color-search: rgb(var(--color-search-rgb));
 	--color-search-light: #fdf0e8;
-	--color-moved: #7c5cbf;
+	--color-moved-rgb: 124 92 191;
+	--color-moved: rgb(var(--color-moved-rgb));
 	--color-moved-light: #f3eefa;
 
 	/* Layout */
@@ -26,11 +30,16 @@
 	--color-surface-warm: #faf6f0;
 	--color-surface-image: #efe8dc;
 
+	/* On-dark (for UI sitting on the lightbox/modal dim layer) */
+	--color-on-dark-rgb: 255 255 255;
+	--color-on-dark: rgb(var(--color-on-dark-rgb));
+
 	/* Text */
 	--color-text: #2c2a26;
 	--color-text-secondary: #5a564e;
 	--color-text-muted: #8a857c;
 	--color-text-light: #a8a29e;
+	--color-text-placeholder: #b8a88a; /* warm tone for placeholders on surface-image */
 
 	/* UI */
 	--color-border: #e8e3da;
@@ -48,8 +57,9 @@
 	--font-display: 'Cormorant Garamond', 'Georgia', serif;
 	--font-body: 'Outfit', system-ui, -apple-system, sans-serif;
 
-	/* Type scale — consolidated from existing usage;
-	   0.5px fractions rounded down; 10/11, 15/16, 18/19 merged. */
+	/* Type scale
+	   base (13) = UI chrome: filter bar, meta tags, captions, small buttons
+	   md   (14) = body copy: descriptions, addresses, placeholder text */
 	--text-xs: 11px;
 	--text-sm: 12px;
 	--text-base: 13px;
@@ -75,27 +85,43 @@
 	--space-7: 28px;
 	--space-8: 32px;
 
-	/* Shadows */
-	--shadow-sm: 0 1px 3px rgb(var(--color-header-bg-rgb) / 0.06),
+	/* Shadows
+	   The *-dark variants use pure black for extra punch against the navy
+	   header/footer; the tinted ones use the header-bg triplet for subtler
+	   ambient depth on light surfaces. */
+	--shadow-sm:
+		0 1px 3px rgb(var(--color-header-bg-rgb) / 0.06),
 		0 1px 2px rgb(var(--color-header-bg-rgb) / 0.04);
-	--shadow-md: 0 4px 16px rgb(var(--color-header-bg-rgb) / 0.08),
+	--shadow-md:
+		0 4px 16px rgb(var(--color-header-bg-rgb) / 0.08),
 		0 2px 6px rgb(var(--color-header-bg-rgb) / 0.04);
-	--shadow-lg: 0 12px 40px rgb(var(--color-header-bg-rgb) / 0.12),
+	--shadow-lg:
+		0 12px 40px rgb(var(--color-header-bg-rgb) / 0.12),
 		0 4px 12px rgb(var(--color-header-bg-rgb) / 0.06);
-	--shadow-sidebar: -6px 0 32px rgb(var(--color-header-bg-rgb) / 0.1),
+	--shadow-sidebar:
+		-6px 0 32px rgb(var(--color-header-bg-rgb) / 0.1),
 		-1px 0 0 rgb(var(--color-header-bg-rgb) / 0.04);
+	--shadow-bar-dark: 0 4px 20px rgba(0, 0, 0, 0.35);
+	--shadow-bar-dark-inverted: 0 -4px 20px rgba(0, 0, 0, 0.35);
+	--shadow-lightbox-img: 0 8px 40px rgba(0, 0, 0, 0.4);
 
 	/* Motion */
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	--duration-fast: 200ms;
+	--duration-base: 250ms;
+	--duration-slow: 300ms;
+	--duration-slower: 400ms;
 
 	/* Radius */
+	--radius-xs: 4px;
 	--radius-sm: 6px;
 	--radius-md: 10px;
 	--radius-lg: 14px;
 	--radius-pill: 100px;
 
 	/* Z-index scale */
+	--z-map: 1;
 	--z-footer: 10;
 	--z-legend: 20;
 	--z-sidebar: 30;

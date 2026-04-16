@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 import { relative, sep } from 'node:path';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -14,9 +14,9 @@ const config = {
 		}
 	},
 	kit: {
-		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
+		// Static output: prerenders the single route to plain HTML/JS so the
+		// site can be hosted on any static host (GitHub Pages, Netlify,
+		// Cloudflare Pages, S3, etc.). See https://svelte.dev/docs/kit/adapter-static.
 		adapter: adapter()
 	}
 };

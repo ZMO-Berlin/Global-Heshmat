@@ -36,10 +36,8 @@
 			</span>
 			<span class="site-footer-credit">
 				<span class="site-footer-role">Development</span>
-				<a
-					href={about.impressum.development.url}
-					target="_blank"
-					rel="noopener noreferrer external">{about.impressum.development.name}</a
+				<a href={about.impressum.development.url} target="_blank" rel="noopener noreferrer external"
+					>{about.impressum.development.name}</a
 				>
 			</span>
 		</div>

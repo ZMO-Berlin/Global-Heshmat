@@ -101,7 +101,9 @@
 							<div class="search-item-name">
 								<span
 									class="search-item-status"
-									style="background:{a.status === 'search' ? '#d4842a' : '#1a8a7d'}"
+									style="background:{a.status === 'search'
+										? 'var(--color-search)'
+										: 'var(--color-primary)'}"
 								></span>
 								{a.name}
 							</div>
