@@ -2,7 +2,7 @@
 
 **Following the Egyptian Sculptor Hassan Heshmat around the world** — an interactive map of artworks in public spaces.
 
-Live site: [heshmat.zmo.de](https://heshmat.zmo.de) (pending DNS).
+Live site: [heshmat.zmo.de](https://heshmat.zmo.de).
 Hosting: GitHub Pages from this repository, deployed automatically on every push to `main`.
 
 Built with [SvelteKit](https://svelte.dev/), [MapLibre GL JS](https://maplibre.org/), and TypeScript.
