@@ -125,7 +125,17 @@ npm run dev
 | `npm run check` | Type-check with svelte-check |
 | `npm run lint` | Prettier check + ESLint |
 | `npm run format` | Format with Prettier |
-| `npm run validate` | format:check + lint + check + build (run before committing) |
+| `npm test` | Run Vitest unit tests once |
+| `npm run test:watch` | Run Vitest in watch mode |
+| `npm run verify:build` | Assert the `build/` artifact has the expected SEO + sitemap content |
+| `npm run validate` | format:check + lint + check + test + build + verify:build (run before committing) |
+
+## Testing
+
+Two layers, both run in CI:
+
+- **Vitest unit tests** live next to the source as `*.test.ts`. They cover the SEO/URL/sitemap surface — `slugify`, `escapeXml`, the `artworkPath` / `absoluteUrl` helpers, and the slug-collision check in `buildArtworkIndex`. These are pure-function tests; no DOM, no SvelteKit runtime needed.
+- **Build-output assertions** in [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs) crack open the prerendered `build/` directory and check the actual HTML files for the things unit tests can't see — exactly one `<title>` per page, canonical URLs pointing at `https://heshmat.zmo.de`, the JSON-LD `@type` matching the route, the Google Search Console verification meta tag landing on every page, no `localhost` leaks, sitemap listing every artwork directory, and so on.
 
 ## Adding a new artwork
 

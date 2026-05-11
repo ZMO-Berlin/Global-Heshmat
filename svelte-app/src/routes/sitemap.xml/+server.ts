@@ -1,17 +1,10 @@
 import { artworks } from '$lib/data/artworks';
 import { SITE_URL, artworkPath } from '$lib/config';
+import { escapeXml } from '$lib/utils/xml';
 
 // Prerender so the file is written once at build time and served as a
 // static asset, not regenerated per request.
 export const prerender = true;
-
-const escapeXml = (s: string) =>
-	s
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;')
-		.replace(/"/g, '&quot;')
-		.replace(/'/g, '&apos;');
 
 interface SitemapEntry {
 	loc: string;
