@@ -12,10 +12,16 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import AboutModal from '$lib/components/AboutModal.svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
+	import { setupUrlSync } from '$lib/stores/url-sync.svelte';
 
 	let { children }: { children: Snippet } = $props();
 
 	const store = getMapStore();
+
+	// Mirror the About modal and active filter into the URL query string
+	// so any state is shareable / deep-linkable, and the browser's Back
+	// button closes an open About modal.
+	setupUrlSync();
 	let mapView: MapView | undefined = $state();
 
 	// Reset goes back to the canonical home URL and recenters the map.
