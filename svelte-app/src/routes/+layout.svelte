@@ -1,8 +1,29 @@
 <script lang="ts">
 	import '../app.css';
 	import type { Snippet } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import logo from '$lib/assets/logo-zmo.png';
+	import Header from '$lib/components/Header.svelte';
+	import FilterBar from '$lib/components/FilterBar.svelte';
+	import MapView from '$lib/components/MapView.svelte';
+	import Sidebar from '$lib/components/Sidebar.svelte';
+	import Legend from '$lib/components/Legend.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import AboutModal from '$lib/components/AboutModal.svelte';
+	import { getMapStore } from '$lib/stores/map.svelte';
+
 	let { children }: { children: Snippet } = $props();
+
+	const store = getMapStore();
+	let mapView: MapView | undefined = $state();
+
+	// Reset goes back to the canonical home URL and recenters the map.
+	function resetView() {
+		store.activeFilter = 'all';
+		mapView?.resetView();
+		goto(resolve('/'));
+	}
 </script>
 
 <svelte:head>
@@ -15,4 +36,24 @@
 	/>
 </svelte:head>
 
+<svelte:window
+	onkeydown={(e) => {
+		if (e.key === 'Escape') {
+			if (store.aboutOpen) {
+				store.aboutOpen = false;
+			} else if (store.selectedArtwork) {
+				goto(resolve('/'));
+			}
+		}
+	}}
+/>
+
 {@render children()}
+
+<Header onreset={resetView} />
+<FilterBar />
+<MapView bind:this={mapView} />
+<Sidebar />
+<Legend />
+<Footer />
+<AboutModal />

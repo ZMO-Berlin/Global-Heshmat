@@ -1,80 +1,106 @@
 <script lang="ts">
-	import { getMapStore } from '$lib/stores/map.svelte';
+	import type { Artwork } from '$lib/data/types';
+	import {
+		SITE_URL,
+		SITE_NAME,
+		SITE_TAGLINE,
+		SITE_DESCRIPTION,
+		PUBLISHER,
+		ARTIST,
+		absoluteUrl,
+		artworkPath
+	} from '$lib/config';
 
-	const store = getMapStore();
+	interface Props {
+		/** When provided, render artwork-specific metadata (title, OG, JSON-LD). Otherwise render site metadata. */
+		artwork?: Artwork | null;
+	}
 
-	const BASE_TITLE = 'Global Heshmat — Following Hassan Heshmat around the world';
-	const BASE_DESCRIPTION =
-		'Interactive map tracing the public artworks of Egyptian sculptor Hassan Heshmat (1920–2006) across Egypt, Europe, and beyond. A project by ZMO Berlin.';
-	const SITE_URL = 'https://zmo-berlin.github.io/Global-Heshmat';
+	const { artwork = null }: Props = $props();
+
 	const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
+	const stripHtml = (s: string) => s.replace(/<[^>]*>/g, '');
+	const truncate = (s: string, n: number) =>
+		s.length <= n ? s : s.slice(0, n - 1).trimEnd() + '…';
+
 	const title = $derived(
-		store.selectedArtwork ? `${store.selectedArtwork.name} — Global Heshmat` : BASE_TITLE
+		artwork ? `${artwork.name} — ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`
 	);
 
 	const description = $derived(
-		store.selectedArtwork
-			? `${store.selectedArtwork.name} — ${store.selectedArtwork.city}, ${store.selectedArtwork.country}. ${store.selectedArtwork.desc.replace(/<[^>]*>/g, '').slice(0, 160)}…`
-			: BASE_DESCRIPTION
+		artwork
+			? truncate(
+					`${artwork.name} — ${artwork.city}, ${artwork.country}. ${stripHtml(artwork.desc)}`,
+					200
+				)
+			: SITE_DESCRIPTION
 	);
 
-	const canonicalUrl = $derived(
-		store.selectedArtwork ? `${SITE_URL}?artwork=${store.selectedArtwork.id}` : SITE_URL
-	);
+	const canonicalUrl = $derived(artwork ? absoluteUrl(artworkPath(artwork.slug!)) : `${SITE_URL}/`);
 
-	// JSON-LD structured data
 	const jsonLd = $derived(
-		store.selectedArtwork
-			? JSON.stringify({
+		artwork
+			? {
 					'@context': 'https://schema.org',
 					'@type': 'VisualArtwork',
-					name: store.selectedArtwork.name,
-					description: store.selectedArtwork.desc.replace(/<[^>]*>/g, '').slice(0, 300),
+					name: artwork.name,
+					description: truncate(stripHtml(artwork.desc), 300),
+					image: artwork.image ? absoluteUrl(`/images/${artwork.image}`) : undefined,
+					url: canonicalUrl,
 					locationCreated: {
 						'@type': 'Place',
-						name: `${store.selectedArtwork.city}, ${store.selectedArtwork.country}`,
+						name: `${artwork.city}, ${artwork.country}`,
+						address: {
+							'@type': 'PostalAddress',
+							streetAddress: artwork.address,
+							addressLocality: artwork.city,
+							addressCountry: artwork.country
+						},
 						geo: {
 							'@type': 'GeoCoordinates',
-							latitude: store.selectedArtwork.lat,
-							longitude: store.selectedArtwork.lng
+							latitude: artwork.lat,
+							longitude: artwork.lng
 						}
 					},
 					creator: {
 						'@type': 'Person',
-						name: 'Hassan Heshmat',
-						birthDate: '1920',
-						deathDate: '2006',
-						nationality: 'Egyptian'
+						name: ARTIST.name,
+						birthDate: ARTIST.birthDate,
+						deathDate: ARTIST.deathDate,
+						nationality: ARTIST.nationality
 					},
 					isPartOf: {
-						'@type': 'WebApplication',
-						name: 'Global Heshmat',
+						'@type': 'WebSite',
+						name: SITE_NAME,
 						url: SITE_URL
 					}
-				})
-			: JSON.stringify({
+				}
+			: {
 					'@context': 'https://schema.org',
-					'@type': 'WebApplication',
-					name: 'Global Heshmat',
-					description: BASE_DESCRIPTION,
+					'@type': 'WebSite',
+					name: SITE_NAME,
+					alternateName: SITE_TAGLINE,
+					description: SITE_DESCRIPTION,
 					url: SITE_URL,
-					applicationCategory: 'EducationalApplication',
+					inLanguage: 'en',
 					about: {
 						'@type': 'Person',
-						name: 'Hassan Heshmat',
-						birthDate: '1920',
-						deathDate: '2006',
-						nationality: 'Egyptian',
-						jobTitle: 'Sculptor'
+						name: ARTIST.name,
+						birthDate: ARTIST.birthDate,
+						deathDate: ARTIST.deathDate,
+						nationality: ARTIST.nationality,
+						jobTitle: ARTIST.jobTitle
 					},
 					publisher: {
 						'@type': 'Organization',
-						name: 'Leibniz-Zentrum Moderner Orient (ZMO)',
-						url: 'https://www.zmo.de'
+						name: PUBLISHER.name,
+						url: PUBLISHER.url
 					}
-				})
+				}
 	);
+
+	const ogType = $derived(artwork ? 'article' : 'website');
 </script>
 
 <svelte:head>
@@ -83,12 +109,12 @@
 	<link rel="canonical" href={canonicalUrl} />
 
 	<!-- Open Graph -->
-	<meta property="og:type" content="website" />
+	<meta property="og:type" content={ogType} />
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
 	<meta property="og:url" content={canonicalUrl} />
 	<meta property="og:image" content={OG_IMAGE} />
-	<meta property="og:site_name" content="Global Heshmat" />
+	<meta property="og:site_name" content={SITE_NAME} />
 	<meta property="og:locale" content="en_US" />
 
 	<!-- Twitter Card -->
@@ -106,7 +132,7 @@
 	<meta name="robots" content="index, follow" />
 	<meta name="theme-color" content="#16192e" />
 
-	<!-- JSON-LD Structured Data -->
+	<!-- JSON-LD structured data -->
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html '<script type="application/ld+json">' + jsonLd + '</' + 'script>'}
+	{@html '<script type="application/ld+json">' + JSON.stringify(jsonLd) + '</' + 'script>'}
 </svelte:head>

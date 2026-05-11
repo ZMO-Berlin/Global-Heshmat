@@ -9,6 +9,8 @@ updates:
       time: "06:00"
       timezone: Europe/Berlin
     open-pull-requests-limit: 10
+    assignees:
+      - fmadore
     labels:
       - dependencies
       - npm
@@ -55,6 +57,8 @@ updates:
       time: "06:00"
       timezone: Europe/Berlin
     open-pull-requests-limit: 5
+    assignees:
+      - fmadore
     labels:
       - dependencies
       - github-actions

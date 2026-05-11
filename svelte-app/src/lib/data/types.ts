@@ -25,6 +25,10 @@ export interface Artwork {
 	status: 'located' | 'search';
 	address: string;
 	desc: string;
+	// Optional URL slug override. If absent, the slug is derived from `name`
+	// at load time. Set this explicitly to keep a stable URL when renaming
+	// an artwork, or to disambiguate two works that share a name.
+	slug?: string;
 	image?: string;
 	imageCaption?: string;
 	images?: ArtworkImage[];

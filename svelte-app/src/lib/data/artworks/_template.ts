@@ -29,6 +29,12 @@
  *
  *  OPTIONAL FIELDS  (include only when applicable)
  *  ─────────────────────────────────────────────────
+ *  slug          URL slug override. If omitted, a slug is auto-derived from
+ *                `name` (e.g. "Sphinx Avenue Relief" → "sphinx-avenue-relief").
+ *                Set this only if you need to keep a stable URL after renaming
+ *                the artwork, or to disambiguate two works that share a name.
+ *                The site URL becomes:  /artworks/<slug>/
+ *
  *  image         Filename of a single image stored in  static/images/
  *                Example: "my-photo.jpg"
  *                >>> The actual image file must be placed in the static/images/ folder.
@@ -109,7 +115,7 @@ const artwork: Artwork = {
 	desc: 'A large bronze relief commissioned in 1975 for the entrance hall of the National Bank. The work depicts a procession of sphinxes and was unveiled by President Sadat. See also the <a href="https://example.com">museum catalogue</a>.',
 
 	// ── Single image (use this OR images[], not both) ────
-	image: 'Story map II.jpg',
+	image: '031-sphinx-avenue.jpg', // place this file in static/images/
 	imageCaption: 'Photo: Sonja Hegasy, 2019',
 
 	// ── Multiple images (use this OR image, not both) ────

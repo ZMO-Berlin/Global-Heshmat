@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { ImageOff, X } from '@lucide/svelte';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import Gallery from './Gallery.svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
 
@@ -24,7 +26,9 @@
 	}
 
 	function close() {
-		store.selectedArtwork = null;
+		// Navigate back to the home route. The home page clears the store
+		// selection on mount, which closes this sidebar.
+		goto(resolve('/'));
 	}
 </script>
 
