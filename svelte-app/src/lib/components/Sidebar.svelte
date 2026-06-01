@@ -35,7 +35,7 @@
 <div class="sidebar" class:open={artwork !== null}>
 	{#if artwork}
 		<div class="sidebar-header">
-			<h2>{artwork.name}</h2>
+			<h2 dir="auto">{artwork.name}</h2>
 			<button class="sidebar-close" onclick={close} aria-label="Close">
 				<X size={20} strokeWidth={2.25} />
 			</button>
@@ -55,11 +55,11 @@
 			<div class="sidebar-content">
 				<div class="sidebar-meta">
 					<span class="tag {tagClass}">{tagText}</span>
-					<span>{artwork.city}, {artwork.country}</span>
+					<span dir="auto">{artwork.city}, {artwork.country}</span>
 				</div>
-				<div class="sidebar-address">{artwork.address}</div>
+				<div class="sidebar-address" dir="auto">{artwork.address}</div>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -- content is from our own data files, not user input -->
-				<div class="sidebar-desc">{@html artwork.desc}</div>
+				<div class="sidebar-desc" dir="auto">{@html artwork.desc}</div>
 
 				{#if artwork.movement}
 					<div class="sidebar-movement">

@@ -120,6 +120,26 @@
 		// Dynamic import keeps maplibre out of the SSR bundle entirely.
 		maplibregl = (await import('maplibre-gl')).default;
 
+		// MapLibre's WebGL renderer lays glyphs out left-to-right by default,
+		// so Arabic/Persian/Hebrew basemap labels (e.g. Egyptian street names)
+		// come out reversed. This ICU-based plugin shapes right-to-left text
+		// correctly. It registers globally and may only be set once, so guard
+		// against re-runs when the component remounts during client navigation.
+		if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
+			// `true` = lazy: the ~1 MB plugin is fetched only when RTL text
+			// first appears in the viewport.
+			maplibregl
+				.setRTLTextPlugin(
+					'https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.4.0/dist/mapbox-gl-rtl-text.js',
+					true
+				)
+				.catch(() => {
+					// Non-fatal: if the CDN is unreachable, labels just fall
+					// back to the default (unshaped) rendering rather than
+					// breaking map initialisation.
+				});
+		}
+
 		const colorPrimary = readToken('--color-primary');
 		const colorPrimaryRgb = readToken('--color-primary-rgb');
 		const colorSearch = readToken('--color-search');
