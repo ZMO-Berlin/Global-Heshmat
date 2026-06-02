@@ -1,45 +1,34 @@
 <script lang="ts">
-	import Header from '$lib/components/Header.svelte';
-	import FilterBar from '$lib/components/FilterBar.svelte';
-	import MapView from '$lib/components/MapView.svelte';
-	import Sidebar from '$lib/components/Sidebar.svelte';
-	import Legend from '$lib/components/Legend.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-	import AboutModal from '$lib/components/AboutModal.svelte';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import Seo from '$lib/components/Seo.svelte';
+	import { artworks } from '$lib/data/artworks';
 	import { getMapStore } from '$lib/stores/map.svelte';
-	import { initUrlSync } from '$lib/stores/url.svelte';
 
 	const store = getMapStore();
-	let mapView: MapView;
 
-	// Sync ?artwork=<id> query param with selected artwork
-	initUrlSync();
-
-	function resetView() {
+	// Clear any leftover selection when the user navigates back to the home
+	// route (e.g. via the close button or browser back).
+	$effect(() => {
 		store.selectedArtwork = null;
-		store.activeFilter = 'all';
-		mapView.resetView();
-	}
+	});
+
+	// Backwards compatibility: redirect legacy /?artwork=<id> deep links to
+	// the new /artworks/<slug>/ canonical URLs.
+	onMount(() => {
+		const params = new URLSearchParams(window.location.search);
+		const idParam = params.get('artwork');
+		if (idParam === null) return;
+
+		const id = Number(idParam);
+		if (Number.isNaN(id)) return;
+
+		const match = artworks.find((a) => a.id === id);
+		if (match) {
+			goto(resolve('/artworks/[slug]', { slug: match.slug! }), { replaceState: true });
+		}
+	});
 </script>
 
-<svelte:window
-	onkeydown={(e) => {
-		if (e.key === 'Escape') {
-			if (store.aboutOpen) {
-				store.aboutOpen = false;
-			} else if (store.selectedArtwork) {
-				store.selectedArtwork = null;
-			}
-		}
-	}}
-/>
-
 <Seo />
-<Header onreset={resetView} />
-<FilterBar />
-<MapView bind:this={mapView} />
-<Sidebar />
-<Legend />
-<Footer />
-<AboutModal />

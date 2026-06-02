@@ -1,15 +1,21 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import maplibregl from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
+	import type MaplibreNS from 'maplibre-gl';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { artworks } from '$lib/data/artworks';
 	import type { Artwork } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
 
 	const store = getMapStore();
 
+	// `maplibre-gl` touches `window` at module load, so import it lazily inside
+	// onMount to keep this component SSR-safe. Types stay imported with
+	// `import type`, which is erased at compile time.
+	let maplibregl: typeof MaplibreNS;
 	let mapContainer: HTMLDivElement;
-	let map: maplibregl.Map;
+	let map: MaplibreNS.Map;
 
 	// Build GeoJSON from artworks
 	function buildGeoJSON(items: Artwork[]) {
@@ -78,7 +84,7 @@
 	function updateMapSource() {
 		if (!map || !map.isStyleLoaded() || !map.getSource('artworks')) return;
 		const filtered = getFilteredArtworks();
-		(map.getSource('artworks') as maplibregl.GeoJSONSource).setData(buildGeoJSON(filtered));
+		(map.getSource('artworks') as MaplibreNS.GeoJSONSource).setData(buildGeoJSON(filtered));
 
 		// Fit bounds to filtered items
 		if (filtered.length > 0) {
@@ -110,7 +116,30 @@
 		return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 	}
 
-	onMount(() => {
+	onMount(async () => {
+		// Dynamic import keeps maplibre out of the SSR bundle entirely.
+		maplibregl = (await import('maplibre-gl')).default;
+
+		// MapLibre's WebGL renderer lays glyphs out left-to-right by default,
+		// so Arabic/Persian/Hebrew basemap labels (e.g. Egyptian street names)
+		// come out reversed. This ICU-based plugin shapes right-to-left text
+		// correctly. It registers globally and may only be set once, so guard
+		// against re-runs when the component remounts during client navigation.
+		if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
+			// `true` = lazy: the ~1 MB plugin is fetched only when RTL text
+			// first appears in the viewport.
+			maplibregl
+				.setRTLTextPlugin(
+					'https://unpkg.com/@mapbox/mapbox-gl-rtl-text@0.4.0/dist/mapbox-gl-rtl-text.js',
+					true
+				)
+				.catch(() => {
+					// Non-fatal: if the CDN is unreachable, labels just fall
+					// back to the default (unshaped) rendering rather than
+					// breaking map initialisation.
+				});
+		}
+
 		const colorPrimary = readToken('--color-primary');
 		const colorPrimaryRgb = readToken('--color-primary-rgb');
 		const colorSearch = readToken('--color-search');
@@ -236,13 +265,15 @@
 				}
 			});
 
-			// Click on artwork point
+			// Click on artwork point — navigate to its detail URL. The
+			// /artworks/[slug]/ page sets `store.selectedArtwork`, which
+			// then triggers the pan-to effect below.
 			for (const layerId of ['artwork-located', 'artwork-search']) {
 				map.on('click', layerId, (e) => {
 					if (!e.features || e.features.length === 0) return;
 					const id = e.features[0].properties.id;
 					const artwork = artworks.find((a) => a.id === id);
-					if (artwork) store.selectedArtwork = artwork;
+					if (artwork) goto(resolve('/artworks/[slug]', { slug: artwork.slug! }));
 				});
 
 				map.on('mouseenter', layerId, () => {
@@ -258,7 +289,7 @@
 				const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
 				if (!features.length) return;
 				const clusterId = features[0].properties.cluster_id;
-				const source = map.getSource('artworks') as maplibregl.GeoJSONSource;
+				const source = map.getSource('artworks') as MaplibreNS.GeoJSONSource;
 				const zoom = await source.getClusterExpansionZoom(clusterId);
 				map.flyTo({
 					center: (features[0].geometry as { type: 'Point'; coordinates: number[] })

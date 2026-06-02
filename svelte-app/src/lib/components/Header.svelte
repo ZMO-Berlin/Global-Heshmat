@@ -18,8 +18,17 @@
 
 <style>
 	.header-subtitle {
-		font-weight: 400;
-		opacity: 0.7;
-		font-size: 0.85em;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-weight: var(--weight-regular);
+		font-size: 0.7em;
+		letter-spacing: var(--tracking-wide);
+		color: rgb(var(--color-header-text-rgb) / 0.65);
+		margin-left: var(--space-1);
+	}
+	@media (max-width: 768px) {
+		.header-subtitle {
+			display: none;
+		}
 	}
 </style>

@@ -2,11 +2,12 @@
    CSS Variables — Exhibition Cartography
    ═══════════════════════════════════════════ */
 :root {
-	/* Brand — RGB triplets are the source of truth so any alpha
-	   variant can derive from the same value via rgb(var(--x-rgb) / a).
-	   The *-light variants below are handpicked (not alpha-derived) because
-	   they read warmer/cleaner on the off-white surfaces than a translucent
-	   overlay would. Keep them in visual sync with their parent colour. */
+	/* ───── Brand ─────
+	   RGB triplets are the source of truth so any alpha variant can derive
+	   from the same value via rgb(var(--x-rgb) / a). The *-light variants
+	   below are handpicked (not alpha-derived) because they read warmer and
+	   cleaner on the off-white surfaces than a translucent overlay would.
+	   Keep them in visual sync with their parent colour. */
 	--color-primary-rgb: 26 138 125;
 	--color-primary: rgb(var(--color-primary-rgb));
 	--color-primary-light: #e8f5f2;
@@ -20,7 +21,7 @@
 	--color-moved: rgb(var(--color-moved-rgb));
 	--color-moved-light: #f3eefa;
 
-	/* Layout */
+	/* ───── Layout surfaces ───── */
 	--color-header-bg-rgb: 22 25 46;
 	--color-header-bg: rgb(var(--color-header-bg-rgb));
 	--color-header-text-rgb: 240 230 211;
@@ -34,26 +35,42 @@
 	--color-on-dark-rgb: 255 255 255;
 	--color-on-dark: rgb(var(--color-on-dark-rgb));
 
-	/* Text */
+	/* ───── Text ───── */
+	--color-ink: var(--color-header-bg); /* high-contrast headings, semantic alias */
 	--color-text: #2c2a26;
 	--color-text-secondary: #5a564e;
 	--color-text-muted: #8a857c;
 	--color-text-light: #a8a29e;
 	--color-text-placeholder: #b8a88a; /* warm tone for placeholders on surface-image */
 
-	/* UI */
+	/* ───── UI ───── */
 	--color-border: #e8e3da;
 	--color-border-light: #f0ebe3;
 	--color-close-bg: #ede8e0;
 	--color-close-bg-hover: #ddd7cc;
 
-	/* Sizing */
+	/* ───── Selection / focus ───── */
+	--color-selection-bg: rgb(var(--color-accent-rgb) / 0.22);
+	--color-selection-text: var(--color-ink);
+	--focus-ring-color: rgb(var(--color-primary-rgb) / 0.35);
+	--focus-ring-color-on-dark: rgb(var(--color-on-dark-rgb) / 0.45);
+	--focus-ring-width: 3px;
+	--focus-ring-offset: 2px;
+
+	/* ───── Scrim (modal/lightbox backdrops) ───── */
+	--scrim-modal: rgb(var(--color-header-bg-rgb) / 0.55);
+	--scrim-lightbox: rgb(var(--color-header-bg-rgb) / 0.94);
+	--scrim-blur: 4px;
+	--scrim-blur-strong: 8px;
+
+	/* ───── Sizing ───── */
 	--header-height: 68px;
 	--filter-height: 48px;
 	--footer-height: 64px;
 	--sidebar-width: 460px;
+	--prose-width: 62ch; /* readable measure for long-form text */
 
-	/* Typography */
+	/* ───── Typography ───── */
 	--font-display: 'Cormorant Garamond', 'Georgia', serif;
 	--font-body: 'Outfit', system-ui, -apple-system, sans-serif;
 
@@ -70,7 +87,33 @@
 	--text-3xl: 24px;
 	--text-4xl: 26px;
 
-	/* Spacing — 4px base with 2px half-steps for control-level gaps. */
+	/* Font weights — only those loaded from Google Fonts.
+	   Outfit: 300, 400, 500, 600.  Cormorant Garamond: 400, 500, 600, 700 (+ italic 400/500). */
+	--weight-light: 300;
+	--weight-regular: 400;
+	--weight-medium: 500;
+	--weight-semibold: 600;
+	--weight-bold: 700;
+
+	/* Line heights — names follow the role rather than the ratio so that
+	   tweaking the scale later doesn't require a global rename. */
+	--leading-tight: 1.25; /* display headings */
+	--leading-snug: 1.4; /* short blocks, captions */
+	--leading-normal: 1.5; /* default UI text */
+	--leading-relaxed: 1.65; /* small cards, insets */
+	--leading-prose: 1.75; /* article body */
+	--leading-loose: 1.8; /* generous long-form (about) */
+
+	/* Letter-spacing — tight keeps display crisp; widest is reserved for
+	   small-caps style section labels (always paired with text-transform: uppercase). */
+	--tracking-tight: -0.01em;
+	--tracking-normal: 0;
+	--tracking-wide: 0.02em;
+	--tracking-wider: 0.04em;
+	--tracking-widest: 0.08em;
+	--tracking-mono: 0.16em; /* numerals/labels that read like an editorial folio */
+
+	/* ───── Spacing — 4px base with 2px half-steps for control-level gaps. ───── */
 	--space-1: 4px;
 	--space-1-5: 6px;
 	--space-2: 8px;
@@ -85,7 +128,7 @@
 	--space-7: 28px;
 	--space-8: 32px;
 
-	/* Shadows
+	/* ───── Shadows ─────
 	   The *-dark variants use pure black for extra punch against the navy
 	   header/footer; the tinted ones use the header-bg triplet for subtler
 	   ambient depth on light surfaces. */
@@ -101,11 +144,13 @@
 	--shadow-sidebar:
 		-6px 0 32px rgb(var(--color-header-bg-rgb) / 0.1),
 		-1px 0 0 rgb(var(--color-header-bg-rgb) / 0.04);
-	--shadow-bar-dark: 0 4px 20px rgba(0, 0, 0, 0.35);
-	--shadow-bar-dark-inverted: 0 -4px 20px rgba(0, 0, 0, 0.35);
-	--shadow-lightbox-img: 0 8px 40px rgba(0, 0, 0, 0.4);
+	--shadow-bar-dark: 0 4px 20px rgb(0 0 0 / 0.35);
+	--shadow-bar-dark-inverted: 0 -4px 20px rgb(0 0 0 / 0.35);
+	--shadow-lightbox-img: 0 8px 40px rgb(0 0 0 / 0.4);
+	--shadow-chip-active: 0 2px 8px rgb(var(--color-primary-rgb) / 0.3);
+	--shadow-chip-active-search: 0 2px 8px rgb(var(--color-search-rgb) / 0.3);
 
-	/* Motion */
+	/* ───── Motion ───── */
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 	--duration-fast: 200ms;
@@ -113,14 +158,14 @@
 	--duration-slow: 300ms;
 	--duration-slower: 400ms;
 
-	/* Radius */
+	/* ───── Radius ───── */
 	--radius-xs: 4px;
 	--radius-sm: 6px;
 	--radius-md: 10px;
 	--radius-lg: 14px;
 	--radius-pill: 100px;
 
-	/* Z-index scale */
+	/* ───── Z-index scale ───── */
 	--z-map: 1;
 	--z-footer: 10;
 	--z-legend: 20;
@@ -131,4 +176,15 @@
 	--z-modal: 100;
 	--z-lightbox: 200;
 	--z-lightbox-ui: 201;
+}
+
+/* Honour the user's reduced-motion preference. Keep transitions instant
+   but non-zero so :hover/:focus state still has a defined transition target. */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--duration-fast: 0.01ms;
+		--duration-base: 0.01ms;
+		--duration-slow: 0.01ms;
+		--duration-slower: 0.01ms;
+	}
 }

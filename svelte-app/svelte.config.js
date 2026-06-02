@@ -17,7 +17,10 @@ const config = {
 		// Static output: prerenders the single route to plain HTML/JS so the
 		// site can be hosted on any static host (GitHub Pages, Netlify,
 		// Cloudflare Pages, S3, etc.). See https://svelte.dev/docs/kit/adapter-static.
-		adapter: adapter()
+		// `fallback` makes GitHub Pages serve our own 404 instead of its default.
+		adapter: adapter({
+			fallback: '404.html'
+		})
 	}
 };
 

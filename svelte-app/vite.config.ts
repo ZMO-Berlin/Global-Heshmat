@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
@@ -16,5 +17,12 @@ export default defineConfig({
 				pluginTimings: false
 			}
 		}
+	},
+	test: {
+		// Pure unit tests for the SEO/URL/sitemap layer. They run in Node
+		// (no browser environment needed) and import via the `$lib/*` alias
+		// that the SvelteKit plugin sets up automatically.
+		environment: 'node',
+		include: ['src/**/*.{test,spec}.ts']
 	}
 });
