@@ -24,7 +24,7 @@ const artwork: Artwork = {
          		caption: "Dancing People"},
 	   {	src: "Tanzende_Gruppe_III.jpg",
      	   caption: "Dancing People"},
-		   { 		src: "Plakat_Ausstellung_Susteren_1968_Niederlande.jpg",
+		   { 		src: "Plakat_Ausstellung_Susteren_1968_Niederlande.jpeg",
          		caption: "Poster for the Exhibition in Susteren 1968"},
 	   {	src: "Rückseite_Schwimmbad.jpg",
      	   caption: "Backside of a Photo"}

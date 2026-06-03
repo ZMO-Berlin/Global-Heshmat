@@ -109,17 +109,17 @@ const artwork: Artwork = {
 	desc: 'This snapshot was taken by chance in 2025 during a visit of the museum by art historian Nadine Nour el Din.',
 	images: [{src: "Agricultural museum_1.jpeg",
 	         caption: "Exhibition Piece"},
-		{ 		src: "Agricultural museum_2.jpg",
+		{ 		src: "Agricultural museum_2.jpeg",
          		caption: "Exhibition Piece"},
-	   {	src: "Agricultural museum_3.jpg",
+	   {	src: "Agricultural museum_3.jpeg",
      	   caption: "Exhibition Piece"},
-		   {src: "Agricultural museum_4.jpeg",
+		   {src: "Agricultural_Museum_4.jpeg",
 	         caption: "Exhibition Piece"},
-		{ 		src: "Agricultural museum_5.jpeg",
+		{ 		src: "Agricultural_Museum_5.jpeg",
          		caption: "Exhibition Piece"},
-	   {	src: "Agricultural museum_6.jpeg",
+	   {	src: "Agricultural_Museum_6.jpeg",
      	   caption: "Exhibition Piece"},
-		   {	src: "Agricultural museum_7.jpeg",
+		   {	src: "Agricultural_Museum_7.jpeg",
      	   caption: "Exhibition Piece"}]
 
 	

@@ -147,6 +147,85 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 	}
 }
 
+// ── Artwork image references resolve to generated WebP derivatives ──
+//
+// Each artwork data file references images by their ORIGINAL filename
+// (e.g. "Foo Bar.jpeg"). At runtime the app (src/lib/utils/image.ts) loads
+// the generated derivative at /images/web/<stem>.webp and
+// /images/thumb/<stem>.webp, swapping the extension for .webp. This guards
+// the filename-drift class of bug: a reference whose stem has no matching
+// derivative — a typo, wrong case, space-vs-underscore, NFC/NFD Unicode
+// mismatch, or simply forgetting to run
+// scripts/generate_image_derivatives.py after adding an image.
+const ARTWORKS_SRC = join(__dirname, '..', 'src', 'lib', 'data', 'artworks');
+const WEB_DIR = join(BUILD_DIR, 'images', 'web');
+const THUMB_DIR = join(BUILD_DIR, 'images', 'thumb');
+
+// Referenced filenames whose SOURCE image is not on disk yet (a colleague
+// still needs to supply them). Tracked here so the build stays green while
+// the gap stays visible — delete an entry once the file is added and the
+// derivative script has been re-run.
+const KNOWN_MISSING = new Set([
+	'Intilaqat_Misr_Abbau.jpg', // 005-The Dawn of Egypt
+	'Schule_Plan.jpg', // 024-Fachschule für Porzellan
+	'The_stable_family.jpg' // 032-TBF Boston
+]);
+
+// Mirror the stem logic in src/lib/utils/image.ts.
+const stemOf = (file) => file.replace(/\.[^./\\]+$/, '');
+const IMG_EXT = /\.(?:jpe?g|png|webp|tiff?|heic|heif)$/i;
+const REF_RE = /(?:src|image)\s*:\s*["']([^"']+)["']/g;
+
+check(
+	'image derivative folders present in build (web/ + thumb/)',
+	existsSync(WEB_DIR) && existsSync(THUMB_DIR),
+	'run scripts/generate_image_derivatives.py and commit static/images/web + thumb'
+);
+
+if (existsSync(WEB_DIR) && existsSync(THUMB_DIR) && existsSync(ARTWORKS_SRC)) {
+	const webSet = new Set(readdirSync(WEB_DIR));
+	const thumbSet = new Set(readdirSync(THUMB_DIR));
+	const dataFiles = readdirSync(ARTWORKS_SRC).filter(
+		(f) => f.endsWith('.ts') && f !== '_template.ts'
+	);
+
+	let refCount = 0;
+	let knownMissingSeen = 0;
+	const broken = [];
+
+	for (const file of dataFiles) {
+		const text = readFileSync(join(ARTWORKS_SRC, file), 'utf8');
+		for (const m of text.matchAll(REF_RE)) {
+			const name = m[1];
+			if (!IMG_EXT.test(name)) continue; // ignore non-image strings
+			if (KNOWN_MISSING.has(name)) {
+				knownMissingSeen++;
+				continue;
+			}
+			refCount++;
+			const webp = stemOf(name) + '.webp';
+			const inWeb = webSet.has(webp);
+			const inThumb = thumbSet.has(webp);
+			if (!inWeb || !inThumb) {
+				const where = !inWeb && !inThumb ? 'web/ and thumb/' : !inWeb ? 'web/' : 'thumb/';
+				broken.push(`${file}: "${name}" → missing ${webp} in ${where}`);
+			}
+		}
+	}
+
+	if (broken.length === 0) {
+		successes.push(`all ${refCount} artwork image references have WebP derivatives`);
+	} else {
+		for (const b of broken) failures.push(`image reference unresolved — ${b}`);
+	}
+
+	if (knownMissingSeen > 0) {
+		successes.push(
+			`${knownMissingSeen} known-missing image reference(s) tracked in KNOWN_MISSING (not failing the build)`
+		);
+	}
+}
+
 // ── Report ──────────────────────────────────────────────────────────
 console.log(`\nverify-build: ${successes.length} passed, ${failures.length} failed`);
 for (const s of successes) console.log(`  ✓ ${s}`);

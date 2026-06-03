@@ -17,11 +17,11 @@ const artwork: Artwork = {
 	         caption: "Photo: Ephraim Gothe, ????"},
 		{ 		src: "Hasan_Heshmat_Wandbild_Zamalek_RAND.jpg",
          		caption: "Wall Mosaic in the Armed Officers' Club"},
-	   {	src: "Mosaik Officers Club Zamalek_darüber Fathy.jpg",
+	   {	src: "Mosaik Officers Club Zamalek_darüber Fathy.jpeg",
      	   caption: "Wall Mosaic in the Armed Officers' Club"},
-		{ 		src: "Image_Samar_Heshmat.jpeg",
+		{ 		src: "Image_Samar_Heshmat.jpg",
          		caption: "Wall Mosaic in the Armed Officers' Club"},
-	   {	src: "Image_Samar_Heshmat_.jpeg",
+	   {	src: "Image_Samar_Heshmat_.jpg",
      	   caption: "Wall Mosaic in the Armed Officers' Club"}]
 
 	
