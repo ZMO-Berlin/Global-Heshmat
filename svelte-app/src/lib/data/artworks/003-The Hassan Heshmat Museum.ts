@@ -17,7 +17,7 @@ const artwork: Artwork = {
 	         caption: "Balcony on the first floor of the Museum"},
 		{ 		src: "Entrance Museum.jpg",
          		caption: "Entrance of The Hassan Heshmat Museum"},
-	   {	src: "Hasan_Heshmat_House Entrance .jpg",
+	   {	src: "Hasan_Heshmat_House Entrance.jpg",
      	   caption: "Heshmat standing in the entrace of the museum"},
 		   {	src: "Horus_Sculpture Garden Museum.jpg",
      	   caption: "Horus Sculpture"},

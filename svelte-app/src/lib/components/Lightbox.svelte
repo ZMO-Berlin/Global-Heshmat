@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
+	import { thumbUrl, webUrl, originalUrl, swapToOriginal } from '$lib/utils/image';
 	import { onMount, onDestroy } from 'svelte';
 
 	let {
@@ -64,7 +65,16 @@
 	{/if}
 
 	<div class="lightbox-content">
-		<img class="lightbox-img" src="/images/{images[current].src}" alt="" />
+		<img
+			class="lightbox-img"
+			src={webUrl(images[current].src)}
+			data-fallback={originalUrl(images[current].src)}
+			alt=""
+			onerror={(e) => {
+				const el = e.currentTarget as HTMLImageElement;
+				if (!swapToOriginal(el)) el.style.display = 'none';
+			}}
+		/>
 		{#if images[current].caption}
 			<div class="lightbox-caption">{images[current].caption}</div>
 		{/if}
@@ -83,7 +93,16 @@
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div class="lightbox-thumb" class:active={i === current} onclick={() => (current = i)}>
-					<img src="/images/{img.src}" alt="" />
+					<img
+						src={thumbUrl(img.src)}
+						data-fallback={originalUrl(img.src)}
+						alt=""
+						loading="lazy"
+						onerror={(e) => {
+							const el = e.currentTarget as HTMLImageElement;
+							if (!swapToOriginal(el)) el.parentElement!.style.display = 'none';
+						}}
+					/>
 				</div>
 			{/each}
 		</div>

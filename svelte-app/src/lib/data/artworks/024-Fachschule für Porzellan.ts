@@ -13,7 +13,7 @@ const artwork: Artwork = {
 	status: 'located',
 	address: 'Weißenbacher Str. 60, 95100 Selb',
 	desc: 'In 1957–58, Hassan Heshmat studied at the "Staatliche Höhere Fachschule für Porzellan" in Selb on a DAAD scholarship.',
-	images: [{src: "Selb_Haus_I.jpg",
+	images: [{src: "Selb_Haus_I.jpeg",
 	         caption: "Hassan Heshmats Accodmodation in Selb, Bavaria (taken 2026)"},
 		{src: "Selb_Haus_II.jpeg",
 	         caption: "Hassan Heshmats Accodmodation in Selb, Bavaria (taken 2026)"},

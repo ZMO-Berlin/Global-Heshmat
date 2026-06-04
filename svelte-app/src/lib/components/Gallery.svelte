@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, Maximize2 } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
+	import { thumbUrl, webUrl, originalUrl, swapToOriginal } from '$lib/utils/image';
 	import Lightbox from './Lightbox.svelte';
 
 	let { images }: { images: ArtworkImage[] } = $props();
@@ -26,10 +27,12 @@
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="gallery-main" onclick={() => (lightboxOpen = true)}>
 		<img
-			src="/images/{images[current].src}"
+			src={webUrl(images[current].src)}
+			data-fallback={originalUrl(images[current].src)}
 			alt=""
 			onerror={(e) => {
-				(e.currentTarget as HTMLImageElement).style.display = 'none';
+				const el = e.currentTarget as HTMLImageElement;
+				if (!swapToOriginal(el)) el.style.display = 'none';
 			}}
 		/>
 
@@ -82,10 +85,13 @@
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div class="gallery-thumb" class:active={i === current} onclick={() => goTo(i)}>
 					<img
-						src="/images/{img.src}"
+						src={thumbUrl(img.src)}
+						data-fallback={originalUrl(img.src)}
 						alt=""
+						loading="lazy"
 						onerror={(e) => {
-							(e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none';
+							const el = e.currentTarget as HTMLImageElement;
+							if (!swapToOriginal(el)) el.parentElement!.style.display = 'none';
 						}}
 					/>
 				</div>

@@ -54,7 +54,8 @@ Global-Heshmat/
     │   │   ├── stores/
     │   │   │   └── map.svelte.ts          # Shared reactive state (Svelte 5 runes)
     │   │   ├── utils/
-    │   │   │   └── slug.ts                # URL slug helper
+    │   │   │   ├── slug.ts                # URL slug helper
+    │   │   │   └── image.ts               # Maps image filenames to WebP derivatives
     │   │   └── config.ts                  # SITE_URL, site metadata, URL helpers
     │   ├── routes/
     │   │   ├── +layout.svelte             # Page chrome (Header, FilterBar, MapView, Sidebar, …)
@@ -69,7 +70,12 @@ Global-Heshmat/
     ├── static/
     │   ├── CNAME                          # heshmat.zmo.de — picked up by GitHub Pages
     │   ├── robots.txt                     # Points crawlers at /sitemap.xml
-    │   └── images/                        # Artwork photos
+    │   └── images/                        # Artwork photos (originals)
+    │       ├── web/                       # Generated <=2000px WebP (gallery + lightbox)
+    │       └── thumb/                     # Generated <=400px WebP (thumbnail strips)
+    ├── scripts/
+    │   ├── generate_image_derivatives.py  # Build web/ + thumb/ WebP from originals
+    │   └── verify-build.mjs               # Post-build SEO / sitemap / image checks
     ├── package.json
     ├── svelte.config.js
     ├── tsconfig.json
@@ -127,7 +133,7 @@ npm run dev
 | `npm run format` | Format with Prettier |
 | `npm test` | Run Vitest unit tests once |
 | `npm run test:watch` | Run Vitest in watch mode |
-| `npm run verify:build` | Assert the `build/` artifact has the expected SEO + sitemap content |
+| `npm run verify:build` | Assert the `build/` artifact has the expected SEO + sitemap content, and that every referenced artwork image has a generated WebP derivative |
 | `npm run validate` | format:check + lint + check + test + build + verify:build (run before committing) |
 
 ## Testing
@@ -135,17 +141,35 @@ npm run dev
 Two layers, both run in CI:
 
 - **Vitest unit tests** live next to the source as `*.test.ts`. They cover the SEO/URL/sitemap surface — `slugify`, `escapeXml`, the `artworkPath` / `absoluteUrl` helpers, and the slug-collision check in `buildArtworkIndex`. These are pure-function tests; no DOM, no SvelteKit runtime needed.
-- **Build-output assertions** in [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs) crack open the prerendered `build/` directory and check the actual HTML files for the things unit tests can't see — exactly one `<title>` per page, canonical URLs pointing at `https://heshmat.zmo.de`, the JSON-LD `@type` matching the route, the Google Search Console verification meta tag landing on every page, no `localhost` leaks, sitemap listing every artwork directory, and so on.
+- **Build-output assertions** in [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs) crack open the prerendered `build/` directory and check the actual HTML files for the things unit tests can't see — exactly one `<title>` per page, canonical URLs pointing at `https://heshmat.zmo.de`, the JSON-LD `@type` matching the route, the Google Search Console verification meta tag landing on every page, no `localhost` leaks, sitemap listing every artwork directory, every referenced artwork image having a generated WebP derivative, and so on.
 
 ## Adding a new artwork
 
 1. Copy `src/lib/data/artworks/_template.ts`.
-2. Rename it (e.g., `032-new-artwork.ts`).
+2. Rename it (e.g., `035-new-artwork.ts`).
 3. Fill in the fields (see the template for documentation).
-4. Drop any images into `static/images/`.
+4. Drop any images into `static/images/`, then generate their WebP derivatives (see [Images](#images)).
 5. Done — `index.ts` auto-imports all artwork files via `import.meta.glob`, the next build emits a new `/artworks/<slug>/` page and adds it to `sitemap.xml`.
 
 The slug is auto-derived from `name`. To pin a stable URL when renaming, set `slug: 'my-stable-slug'` explicitly. A build error is thrown if two artworks would resolve to the same slug.
+
+### Images
+
+Originals (some up to ~18 MB, a few in browser-unfriendly formats like HEIC/TIFF) are never served directly. The app loads generated WebP derivatives instead:
+
+- `static/images/<file>` — the committed original; used only as a runtime fallback.
+- `static/images/web/<stem>.webp` — `<=2000px`, shown in the gallery and lightbox.
+- `static/images/thumb/<stem>.webp` — `<=400px`, shown in the thumbnail strips.
+
+After adding or replacing any image, regenerate the derivatives and commit them:
+
+```bash
+# from svelte-app/  (one-time: pip install Pillow pillow-heif)
+python scripts/generate_image_derivatives.py
+git add static/images
+```
+
+The script is incremental (only new or changed files are processed), converts HEIC/TIFF, and bakes in EXIF orientation. In the data files always reference the **original** filename (e.g. `"My Sculpture.jpeg"`); the app maps it to the `.webp` derivative by swapping the extension, so a `.jpg`/`.jpeg` mismatch still resolves. `npm run verify:build` fails if a referenced image has no derivative — catching typos and forgotten regenerations. Images whose source file isn't available yet are tracked in the `KNOWN_MISSING` allowlist near the top of [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs).
 
 ### Data schema
 
