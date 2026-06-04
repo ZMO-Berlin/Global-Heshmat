@@ -23,12 +23,10 @@ const artwork: Artwork = {
 	         caption: "School Building until 1971"},
 			 {src: "Wärmetechnisches_Labor.jpg",
 	         caption: "Thermal Engineering Laboratory"},
-		{src: "Technikerbau_Plan.tif",
+			 {src: "Technikerbau_Plan.tif",
 	         caption: "Engineering Construction Plan"},
-			 {src: "Schule_Plan.jpg",
-	         caption: "A recent photo of the school from 2026"}
-			
-			]
+			 {src: "Schule_2026.jpg",
+	         caption: "A recent photo of the school from 2026"}	]
 	
 	
 };
