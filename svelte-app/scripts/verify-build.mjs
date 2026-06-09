@@ -163,13 +163,12 @@ const THUMB_DIR = join(BUILD_DIR, 'images', 'thumb');
 
 // Referenced filenames whose SOURCE image is not on disk yet (a colleague
 // still needs to supply them). Tracked here so the build stays green while
-// the gap stays visible — delete an entry once the file is added and the
-// derivative script has been re-run.
-const KNOWN_MISSING = new Set([
-	'Intilaqat_Misr_Abbau.jpg', // 005-The Dawn of Egypt
-	'Schule_Plan.jpg', // 024-Fachschule für Porzellan
-	'The_stable_family.jpg' // 032-TBF Boston
-]);
+// the gap stays visible — add an entry to silence a known gap, and delete it
+// once the file is added and the derivative script has been re-run.
+// Currently empty: the three formerly-missing sources are all resolved —
+// Intilaqat_Misr_Abbau.jpg (005) and The_stable_family.jpg (032) were supplied
+// and now have derivatives; Schule_Plan.jpg (024) is no longer referenced.
+const KNOWN_MISSING = new Set([]);
 
 // Mirror the stem logic in src/lib/utils/image.ts.
 const stemOf = (file) => file.replace(/\.[^./\\]+$/, '');
