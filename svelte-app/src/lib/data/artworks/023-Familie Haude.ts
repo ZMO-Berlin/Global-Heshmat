@@ -14,13 +14,13 @@ const artwork: Artwork = {
 	address: 'Ahornweg 6, 95100 Selb',
 	desc: 'Whilst studying at the Porcelain Technical College in Selb, Hassan Heshmat lived with the Hande family at 6 Ahornweg, 95100 Selb, Germany.',
     images: [{src: "Selb_Haus_I.jpeg",
-	         caption: "Hassan Heshmats Accodmodation in Selb, Bavaria (taken 2026)"},
+	         caption: "Hassan Heshmats Accodmodation in Selb, Bavaria,  2026"},
 		{src: "Selb_Haus_II.jpeg",
-	         caption: "Hassan Heshmats Accodmodation in Selb, Bavaria (taken 2026)"},
+	         caption: "Hassan Heshmats Accodmodation in Selb, Bavaria, 2026"},
 	   {src: "Selb_Haus_III.jpeg",
-	         caption: "The window at the top is from his room at the time (taken 2026)."},
+	         caption: "The window at the top is from his room at the time, 2026"},
 		   {	src: "Haus_in_Selb.jpeg",
-     	   caption: "The house in winter (taken 2025)"},
+     	   caption: "The house in winter, 2025"},
 		   
 		   ]
 	

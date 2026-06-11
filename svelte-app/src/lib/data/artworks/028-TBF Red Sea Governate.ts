@@ -18,7 +18,7 @@ const artwork: Artwork = {
 		{src: "mermaid_rsg_II.jpg",
 	         caption: "The statue in front of the government building"},
 			 {src: "mermaid_rsg_III.jpg",
-	         caption: "The statue on a different location (taken 2009)"}]
+	         caption: "The statue on a different location, 2009"}]
 	
 	
 };

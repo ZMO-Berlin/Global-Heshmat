@@ -18,15 +18,15 @@ const artwork: Artwork = {
 	   {	src: "BTM Figur Eröffnung 1993_palmenwedel Kopie_Family archive.HEIC",
      	   caption: "Launch of the Statue in 1993"},
 		   {	src: "BTM Statue_männl. Seite_ganz Kopie_A_Kamel.jpg",
-     	   caption: "Photo: Ahmed Kamel, ????"},
+     	   caption: "Photo: Ahmed Kamel, 2025"},
 		   {	src: "BTM Statue_männl. Seite_Torso Kopie_A_Kamel.jpg",
-     	   caption: "Photo: Ahmed Kamel, ????"},
+     	   caption: "Photo: Ahmed Kamel, 2025"},
 		   {	src: "BTM Statue_weibl. Seite_Frauenmode Kopie_A_Kamel.jpg",
-     	   caption: "Photo: Ahmed Kamel, ????"},
+     	   caption: "Photo: Ahmed Kamel, 2025"},
 		   {	src: "BTM Statue_weibl. Seite_ganz Kopie_A_Kamel.jpg",
-     	   caption: "Photo: Ahmed Kamel, ????"},
+     	   caption: "Photo: Ahmed Kamel, 2025"},
 		   {	src: "BTM Statue_weibl. Seite_Torso Kopie_A_Kamel.jpg",
-     	   caption: "Photo: Ahmed Kamel, ????"},
+     	   caption: "Photo: Ahmed Kamel, 2025"},
 		   ]
 
 	
