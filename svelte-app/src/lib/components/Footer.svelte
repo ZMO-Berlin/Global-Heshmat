@@ -23,7 +23,7 @@
 				<a
 					href="https://www.zmo.de/en/people/dr-sonja-hegasy"
 					target="_blank"
-					rel="noopener noreferrer external">Sonja Hegasy</a
+					rel="noopener noreferrer external">Dr Sonja Hegasy</a
 				>
 			</span>
 			<span class="site-footer-credit">
@@ -39,6 +39,10 @@
 				<a href={about.impressum.development.url} target="_blank" rel="noopener noreferrer external"
 					>{about.impressum.development.name}</a
 				>
+			</span>
+			<span class="site-footer-credit">
+				<span class="site-footer-role">Contributor</span>
+				Samar Heshmat
 			</span>
 		</div>
 	</div>
