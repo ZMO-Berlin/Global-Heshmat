@@ -46,37 +46,39 @@
 />
 
 <div class="filters">
-	<span>Filter:</span>
+	<div class="filter-chips">
+		<span>Filter:</span>
 
-	<button
-		class="filter-chip"
-		class:active={store.activeFilter === 'all'}
-		onclick={() => setFilter('all')}
-	>
-		All
-	</button>
-
-	<div class="filter-sep"></div>
-
-	{#each countries as country (country)}
 		<button
 			class="filter-chip"
-			class:active={store.activeFilter === country}
-			onclick={() => setFilter(country)}
+			class:active={store.activeFilter === 'all'}
+			onclick={() => setFilter('all')}
 		>
-			{country}
+			All
 		</button>
-	{/each}
 
-	<div class="filter-sep"></div>
+		<div class="filter-sep"></div>
 
-	<button
-		class="filter-chip"
-		class:active-search={store.activeFilter === 'search'}
-		onclick={() => setFilter('search')}
-	>
-		To be found
-	</button>
+		{#each countries as country (country)}
+			<button
+				class="filter-chip"
+				class:active={store.activeFilter === country}
+				onclick={() => setFilter(country)}
+			>
+				{country}
+			</button>
+		{/each}
+
+		<div class="filter-sep"></div>
+
+		<button
+			class="filter-chip"
+			class:active-search={store.activeFilter === 'search'}
+			onclick={() => setFilter('search')}
+		>
+			To be found
+		</button>
+	</div>
 
 	<div class="search-wrapper">
 		<Search class="search-icon" size={14} strokeWidth={2.5} />

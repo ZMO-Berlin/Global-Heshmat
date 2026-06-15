@@ -148,7 +148,29 @@ body {
 	font-size: var(--text-base);
 	color: var(--color-text-secondary);
 }
-.filters > span:first-child {
+/* Chip group: a single row that scrolls horizontally when the chips don't
+   fit (narrow desktop, and especially mobile) so every country stays
+   reachable. The search box is a sibling of this container, so it never
+   scrolls out of reach. */
+.filter-chips {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	flex: 1;
+	min-width: 0;
+	overflow-x: auto;
+	scrollbar-width: none; /* Firefox */
+	-webkit-overflow-scrolling: touch;
+	/* Fade the right edge to hint the row scrolls when chips overflow (happens
+	   on mobile and on narrower desktops). Harmless when they fit — it just
+	   fades the empty space before the search box. */
+	-webkit-mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
+	mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
+}
+.filter-chips::-webkit-scrollbar {
+	display: none; /* Chrome/Safari/Edge */
+}
+.filter-chips > span:first-child {
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
 	font-weight: var(--weight-semibold);
@@ -1120,7 +1142,11 @@ body {
 		display: none;
 	}
 	.site-footer-credits {
-		gap: var(--space-2-5);
+		/* Fill the row and center the wrapped names so a short second line
+		   reads as balanced instead of a lone name dangling off the right. */
+		flex: 1;
+		justify-content: center;
+		gap: var(--space-1-5) var(--space-3);
 	}
 	.site-footer-role {
 		display: none;
@@ -1133,6 +1159,14 @@ body {
 	}
 	.search-results {
 		width: 280px;
+	}
+	.filters {
+		padding: 0 var(--space-3-5);
+	}
+	/* Hide the "Filter:" label on phones — the chips speak for themselves and
+	   the row needs every pixel. */
+	.filter-chips > span:first-child {
+		display: none;
 	}
 	.filter-chip {
 		padding: 3px var(--space-2-5);
