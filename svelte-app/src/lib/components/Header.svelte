@@ -13,6 +13,10 @@
 	<div class="header-right">
 		<button class="header-btn" onclick={onreset}>World View</button>
 		<button class="header-btn" onclick={() => (store.aboutOpen = true)}>About</button>
+		<button class="header-btn header-btn-cta" onclick={() => (store.missingOpen = true)}>
+			<span class="cta-full">Help us find missing works</span>
+			<span class="cta-short">Missing works</span>
+		</button>
 	</div>
 </header>
 
