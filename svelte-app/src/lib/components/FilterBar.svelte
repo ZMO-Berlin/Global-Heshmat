@@ -78,6 +78,14 @@
 		>
 			To be found
 		</button>
+
+		<button
+			class="filter-chip"
+			class:active={store.activeFilter === 'residence'}
+			onclick={() => setFilter('residence')}
+		>
+			Places of residence
+		</button>
 	</div>
 
 	<div class="search-wrapper">

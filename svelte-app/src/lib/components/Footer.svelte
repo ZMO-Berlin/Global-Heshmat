@@ -19,7 +19,7 @@
 		</div>
 		<div class="site-footer-credits">
 			<span class="site-footer-credit">
-				<span class="site-footer-role">Content</span>
+				<span class="site-footer-role">Concept</span>
 				<a
 					href="https://www.zmo.de/en/people/dr-sonja-hegasy"
 					target="_blank"
@@ -27,7 +27,7 @@
 				>
 			</span>
 			<span class="site-footer-credit">
-				<span class="site-footer-role">Concept</span>
+				<span class="site-footer-role">Configuration</span>
 				<a
 					href="https://www.zmo.de/en/people/jan-purtzel"
 					target="_blank"

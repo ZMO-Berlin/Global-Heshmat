@@ -20,6 +20,8 @@
 	--color-moved-rgb: 124 92 191;
 	--color-moved: rgb(var(--color-moved-rgb));
 	--color-moved-light: #f3eefa;
+	--color-residence-rgb: 64 99 156;
+	--color-residence: rgb(var(--color-residence-rgb));
 
 	/* ───── Layout surfaces ───── */
 	--color-header-bg-rgb: 22 25 46;

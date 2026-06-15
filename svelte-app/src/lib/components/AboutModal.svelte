@@ -18,10 +18,14 @@
 	{/each}
 
 	<p>
-		More information:
+		More information:<br />
 		<a href={about.publicationUrl} target="_blank" rel="noopener noreferrer external"
 			>{about.publicationLabel}</a
 		>
+		{#each about.moreInfo as link (link.url)}
+			<br />
+			<a href={link.url} target="_blank" rel="noopener noreferrer external">{link.label}</a>
+		{/each}
 	</p>
 
 	<h3>Videos</h3>
@@ -39,7 +43,7 @@
 		<a href={about.impressum.ideaResearch.url} target="_blank" rel="noopener noreferrer external"
 			>{about.impressum.ideaResearch.name}</a
 		>, {about.impressum.ideaResearch.affiliation}<br />
-		Concept: {about.impressum.concept}<br />
+		Configuration: {about.impressum.configuration}<br />
 		Development:
 		<a href={about.impressum.development.url} target="_blank" rel="noopener noreferrer external"
 			>{about.impressum.development.name}</a

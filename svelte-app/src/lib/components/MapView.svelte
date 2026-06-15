@@ -78,6 +78,10 @@
 	function getFilteredArtworks(): Artwork[] {
 		if (store.activeFilter === 'all') return artworks;
 		if (store.activeFilter === 'search') return artworks.filter((a) => a.status === 'search');
+		// "Places of residence" is a placeholder category — no residence markers
+		// exist yet, so this filter intentionally yields an empty map. Hook the
+		// real data source in here when residence locations are added.
+		if (store.activeFilter === 'residence') return [];
 		return artworks.filter((a) => a.country === store.activeFilter);
 	}
 

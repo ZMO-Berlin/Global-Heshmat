@@ -1,7 +1,8 @@
 export const aboutContent = {
 	title: 'About this project',
 	intro: 'Global Heshmat &ndash; Following the Egyptian Sculptor Hassan Heshmat around the world.',
-	subtitle: 'Artworks in public spaces.',
+	subtitle:
+		'Artworks in public spaces (*This website does not list works held in private homes or past exhibitions in galleries and museums.)',
 
 	paragraphs: [
 		'Heshmat was born in a small town on the Nile and began working with clay as a child. At the age of twelve, his father allowed him to choose his own career, and Heshmat went to Cairo to attend the School of Applied Arts. There he meets a teacher who would later also become famous, the sculptor Saeed Sadr.',
@@ -19,6 +20,17 @@ export const aboutContent = {
 
 	publicationUrl: 'https://repositorium.zmo.de/receive/zmo_mods_00002340',
 	publicationLabel: 'Open access publication (Arabic/German)',
+
+	moreInfo: [
+		{
+			label: 'Project page',
+			url: 'https://www.zmo.de/forschung/religion-und-intellektuelle-kultur/sonja-hegasy'
+		},
+		{
+			label: 'Audiovisual Exhibition',
+			url: 'https://www.zmo.de/en/knowledgetransfer/h-heshmat-digital'
+		}
+	],
 
 	videos: [
 		{
@@ -41,7 +53,7 @@ export const aboutContent = {
 			url: 'https://www.zmo.de/en/people/dr-sonja-hegasy',
 			affiliation: 'ZMO'
 		},
-		concept: 'Jan Purtzel, ZMO',
+		configuration: 'Jan Purtzel, ZMO',
 		development: {
 			name: 'Dr Fr\u00e9d\u00e9rick Madore',
 			url: 'https://www.frederickmadore.com/',
