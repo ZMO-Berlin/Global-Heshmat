@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Search } from '@lucide/svelte';
+	import { Search, ChevronLeft, ChevronRight } from '@lucide/svelte';
+	import { fade } from 'svelte/transition';
 	import { artworks, countries } from '$lib/data/artworks';
 	import type { Artwork } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
@@ -8,6 +9,51 @@
 
 	let searchInput = $state('');
 	let searchOpen = $state(false);
+
+	// Country chip rail. It already scrolls horizontally when the chips overflow
+	// (common on mobile and narrow desktops). Track whether content is hidden on
+	// each side so we can show a scroll arrow there and fade only that edge —
+	// making the scroll discoverable, and never clipping the last chip at rest.
+	let chipsEl: HTMLDivElement | undefined = $state();
+	let canLeft = $state(false);
+	let canRight = $state(false);
+
+	function updateArrows() {
+		const el = chipsEl;
+		if (!el) return;
+		const max = el.scrollWidth - el.clientWidth;
+		canLeft = el.scrollLeft > 1;
+		canRight = el.scrollLeft < max - 1;
+	}
+
+	function scrollChips(dir: 1 | -1) {
+		chipsEl?.scrollBy({ left: dir * chipsEl.clientWidth * 0.7, behavior: 'smooth' });
+	}
+
+	// Recompute when the rail mounts and whenever it resizes (viewport change).
+	// Web fonts load after first paint and change chip widths, so recheck once
+	// they're ready too.
+	$effect(() => {
+		const el = chipsEl;
+		if (!el) return;
+		updateArrows();
+		const ro = new ResizeObserver(updateArrows);
+		ro.observe(el);
+		document.fonts?.ready.then(updateArrows);
+		return () => ro.disconnect();
+	});
+
+	// Fade only the edge(s) with more content — never the resting end, so the
+	// last chip shows in full once there's nothing further to scroll to.
+	const chipsMask = $derived(
+		canLeft && canRight
+			? 'linear-gradient(to right, transparent, #000 22px, #000 calc(100% - 22px), transparent)'
+			: canRight
+				? 'linear-gradient(to right, #000 calc(100% - 22px), transparent)'
+				: canLeft
+					? 'linear-gradient(to right, transparent, #000 22px)'
+					: 'none'
+	);
 
 	const matches = $derived.by(() => {
 		const q = searchInput.trim().toLowerCase();
@@ -46,46 +92,77 @@
 />
 
 <div class="filters">
-	<div class="filter-chips">
-		<span>Filter:</span>
+	<div class="filter-rail">
+		{#if canLeft}
+			<button
+				type="button"
+				class="filter-arrow filter-arrow-left"
+				transition:fade={{ duration: 120 }}
+				onclick={() => scrollChips(-1)}
+				aria-label="Scroll the filter list left"
+			>
+				<ChevronLeft size={16} strokeWidth={2.5} />
+			</button>
+		{/if}
 
-		<button
-			class="filter-chip"
-			class:active={store.activeFilter === 'all'}
-			onclick={() => setFilter('all')}
+		<div
+			class="filter-chips"
+			bind:this={chipsEl}
+			onscroll={updateArrows}
+			style="mask-image:{chipsMask};-webkit-mask-image:{chipsMask}"
 		>
-			All
-		</button>
+			<span>Filter:</span>
 
-		<div class="filter-sep"></div>
-
-		{#each countries as country (country)}
 			<button
 				class="filter-chip"
-				class:active={store.activeFilter === country}
-				onclick={() => setFilter(country)}
+				class:active={store.activeFilter === 'all'}
+				onclick={() => setFilter('all')}
 			>
-				{country}
+				All
 			</button>
-		{/each}
 
-		<div class="filter-sep"></div>
+			<div class="filter-sep"></div>
 
-		<button
-			class="filter-chip"
-			class:active-search={store.activeFilter === 'search'}
-			onclick={() => setFilter('search')}
-		>
-			To be found
-		</button>
+			{#each countries as country (country)}
+				<button
+					class="filter-chip"
+					class:active={store.activeFilter === country}
+					onclick={() => setFilter(country)}
+				>
+					{country}
+				</button>
+			{/each}
 
-		<button
-			class="filter-chip"
-			class:active={store.activeFilter === 'residence'}
-			onclick={() => setFilter('residence')}
-		>
-			Places of residence
-		</button>
+			<div class="filter-sep"></div>
+
+			<button
+				class="filter-chip"
+				class:active-search={store.activeFilter === 'search'}
+				onclick={() => setFilter('search')}
+			>
+				To be found
+			</button>
+
+			<button
+				class="filter-chip"
+				class:active={store.activeFilter === 'residence'}
+				onclick={() => setFilter('residence')}
+			>
+				Places of residence
+			</button>
+		</div>
+
+		{#if canRight}
+			<button
+				type="button"
+				class="filter-arrow filter-arrow-right"
+				transition:fade={{ duration: 120 }}
+				onclick={() => scrollChips(1)}
+				aria-label="Scroll the filter list right"
+			>
+				<ChevronRight size={16} strokeWidth={2.5} />
+			</button>
+		{/if}
 	</div>
 
 	<div class="search-wrapper">

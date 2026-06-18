@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { aboutContent as about } from '$lib/data/about';
-	import logo from '$lib/assets/logo-zmo.png';
+	import logo from '$lib/assets/logo-zmo-white.png';
 </script>
 
 <footer class="site-footer">
@@ -15,7 +15,7 @@
 			>
 				<img src={logo} alt="ZMO" />
 			</a>
-			<span class="site-footer-label">Leibniz-Zentrum Moderner Orient <span>(ZMO)</span></span>
+			<span class="site-footer-label">Leibniz-Zentrum Moderner Orient (ZMO)</span>
 		</div>
 		<div class="site-footer-credits">
 			<span class="site-footer-credit">
