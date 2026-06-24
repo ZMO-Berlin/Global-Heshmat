@@ -96,6 +96,15 @@
  *     - The movement.fromLat/fromLng should reflect the ORIGINAL location.
  *
  * ============================================================
+ *  PLACES OF RESIDENCE  (separate template)
+ * ============================================================
+ *
+ *  Where Heshmat *lived or worked* (hometown, Cairo, Selb, …) is a separate
+ *  map category with its OWN data type, template and folder — do NOT add a
+ *  residence as an artwork file here. See:
+ *      src/lib/data/residences/_template.ts
+ *
+ * ============================================================
  *  FILLED EXAMPLE (copy and adapt)
  * ============================================================
  */

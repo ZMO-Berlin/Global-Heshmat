@@ -11,6 +11,7 @@
 	import Legend from '$lib/components/Legend.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import AboutModal from '$lib/components/AboutModal.svelte';
+	import MissingWorksModal from '$lib/components/MissingWorksModal.svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import { setupUrlSync } from '$lib/stores/url-sync.svelte';
 
@@ -45,7 +46,9 @@
 <svelte:window
 	onkeydown={(e) => {
 		if (e.key === 'Escape') {
-			if (store.aboutOpen) {
+			if (store.missingOpen) {
+				store.missingOpen = false;
+			} else if (store.aboutOpen) {
 				store.aboutOpen = false;
 			} else if (store.selectedArtwork) {
 				goto(resolve('/'));
@@ -63,3 +66,4 @@
 <Legend />
 <Footer />
 <AboutModal />
+<MissingWorksModal />

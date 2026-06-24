@@ -101,12 +101,32 @@ body {
 	font-weight: var(--weight-medium);
 	letter-spacing: var(--tracking-wider);
 	text-transform: uppercase;
+	white-space: nowrap;
 	transition: all var(--duration-slow) var(--ease-out);
 }
 .header-btn:hover {
 	background: rgb(var(--color-accent-rgb) / 0.15);
 	border-color: var(--color-accent);
 	color: var(--color-on-dark);
+}
+/* Call-to-action variant: filled accent, sentence-case so the longer
+   appeal label reads as an invitation rather than a nav control. */
+.header-btn-cta {
+	background: var(--color-accent);
+	border-color: var(--color-accent);
+	color: var(--color-on-dark);
+	text-transform: none;
+	letter-spacing: var(--tracking-wide);
+}
+.header-btn-cta:hover {
+	background: var(--color-accent);
+	border-color: var(--color-accent);
+	color: var(--color-on-dark);
+	opacity: 0.9;
+}
+/* Short label only swaps in on narrow viewports (see responsive block). */
+.header-btn-cta .cta-short {
+	display: none;
 }
 
 /* ═══════════════════════════════════════════
@@ -128,13 +148,75 @@ body {
 	font-size: var(--text-base);
 	color: var(--color-text-secondary);
 }
-.filters > span:first-child {
+/* The chip rail wraps the scroller plus its two scroll arrows. position:relative
+   anchors the arrows to the rail's own edges — so the right arrow sits at the
+   chips' right edge, never on top of the search box. */
+.filter-rail {
+	position: relative;
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+}
+/* Chip group: a single row that scrolls horizontally when the chips don't
+   fit (narrow desktop, and especially mobile) so every country stays
+   reachable. The search box is a sibling of the rail, so it never scrolls
+   out of reach. */
+.filter-chips {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	flex: 1;
+	min-width: 0;
+	overflow-x: auto;
+	scrollbar-width: none; /* Firefox */
+	-webkit-overflow-scrolling: touch;
+	/* The edge fade is applied inline and tracks scroll position (see
+	   FilterBar.svelte): only the side with more content fades, so the resting
+	   end stays crisp and the last chip is never clipped. */
+}
+.filter-chips::-webkit-scrollbar {
+	display: none; /* Chrome/Safari/Edge */
+}
+.filter-chips > span:first-child {
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
 	font-weight: var(--weight-semibold);
 	letter-spacing: var(--tracking-wide);
 	color: var(--color-text-muted);
 	margin-right: var(--space-1);
+}
+/* Scroll arrows: shown only when content is hidden on that side. They overlay
+   the faded edge of the rail and nudge the row by roughly a screenful. */
+.filter-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 1;
+	display: grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border-radius: var(--radius-pill);
+	border: 1px solid var(--color-border);
+	background: var(--color-surface);
+	color: var(--color-text-secondary);
+	cursor: pointer;
+	box-shadow: var(--shadow-sm);
+	transition:
+		border-color var(--duration-base) var(--ease-out),
+		color var(--duration-base) var(--ease-out);
+}
+.filter-arrow:hover {
+	border-color: var(--color-text-muted);
+	color: var(--color-text);
+}
+.filter-arrow-left {
+	left: 0;
+}
+.filter-arrow-right {
+	right: 0;
 }
 .filter-chip {
 	padding: 5px var(--space-3-5);
@@ -526,9 +608,9 @@ body {
 }
 
 /* ═══════════════════════════════════════════
-   About Modal
+   Modal (shared chrome: About, Missing works, …)
    ═══════════════════════════════════════════ */
-.about-overlay {
+.modal-overlay {
 	position: fixed;
 	inset: 0;
 	z-index: var(--z-modal);
@@ -547,7 +629,7 @@ body {
 		opacity: 1;
 	}
 }
-.about-modal {
+.modal-card {
 	background: var(--color-surface);
 	max-width: 700px;
 	width: 92%;
@@ -569,21 +651,21 @@ body {
 		transform: translateY(0) scale(1);
 	}
 }
-.about-header {
+.modal-header {
 	padding: var(--space-7) var(--space-8) var(--space-5);
 	border-bottom: 1px solid var(--color-border);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
-.about-header h2 {
+.modal-header h2 {
 	font-family: var(--font-display);
 	font-size: var(--text-4xl);
 	font-weight: var(--weight-semibold);
 	color: var(--color-ink);
 	line-height: var(--leading-tight);
 }
-.about-body {
+.modal-body {
 	padding: var(--space-7) var(--space-8);
 	overflow-y: auto;
 	font-size: var(--text-lg);
@@ -592,20 +674,20 @@ body {
 	scrollbar-width: thin;
 	scrollbar-color: var(--color-border) transparent;
 }
-.about-body p {
+.modal-body p {
 	margin-bottom: var(--space-4);
 	max-width: var(--prose-width); /* keep the measure readable on wide modals */
 }
-.about-body a {
+.modal-body a {
 	color: var(--color-primary);
 	text-decoration-color: rgb(var(--color-primary-rgb) / 0.3);
 	text-underline-offset: 2px;
 	transition: text-decoration-color var(--duration-fast) var(--ease-out);
 }
-.about-body a:hover {
+.modal-body a:hover {
 	text-decoration-color: var(--color-primary);
 }
-.about-body .impressum {
+.modal-body .impressum {
 	margin-top: var(--space-7);
 	padding-top: var(--space-5-5);
 	border-top: 1px solid var(--color-border);
@@ -615,7 +697,7 @@ body {
 }
 /* Editorial section heading: serif h3 with a short accent rule below,
    echoing the sidebar h2 treatment so the modal feels like the same artefact. */
-.about-body h3 {
+.modal-body h3 {
 	font-family: var(--font-display);
 	color: var(--color-ink);
 	margin: var(--space-6) 0 var(--space-3-5);
@@ -623,7 +705,7 @@ body {
 	font-weight: var(--weight-semibold);
 	line-height: var(--leading-tight);
 }
-.about-body h3::after {
+.modal-body h3::after {
 	content: '';
 	display: block;
 	width: 28px;
@@ -632,10 +714,10 @@ body {
 	margin-top: var(--space-1-5);
 	border-radius: 1px;
 }
-.about-body .videos {
+.modal-body .videos {
 	margin-top: var(--space-3);
 }
-.about-body .videos a {
+.modal-body .videos a {
 	display: block;
 	margin: var(--space-2) 0;
 	padding: var(--space-2-5) var(--space-4);
@@ -647,7 +729,7 @@ body {
 	font-weight: var(--weight-medium);
 	transition: all var(--duration-base) var(--ease-out);
 }
-.about-body .videos a:hover {
+.modal-body .videos a:hover {
 	background: var(--color-accent-light);
 	border-color: var(--color-accent);
 	color: var(--color-accent);
@@ -992,17 +1074,12 @@ body {
 	display: block;
 }
 .site-footer-label {
-	font-family: var(--font-display);
+	font-family: var(--font-body);
 	font-size: var(--text-lg);
 	font-weight: var(--weight-semibold);
 	color: var(--color-header-text);
 	letter-spacing: var(--tracking-wide);
 	white-space: nowrap;
-}
-.site-footer-label span {
-	color: var(--color-accent);
-	font-weight: var(--weight-semibold);
-	font-style: italic;
 }
 .site-footer-credits {
 	display: flex;
@@ -1061,8 +1138,26 @@ body {
    Responsive
    ═══════════════════════════════════════════ */
 @media (max-width: 768px) {
+	.header {
+		padding: 0 var(--space-3-5);
+	}
 	.header h1 {
 		font-size: var(--text-lg);
+	}
+	.header-right {
+		gap: var(--space-1-5);
+	}
+	.header-btn {
+		padding: 6px var(--space-2-5);
+		font-size: var(--text-xs);
+		letter-spacing: normal;
+	}
+	/* Swap to the compact CTA label so three buttons fit a phone header. */
+	.header-btn-cta .cta-full {
+		display: none;
+	}
+	.header-btn-cta .cta-short {
+		display: inline;
 	}
 	.sidebar {
 		width: 100%;
@@ -1083,7 +1178,11 @@ body {
 		display: none;
 	}
 	.site-footer-credits {
-		gap: var(--space-2-5);
+		/* Fill the row and center the wrapped names so a short second line
+		   reads as balanced instead of a lone name dangling off the right. */
+		flex: 1;
+		justify-content: center;
+		gap: var(--space-1-5) var(--space-3);
 	}
 	.site-footer-role {
 		display: none;
@@ -1096,6 +1195,14 @@ body {
 	}
 	.search-results {
 		width: 280px;
+	}
+	.filters {
+		padding: 0 var(--space-3-5);
+	}
+	/* Hide the "Filter:" label on phones — the chips speak for themselves and
+	   the row needs every pixel. */
+	.filter-chips > span:first-child {
+		display: none;
 	}
 	.filter-chip {
 		padding: 3px var(--space-2-5);

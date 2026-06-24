@@ -5,6 +5,7 @@ let selectedArtwork = $state<Artwork | null>(null);
 let activeFilter = $state<string>('all');
 let searchQuery = $state<string>('');
 let aboutOpen = $state<boolean>(false);
+let missingOpen = $state<boolean>(false);
 
 export function getMapStore() {
 	return {
@@ -31,6 +32,12 @@ export function getMapStore() {
 		},
 		set aboutOpen(value: boolean) {
 			aboutOpen = value;
+		},
+		get missingOpen() {
+			return missingOpen;
+		},
+		set missingOpen(value: boolean) {
+			missingOpen = value;
 		}
 	};
 }

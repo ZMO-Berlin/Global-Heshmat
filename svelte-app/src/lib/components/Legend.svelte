@@ -9,6 +9,10 @@
 		To be found
 	</div>
 	<div class="legend-item">
+		<div class="legend-dot" style="background: var(--color-residence);"></div>
+		Places of residence
+	</div>
+	<div class="legend-item">
 		<div class="legend-dot ghost-dot"></div>
 		Former location
 	</div>

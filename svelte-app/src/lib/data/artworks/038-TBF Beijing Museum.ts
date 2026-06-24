@@ -8,7 +8,7 @@ const artwork: Artwork = {
 	name: 'Beijing Museum',
 	lat: 39.9165092181025,
 	lng: 116.39722970835552,
-	country: 'People`s Republic of China',
+	country: "People's Republic of China",
 	city: 'Beijing',
 	status: 'search',
 	address: '4 Jingshan Front St, Dongcheng, Beijing, 100009',

@@ -1,7 +1,8 @@
 export const aboutContent = {
 	title: 'About this project',
 	intro: 'Global Heshmat &ndash; Following the Egyptian Sculptor Hassan Heshmat around the world.',
-	subtitle: 'Artworks in public spaces.',
+	subtitle:
+		'Artworks in public spaces (*This website does not list works held in private homes or past exhibitions in galleries and museums.)',
 
 	paragraphs: [
 		'Heshmat was born in a small town on the Nile and began working with clay as a child. At the age of twelve, his father allowed him to choose his own career, and Heshmat went to Cairo to attend the School of Applied Arts. There he meets a teacher who would later also become famous, the sculptor Saeed Sadr.',
@@ -20,6 +21,17 @@ export const aboutContent = {
 	publicationUrl: 'https://repositorium.zmo.de/receive/zmo_mods_00002340',
 	publicationLabel: 'Open access publication (Arabic/German)',
 
+	moreInfo: [
+		{
+			label: 'Project page',
+			url: 'https://www.zmo.de/forschung/religion-und-intellektuelle-kultur/sonja-hegasy'
+		},
+		{
+			label: 'Audiovisual Exhibition',
+			url: 'https://www.zmo.de/en/knowledgetransfer/h-heshmat-digital'
+		}
+	],
+
 	videos: [
 		{
 			label: 'The artist at work',
@@ -36,13 +48,18 @@ export const aboutContent = {
 	contactEmail: 'sonja.hegasy@zmo.de',
 
 	impressum: {
-		concept: 'Jan Purtzel, ZMO',
-		content: 'Dr Sonja Hegasy, ZMO',
+		ideaResearch: {
+			name: 'Dr Sonja Hegasy',
+			url: 'https://www.zmo.de/en/people/dr-sonja-hegasy',
+			affiliation: 'ZMO'
+		},
+		configuration: 'Jan Purtzel, ZMO',
 		development: {
-			name: 'Fr\u00e9d\u00e9rick Madore',
+			name: 'Dr Fr\u00e9d\u00e9rick Madore',
 			url: 'https://www.frederickmadore.com/',
 			affiliation: 'University of Bayreuth'
 		},
+		contributions: 'Samar Heshmat, Alexandria',
 		website: 'http://www.zmo.de',
 		thanks:
 			'Our sincere thanks go to the family of Hassan Heshmat, the Hassan Heshmat Museum and all photographers who generously provided images. Should we have inadvertently failed to identify or properly attribute any image or its rights-holder, we apologize sincerely. Please get in touch with us to resolve any such oversight.'

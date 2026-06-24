@@ -99,7 +99,7 @@ npm run dev
 
 ## Credits
 
-- **Concept:** Jan Purzel, ZMO
+- **Concept:** Jan Purtzel, ZMO
 - **Content:** Dr Sonja Hegasy, ZMO
 - **Development:** [Frédérick Madore](https://www.frederickmadore.com/), University of Bayreuth
 - [www.zmo.de](http://www.zmo.de)
