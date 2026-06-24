@@ -16,8 +16,10 @@ const artwork: Artwork = {
 	images: [{src: "Ein_Ägypter_erlebte_das_Porzellan.jpg",
 	         caption: "Article from a German local newspaper (Selber Tagblatt, 28–29 June 1958)"},
 		{ 		src: "Rosenthal_K5123.jpg",
-         		caption: "Rosenthal K5123"},
-				{ 		src: "Porzellanikon_II.jpg"},
+         		caption: "Rosenthal K5123, Copyright: Jessica Ulrich"},
+				{ 		src: "Porzellanikon_II.jpg",
+					caption: "Rosenthal K5124, Copyright: Jessica Ulrich"
+				},
 			]
 
 	
