@@ -30,7 +30,9 @@ const artwork: Artwork = {
 		{src: "AC_VII.jpg",
 	         caption: "Photo: Samar Heshmat, 2026"},
 			 {src: "AC_IX.jpg",
-	         caption: "Photo: Samar Heshmat, 2026"}
+	         caption: "Photo: Samar Heshmat, 2026"},
+			 {src: "Armenian_Monument_with_people_Kopie.jpg",
+	         caption: "Inauguration"}
 			]
 
 	
