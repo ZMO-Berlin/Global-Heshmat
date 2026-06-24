@@ -12,7 +12,7 @@ const artwork: Artwork = {
 	city: 'Alexandria',
 	status: 'search',
 	address: 'Alexandria Cairo Desert Road، Amreya 1, Alexandria Governorate 5258701',
-	desc: 'We suspect that a copy of the sculpture “The Gift of Motherhood” was once located in a children’s village in Alexandria. The SOS Children’s Village in Alexandria is the only address we are aware of there. However, we cannot confirm with certainty that this was the statue’s former location. We would be grateful for any information regarding the whereabouts of the artwork.',
+	desc: 'The artist writes that he made the statue ‘The gift of motherhood’ for a children’s village in Alexandria. The only one we found was the SOS Children’s Village.',
 	image: 'Die Gabe der Mutterschaft_BTM Fabrik_Ahmed Kamel.jpg',
 	imageCaption: 'Statue The Gift of Motherhood at the Entrance of the BTM Factory in 10th of Ramadan City'
 

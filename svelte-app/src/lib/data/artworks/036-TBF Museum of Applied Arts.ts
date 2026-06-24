@@ -12,7 +12,7 @@ const artwork: Artwork = {
 	city: 'Budapest',
 	status: 'search',
 	address: 'Üllői út 33-37, 1092 Budspest',
-	desc: 'The Iparművészeti Múzeum (Museum of Applied Arts) in Budapest once housed works by Hassan Heshmat. Currently, there is no information available and the works’ whereabouts are unknown. We would be grateful for any information regarding the artwork’s whereabouts.',
+	desc: 'The Iparművészeti Múzeum (Museum of Applied Arts) in Budapest once housed works by Hassan Heshmat. Currently, there is no information available and the works whereabouts are unknown.',
 	
 	
 	

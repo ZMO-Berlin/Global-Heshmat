@@ -12,11 +12,11 @@ const artwork: Artwork = {
 	city: 'Paris',
 	status: 'search',
 	address: '1160 Aeroport Charles de Gaulle, 77990 Mauregard',
-	desc: 'Reportedly, this sculpture of a gateway featuring a triple statue of Menkaure was located on the Egypt Air premises in Paris. As Egypt Air is currently based at Charles de Gaulle Airport, we assume that the former site was located somewhere in the immediate vicinity. However, if the terminal was built and erected before 1974, it is likely that it was associated with Paris-Orly Airport, as Charles de Gaulle Airport did not open until that time. The picture shown here is a replica from the Hassan Heshmat Museum in Cairo. We would be grateful for any information regarding the whereabouts of this artwork.',
+	desc: 'The photo shows the Mykerinos Triad in the garden of the Hassan Heshmat Museum, a copy of which stood at the entrance of the Egypt Air office in Paris according to the artist’s autobiography. We do not know whether this was at one of the airports or in the inner city?',
 	images: [{src: "Egypt_Air_Paris_HH_Museum.jpg",
-	         caption: "The gate at the Hassan Heshmat Museum today"},
+	         caption: "Mykerinos Triad, taken by Ephraim Gothe (?)"},
 		{ 		src: "Egypt_Air_HH_Museum.jpg",
-         		caption: "The gate at the Hassan Heshmat Museum today"}]
+         		caption: "Mykerinos Triad, Historical photograph from the sculpture garden"}]
 	
 
 	

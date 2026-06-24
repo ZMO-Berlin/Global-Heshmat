@@ -18,7 +18,7 @@ const artwork: Artwork = {
 		{ 		src: "Hasan_Heshmat_Wandbild_Zamalek_RAND.jpg",
          		caption: "Wall Mosaic in the Armed Officers' Club"},
 	   {	src: "Mosaik Officers Club Zamalek_darüber Fathy.jpeg",
-     	   caption: "Wall Mosaic in the Armed Officers' Club"},
+     	   caption: "Frieze by Fathy Mahmoud (top) and Hassan Heshmat (below)"},
 		{ 		src: "Image_Samar_Heshmat.jpg",
          		caption: "Wall Mosaic in the Armed Officers' Club"},
 	   {	src: "Image_Samar_Heshmat_.jpg",

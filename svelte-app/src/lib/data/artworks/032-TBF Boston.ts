@@ -12,7 +12,7 @@ const artwork: Artwork = {
 	city: 'Boston (Massachusetts)',
 	status: 'search',
 	address: 'unknown',
-	desc: 'This porcelain sculpture is associated with Boston, Massachusetts. We have not yet been able to pinpoint its exact location. We would be grateful for any information regarding the whereabouts of the artwork.',
+	desc: 'Two-meter work out of basalt stone in a church in Boston, USA. Photo from the museum in Ain Shams, 1974.',
 	image: 'The_stable_family.jpg',
 	imageCaption: 'The Stable Family - Porcelain Sculpture'
 
