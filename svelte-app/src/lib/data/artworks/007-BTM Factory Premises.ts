@@ -10,7 +10,7 @@ const artwork: Artwork = {
 	city: '10th of Ramadan City',
 	status: 'located',
 	address: '10th of Ramadan City 1, Al-Sharqia Governorate',
-	desc: 'In 1993, Bishara commissioned Heshmat to design a figure for his fashion factory in 10th of Ramadan City on the occasion of the opening of a tailored suit factory. Here too, Heshmat worked with the motif of women and men from different perspectives merged in one figure, but focuses on the modern fashion aspect, thus creating a fairly atypical work out of basalt stone with a mosaic.',
+	desc: 'In 1993, famous businessman Louis Bishara commissioned Heshmat to design a figure for his fashion factory in 10th of Ramadan City on the occasion of the opening of a tailored suit factory. Here too, Heshmat worked with the motif of women and men from different perspectives merged in one figure, but focuses on the modern fashion aspect, thus creating a fairly atypical work out of basalt stone with a mosaic.',
 	images: [{src: "transport_BTM_Statue from workshop in Ain Shams.jpg",
 	         caption: "Transport of the Statue from workshop in Ain Shams "},
 		{ 		src: "Heshmat_Inauguration_BTM.jpeg",

@@ -12,7 +12,7 @@ const artwork: Artwork = {
 	city: 'Cairo (Zamalek)',
 	status: 'located',
 	address: 'Inside the Egyptian Opera House, Zamalek, Cairo Governorate 4270020',
-	desc: 'tba ',
+	desc: 'Currently there is no statue of Hassan Heshmat in the ongoing exhibition (May 2026)',
 	image: 'Museum_of_Egyptian_Modern_Art.jpg',
 	imageCaption: 'Museum of Egyptian Modern Art'
 

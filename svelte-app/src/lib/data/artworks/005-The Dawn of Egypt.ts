@@ -11,7 +11,7 @@ const artwork: Artwork = {
 	city: '10th of Ramadan City',
 	status: 'located',
 	address: '10th of Ramadan City 1, Al-Sharqia Governorate 7065843',
-	desc: 'The sculpture The Dawn of Egypt, eight-metre high and made of white stone, was erected in 1982 at Midan Galaa. Every day, tens of thousands of people passed by the eight-metre-high statue. Popularly known as Galaa Masr, as it stood near the bridge of the same name in el-Nozha and referred to the Anglo-Egyptian Agreement of 1954 on the evacuation of British forces from the Suez Zone. In 2022, it had to make way for road construction in Cairo. By courtesy of Marie L. Bishara it now stands completely renovated at this roundabout in 10th of Ramadan City. The sculpture The Dawn of Egypt, eight-metre high and made of white stone, was erected in 1982 at Midan Galaa. Every day, tens of thousands of people passed by the eight-metre-high statue. Popularly known as Galaa Masr, as it stood near the bridge of the same name in el-Nozha and referred to the Anglo-Egyptian Agreement of 1954 on the evacuation of British forces from the Suez Zone. In 2022, it had to make way for road construction in Cairo. By courtesy of Marie L. Bishara it now stands completely renovated at this roundabout in 10th of Ramadan City.',
+	desc: 'The sculpture ‚The Dawn of Egypt’, eight-metre high and made of white stone, was erected in 1982 at Midan Galaa. Every day, tens of thousands of people passed by. Popularly known as Galaa Masr, as it stood near the bridge of the same name in el-Nozha and referred to the Anglo-Egyptian Agreement of 1954 on the evacuation of British forces from the Suez Zone. In 2022, the statue had to make way for road construction in Cairo. By courtesy of Marie L. Bishara it now stands completely renovated at this roundabout in 10th of Ramadan City.',
 	images: [{src: "Intilaqat_Misr_Abbau.jpg",
 	         caption: "Abbau der Statue in Midan Galaa"},
 		{ 		src: "Intilaqat_Misr_Ahmed_Kamel.jpg",
@@ -23,7 +23,10 @@ const artwork: Artwork = {
 			 {src: "Midan_Galaa_2026_2.jpg",
 	         caption: "Midan Galaa April 2026"},
 			 {src: "Midan_Galaa_2026_3.jpg",
-	         caption: "Midan Galaa April 2026"}],
+	         caption: "Midan Galaa April 2026"},
+			 {src: "Midan_Galaa_historic.jpg",
+	         caption: "Historic image of Midan Galaa"}
+		   ],
 	movement: {
 		fromLat: 30.095414812468157,
 		fromLng: 31.3427619673732,

@@ -16,15 +16,14 @@ const artwork: Artwork = {
 	images: [{src: "Balcony 1st floor Museum.jpg",
 	         caption: "Balcony on the first floor of the Museum"},
 		{ 		src: "Entrance Museum.jpg",
-         		caption: "Entrance of The Hassan Heshmat Museum"},
+         		caption: "The Entrance of The Hassan Heshmat Museum"},
 	   {	src: "Hasan_Heshmat_House Entrance.jpg",
-     	   caption: "Heshmat standing in the entrace of the museum"},
+     	   caption: "Heshmat standing in the entrance of the museum"},
 		   {	src: "Horus_Sculpture Garden Museum.jpg",
      	   caption: "Horus Sculpture"},
 		    {	src: "Mykerinos Triade_E_Gothe.jpg",
      	   caption: "Mykerios Triade"},
-		    {	src: "The couple_Sculpture Garden Museum.jpg",
-     	   caption: "The Couple Sculpture"}
+		    {	src: "The couple_Sculpture Garden Museum.jpg"}
 		   ],
 		   links: [
 		{

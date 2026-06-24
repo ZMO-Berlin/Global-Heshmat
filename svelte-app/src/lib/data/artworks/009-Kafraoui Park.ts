@@ -25,7 +25,11 @@ const artwork: Artwork = {
 		   {	src: "Pharaon. Familie seitl._10th Ramadan_Ahmed Kamel.jpg",
      	   caption: "Pharaonic Family, Photo: Ahmed Kamel, 2025"},
 		   {	src: "Schlacht von Hattin_Ahmed Kamel.jpg",
-     	   caption: "Battle of Hattin, Photo: Ahmed Kamel, 2025"}]
+     	   caption: "Battle of Hattin, Photo: Ahmed Kamel, 2025"},
+		{src: "Symbol_des_Regierungsbezirks_Matrouh_Kafraoui.jpeg",
+	         caption: "Symbol of the Matrouh Governorate"},
+		{ 		src: "Zwei_Bäuerinnen_Kafraoui_Park_Ahmed_Kamel.jpg",
+         		caption: "Two Female Peasants, Photo: Ahmed Kamel, 2025"}]
 
 	
 	};
