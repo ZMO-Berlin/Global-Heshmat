@@ -11,7 +11,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Hurghada',
 	status: 'search',
-	address: 'Hurghada, Red Sea Governate',
+	address: 'Hurghada',
 	desc: 'We have not been able to pinpoint the exact location of this mosaic, believed to be somewhere on the entrance to Hurghada.',
 	image: 'Hurghada_Mosaics_farbig.jpeg',
 	imageCaption: 'Mosaic of Two Fishermen'

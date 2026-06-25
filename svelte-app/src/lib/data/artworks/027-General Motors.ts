@@ -9,7 +9,7 @@ const artwork: Artwork = {
 	lat: 29.947414376191606,
 	lng: 30.892092073235098,
 	country: 'Egypt',
-	city: '6th of October City (Giza)',
+	city: 'Giza (6th of October City)',
 	status: 'search',
 	address: 'Street 28, 6th of October City (2), Giza Governorate 3222156',
 	desc: 'The office of General Motors Egypt, opened in 1985 by President Hosny Mubarak. Despite inquiry, we do not know, if the mosaic still exists there.',

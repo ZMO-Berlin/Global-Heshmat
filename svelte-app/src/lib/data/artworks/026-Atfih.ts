@@ -9,7 +9,7 @@ const artwork: Artwork = {
 	lat: 29.409032571720317,
 	lng: 31.25286968196873,
 	country: 'Egypt',
-	city: 'Atfih (Giza)',
+	city: 'Atfih',
 	status: 'located',
 	address: 'Atfih, Manyal as Soltan, El Wahat El Bahariya, Al-Dschiza 3416251',
 	desc: 'The Rotary Club in Egypt supported this statue “The Farmer’s Family” in Atfih village. For the moment we do not know, if it still exists here.',

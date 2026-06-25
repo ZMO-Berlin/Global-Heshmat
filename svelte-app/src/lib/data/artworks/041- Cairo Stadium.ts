@@ -9,7 +9,7 @@ const artwork: Artwork = {
 	lat: 30.06935734504182,
 	lng: 31.312341920766567,
 	country: 'Egypt',
-	city: 'Nasr-City, Cairo',
+	city: 'Cairo (Nasr City)',
 	status: 'located',
 	address: 'Al Estad, Qesm Than Madinet Nasr, Cairo Governorate 4436020',
 	desc: '...',
