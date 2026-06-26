@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Artwork } from '$lib/data/types';
+	import type { Artwork, Residence } from '$lib/data/types';
 	import {
 		SITE_URL,
 		SITE_NAME,
@@ -8,15 +8,18 @@
 		PUBLISHER,
 		ARTIST,
 		absoluteUrl,
-		artworkPath
+		artworkPath,
+		residencePath
 	} from '$lib/config';
 
 	interface Props {
-		/** When provided, render artwork-specific metadata (title, OG, JSON-LD). Otherwise render site metadata. */
+		/** When provided, render artwork-specific metadata (title, OG, JSON-LD). */
 		artwork?: Artwork | null;
+		/** When provided, render residence-specific metadata. Otherwise site metadata. */
+		residence?: Residence | null;
 	}
 
-	const { artwork = null }: Props = $props();
+	const { artwork = null, residence = null }: Props = $props();
 
 	const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
@@ -24,8 +27,16 @@
 	const truncate = (s: string, n: number) =>
 		s.length <= n ? s : s.slice(0, n - 1).trimEnd() + '…';
 
+	// First photo of a residence — its `images` array takes precedence over the
+	// legacy single `image`, mirroring the gallery's own resolution order.
+	const residenceImage = $derived(residence?.images?.[0]?.src ?? residence?.image);
+
 	const title = $derived(
-		artwork ? `${artwork.name} — ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`
+		artwork
+			? `${artwork.name} — ${SITE_NAME}`
+			: residence
+				? `${residence.name} — ${SITE_NAME}`
+				: `${SITE_NAME} — ${SITE_TAGLINE}`
 	);
 
 	const description = $derived(
@@ -34,10 +45,21 @@
 					`${artwork.name} — ${artwork.city}, ${artwork.country}. ${stripHtml(artwork.desc)}`,
 					200
 				)
-			: SITE_DESCRIPTION
+			: residence
+				? truncate(
+						`${residence.name} — ${residence.city}, ${residence.country}. ${stripHtml(residence.desc)}`,
+						200
+					)
+				: SITE_DESCRIPTION
 	);
 
-	const canonicalUrl = $derived(artwork ? absoluteUrl(artworkPath(artwork.slug!)) : `${SITE_URL}/`);
+	const canonicalUrl = $derived(
+		artwork
+			? absoluteUrl(artworkPath(artwork.slug!))
+			: residence
+				? absoluteUrl(residencePath(residence.slug!))
+				: `${SITE_URL}/`
+	);
 
 	const jsonLd = $derived(
 		artwork
@@ -76,31 +98,55 @@
 						url: SITE_URL
 					}
 				}
-			: {
-					'@context': 'https://schema.org',
-					'@type': 'WebSite',
-					name: SITE_NAME,
-					alternateName: SITE_TAGLINE,
-					description: SITE_DESCRIPTION,
-					url: SITE_URL,
-					inLanguage: 'en',
-					about: {
-						'@type': 'Person',
-						name: ARTIST.name,
-						birthDate: ARTIST.birthDate,
-						deathDate: ARTIST.deathDate,
-						nationality: ARTIST.nationality,
-						jobTitle: ARTIST.jobTitle
-					},
-					publisher: {
-						'@type': 'Organization',
-						name: PUBLISHER.name,
-						url: PUBLISHER.url
+			: residence
+				? {
+						'@context': 'https://schema.org',
+						'@type': 'Place',
+						name: residence.name,
+						description: truncate(stripHtml(residence.desc), 300),
+						image: residenceImage ? absoluteUrl(`/images/${residenceImage}`) : undefined,
+						url: canonicalUrl,
+						address: {
+							'@type': 'PostalAddress',
+							addressLocality: residence.city,
+							addressCountry: residence.country
+						},
+						geo: {
+							'@type': 'GeoCoordinates',
+							latitude: residence.lat,
+							longitude: residence.lng
+						},
+						isPartOf: {
+							'@type': 'WebSite',
+							name: SITE_NAME,
+							url: SITE_URL
+						}
 					}
-				}
+				: {
+						'@context': 'https://schema.org',
+						'@type': 'WebSite',
+						name: SITE_NAME,
+						alternateName: SITE_TAGLINE,
+						description: SITE_DESCRIPTION,
+						url: SITE_URL,
+						inLanguage: 'en',
+						about: {
+							'@type': 'Person',
+							name: ARTIST.name,
+							birthDate: ARTIST.birthDate,
+							deathDate: ARTIST.deathDate,
+							nationality: ARTIST.nationality,
+							jobTitle: ARTIST.jobTitle
+						},
+						publisher: {
+							'@type': 'Organization',
+							name: PUBLISHER.name,
+							url: PUBLISHER.url
+						}
+					}
 	);
 
-	const ogType = $derived(artwork ? 'article' : 'website');
+	const ogType = $derived(artwork || residence ? 'article' : 'website');
 </script>
 
 <svelte:head>

@@ -51,10 +51,8 @@
 				store.missingOpen = false;
 			} else if (store.aboutOpen) {
 				store.aboutOpen = false;
-			} else if (store.selectedArtwork) {
+			} else if (store.selectedArtwork || store.selectedResidence) {
 				goto(resolve('/'));
-			} else if (store.selectedResidence) {
-				store.selectedResidence = null;
 			}
 		}
 	}}

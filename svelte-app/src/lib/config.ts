@@ -37,3 +37,8 @@ export function absoluteUrl(path: string): string {
 export function artworkPath(slug: string): string {
 	return `/artworks/${slug}/`;
 }
+
+/** Canonical path for a place-of-residence detail page. */
+export function residencePath(slug: string): string {
+	return `/residences/${slug}/`;
+}

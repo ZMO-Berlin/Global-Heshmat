@@ -53,6 +53,10 @@ export interface Residence {
 	years: string;
 	/** Short note; HTML is allowed, matching the artwork `desc` convention. */
 	desc: string;
+	// Optional URL slug override. If absent, the slug is derived from `name` at
+	// load time. Mirrors the artwork convention — set it explicitly to keep a
+	// stable URL when renaming, or to disambiguate two places that share a name.
+	slug?: string;
 	/** Optional single photo filename in static/images/ (same pipeline as artworks). */
 	image?: string;
 	imageCaption?: string;

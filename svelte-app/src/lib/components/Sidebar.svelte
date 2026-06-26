@@ -32,14 +32,9 @@
 	}
 
 	function close() {
-		if (artwork) {
-			// Artworks own a route — navigate home so the URL and the sidebar
-			// both clear (the home page resets the store selection on mount).
-			goto(resolve('/'));
-		} else {
-			// Residences are sidebar-only (no route), so just drop the selection.
-			store.selectedResidence = null;
-		}
+		// Artworks and residences both own a route, so navigating home clears
+		// the URL and the sidebar (the home page resets the selection on mount).
+		goto(resolve('/'));
 	}
 </script>
 

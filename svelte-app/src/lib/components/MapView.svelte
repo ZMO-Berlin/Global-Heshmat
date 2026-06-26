@@ -394,14 +394,14 @@
 				ghostPopup.remove();
 			});
 
-			// Click a residence marker — open it in the shared sidebar. Residences
-			// have no dedicated route, so we set the store selection directly
-			// (which the pan-to effect above then reacts to).
+			// Click a residence marker — navigate to its detail URL. The
+			// /residences/[slug]/ page sets `store.selectedResidence`, which then
+			// triggers the pan-to effect above (mirrors the artwork flow).
 			map.on('click', 'residence-markers', (e) => {
 				if (!e.features || e.features.length === 0) return;
 				const id = e.features[0].properties.id;
 				const residence = residences.find((r) => r.id === id);
-				if (residence) store.selectedResidence = residence;
+				if (residence) goto(resolve('/residences/[slug]', { slug: residence.slug! }));
 			});
 
 			map.on('mouseenter', 'residence-markers', () => {

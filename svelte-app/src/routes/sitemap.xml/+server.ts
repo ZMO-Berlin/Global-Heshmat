@@ -1,5 +1,6 @@
 import { artworks } from '$lib/data/artworks';
-import { SITE_URL, artworkPath } from '$lib/config';
+import { residences } from '$lib/data/residences';
+import { SITE_URL, artworkPath, residencePath } from '$lib/config';
 import { escapeXml } from '$lib/utils/xml';
 
 // Prerender so the file is written once at build time and served as a
@@ -19,6 +20,11 @@ export function GET(): Response {
 			loc: `${SITE_URL}${artworkPath(a.slug!)}`,
 			changefreq: 'monthly' as const,
 			priority: '0.8'
+		})),
+		...residences.map((r) => ({
+			loc: `${SITE_URL}${residencePath(r.slug!)}`,
+			changefreq: 'monthly' as const,
+			priority: '0.7'
 		}))
 	];
 

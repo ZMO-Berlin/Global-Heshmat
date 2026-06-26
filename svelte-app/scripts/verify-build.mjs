@@ -145,6 +145,51 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 			'no artwork pages to check (artworks folder is empty — skipping per-artwork assertions)'
 		);
 	}
+
+	// Every residence directory should appear in the sitemap.
+	const residencesDir = join(BUILD_DIR, 'residences');
+	const resSlugs = existsSync(residencesDir)
+		? readdirSync(residencesDir, { withFileTypes: true })
+				.filter((d) => d.isDirectory())
+				.map((d) => d.name)
+		: [];
+
+	for (const slug of resSlugs) {
+		check(
+			`sitemap lists /residences/${slug}/`,
+			sitemap.includes(`<loc>${SITE_URL}/residences/${slug}/</loc>`)
+		);
+	}
+
+	// ── Per-residence SEO (sample the first one) ────────────────────
+	if (resSlugs.length > 0) {
+		const sample = resSlugs[0];
+		const html = read(join('residences', sample, 'index.html'));
+		check(
+			`residence page /${sample}/ has exactly one <title>`,
+			(html.match(/<title>/g) ?? []).length === 1
+		);
+		check(
+			`residence page /${sample}/ canonical points at the residence URL`,
+			new RegExp(`rel="canonical"\\s+href="${SITE_URL}/residences/${sample}/"`).test(html)
+		);
+		check(
+			`residence page /${sample}/ JSON-LD declares @type Place`,
+			/<script type="application\/ld\+json">[^<]*"@type":"Place"/.test(html)
+		);
+		check(
+			`residence page /${sample}/ og:type is "article"`,
+			/property="og:type"\s+content="article"/.test(html)
+		);
+		check(
+			`residence page /${sample}/ includes the GSC verification meta`,
+			new RegExp(`name="google-site-verification"[^>]*content="${GSC_TOKEN}"`).test(html)
+		);
+	} else {
+		successes.push(
+			'no residence pages to check (residences folder is empty — skipping per-residence assertions)'
+		);
+	}
 }
 
 // ── Artwork + residence image references resolve to WebP derivatives ──
