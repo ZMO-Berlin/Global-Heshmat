@@ -147,17 +147,18 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 	}
 }
 
-// ── Artwork image references resolve to generated WebP derivatives ──
+// ── Artwork + residence image references resolve to WebP derivatives ──
 //
-// Each artwork data file references images by their ORIGINAL filename
-// (e.g. "Foo Bar.jpeg"). At runtime the app (src/lib/utils/image.ts) loads
-// the generated derivative at /images/web/<stem>.webp and
+// Each artwork/residence data file references images by their ORIGINAL
+// filename (e.g. "Foo Bar.jpeg"). At runtime the app (src/lib/utils/image.ts)
+// loads the generated derivative at /images/web/<stem>.webp and
 // /images/thumb/<stem>.webp, swapping the extension for .webp. This guards
 // the filename-drift class of bug: a reference whose stem has no matching
 // derivative — a typo, wrong case, space-vs-underscore, NFC/NFD Unicode
 // mismatch, or simply forgetting to run
 // scripts/generate_image_derivatives.py after adding an image.
-const ARTWORKS_SRC = join(__dirname, '..', 'src', 'lib', 'data', 'artworks');
+const DATA_ROOT = join(__dirname, '..', 'src', 'lib', 'data');
+const DATA_DIRS = [join(DATA_ROOT, 'artworks'), join(DATA_ROOT, 'residences')];
 const WEB_DIR = join(BUILD_DIR, 'images', 'web');
 const THUMB_DIR = join(BUILD_DIR, 'images', 'thumb');
 
@@ -181,39 +182,41 @@ check(
 	'run scripts/generate_image_derivatives.py and commit static/images/web + thumb'
 );
 
-if (existsSync(WEB_DIR) && existsSync(THUMB_DIR) && existsSync(ARTWORKS_SRC)) {
+if (existsSync(WEB_DIR) && existsSync(THUMB_DIR)) {
 	const webSet = new Set(readdirSync(WEB_DIR));
 	const thumbSet = new Set(readdirSync(THUMB_DIR));
-	const dataFiles = readdirSync(ARTWORKS_SRC).filter(
-		(f) => f.endsWith('.ts') && f !== '_template.ts'
-	);
 
 	let refCount = 0;
 	let knownMissingSeen = 0;
 	const broken = [];
 
-	for (const file of dataFiles) {
-		const text = readFileSync(join(ARTWORKS_SRC, file), 'utf8');
-		for (const m of text.matchAll(REF_RE)) {
-			const name = m[1];
-			if (!IMG_EXT.test(name)) continue; // ignore non-image strings
-			if (KNOWN_MISSING.has(name)) {
-				knownMissingSeen++;
-				continue;
-			}
-			refCount++;
-			const webp = stemOf(name) + '.webp';
-			const inWeb = webSet.has(webp);
-			const inThumb = thumbSet.has(webp);
-			if (!inWeb || !inThumb) {
-				const where = !inWeb && !inThumb ? 'web/ and thumb/' : !inWeb ? 'web/' : 'thumb/';
-				broken.push(`${file}: "${name}" → missing ${webp} in ${where}`);
+	for (const dir of DATA_DIRS.filter(existsSync)) {
+		const dataFiles = readdirSync(dir).filter(
+			(f) => f.endsWith('.ts') && f !== '_template.ts' && f !== 'index.ts'
+		);
+		for (const file of dataFiles) {
+			const text = readFileSync(join(dir, file), 'utf8');
+			for (const m of text.matchAll(REF_RE)) {
+				const name = m[1];
+				if (!IMG_EXT.test(name)) continue; // ignore non-image strings
+				if (KNOWN_MISSING.has(name)) {
+					knownMissingSeen++;
+					continue;
+				}
+				refCount++;
+				const webp = stemOf(name) + '.webp';
+				const inWeb = webSet.has(webp);
+				const inThumb = thumbSet.has(webp);
+				if (!inWeb || !inThumb) {
+					const where = !inWeb && !inThumb ? 'web/ and thumb/' : !inWeb ? 'web/' : 'thumb/';
+					broken.push(`${file}: "${name}" → missing ${webp} in ${where}`);
+				}
 			}
 		}
 	}
 
 	if (broken.length === 0) {
-		successes.push(`all ${refCount} artwork image references have WebP derivatives`);
+		successes.push(`all ${refCount} artwork + residence image references have WebP derivatives`);
 	} else {
 		for (const b of broken) failures.push(`image reference unresolved — ${b}`);
 	}

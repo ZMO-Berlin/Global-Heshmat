@@ -70,6 +70,7 @@
 	function setFilter(filter: string) {
 		store.activeFilter = filter;
 		store.selectedArtwork = null;
+		store.selectedResidence = null;
 	}
 
 	function selectResult(artwork: Artwork) {

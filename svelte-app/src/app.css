@@ -482,6 +482,12 @@ body {
 	background: var(--color-moved-light);
 	color: var(--color-moved);
 }
+/* No handpicked --color-residence-light exists, so derive a soft tint from the
+   residence rgb triplet (same approach as --color-accent-light). */
+.tag-residence {
+	background: rgb(var(--color-residence-rgb) / 0.12);
+	color: var(--color-residence);
+}
 .sidebar-desc {
 	font-size: var(--text-md);
 	line-height: var(--leading-prose);
