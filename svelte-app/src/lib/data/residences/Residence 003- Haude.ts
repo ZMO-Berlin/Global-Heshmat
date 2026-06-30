@@ -54,7 +54,6 @@ const residence: Residence = {
 	desc: 'Whilst studying at the Porcelain Technical College in Selb, Hassan Heshmat lived with the Haude family at 6 Ahornweg, 95100 Selb, Germany.',
 	images: [
 		{ src: 'Selb_Haus_II.jpeg', caption: 'Hassan Heshmat’s Accommodation in Selb, Bavaria, 2026' },
-		{ src: 'Selb_Haus_I.jpeg' },
 		{ src: 'Selb_Haus_III.jpeg' }
 	]
 };
