@@ -1,8 +1,8 @@
 export const aboutContent = {
 	title: 'About this project',
-	intro: 'Global Heshmat &ndash; Following the Egyptian Sculptor Hassan Heshmat around the world.',
+	intro: 'Global Heshmat &ndash; Following the Egyptian Sculptor Hassan Heshmat Around the World.',
 	subtitle:
-		'Artworks in public spaces (*This website does not list works held in private homes or past exhibitions in galleries and museums.)',
+		'Artworks in public spaces*',
 
 	paragraphs: [
 		'Heshmat was born in a small town on the Nile and began working with clay as a child. At the age of twelve, his father allowed him to choose his own career, and Heshmat went to Cairo to attend the School of Applied Arts. There he meets a teacher who would later also become famous, the sculptor Saeed Sadr.',
@@ -15,7 +15,9 @@ export const aboutContent = {
 
 		'Heshmat was an internationally renowned artist who found admirers all over the world. His sculptures can be found not only on the Nile, but have also been exported to Brazzaville, Frankfurt am Main, Warsaw, Malm&ouml;, East Berlin and Boston. In 10th of Ramadan City, the founder of a well-known fashion company, the Copt Louis Bishara, had a small open-air museum for Heshmat built in a public park. Various industrialists have erected Heshmat&rsquo;s art on their premises. A large relief by him still adorns the officers&rsquo; club on Zamalek&rsquo;s main street.',
 
-		'Heshmat held solo exhibitions all over Europe, among other in Paris and Budapest in 1957, in Susteren in 1968, 1970 in Bonn and Radhus, 1978 in Roskilde or 1979 in Ystad. In 2000 Heshmat was awarded the State Appreciation Award, Egypt&rsquo;s highest award.'
+		'Heshmat held solo exhibitions all over Europe, among other in Paris and Budapest in 1957, in Susteren in 1968, 1970 in Bonn and Radhus, 1978 in Roskilde or 1979 in Ystad. In 2000 Heshmat was awarded the State Appreciation Award, Egypt&rsquo;s highest award.',
+
+		'*This website does not list works held in private homes or past exhibitions in galleries and museums.'
 	],
 
 	publicationUrl: 'https://repositorium.zmo.de/receive/zmo_mods_00002340',
