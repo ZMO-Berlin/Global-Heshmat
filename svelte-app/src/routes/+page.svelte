@@ -12,6 +12,7 @@
 	// route (e.g. via the close button or browser back).
 	$effect(() => {
 		store.selectedArtwork = null;
+		store.selectedResidence = null;
 	});
 
 	// Backwards compatibility: redirect legacy /?artwork=<id> deep links to

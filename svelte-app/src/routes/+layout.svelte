@@ -28,6 +28,7 @@
 	// Reset goes back to the canonical home URL and recenters the map.
 	function resetView() {
 		store.activeFilter = 'all';
+		store.selectedResidence = null;
 		mapView?.resetView();
 		goto(resolve('/'));
 	}
@@ -50,7 +51,7 @@
 				store.missingOpen = false;
 			} else if (store.aboutOpen) {
 				store.aboutOpen = false;
-			} else if (store.selectedArtwork) {
+			} else if (store.selectedArtwork || store.selectedResidence) {
 				goto(resolve('/'));
 			}
 		}

@@ -1,7 +1,8 @@
-import type { Artwork } from '$lib/data/types';
+import type { Artwork, Residence } from '$lib/data/types';
 
 // Shared reactive state for cross-component communication
 let selectedArtwork = $state<Artwork | null>(null);
+let selectedResidence = $state<Residence | null>(null);
 let activeFilter = $state<string>('all');
 let searchQuery = $state<string>('');
 let aboutOpen = $state<boolean>(false);
@@ -14,6 +15,16 @@ export function getMapStore() {
 		},
 		set selectedArtwork(value: Artwork | null) {
 			selectedArtwork = value;
+			// An artwork and a residence can't be open at once — opening one
+			// closes the other so only a single detail panel is ever shown.
+			if (value !== null) selectedResidence = null;
+		},
+		get selectedResidence() {
+			return selectedResidence;
+		},
+		set selectedResidence(value: Residence | null) {
+			selectedResidence = value;
+			if (value !== null) selectedArtwork = null;
 		},
 		get activeFilter() {
 			return activeFilter;

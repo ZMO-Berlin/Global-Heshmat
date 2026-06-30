@@ -5,7 +5,8 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { artworks } from '$lib/data/artworks';
-	import type { Artwork } from '$lib/data/types';
+	import { residences } from '$lib/data/residences';
+	import type { Artwork, Residence } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
 
 	const store = getMapStore();
@@ -78,22 +79,52 @@
 	function getFilteredArtworks(): Artwork[] {
 		if (store.activeFilter === 'all') return artworks;
 		if (store.activeFilter === 'search') return artworks.filter((a) => a.status === 'search');
-		// "Places of residence" is a placeholder category — no residence markers
-		// exist yet, so this filter intentionally yields an empty map. Hook the
-		// real data source in here when residence locations are added.
+		// The "Places of residence" filter shows only residence markers (see
+		// getVisibleResidences), so no artworks are plotted under it.
 		if (store.activeFilter === 'residence') return [];
 		return artworks.filter((a) => a.country === store.activeFilter);
+	}
+
+	// Residences show on the default "all" view and under their own "Places of
+	// residence" filter. The country and "to be found" filters are artwork-only,
+	// so residences hide there.
+	function getVisibleResidences(): Residence[] {
+		return store.activeFilter === 'all' || store.activeFilter === 'residence' ? residences : [];
+	}
+
+	function buildResidenceGeoJSON(items: Residence[]) {
+		return {
+			type: 'FeatureCollection' as const,
+			features: items.map((r) => ({
+				type: 'Feature' as const,
+				geometry: { type: 'Point' as const, coordinates: [r.lng, r.lat] },
+				properties: {
+					id: r.id,
+					name: r.name,
+					country: r.country,
+					city: r.city
+				}
+			}))
+		};
 	}
 
 	function updateMapSource() {
 		if (!map || !map.isStyleLoaded() || !map.getSource('artworks')) return;
 		const filtered = getFilteredArtworks();
+		const visibleResidences = getVisibleResidences();
 		(map.getSource('artworks') as MaplibreNS.GeoJSONSource).setData(buildGeoJSON(filtered));
+		(map.getSource('residences') as MaplibreNS.GeoJSONSource)?.setData(
+			buildResidenceGeoJSON(visibleResidences)
+		);
 
-		// Fit bounds to filtered items
-		if (filtered.length > 0) {
+		// Fit bounds to everything currently visible (artworks + residences).
+		const points: [number, number][] = [
+			...filtered.map((a): [number, number] => [a.lng, a.lat]),
+			...visibleResidences.map((r): [number, number] => [r.lng, r.lat])
+		];
+		if (points.length > 0) {
 			const bounds = new maplibregl.LngLatBounds();
-			filtered.forEach((a) => bounds.extend([a.lng, a.lat]));
+			points.forEach((p) => bounds.extend(p));
 			map.fitBounds(bounds, { padding: 60, maxZoom: 10 });
 		}
 	}
@@ -110,6 +141,14 @@
 		const artwork = store.selectedArtwork;
 		if (artwork && map) {
 			map.flyTo({ center: [artwork.lng, artwork.lat], zoom: 14 });
+		}
+	});
+
+	// React to residence selection (pan to it)
+	$effect(() => {
+		const residence = store.selectedResidence;
+		if (residence && map) {
+			map.flyTo({ center: [residence.lng, residence.lat], zoom: 14 });
 		}
 	});
 
@@ -150,6 +189,7 @@
 		const colorAccent = readToken('--color-accent');
 		const colorOnDark = readToken('--color-on-dark');
 		const colorTextMuted = readToken('--color-text-muted');
+		const colorResidence = readToken('--color-residence');
 
 		map = new maplibregl.Map({
 			container: mapContainer,
@@ -269,6 +309,26 @@
 				}
 			});
 
+			// Places of residence — a separate, unclustered source so they read
+			// as their own category (distinct colour) and never merge into the
+			// artwork clusters.
+			map.addSource('residences', {
+				type: 'geojson',
+				data: buildResidenceGeoJSON(getVisibleResidences())
+			});
+
+			map.addLayer({
+				id: 'residence-markers',
+				type: 'circle',
+				source: 'residences',
+				paint: {
+					'circle-color': colorResidence,
+					'circle-radius': 8,
+					'circle-stroke-width': 2.5,
+					'circle-stroke-color': colorOnDark
+				}
+			});
+
 			// Click on artwork point — navigate to its detail URL. The
 			// /artworks/[slug]/ page sets `store.selectedArtwork`, which
 			// then triggers the pan-to effect below.
@@ -332,6 +392,23 @@
 			map.on('mouseleave', 'ghost-markers', () => {
 				map.getCanvas().style.cursor = '';
 				ghostPopup.remove();
+			});
+
+			// Click a residence marker — navigate to its detail URL. The
+			// /residences/[slug]/ page sets `store.selectedResidence`, which then
+			// triggers the pan-to effect above (mirrors the artwork flow).
+			map.on('click', 'residence-markers', (e) => {
+				if (!e.features || e.features.length === 0) return;
+				const id = e.features[0].properties.id;
+				const residence = residences.find((r) => r.id === id);
+				if (residence) goto(resolve('/residences/[slug]', { slug: residence.slug! }));
+			});
+
+			map.on('mouseenter', 'residence-markers', () => {
+				map.getCanvas().style.cursor = 'pointer';
+			});
+			map.on('mouseleave', 'residence-markers', () => {
+				map.getCanvas().style.cursor = '';
 			});
 		});
 	});
