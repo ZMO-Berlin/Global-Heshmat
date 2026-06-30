@@ -61,7 +61,7 @@ export const aboutContent = {
 			url: 'https://www.frederickmadore.com/',
 			affiliation: 'University of Bayreuth'
 		},
-		contributions: 'Samar Heshmat, Alexandria',
+		contributions: 'Samar Hafez, Alexandria',
 		website: 'http://www.zmo.de',
 		thanks:
 			'Our sincere thanks go to the family of Hassan Heshmat, the Hassan Heshmat Museum and all photographers who generously provided images. Should we have inadvertently failed to identify or properly attribute any image or its rights-holder, we apologize sincerely. Please get in touch with us to resolve any such oversight.'

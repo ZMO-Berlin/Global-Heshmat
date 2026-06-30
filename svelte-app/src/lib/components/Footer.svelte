@@ -42,7 +42,7 @@
 			</span>
 			<span class="site-footer-credit">
 				<span class="site-footer-role">Contributor</span>
-				Samar Heshmat
+				Samar Hafez
 			</span>
 		</div>
 	</div>
