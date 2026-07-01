@@ -45,5 +45,8 @@
 	"dependencies": {
 		"@lucide/svelte": "^1.22.0",
 		"maplibre-gl": "^5.24.0"
+	},
+	"overrides": {
+		"cookie": "^0.7.0"
 	}
 }
