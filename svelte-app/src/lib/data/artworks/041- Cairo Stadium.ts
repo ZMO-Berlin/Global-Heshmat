@@ -14,7 +14,7 @@ const artwork: Artwork = {
 	address: 'Al Estad, Qesm Than Madinet Nasr, Cairo Governorate 4436020',
 	desc: '...',
 	image: 'Cairo_Stadium_cut.jpg',
-	imageCaption: 'Samar Heshmat, 2026',
+	imageCaption: 'by Samar Hafez, 2026',
 
 	
 	

@@ -17,7 +17,7 @@ const artwork: Artwork = {
 	images: [{src: "Obelisk_I.jpg",
 	         caption: "Obelisk"},
 		{ 		src: "Oriental Weavers.jpeg",
-         		caption: "Obelisk, Foto: Smar Heshmat, 2026"}]
+         		caption: "Obelisk, Foto: Samar Hafez, 2026"}]
 
 	
 	
