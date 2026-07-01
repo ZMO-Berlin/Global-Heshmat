@@ -1,8 +1,7 @@
 export const aboutContent = {
 	title: 'About this project',
 	intro: 'Global Heshmat &ndash; Following the Egyptian Sculptor Hassan Heshmat Around the World.',
-	subtitle:
-		'Artworks in public spaces*',
+	subtitle: 'Artworks in public spaces*',
 
 	paragraphs: [
 		'Heshmat was born in a small town on the Nile and began working with clay as a child. At the age of twelve, his father allowed him to choose his own career, and Heshmat went to Cairo to attend the School of Applied Arts. There he meets a teacher who would later also become famous, the sculptor Saeed Sadr.',

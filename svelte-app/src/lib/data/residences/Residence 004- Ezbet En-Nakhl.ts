@@ -52,9 +52,6 @@ const residence: Residence = {
 	city: 'Cairo (Ezbet El Nakhl)',
 	years: '1945',
 	desc: 'Hassan Heshmat lived here as a young man'
-    
-	
 };
 
 export default residence;
-
