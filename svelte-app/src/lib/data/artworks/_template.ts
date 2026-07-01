@@ -57,6 +57,13 @@
  *  video         A YouTube URL (the app extracts the embed automatically).
  *                Example: "https://www.youtube.com/watch?v=XXXXXXXXXXX"
  *
+ *  videoFile     Filename of a self-hosted clip in  static/videos/  — played
+ *                inline with a native <video> player. Use this instead of
+ *                `video` for a local file. Example: "my-clip.mp4"
+ *                >>> Place the actual .mp4 (H.264/AAC) in static/videos/.
+ *
+ *  videoCaption  Credit / caption shown beneath the local video.
+ *
  *  movement      For artworks that were relocated. Contains:
  *                  - fromLat:   original latitude            (REQUIRED)
  *                  - fromLng:   original longitude           (REQUIRED)
@@ -153,6 +160,10 @@ const artwork: Artwork = {
 
 	// ── YouTube video ────────────────────────────────────
 	// video: "https://www.youtube.com/watch?v=XXXXXXXXXXX",
+
+	// ── Self-hosted video (file in static/videos/) ───────
+	// videoFile: "my-clip.mp4",
+	// videoCaption: "Video: Jane Doe, 2026",
 
 	// ── Relocation info (only if the artwork was moved) ──
 	movement: {

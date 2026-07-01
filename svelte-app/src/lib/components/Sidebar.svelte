@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import Gallery from './Gallery.svelte';
+	import VideoPlayer from './VideoPlayer.svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
 
 	const store = getMapStore();
@@ -88,6 +89,10 @@
 								></iframe>
 							</div>
 						{/if}
+					{/if}
+
+					{#if artwork.videoFile}
+						<VideoPlayer src={artwork.videoFile} caption={artwork.videoCaption} />
 					{/if}
 
 					{#if artwork.links && artwork.links.length > 0}
