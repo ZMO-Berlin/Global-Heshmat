@@ -20,7 +20,13 @@ const config = {
 		// `fallback` makes GitHub Pages serve our own 404 instead of its default.
 		adapter: adapter({
 			fallback: '404.html'
-		})
+		}),
+		// The PWA service worker is generated and registered by
+		// `@vite-pwa/sveltekit` (see vite.config.ts + src/routes/+layout.svelte),
+		// so disable SvelteKit's own service-worker handling to avoid conflicts.
+		serviceWorker: {
+			register: false
+		}
 	}
 };
 

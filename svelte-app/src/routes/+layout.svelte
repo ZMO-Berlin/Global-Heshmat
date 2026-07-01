@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import type { Snippet } from 'svelte';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import logo from '$lib/assets/logo-zmo.png';
@@ -23,6 +24,18 @@
 	// so any state is shareable / deep-linkable, and the browser's Back
 	// button closes an open About modal.
 	setupUrlSync();
+
+	// Register the PWA service worker on the client. With `registerType:
+	// 'autoUpdate'` (vite.config.ts) a newly deployed version is fetched and
+	// applied silently on the next visit — no update toast, no install prompt.
+	// Dynamically imported so the virtual module is only pulled in the browser
+	// bundle, never during prerendering.
+	onMount(() => {
+		void import('virtual:pwa-register').then(({ registerSW }) => {
+			registerSW({ immediate: true });
+		});
+	});
+
 	let mapView: MapView | undefined = $state();
 
 	// Reset goes back to the canonical home URL and recenters the map.
