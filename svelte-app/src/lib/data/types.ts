@@ -33,7 +33,16 @@ export interface Artwork {
 	imageCaption?: string;
 	images?: ArtworkImage[];
 	links?: ArtworkLink[];
+	/** A YouTube URL — embedded as an iframe. For a self-hosted clip use `videoFile`. */
 	video?: string;
+	/**
+	 * Filename of a self-hosted clip in `static/videos/` (e.g. "Midan_Galaa.mp4"),
+	 * played inline via a native <video> element. Use this for local files; use
+	 * `video` for YouTube. The two are independent and may both be set.
+	 */
+	videoFile?: string;
+	/** Optional credit / caption shown beneath the local video. */
+	videoCaption?: string;
 	movement?: ArtworkMovement;
 }
 

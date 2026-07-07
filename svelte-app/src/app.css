@@ -522,6 +522,26 @@ body {
 	aspect-ratio: 16 / 9;
 	border: none;
 }
+.video-player {
+	margin: var(--space-4-5) 0;
+	text-align: center;
+}
+.video-player video {
+	max-width: 100%;
+	/* Cap the height so a portrait (9:16 phone) clip doesn't dominate the narrow
+	   sidebar; the browser preserves the clip's intrinsic aspect ratio within
+	   the max-width / max-height box. */
+	max-height: 60vh;
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+	background: #000;
+}
+.video-player figcaption {
+	margin-top: var(--space-2-5);
+	font-size: var(--text-xs);
+	font-style: italic;
+	color: var(--color-text-muted);
+}
 .sidebar-links {
 	margin-top: var(--space-4-5);
 	display: flex;

@@ -273,6 +273,41 @@ if (existsSync(WEB_DIR) && existsSync(THUMB_DIR)) {
 	}
 }
 
+// ── Artwork video references resolve to a file in build/videos/ ──────
+//
+// Mirror of the image check above, for self-hosted <video> clips. Data files
+// reference a clip by filename (videoFile: "X.mp4"); the app serves it from
+// /videos/X.mp4 (static/videos is copied verbatim into build/). Guards the
+// same filename-drift / forgot-to-add-the-file class of bug for videos.
+const VIDEOS_DIR = join(BUILD_DIR, 'videos');
+const VID_REF_RE = /videoFile\s*:\s*["']([^"']+)["']/g;
+const videoSet = existsSync(VIDEOS_DIR) ? new Set(readdirSync(VIDEOS_DIR)) : new Set();
+let vidRefCount = 0;
+const brokenVideos = [];
+
+for (const dir of DATA_DIRS.filter(existsSync)) {
+	const dataFiles = readdirSync(dir).filter(
+		(f) => f.endsWith('.ts') && f !== '_template.ts' && f !== 'index.ts'
+	);
+	for (const file of dataFiles) {
+		const text = readFileSync(join(dir, file), 'utf8');
+		for (const m of text.matchAll(VID_REF_RE)) {
+			vidRefCount++;
+			if (!videoSet.has(m[1])) {
+				brokenVideos.push(`${file}: "${m[1]}" → missing videos/${m[1]}`);
+			}
+		}
+	}
+}
+
+if (vidRefCount === 0) {
+	successes.push('no artwork video references to check');
+} else if (brokenVideos.length === 0) {
+	successes.push(`all ${vidRefCount} artwork video reference(s) resolve to build/videos/`);
+} else {
+	for (const b of brokenVideos) failures.push(`video reference unresolved — ${b}`);
+}
+
 // ── Report ──────────────────────────────────────────────────────────
 console.log(`\nverify-build: ${successes.length} passed, ${failures.length} failed`);
 for (const s of successes) console.log(`  ✓ ${s}`);
