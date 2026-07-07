@@ -12,7 +12,7 @@ const artwork: Artwork = {
 	city: 'Boston (Massachusetts)',
 	status: 'search',
 	address: 'unknown',
-	desc: 'Two-meter work out of basalt stone in a church in Boston, USA. Photo from the museum in Ain Shams, 1974.',
+	desc: 'Two-meter work out of basalt stone in a church in Boston, USA. Photo from the museum in Ain Shams, 1974. Another of this figurine is located at the Cairo International Stadium.',
 	image: 'The_stable_family.jpg',
 	imageCaption: 'The Stable Family - Porcelain Sculpture'
 

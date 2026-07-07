@@ -12,7 +12,7 @@ const artwork: Artwork = {
 	city: 'Cairo (Nasr City)',
 	status: 'located',
 	address: 'Al Estad, Qesm Than Madinet Nasr, Cairo Governorate 4436020',
-	desc: '...',
+	desc: 'This is a version of the ‘The Stable Family’  figurine, the same one we’re looking for in Boston.',
 	image: 'Cairo_Stadium_cut.jpg',
 	imageCaption: 'by Samar Hafez, 2026',
 

@@ -46,8 +46,8 @@ import type { Residence } from '../types';
 const residence: Residence = {
 	id: 4,
 	name: 'Ezbet El Nakhl',
-	lat: 30.138887068589295,
-	lng: 31.319656238932765,
+	lat: 30.138763547445613,
+	lng: 31.32135369007047,
 	country: 'Egypt',
 	city: 'Cairo (Ezbet El Nakhl)',
 	years: '1945',
