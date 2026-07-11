@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, Maximize2 } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
-	import { thumbUrl, webUrl, originalUrl, swapToOriginal } from '$lib/utils/image';
+	import { thumbUrl, webUrl } from '$lib/utils/image';
 	import Lightbox from './Lightbox.svelte';
 
 	let { images, name }: { images: ArtworkImage[]; name: string } = $props();
@@ -42,13 +42,9 @@
 		>
 			<img
 				src={webUrl(images[current].src)}
-				data-fallback={originalUrl(images[current].src)}
 				alt={images[current].caption || name}
 				onload={(e) => ((e.currentTarget as HTMLImageElement).style.display = '')}
-				onerror={(e) => {
-					const el = e.currentTarget as HTMLImageElement;
-					if (!swapToOriginal(el)) el.style.display = 'none';
-				}}
+				onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
 			/>
 		</button>
 
@@ -90,15 +86,12 @@
 				>
 					<img
 						src={thumbUrl(img.src)}
-						data-fallback={originalUrl(img.src)}
 						alt=""
 						loading="lazy"
 						onload={(e) =>
 							((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
-						onerror={(e) => {
-							const el = e.currentTarget as HTMLImageElement;
-							if (!swapToOriginal(el)) el.parentElement!.style.display = 'none';
-						}}
+						onerror={(e) =>
+							((e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none')}
 					/>
 				</button>
 			{/each}

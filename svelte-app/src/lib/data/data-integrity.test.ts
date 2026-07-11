@@ -15,12 +15,13 @@ import { residences } from './residences';
  */
 
 const STATIC_DIR = fileURLToPath(new URL('../../../static/', import.meta.url));
+const ORIGINALS_DIR = fileURLToPath(new URL('../../../originals/', import.meta.url));
 
 function fileSet(dir: string): Set<string> {
 	return new Set(readdirSync(dir).map((f) => f.normalize('NFC')));
 }
 
-const originals = fileSet(`${STATIC_DIR}images`);
+const originals = fileSet(ORIGINALS_DIR);
 const webDerivatives = fileSet(`${STATIC_DIR}images/web`);
 const thumbDerivatives = fileSet(`${STATIC_DIR}images/thumb`);
 const videos = fileSet(`${STATIC_DIR}videos`);
@@ -46,7 +47,7 @@ const allItems = [...artworks, ...residences];
 const allImageRefs = [...imageRefs(artworks), ...imageRefs(residences)];
 
 describe('image references', () => {
-	it('every referenced image exists verbatim in static/images/', () => {
+	it('every referenced image exists verbatim in originals/', () => {
 		const missing = allImageRefs
 			.filter((r) => !originals.has(r.file.normalize('NFC')))
 			.map((r) => `${r.owner}: ${r.file}`);
@@ -59,6 +60,22 @@ describe('image references', () => {
 			.filter((r) => !webDerivatives.has(r.webp) || !thumbDerivatives.has(r.webp))
 			.map((r) => `${r.owner}: ${r.file} → ${r.webp}`);
 		expect(missing).toEqual([]);
+	});
+
+	// The reverse direction: nothing accumulates unnoticed. Orphaned originals
+	// once added up to >100 MB of never-served weight in the repo.
+	it('every file in originals/ is referenced by a data file', () => {
+		const referencedStems = new Set(allImageRefs.map((r) => stem(r.file).normalize('NFC')));
+		const orphans = [...originals].filter((f) => !referencedStems.has(stem(f)));
+		expect(orphans).toEqual([]);
+	});
+
+	it('every derivative corresponds to a file in originals/ (no stale derivatives)', () => {
+		const originalStems = new Set([...originals].map((f) => stem(f)));
+		const stale = [...webDerivatives, ...thumbDerivatives].filter(
+			(f) => !originalStems.has(stem(f))
+		);
+		expect(stale).toEqual([]);
 	});
 });
 

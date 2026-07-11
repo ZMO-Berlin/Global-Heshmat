@@ -2,16 +2,18 @@
 """
 Generate web-ready image derivatives for the Global Heshmat app.
 
-The artwork data references large originals in ``static/images/`` (some up to
-~18 MB). The app, however, only ever needs two much smaller variants:
+The artwork data references large originals kept in ``originals/`` (some up
+to ~18 MB) — deliberately OUTSIDE ``static/`` so they are archived in the
+repository but never shipped in the deployed site. The app only ever serves
+two much smaller variants:
 
   * a **thumbnail** for the gallery / lightbox thumb strips, and
   * a **web** image for the main gallery view and the full-screen lightbox.
 
-This script reads every image in ``static/images/`` and writes downscaled WebP
-copies into two sibling sub-folders, keeping the originals untouched:
+This script reads every image in ``originals/`` and writes downscaled WebP
+copies into ``static/images/``, keeping the originals untouched:
 
-    static/images/<original>.jpeg        (left as-is)
+    originals/<original>.jpeg            (left as-is, not deployed)
     static/images/web/<original>.webp    (long edge <= --web-size,  default 2000px)
     static/images/thumb/<original>.webp  (long edge <= --thumb-size, default 400px)
 
@@ -146,7 +148,8 @@ def make_derivative(
 
 def main() -> int:
     script_dir = Path(__file__).resolve().parent
-    default_src = script_dir.parent / "static" / "images"
+    default_src = script_dir.parent / "originals"
+    default_out = script_dir.parent / "static" / "images"
 
     ap = argparse.ArgumentParser(
         description="Generate WebP thumbnail + web derivatives for app images.",
@@ -157,6 +160,12 @@ def main() -> int:
         type=Path,
         default=default_src,
         help="Folder containing the original images.",
+    )
+    ap.add_argument(
+        "--out",
+        type=Path,
+        default=default_out,
+        help="Folder that receives the web/ and thumb/ output sub-folders.",
     )
     ap.add_argument("--web-size", type=int, default=2000, help="Web long-edge (px).")
     ap.add_argument("--thumb-size", type=int, default=400, help="Thumb long-edge (px).")
@@ -183,8 +192,11 @@ def main() -> int:
     if not src_dir.is_dir():
         sys.exit(f"ERROR: source folder not found: {src_dir}")
 
-    web_dir = src_dir / WEB_DIRNAME
-    thumb_dir = src_dir / THUMB_DIRNAME
+    out_dir: Path = args.out
+    web_dir = out_dir / WEB_DIRNAME
+    thumb_dir = out_dir / THUMB_DIRNAME
+    # Guard against output folders living inside the source folder (the old
+    # layout) — never treat generated files as sources.
     skip_dirs = {web_dir.resolve(), thumb_dir.resolve()}
 
     # Collect source files (never descend into our own output folders).

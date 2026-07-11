@@ -35,18 +35,18 @@
  *                the artwork, or to disambiguate two works that share a name.
  *                The site URL becomes:  /artworks/<slug>/
  *
- *  image         Filename of a single image stored in  static/images/
+ *  image         Filename of a single image stored in  originals/
  *                Example: "my-photo.jpg"
- *                >>> The actual image file must be placed in the static/images/ folder.
+ *                >>> The actual image file must be placed in the originals/ folder.
  *
  *  imageCaption  Credit / caption for the single image above.
  *                Example: "Photo: John Doe, 2024"
  *
  *  images        Array of multiple images (use this instead of image/imageCaption
  *                when there are several photos). Each entry has:
- *                  - src:      filename in static/images/    (REQUIRED)
+ *                  - src:      filename in originals/       (REQUIRED)
  *                  - caption:  description or credit          (optional)
- *                >>> Each image file listed in src must exist in the static/images/ folder.
+ *                >>> Each image file listed in src must exist in the originalss/ folder.
  *                >>> Use descriptive file names (e.g. "024-mermaid-front-view.jpg"),
  *                    NOT generic names like "photo1.jpg".
  *
@@ -75,12 +75,12 @@
  * ============================================================
  *
  *  1. IMAGE FILES
- *     - All image files must be placed in:  static/images/
+ *     - All image files must be placed in:  originals/
  *     - Use the EXACT filename (case-sensitive) in the "image" or "src" fields.
  *     - Accepted formats: .jpg, .jpeg, .png, .webp
  *     - Please provide the file name of each image in the data file,
  *       AND send the actual image files separately so they can be added
- *       to the static/images/ folder.
+ *       to the originals/ folder.
  *
  *  2. COORDINATES
  *     - Use decimal degrees (not DMS).
@@ -131,7 +131,7 @@ const artwork: Artwork = {
 	desc: 'A large bronze relief commissioned in 1975 for the entrance hall of the National Bank. The work depicts a procession of sphinxes and was unveiled by President Sadat. See also the <a href="https://example.com">museum catalogue</a>.',
 
 	// ── Single image (use this OR images[], not both) ────
-	image: '031-sphinx-avenue.jpg', // place this file in static/images/
+	image: '031-sphinx-avenue.jpg', // place this file in originals/
 	imageCaption: 'Photo: Sonja Hegasy, 2019',
 
 	// ── Multiple images (use this OR image, not both) ────

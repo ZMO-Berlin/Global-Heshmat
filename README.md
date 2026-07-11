@@ -67,10 +67,11 @@ Global-Heshmat/
     │   │   └── sitemap.xml/+server.ts     # Prerendered sitemap.xml
     │   ├── app.html                       # Includes Google Search Console verification
     │   └── app.d.ts
+    ├── originals/                         # Archived artwork photos (NOT deployed)
     ├── static/
     │   ├── CNAME                          # heshmat.zmo.de — picked up by GitHub Pages
     │   ├── robots.txt                     # Points crawlers at /sitemap.xml
-    │   └── images/                        # Artwork photos (originals)
+    │   └── images/
     │       ├── web/                       # Generated <=2000px WebP (gallery + lightbox)
     │       └── thumb/                     # Generated <=400px WebP (thumbnail strips)
     ├── scripts/
@@ -148,25 +149,25 @@ Two layers, both run in CI:
 1. Copy `src/lib/data/artworks/_template.ts`.
 2. Rename it (e.g., `035-new-artwork.ts`).
 3. Fill in the fields (see the template for documentation).
-4. Drop any images into `static/images/`, then generate their WebP derivatives (see [Images](#images)).
+4. Drop any images into `originals/`, then generate their WebP derivatives (see [Images](#images)).
 5. Done — `index.ts` auto-imports all artwork files via `import.meta.glob`, the next build emits a new `/artworks/<slug>/` page and adds it to `sitemap.xml`.
 
 The slug is auto-derived from `name`. To pin a stable URL when renaming, set `slug: 'my-stable-slug'` explicitly. A build error is thrown if two artworks would resolve to the same slug.
 
 ### Images
 
-Originals (some up to ~18 MB, a few in browser-unfriendly formats like HEIC/TIFF) are never served directly. The app loads generated WebP derivatives instead:
+Originals (some up to ~18 MB, a few in browser-unfriendly formats like HEIC/TIFF) are never served — they live in `originals/`, outside `static/`, so they are archived in the repository but excluded from the deployed site. The app loads generated WebP derivatives:
 
-- `static/images/<file>` — the committed original; used only as a runtime fallback.
+- `originals/<file>` — the committed original (not deployed).
 - `static/images/web/<stem>.webp` — `<=2000px`, shown in the gallery and lightbox.
 - `static/images/thumb/<stem>.webp` — `<=400px`, shown in the thumbnail strips.
 
-After adding or replacing any image, regenerate the derivatives and commit them:
+After adding or replacing any image in `originals/`, regenerate the derivatives and commit them:
 
 ```bash
 # from svelte-app/  (one-time: pip install Pillow pillow-heif)
 python scripts/generate_image_derivatives.py
-git add static/images
+git add originals static/images
 ```
 
 The script is incremental (only new or changed files are processed), converts HEIC/TIFF, and bakes in EXIF orientation. In the data files always reference the **original** filename (e.g. `"My Sculpture.jpeg"`); the app maps it to the `.webp` derivative by swapping the extension, so a `.jpg`/`.jpeg` mismatch still resolves. `npm run verify:build` fails if a referenced image has no derivative — catching typos and forgotten regenerations. Images whose source file isn't available yet are tracked in the `KNOWN_MISSING` allowlist near the top of [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs).
@@ -186,7 +187,7 @@ Each artwork file exports a single object with these fields:
 | `address` | `string` | Yes | Street address or Plus Code |
 | `desc` | `string` | Yes | Description (HTML allowed) |
 | `slug` | `string` | No | URL slug override (auto-derived from `name` if omitted) |
-| `image` | `string` | No | Single image filename in `static/images/` |
+| `image` | `string` | No | Single image filename in `originals/` |
 | `imageCaption` | `string` | No | Credit line for single image |
 | `images` | `ArtworkImage[]` | No | Multiple images with captions |
 | `links` | `ArtworkLink[]` | No | External reference URLs |

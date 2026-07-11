@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
-	import { thumbUrl, webUrl, originalUrl, swapToOriginal } from '$lib/utils/image';
+	import { thumbUrl, webUrl } from '$lib/utils/image';
 	import { trapFocus } from '$lib/utils/focus-trap';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -80,13 +80,9 @@
 		<img
 			class="lightbox-img"
 			src={webUrl(images[current].src)}
-			data-fallback={originalUrl(images[current].src)}
 			alt={images[current].caption || name}
 			onload={(e) => ((e.currentTarget as HTMLImageElement).style.display = '')}
-			onerror={(e) => {
-				const el = e.currentTarget as HTMLImageElement;
-				if (!swapToOriginal(el)) el.style.display = 'none';
-			}}
+			onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
 		/>
 		{#if images[current].caption}
 			<div class="lightbox-caption">{images[current].caption}</div>
@@ -113,15 +109,12 @@
 				>
 					<img
 						src={thumbUrl(img.src)}
-						data-fallback={originalUrl(img.src)}
 						alt=""
 						loading="lazy"
 						onload={(e) =>
 							((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
-						onerror={(e) => {
-							const el = e.currentTarget as HTMLImageElement;
-							if (!swapToOriginal(el)) el.parentElement!.style.display = 'none';
-						}}
+						onerror={(e) =>
+							((e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none')}
 					/>
 				</button>
 			{/each}

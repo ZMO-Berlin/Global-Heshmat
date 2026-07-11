@@ -58,7 +58,7 @@ svelte-app/
 1. Copy `src/lib/data/artworks/_template.ts`
 2. Rename it (e.g., `031-new-artwork.ts`)
 3. Fill in the fields
-4. Drop any images into `static/images/`
+4. Drop any images into `originals/` and regenerate the WebP derivatives (`python scripts/generate_image_derivatives.py`)
 5. Done — the `index.ts` auto-imports all artwork files via `import.meta.glob`
 
 ## Development

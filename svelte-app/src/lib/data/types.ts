@@ -72,7 +72,7 @@ export interface Residence {
 	// load time. Mirrors the artwork convention — set it explicitly to keep a
 	// stable URL when renaming, or to disambiguate two places that share a name.
 	slug?: string;
-	/** Optional single photo filename in static/images/ (same pipeline as artworks). */
+	/** Optional single photo filename in originals/ (same pipeline as artworks). */
 	image?: string;
 	imageCaption?: string;
 	/**
