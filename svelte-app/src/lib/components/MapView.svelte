@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, untrack } from 'svelte';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import type MaplibreNS from 'maplibre-gl';
 	import { goto } from '$app/navigation';
@@ -16,7 +16,14 @@
 	// `import type`, which is erased at compile time.
 	let maplibregl: typeof MaplibreNS;
 	let mapContainer: HTMLDivElement;
-	let map: MaplibreNS.Map;
+	// `$state` so the effects below re-run once the (async) map creation
+	// finishes — on a hard load of a deep link the store is populated before
+	// the map exists, and a plain variable would leave those effects dead.
+	let map = $state<MaplibreNS.Map>();
+	// Set when the component is torn down while onMount's awaits are still in
+	// flight, so the continuations don't construct/drive a map that nothing
+	// will ever clean up (a leaked WebGL context).
+	let destroyed = false;
 
 	// Build GeoJSON from artworks
 	function buildGeoJSON(items: Artwork[]) {
@@ -109,13 +116,23 @@
 	}
 
 	function updateMapSource() {
-		if (!map || !map.isStyleLoaded() || !map.getSource('artworks')) return;
+		// Before the style has loaded the sources don't exist yet; the map's
+		// 'load' handler calls this again, so early-returning here never
+		// loses an update.
+		if (!map || !map.getSource('artworks')) return;
 		const filtered = getFilteredArtworks();
 		const visibleResidences = getVisibleResidences();
 		(map.getSource('artworks') as MaplibreNS.GeoJSONSource).setData(buildGeoJSON(filtered));
 		(map.getSource('residences') as MaplibreNS.GeoJSONSource)?.setData(
 			buildResidenceGeoJSON(visibleResidences)
 		);
+
+		// With a selected item the camera belongs to the pan-to-selection
+		// effects — fitting bounds here would immediately yank it away
+		// (e.g. on a deep-linked artwork page while the sources initialise).
+		// Read untracked: the filter effect above must not re-run (and refit
+		// the camera) merely because a selection opened or closed.
+		if (untrack(() => store.selectedArtwork || store.selectedResidence)) return;
 
 		// Fit bounds to everything currently visible (artworks + residences).
 		const points: [number, number][] = [
@@ -162,6 +179,7 @@
 	onMount(async () => {
 		// Dynamic import keeps maplibre out of the SSR bundle entirely.
 		maplibregl = (await import('maplibre-gl')).default;
+		if (destroyed) return;
 
 		// MapLibre's WebGL renderer lays glyphs out left-to-right by default,
 		// so Arabic/Persian/Hebrew basemap labels (e.g. Egyptian street names)
@@ -191,30 +209,33 @@
 		const colorTextMuted = readToken('--color-text-muted');
 		const colorResidence = readToken('--color-residence');
 
-		map = new maplibregl.Map({
+		// Wire everything through the local `m` (guaranteed non-undefined);
+		// the `map` state assignment below is what wakes up the effects.
+		const m = new maplibregl.Map({
 			container: mapContainer,
 			style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
 			center: [20, 35],
 			zoom: 3,
 			attributionControl: false
 		});
+		map = m;
 
-		map.addControl(new maplibregl.NavigationControl(), 'top-right');
-		map.addControl(new maplibregl.GlobeControl(), 'top-right');
-		map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+		m.addControl(new maplibregl.NavigationControl(), 'top-right');
+		m.addControl(new maplibregl.GlobeControl(), 'top-right');
+		m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
 
-		map.on('load', () => {
+		m.on('load', () => {
 			// Artwork points source
-			map.addSource('artworks', {
+			m.addSource('artworks', {
 				type: 'geojson',
-				data: buildGeoJSON(artworks),
+				data: buildGeoJSON(getFilteredArtworks()),
 				cluster: true,
 				clusterMaxZoom: 12,
 				clusterRadius: 45
 			});
 
 			// Cluster circles
-			map.addLayer({
+			m.addLayer({
 				id: 'clusters',
 				type: 'circle',
 				source: 'artworks',
@@ -229,7 +250,7 @@
 			});
 
 			// Cluster count labels
-			map.addLayer({
+			m.addLayer({
 				id: 'cluster-count',
 				type: 'symbol',
 				source: 'artworks',
@@ -245,7 +266,7 @@
 			});
 
 			// Located markers (unclustered)
-			map.addLayer({
+			m.addLayer({
 				id: 'artwork-located',
 				type: 'circle',
 				source: 'artworks',
@@ -259,7 +280,7 @@
 			});
 
 			// Search markers (unclustered)
-			map.addLayer({
+			m.addLayer({
 				id: 'artwork-search',
 				type: 'circle',
 				source: 'artworks',
@@ -273,12 +294,12 @@
 			});
 
 			// Relocation lines
-			map.addSource('relocations', {
+			m.addSource('relocations', {
 				type: 'geojson',
 				data: buildRelocationGeoJSON()
 			});
 
-			map.addLayer({
+			m.addLayer({
 				id: 'relocation-lines',
 				type: 'line',
 				source: 'relocations',
@@ -291,12 +312,12 @@
 			});
 
 			// Ghost markers (former locations)
-			map.addSource('ghosts', {
+			m.addSource('ghosts', {
 				type: 'geojson',
 				data: buildGhostGeoJSON()
 			});
 
-			map.addLayer({
+			m.addLayer({
 				id: 'ghost-markers',
 				type: 'circle',
 				source: 'ghosts',
@@ -312,12 +333,12 @@
 			// Places of residence — a separate, unclustered source so they read
 			// as their own category (distinct colour) and never merge into the
 			// artwork clusters.
-			map.addSource('residences', {
+			m.addSource('residences', {
 				type: 'geojson',
 				data: buildResidenceGeoJSON(getVisibleResidences())
 			});
 
-			map.addLayer({
+			m.addLayer({
 				id: 'residence-markers',
 				type: 'circle',
 				source: 'residences',
@@ -333,87 +354,95 @@
 			// /artworks/[slug]/ page sets `store.selectedArtwork`, which
 			// then triggers the pan-to effect below.
 			for (const layerId of ['artwork-located', 'artwork-search']) {
-				map.on('click', layerId, (e) => {
+				m.on('click', layerId, (e) => {
 					if (!e.features || e.features.length === 0) return;
 					const id = e.features[0].properties.id;
 					const artwork = artworks.find((a) => a.id === id);
 					if (artwork) goto(resolve('/artworks/[slug]', { slug: artwork.slug! }));
 				});
 
-				map.on('mouseenter', layerId, () => {
-					map.getCanvas().style.cursor = 'pointer';
+				m.on('mouseenter', layerId, () => {
+					m.getCanvas().style.cursor = 'pointer';
 				});
-				map.on('mouseleave', layerId, () => {
-					map.getCanvas().style.cursor = '';
+				m.on('mouseleave', layerId, () => {
+					m.getCanvas().style.cursor = '';
 				});
 			}
 
 			// Click on cluster to zoom in
-			map.on('click', 'clusters', async (e) => {
-				const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+			m.on('click', 'clusters', async (e) => {
+				const features = m.queryRenderedFeatures(e.point, { layers: ['clusters'] });
 				if (!features.length) return;
 				const clusterId = features[0].properties.cluster_id;
-				const source = map.getSource('artworks') as MaplibreNS.GeoJSONSource;
+				const source = m.getSource('artworks') as MaplibreNS.GeoJSONSource;
 				const zoom = await source.getClusterExpansionZoom(clusterId);
-				map.flyTo({
+				if (destroyed) return;
+				m.flyTo({
 					center: (features[0].geometry as { type: 'Point'; coordinates: number[] })
 						.coordinates as [number, number],
 					zoom
 				});
 			});
 
-			map.on('mouseenter', 'clusters', () => {
-				map.getCanvas().style.cursor = 'pointer';
+			m.on('mouseenter', 'clusters', () => {
+				m.getCanvas().style.cursor = 'pointer';
 			});
-			map.on('mouseleave', 'clusters', () => {
-				map.getCanvas().style.cursor = '';
+			m.on('mouseleave', 'clusters', () => {
+				m.getCanvas().style.cursor = '';
 			});
 
 			// Ghost marker tooltip
 			const ghostPopup = new maplibregl.Popup({
 				closeButton: false,
 				closeOnClick: false,
-				offset: 10
+				offset: 10,
+				className: 'ghost-popup'
 			});
 
-			map.on('mouseenter', 'ghost-markers', (e) => {
-				map.getCanvas().style.cursor = 'pointer';
+			m.on('mouseenter', 'ghost-markers', (e) => {
+				m.getCanvas().style.cursor = 'pointer';
 				if (e.features && e.features.length > 0) {
 					const coords = (
 						e.features[0].geometry as { type: 'Point'; coordinates: number[] }
 					).coordinates.slice() as [number, number];
 					const name = e.features[0].properties.name;
-					ghostPopup
-						.setLngLat(coords)
-						.setHTML(`<span style="font-size:12px">${name}</span>`)
-						.addTo(map);
+					// setText (not setHTML) so the data string can never be
+					// interpreted as markup; styling comes from the CSS class.
+					ghostPopup.setLngLat(coords).setText(name).addTo(m);
 				}
 			});
-			map.on('mouseleave', 'ghost-markers', () => {
-				map.getCanvas().style.cursor = '';
+			m.on('mouseleave', 'ghost-markers', () => {
+				m.getCanvas().style.cursor = '';
 				ghostPopup.remove();
 			});
 
 			// Click a residence marker — navigate to its detail URL. The
 			// /residences/[slug]/ page sets `store.selectedResidence`, which then
 			// triggers the pan-to effect above (mirrors the artwork flow).
-			map.on('click', 'residence-markers', (e) => {
+			m.on('click', 'residence-markers', (e) => {
 				if (!e.features || e.features.length === 0) return;
 				const id = e.features[0].properties.id;
 				const residence = residences.find((r) => r.id === id);
 				if (residence) goto(resolve('/residences/[slug]', { slug: residence.slug! }));
 			});
 
-			map.on('mouseenter', 'residence-markers', () => {
-				map.getCanvas().style.cursor = 'pointer';
+			m.on('mouseenter', 'residence-markers', () => {
+				m.getCanvas().style.cursor = 'pointer';
 			});
-			map.on('mouseleave', 'residence-markers', () => {
-				map.getCanvas().style.cursor = '';
+			m.on('mouseleave', 'residence-markers', () => {
+				m.getCanvas().style.cursor = '';
 			});
+
+			// Apply whatever store state accumulated while the style loaded —
+			// on a deep link (/?filter=Egypt) the filter was set long before
+			// the sources above existed. Only when the filter differs from the
+			// default, so a plain visit keeps the hand-tuned initial camera.
+			if (store.activeFilter !== 'all') updateMapSource();
 		});
 	});
 
 	onDestroy(() => {
+		destroyed = true;
 		if (map) map.remove();
 	});
 
@@ -434,5 +463,11 @@
 		left: 0;
 		right: 0;
 		z-index: var(--z-map);
+	}
+
+	/* MapLibre creates popup DOM outside Svelte's reach, so the ghost
+	   tooltip's styling has to be a global rule scoped by its className. */
+	.map-container :global(.ghost-popup .maplibregl-popup-content) {
+		font-size: 12px;
 	}
 </style>
