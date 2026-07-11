@@ -5,7 +5,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { artworks, countries } from '$lib/data/artworks';
-	import type { Artwork } from '$lib/data/types';
+	import type { IndexedArtwork } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
 
 	const store = getMapStore();
@@ -111,11 +111,11 @@
 	// marker — the /artworks/[slug]/ page then sets the store selection. Going
 	// through the router (rather than setting the store directly) keeps the
 	// URL shareable and lets the close button / Escape / Back all work.
-	function selectResult(artwork: Artwork) {
+	function selectResult(artwork: IndexedArtwork) {
 		searchInput = '';
 		searchOpen = false;
 		activeIndex = -1;
-		goto(resolve('/artworks/[slug]', { slug: artwork.slug! }));
+		goto(resolve('/artworks/[slug]', { slug: artwork.slug }));
 	}
 
 	function handleSearchFocus() {

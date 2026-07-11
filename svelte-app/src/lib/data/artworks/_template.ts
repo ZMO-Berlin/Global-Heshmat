@@ -120,7 +120,7 @@ import type { Artwork } from '../types';
 
 const artwork: Artwork = {
 	// ── Required fields ──────────────────────────────────
-	id: 31,
+	id: 999, // REPLACE with the next free id — the build fails on a duplicate
 	name: 'Sphinx Avenue Relief',
 	lat: 30.045,
 	lng: 31.235,

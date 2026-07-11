@@ -27,7 +27,7 @@
 
 		const match = artworks.find((a) => a.id === id);
 		if (match) {
-			goto(resolve('/artworks/[slug]', { slug: match.slug! }), { replaceState: true });
+			goto(resolve('/artworks/[slug]', { slug: match.slug }), { replaceState: true });
 		}
 	});
 </script>

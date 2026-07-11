@@ -11,10 +11,14 @@
 import type { Artwork } from '../types';
 import { buildArtworkIndex } from '$lib/utils/artwork-index';
 
-const modules = import.meta.glob<{ default: Artwork }>('./*.ts', { eager: true });
+// Negative patterns exclude the template and this index at glob time —
+// unlike a substring filter, a future data file that happens to contain
+// "index" or "template" in its name still gets picked up.
+const modules = import.meta.glob<{ default: Artwork }>(
+	['./*.ts', '!./_template.ts', '!./index.ts'],
+	{ eager: true }
+);
 
-const raw: Artwork[] = Object.entries(modules)
-	.filter(([path]) => !path.includes('_template') && !path.includes('index'))
-	.map(([, mod]) => mod.default);
+const raw: Artwork[] = Object.values(modules).map((mod) => mod.default);
 
 export default buildArtworkIndex(raw);

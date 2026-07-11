@@ -44,7 +44,7 @@
 import type { Residence } from '../types';
 
 const residence: Residence = {
-	id: 1,
+	id: 999, // REPLACE with the next free id — the build fails on a duplicate
 	name: 'Staatliche Fachschule für Porzellan',
 	lat: 50.1726,
 	lng: 12.13,

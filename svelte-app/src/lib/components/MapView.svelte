@@ -358,7 +358,7 @@
 					if (!e.features || e.features.length === 0) return;
 					const id = e.features[0].properties.id;
 					const artwork = artworks.find((a) => a.id === id);
-					if (artwork) goto(resolve('/artworks/[slug]', { slug: artwork.slug! }));
+					if (artwork) goto(resolve('/artworks/[slug]', { slug: artwork.slug }));
 				});
 
 				m.on('mouseenter', layerId, () => {
@@ -423,7 +423,7 @@
 				if (!e.features || e.features.length === 0) return;
 				const id = e.features[0].properties.id;
 				const residence = residences.find((r) => r.id === id);
-				if (residence) goto(resolve('/residences/[slug]', { slug: residence.slug! }));
+				if (residence) goto(resolve('/residences/[slug]', { slug: residence.slug }));
 			});
 
 			m.on('mouseenter', 'residence-markers', () => {

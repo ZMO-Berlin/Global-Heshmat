@@ -55,6 +55,21 @@ describe('buildArtworkIndex', () => {
 		).toThrow(/Duplicate artwork slug "original"/);
 	});
 
+	it('throws when two artworks share an id (e.g. a copied template kept its id)', () => {
+		expect(() =>
+			buildArtworkIndex([minimal({ id: 7, name: 'First' }), minimal({ id: 7, name: 'Second' })])
+		).toThrow(/Duplicate artwork id 7.*"First".*"Second"/);
+	});
+
+	it('throws when a name yields an empty slug and no explicit slug is set', () => {
+		expect(() => buildArtworkIndex([minimal({ id: 1, name: '···' })])).toThrow(/empty slug/);
+	});
+
+	it('accepts a non-ASCII name when an explicit slug is provided', () => {
+		const result = buildArtworkIndex([minimal({ id: 1, name: '···', slug: 'pinned' })]);
+		expect(result[0].slug).toBe('pinned');
+	});
+
 	it('returns an empty array for empty input without throwing', () => {
 		expect(buildArtworkIndex([])).toEqual([]);
 	});

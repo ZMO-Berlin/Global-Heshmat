@@ -4,7 +4,6 @@ import type { Artwork, Residence } from '$lib/data/types';
 let selectedArtwork = $state<Artwork | null>(null);
 let selectedResidence = $state<Residence | null>(null);
 let activeFilter = $state<string>('all');
-let searchQuery = $state<string>('');
 let aboutOpen = $state<boolean>(false);
 let missingOpen = $state<boolean>(false);
 
@@ -31,12 +30,6 @@ export function getMapStore() {
 		},
 		set activeFilter(value: string) {
 			activeFilter = value;
-		},
-		get searchQuery() {
-			return searchQuery;
-		},
-		set searchQuery(value: string) {
-			searchQuery = value;
 		},
 		get aboutOpen() {
 			return aboutOpen;

@@ -40,18 +40,6 @@ body {
 	outline-color: var(--focus-ring-color-on-dark);
 }
 
-/* ───── Editorial label utility ─────
-   Small-caps treatment shared by metadata fields (footer roles, etc.).
-   Pairs body font + widest tracking + uppercase to read like a magazine byline. */
-.eyebrow {
-	font-family: var(--font-body);
-	font-size: var(--text-xs);
-	font-weight: var(--weight-semibold);
-	letter-spacing: var(--tracking-widest);
-	text-transform: uppercase;
-	color: var(--color-text-muted);
-}
-
 /* ═══════════════════════════════════════════
    Header
    ═══════════════════════════════════════════ */

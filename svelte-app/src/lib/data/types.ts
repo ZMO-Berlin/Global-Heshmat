@@ -51,6 +51,12 @@ export interface Artwork {
  * Cairo, Selb, …), as distinct from where his artworks stand. Surfaced under
  * the "Places of residence" map category and plotted as its own marker layer.
  */
+/**
+ * An artwork after indexing (see `$lib/utils/artwork-index.ts`): the slug is
+ * resolved and guaranteed, so consumers can build URLs without assertions.
+ */
+export type IndexedArtwork = Artwork & { slug: string };
+
 export interface Residence {
 	id: number;
 	name: string;
@@ -75,3 +81,6 @@ export interface Residence {
 	 */
 	images?: ArtworkImage[];
 }
+
+/** A residence after indexing — slug resolved and guaranteed. */
+export type IndexedResidence = Residence & { slug: string };

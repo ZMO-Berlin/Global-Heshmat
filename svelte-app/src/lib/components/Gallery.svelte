@@ -93,7 +93,8 @@
 						data-fallback={originalUrl(img.src)}
 						alt=""
 						loading="lazy"
-						onload={(e) => ((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
+						onload={(e) =>
+							((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
 						onerror={(e) => {
 							const el = e.currentTarget as HTMLImageElement;
 							if (!swapToOriginal(el)) el.parentElement!.style.display = 'none';

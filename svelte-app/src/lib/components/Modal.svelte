@@ -32,13 +32,7 @@
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="modal-overlay" onclick={handleOverlayClick}>
-		<div
-			class="modal-card"
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby={titleId}
-			use:trapFocus
-		>
+		<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby={titleId} use:trapFocus>
 			<div class="modal-header">
 				<h2 id={titleId}>{title}</h2>
 				<button class="sidebar-close" onclick={onclose} aria-label="Close">
