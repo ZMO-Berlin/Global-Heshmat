@@ -41,6 +41,7 @@
 	// Reset goes back to the canonical home URL and recenters the map.
 	function resetView() {
 		store.activeFilter = 'all';
+		store.selectedArtwork = null;
 		store.selectedResidence = null;
 		mapView?.resetView();
 		goto(resolve('/'));

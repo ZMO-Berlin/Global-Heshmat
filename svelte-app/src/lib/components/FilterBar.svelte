@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { Search, ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import { fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { artworks, countries } from '$lib/data/artworks';
 	import type { Artwork } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
@@ -71,12 +74,21 @@
 		store.activeFilter = filter;
 		store.selectedArtwork = null;
 		store.selectedResidence = null;
+		// A detail route owns the selection it displays; picking a filter
+		// dismisses that view, so also navigate home rather than leaving a
+		// stale /artworks/<slug> or /residences/<slug> URL behind. The
+		// filter itself is re-appended to the URL by the url-sync effect.
+		if (page.route.id !== '/') goto(resolve('/'));
 	}
 
+	// Navigate to the artwork's canonical URL, exactly like clicking its map
+	// marker — the /artworks/[slug]/ page then sets the store selection. Going
+	// through the router (rather than setting the store directly) keeps the
+	// URL shareable and lets the close button / Escape / Back all work.
 	function selectResult(artwork: Artwork) {
 		searchInput = '';
 		searchOpen = false;
-		store.selectedArtwork = artwork;
+		goto(resolve('/artworks/[slug]', { slug: artwork.slug! }));
 	}
 
 	function handleSearchFocus() {
