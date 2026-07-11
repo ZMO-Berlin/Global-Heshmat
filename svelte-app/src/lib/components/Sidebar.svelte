@@ -49,7 +49,12 @@
 		</div>
 		<div class="sidebar-body">
 			{#if images.length > 0}
-				<Gallery {images} />
+				<!-- Keyed so switching items rebuilds the gallery from image 0
+				     instead of reusing the instance (whose index could point
+				     past the end of a shorter image list). -->
+				{#key item.id}
+					<Gallery {images} />
+				{/key}
 			{:else}
 				<div class="sidebar-image">
 					<div class="sidebar-image-placeholder">

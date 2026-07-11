@@ -11,6 +11,14 @@
 
 	const multi = $derived(images.length > 1);
 
+	// Defensive: if the `images` prop is ever swapped for a shorter list on a
+	// live instance, snap back to the first image rather than indexing past
+	// the end (the Sidebar keys this component per item, but the guard keeps
+	// the component safe wherever it's used).
+	$effect(() => {
+		if (current >= images.length) current = 0;
+	});
+
 	function next() {
 		current = (current + 1) % images.length;
 	}
@@ -30,6 +38,7 @@
 			src={webUrl(images[current].src)}
 			data-fallback={originalUrl(images[current].src)}
 			alt=""
+			onload={(e) => ((e.currentTarget as HTMLImageElement).style.display = '')}
 			onerror={(e) => {
 				const el = e.currentTarget as HTMLImageElement;
 				if (!swapToOriginal(el)) el.style.display = 'none';
@@ -89,6 +98,7 @@
 						data-fallback={originalUrl(img.src)}
 						alt=""
 						loading="lazy"
+						onload={(e) => ((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
 						onerror={(e) => {
 							const el = e.currentTarget as HTMLImageElement;
 							if (!swapToOriginal(el)) el.parentElement!.style.display = 'none';
