@@ -70,6 +70,32 @@
 			.slice(0, 8);
 	});
 
+	// Combobox keyboard support: ArrowDown/ArrowUp move the highlighted
+	// result, Enter opens it, Escape dismisses the list. The highlight is
+	// exposed to screen readers via aria-activedescendant on the input.
+	const listboxId = $props.id();
+	let activeIndex = $state(-1);
+	const resultsOpen = $derived(searchOpen && searchInput.trim().length >= 2);
+
+	function handleSearchKeydown(e: KeyboardEvent) {
+		if (!resultsOpen || matches.length === 0) return;
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			activeIndex = (activeIndex + 1) % matches.length;
+		} else if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			activeIndex = (activeIndex - 1 + matches.length) % matches.length;
+		} else if (e.key === 'Enter' && activeIndex >= 0 && activeIndex < matches.length) {
+			e.preventDefault();
+			selectResult(matches[activeIndex]);
+		} else if (e.key === 'Escape') {
+			// Consume the Escape: it closes the dropdown, not the sidebar or
+			// a modal (the layout's window-level handler would act otherwise).
+			e.stopPropagation();
+			searchOpen = false;
+		}
+	}
+
 	function setFilter(filter: string) {
 		store.activeFilter = filter;
 		store.selectedArtwork = null;
@@ -88,6 +114,7 @@
 	function selectResult(artwork: Artwork) {
 		searchInput = '';
 		searchOpen = false;
+		activeIndex = -1;
 		goto(resolve('/artworks/[slug]', { slug: artwork.slug! }));
 	}
 
@@ -184,21 +211,37 @@
 			type="text"
 			class="search-input"
 			placeholder="Search artworks..."
+			aria-label="Search artworks"
+			role="combobox"
+			aria-expanded={resultsOpen}
+			aria-controls={listboxId}
+			aria-autocomplete="list"
+			aria-activedescendant={activeIndex >= 0 ? `${listboxId}-${activeIndex}` : undefined}
 			bind:value={searchInput}
-			oninput={() => (searchOpen = searchInput.trim().length >= 2)}
+			oninput={() => {
+				searchOpen = searchInput.trim().length >= 2;
+				activeIndex = -1;
+			}}
 			onfocus={handleSearchFocus}
+			onkeydown={handleSearchKeydown}
 		/>
 
-		{#if searchOpen && searchInput.trim().length >= 2}
-			<div class="search-results">
+		{#if resultsOpen}
+			<div class="search-results" id={listboxId} role="listbox" aria-label="Search results">
 				{#if matches.length === 0}
-					<div class="search-empty">No artworks found</div>
+					<div class="search-empty" role="status">No artworks found</div>
 				{:else}
-					{#each matches as a (a.id)}
-						<!-- svelte-ignore a11y_click_events_have_key_events -->
-						<!-- svelte-ignore a11y_no_static_element_interactions -->
-						<div class="search-item" onclick={() => selectResult(a)}>
-							<div class="search-item-name">
+					{#each matches as a, i (a.id)}
+						<button
+							type="button"
+							class="search-item"
+							class:keyboard-active={i === activeIndex}
+							id="{listboxId}-{i}"
+							role="option"
+							aria-selected={i === activeIndex}
+							onclick={() => selectResult(a)}
+						>
+							<span class="search-item-name">
 								<span
 									class="search-item-status"
 									style="background:{a.status === 'search'
@@ -206,9 +249,9 @@
 										: 'var(--color-primary)'}"
 								></span>
 								{a.name}
-							</div>
-							<div class="search-item-loc">{a.city}, {a.country}</div>
-						</div>
+							</span>
+							<span class="search-item-loc">{a.city}, {a.country}</span>
+						</button>
 					{/each}
 				{/if}
 			</div>

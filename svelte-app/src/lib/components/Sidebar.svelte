@@ -53,7 +53,7 @@
 				     instead of reusing the instance (whose index could point
 				     past the end of a shorter image list). -->
 				{#key item.id}
-					<Gallery {images} />
+					<Gallery {images} name={item.name} />
 				{/key}
 			{:else}
 				<div class="sidebar-image">
