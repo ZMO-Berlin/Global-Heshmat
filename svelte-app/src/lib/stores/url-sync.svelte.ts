@@ -4,8 +4,6 @@ import { page } from '$app/state';
 import { getMapStore } from './map.svelte';
 import { facetsToSearchString, paramsToFacets } from '$lib/utils/url-facets';
 
-let lastAboutOpen = false;
-
 /**
  * Bidirectional sync between the shared map store (About modal, active
  * filter) and the URL query string.
@@ -18,18 +16,29 @@ let lastAboutOpen = false;
  * Direction URL → store: the initial URL is parsed at setup time, and a
  *   `popstate` listener re-syncs whenever the user uses Back/Forward.
  *
- * Call once from the layout's <script> setup so the `$effect` is owned
- * by the layout component's lifecycle.
+ * Call once from the layout's <script> setup so the `$effect`s are owned
+ * by the layout component's lifecycle (which also removes the popstate
+ * listener again if the layout is ever torn down, e.g. during HMR).
  */
 export function setupUrlSync(): void {
 	if (!browser) return;
 
 	const store = getMapStore();
 
+	// Local (not module-level) so a re-setup can't inherit stale state.
+	let lastAboutOpen: boolean;
+
 	applyUrlToStore(store);
 	lastAboutOpen = store.aboutOpen;
 
-	window.addEventListener('popstate', () => applyUrlToStore(store));
+	$effect(() => {
+		const onPopstate = () => {
+			applyUrlToStore(store);
+			lastAboutOpen = store.aboutOpen;
+		};
+		window.addEventListener('popstate', onPopstate);
+		return () => window.removeEventListener('popstate', onPopstate);
+	});
 
 	$effect(() => {
 		// Reactive deps: route changes (goto) AND local store changes both
@@ -66,5 +75,4 @@ function applyUrlToStore(store: ReturnType<typeof getMapStore>): void {
 	const facets = paramsToFacets(new URLSearchParams(window.location.search));
 	store.aboutOpen = facets.aboutOpen;
 	store.activeFilter = facets.activeFilter;
-	lastAboutOpen = facets.aboutOpen;
 }

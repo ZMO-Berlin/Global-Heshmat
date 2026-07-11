@@ -51,6 +51,16 @@ describe('buildResidenceIndex', () => {
 		).toThrow(/Duplicate residence slug "original"/);
 	});
 
+	it('throws when two residences share an id (e.g. a copied template kept its id)', () => {
+		expect(() =>
+			buildResidenceIndex([minimal({ id: 4, name: 'First' }), minimal({ id: 4, name: 'Second' })])
+		).toThrow(/Duplicate residence id 4.*"First".*"Second"/);
+	});
+
+	it('throws when a name yields an empty slug and no explicit slug is set', () => {
+		expect(() => buildResidenceIndex([minimal({ id: 1, name: '···' })])).toThrow(/empty slug/);
+	});
+
 	it('returns an empty array for empty input without throwing', () => {
 		expect(buildResidenceIndex([])).toEqual([]);
 	});

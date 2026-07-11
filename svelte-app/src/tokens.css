@@ -42,7 +42,6 @@
 	--color-text: #2c2a26;
 	--color-text-secondary: #5a564e;
 	--color-text-muted: #8a857c;
-	--color-text-light: #a8a29e;
 	--color-text-placeholder: #b8a88a; /* warm tone for placeholders on surface-image */
 
 	/* ───── UI ───── */
@@ -90,7 +89,9 @@
 	--text-4xl: 26px;
 
 	/* Font weights — only those loaded from Google Fonts.
-	   Outfit: 300, 400, 500, 600.  Cormorant Garamond: 400, 500, 600, 700 (+ italic 400/500). */
+	   Outfit: 300, 400, 500, 600.  Cormorant Garamond: 400, 500, 600, 700 (+ italic 400/500).
+	   The weight/leading/tracking scales below intentionally include steps
+	   with no current usage — they document the full design scale. */
 	--weight-light: 300;
 	--weight-regular: 400;
 	--weight-medium: 500;
@@ -154,7 +155,6 @@
 
 	/* ───── Motion ───── */
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 	--duration-fast: 200ms;
 	--duration-base: 250ms;
 	--duration-slow: 300ms;

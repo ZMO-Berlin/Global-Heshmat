@@ -17,12 +17,12 @@ export function GET(): Response {
 	const entries: SitemapEntry[] = [
 		{ loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
 		...artworks.map((a) => ({
-			loc: `${SITE_URL}${artworkPath(a.slug!)}`,
+			loc: `${SITE_URL}${artworkPath(a.slug)}`,
 			changefreq: 'monthly' as const,
 			priority: '0.8'
 		})),
 		...residences.map((r) => ({
-			loc: `${SITE_URL}${residencePath(r.slug!)}`,
+			loc: `${SITE_URL}${residencePath(r.slug)}`,
 			changefreq: 'monthly' as const,
 			priority: '0.7'
 		}))
@@ -43,10 +43,11 @@ export function GET(): Response {
 			.join('\n') +
 		`\n</urlset>\n`;
 
+	// No Cache-Control: the route is prerendered to a static file, so the
+	// hosting platform's own headers are what actually reach clients.
 	return new Response(body, {
 		headers: {
-			'Content-Type': 'application/xml; charset=utf-8',
-			'Cache-Control': 'public, max-age=3600'
+			'Content-Type': 'application/xml; charset=utf-8'
 		}
 	});
 }

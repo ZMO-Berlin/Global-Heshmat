@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Artwork, Residence } from '$lib/data/types';
+	import type { IndexedArtwork, IndexedResidence } from '$lib/data/types';
+	import { webUrl } from '$lib/utils/image';
 	import {
 		SITE_URL,
 		SITE_NAME,
@@ -14,9 +15,9 @@
 
 	interface Props {
 		/** When provided, render artwork-specific metadata (title, OG, JSON-LD). */
-		artwork?: Artwork | null;
+		artwork?: IndexedArtwork | null;
 		/** When provided, render residence-specific metadata. Otherwise site metadata. */
-		residence?: Residence | null;
+		residence?: IndexedResidence | null;
 	}
 
 	const { artwork = null, residence = null }: Props = $props();
@@ -27,8 +28,11 @@
 	const truncate = (s: string, n: number) =>
 		s.length <= n ? s : s.slice(0, n - 1).trimEnd() + '…';
 
-	// First photo of a residence — its `images` array takes precedence over the
-	// legacy single `image`, mirroring the gallery's own resolution order.
+	// First photo of an item — the `images` array takes precedence over the
+	// legacy single `image`, mirroring the gallery's own resolution order. The
+	// structured-data URL points at the web-size WebP derivative, not the
+	// multi-megabyte original.
+	const artworkImage = $derived(artwork?.images?.[0]?.src ?? artwork?.image);
 	const residenceImage = $derived(residence?.images?.[0]?.src ?? residence?.image);
 
 	const title = $derived(
@@ -55,9 +59,9 @@
 
 	const canonicalUrl = $derived(
 		artwork
-			? absoluteUrl(artworkPath(artwork.slug!))
+			? absoluteUrl(artworkPath(artwork.slug))
 			: residence
-				? absoluteUrl(residencePath(residence.slug!))
+				? absoluteUrl(residencePath(residence.slug))
 				: `${SITE_URL}/`
 	);
 
@@ -68,7 +72,7 @@
 					'@type': 'VisualArtwork',
 					name: artwork.name,
 					description: truncate(stripHtml(artwork.desc), 300),
-					image: artwork.image ? absoluteUrl(`/images/${artwork.image}`) : undefined,
+					image: artworkImage ? absoluteUrl(webUrl(artworkImage)) : undefined,
 					url: canonicalUrl,
 					locationCreated: {
 						'@type': 'Place',
@@ -104,7 +108,7 @@
 						'@type': 'Place',
 						name: residence.name,
 						description: truncate(stripHtml(residence.desc), 300),
-						image: residenceImage ? absoluteUrl(`/images/${residenceImage}`) : undefined,
+						image: residenceImage ? absoluteUrl(webUrl(residenceImage)) : undefined,
 						url: canonicalUrl,
 						address: {
 							'@type': 'PostalAddress',
@@ -178,7 +182,12 @@
 	<meta name="robots" content="index, follow" />
 	<meta name="theme-color" content="#16192e" />
 
-	<!-- JSON-LD structured data -->
+	<!-- JSON-LD structured data. `<` is escaped so no data string (names and
+	     descriptions are curated but free-form) can ever close the script tag
+	     or open another element mid-payload. -->
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html '<script type="application/ld+json">' + JSON.stringify(jsonLd) + '</' + 'script>'}
+	{@html '<script type="application/ld+json">' +
+		JSON.stringify(jsonLd).replace(/</g, '\\u003c') +
+		'</' +
+		'script>'}
 </svelte:head>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { thumbUrl, webUrl, originalUrl } from './image';
+import { thumbUrl, webUrl } from './image';
 
 describe('image URL helpers', () => {
 	it('maps an original to its web derivative, swapping the extension', () => {
@@ -27,9 +27,5 @@ describe('image URL helpers', () => {
 		expect(webUrl('Mosaik Officers Club Zamalek_darüber Fathy.jpeg')).toBe(
 			'/images/web/Mosaik Officers Club Zamalek_darüber Fathy.webp'
 		);
-	});
-
-	it('points the fallback URL at the untouched original', () => {
-		expect(originalUrl('Agricultural museum_2.jpeg')).toBe('/images/Agricultural museum_2.jpeg');
 	});
 });

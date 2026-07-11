@@ -1,15 +1,23 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, Maximize2 } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
-	import { thumbUrl, webUrl, originalUrl, swapToOriginal } from '$lib/utils/image';
+	import { thumbUrl, webUrl } from '$lib/utils/image';
 	import Lightbox from './Lightbox.svelte';
 
-	let { images }: { images: ArtworkImage[] } = $props();
+	let { images, name }: { images: ArtworkImage[]; name: string } = $props();
 
 	let current = $state(0);
 	let lightboxOpen = $state(false);
 
 	const multi = $derived(images.length > 1);
+
+	// Defensive: if the `images` prop is ever swapped for a shorter list on a
+	// live instance, snap back to the first image rather than indexing past
+	// the end (the Sidebar keys this component per item, but the guard keeps
+	// the component safe wherever it's used).
+	$effect(() => {
+		if (current >= images.length) current = 0;
+	});
 
 	function next() {
 		current = (current + 1) % images.length;
@@ -23,51 +31,38 @@
 </script>
 
 <div class="gallery">
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div class="gallery-main" onclick={() => (lightboxOpen = true)}>
-		<img
-			src={webUrl(images[current].src)}
-			data-fallback={originalUrl(images[current].src)}
-			alt=""
-			onerror={(e) => {
-				const el = e.currentTarget as HTMLImageElement;
-				if (!swapToOriginal(el)) el.style.display = 'none';
-			}}
-		/>
+	<div class="gallery-main">
+		<!-- The whole image is the click/tap/Enter target for the lightbox; the
+		     arrows and the expand affordance sit on top as separate buttons. -->
+		<button
+			type="button"
+			class="gallery-open"
+			onclick={() => (lightboxOpen = true)}
+			aria-label="View image full screen"
+		>
+			<img
+				src={webUrl(images[current].src)}
+				alt={images[current].caption || name}
+				onload={(e) => ((e.currentTarget as HTMLImageElement).style.display = '')}
+				onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
+			/>
+		</button>
 
 		{#if multi}
 			<div class="gallery-counter">
 				{current + 1} / {images.length}
 			</div>
-			<button
-				class="gallery-arrow gallery-arrow-prev"
-				onclick={(e) => {
-					e.stopPropagation();
-					prev();
-				}}
-				aria-label="Previous image"
-			>
+			<button class="gallery-arrow gallery-arrow-prev" onclick={prev} aria-label="Previous image">
 				<ChevronLeft size={16} strokeWidth={2.5} />
 			</button>
-			<button
-				class="gallery-arrow gallery-arrow-next"
-				onclick={(e) => {
-					e.stopPropagation();
-					next();
-				}}
-				aria-label="Next image"
-			>
+			<button class="gallery-arrow gallery-arrow-next" onclick={next} aria-label="Next image">
 				<ChevronRight size={16} strokeWidth={2.5} />
 			</button>
 		{/if}
 
 		<button
 			class="gallery-expand"
-			onclick={(e) => {
-				e.stopPropagation();
-				lightboxOpen = true;
-			}}
+			onclick={() => (lightboxOpen = true)}
 			aria-label="View full screen"
 		>
 			<Maximize2 size={16} strokeWidth={2} />
@@ -81,25 +76,29 @@
 	{#if multi}
 		<div class="gallery-thumbs">
 			{#each images as img, i (img.src)}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="gallery-thumb" class:active={i === current} onclick={() => goTo(i)}>
+				<button
+					type="button"
+					class="gallery-thumb"
+					class:active={i === current}
+					aria-label="Show image {i + 1} of {images.length}"
+					aria-current={i === current}
+					onclick={() => goTo(i)}
+				>
 					<img
 						src={thumbUrl(img.src)}
-						data-fallback={originalUrl(img.src)}
 						alt=""
 						loading="lazy"
-						onerror={(e) => {
-							const el = e.currentTarget as HTMLImageElement;
-							if (!swapToOriginal(el)) el.parentElement!.style.display = 'none';
-						}}
+						onload={(e) =>
+							((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
+						onerror={(e) =>
+							((e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none')}
 					/>
-				</div>
+				</button>
 			{/each}
 		</div>
 	{/if}
 </div>
 
 {#if lightboxOpen}
-	<Lightbox {images} bind:current onclose={() => (lightboxOpen = false)} />
+	<Lightbox {images} {name} bind:current onclose={() => (lightboxOpen = false)} />
 {/if}

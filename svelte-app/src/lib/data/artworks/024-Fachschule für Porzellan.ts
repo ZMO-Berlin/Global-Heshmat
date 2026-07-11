@@ -17,7 +17,7 @@ const artwork: Artwork = {
 	         caption: "A recent photo of the school from 2026"},
 		{src: "OFRA_Okt_74.tif",
 	         caption: "October 1974"},
-		{src: "Schulgebäude_bis_1971.jeg",
+		{src: "Schulgebäude_bis_1971.jpg",
 	         caption: "School Building until 1971"},
 			 {src: "Wärmetechnisches_Labor.jpg",
 	         caption: "Thermal Engineering Laboratory"},

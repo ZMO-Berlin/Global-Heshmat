@@ -12,7 +12,7 @@
  *  1. Copy this file and rename it:  NNN-short-name.ts
  *     (e.g. 002-selb.ts). Use the next free id/number.
  *  2. Fill in the fields below.
- *  3. (Optional) Drop a photo into  static/images/  and regenerate the
+ *  3. (Optional) Drop a photo into  originals/  and regenerate the
  *     WebP derivatives — same process as artworks (see the repo README).
  *  4. Save. Every .ts file in this folder (except _template and index)
  *     is auto-collected via Vite's import.meta.glob — no registration.
@@ -33,7 +33,7 @@
  *  years     Period of residence, e.g. "1957–1959" or "from 1948".
  *  desc      Short note — what the place was, or what he did there.
  *            HTML is allowed (<em>, <a href="">, …).
- *  image         (optional) photo filename placed in static/images/.
+ *  image         (optional) photo filename placed in originals/.
  *  imageCaption  (optional) credit line for that photo.
  *
  * ============================================================
@@ -50,7 +50,7 @@ const residence: Residence = {
 	lng: 7.05763186406692,
 	country: 'Germany',
 	city: 'Leverkusen',
-	years: '1977',
+	years: 'from the late 1960s',
 	desc: 'Since the late 1960s Hassan Heshmat regularly visited his brother-in-law, Dr. Ahmed Hegasy - first in Cologne, then in Leverkusen, accompanied by his wife Madiha or one of his children. Sometimes he drove from Egypt with his artworks in the car, taking a ferry from Alexandria to Italy. On one occasion, he organised a direct sale in the Hegasy family’s living room once they had moved to Leverkusen. He also talked with them about his work for the memorial in Hasselt.',
 	images: [
 		{ src: 'Leverkusen_I.jpg', caption: 'ca. 1977' },
