@@ -57,6 +57,10 @@ check(
 
 check('404.html present', existsSync(join(BUILD_DIR, '404.html')));
 
+// The social-preview image referenced by every page's og:image/twitter:image
+// (see src/lib/components/Seo.svelte) must actually ship in the build.
+check('og-image.png present', existsSync(join(BUILD_DIR, 'og-image.png')));
+
 // ── Home page SEO ───────────────────────────────────────────────────
 check('index.html present', existsSync(join(BUILD_DIR, 'index.html')));
 
@@ -83,6 +87,10 @@ if (existsSync(join(BUILD_DIR, 'index.html'))) {
 	check(
 		'home includes Google Search Console verification meta',
 		new RegExp(`name="google-site-verification"[^>]*content="${GSC_TOKEN}"`).test(home)
+	);
+	check(
+		'home og:image points at the shipped og-image.png',
+		new RegExp(`property="og:image"\\s+content="${SITE_URL}/og-image.png"`).test(home)
 	);
 	check(
 		'home does not leak localhost URLs',
