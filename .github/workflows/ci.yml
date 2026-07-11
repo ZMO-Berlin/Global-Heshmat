@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  # Manual deploys (e.g. re-publishing after a Pages hiccup) run the same
+  # checks-then-deploy pipeline as a push to main.
+  workflow_dispatch:
 
 # Cancel in-progress runs for the same branch/PR when a new commit is pushed.
 concurrency:
@@ -22,6 +25,7 @@ jobs:
   lint:
     name: Lint & format
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -33,21 +37,19 @@ jobs:
           cache: npm
           cache-dependency-path: svelte-app/package-lock.json
 
+      # npm ci runs the `prepare` script (svelte-kit sync), so the generated
+      # types the linters need already exist after this step.
       - name: Install dependencies
         run: npm ci
 
-      - name: Sync SvelteKit
-        run: npm run prepare
-
-      - name: Check formatting
-        run: npm run format:check
-
+      # `lint` = prettier --check . && eslint . — one step covers both.
       - name: Lint
         run: npm run lint
 
   typecheck:
     name: Type check
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -68,6 +70,7 @@ jobs:
   test:
     name: Unit tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -88,6 +91,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -111,3 +115,38 @@ jobs:
 
       - name: Verify build artifact
         run: npm run verify:build
+
+      # The Node 22 build doubles as the deployment artifact, so a deploy can
+      # never ship a build that skipped lint/typecheck/tests/verification.
+      - name: Configure Pages
+        if: matrix.node-version == 22 && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+
+      - name: Upload Pages artifact
+        if: matrix.node-version == 22 && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: svelte-app/build
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: [lint, typecheck, test, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Only the deploy job holds the elevated permissions.
+    permissions:
+      pages: write
+      id-token: write
+    # Allow only one concurrent deployment, without cancelling in-progress
+    # runs, so a deployment finishes cleanly.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
