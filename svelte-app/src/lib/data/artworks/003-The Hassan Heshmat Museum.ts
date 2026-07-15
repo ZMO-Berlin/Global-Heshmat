@@ -30,7 +30,7 @@ const artwork: Artwork = {
 		   {src: "Heshmat Gallery 2.jpg", caption: "Image Courtesy of S. Hafez"},
 		   {src: "Heshmat Gallery 3.jpg", caption: "Image Courtesy of S. Hafez"},
 		   {src: "Heshmat Gallery 4.jpg", caption: "Image Courtesy of S. Hafez"},
-			]
+			],
 		   links: [
 		{
 			label: 'History of Hassan Heshmat Museum',
