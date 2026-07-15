@@ -25,10 +25,10 @@ const artwork: Artwork = {
      	   caption: "Mykerios Triade"},
 		    {	src: "The couple_Sculpture Garden Museum.jpg"},
 		
-		   {src: "Heshmat Gallery 1.jpg", caption: "Image Courtesy of S. Hafez"},
-		   {src: "Heshmat Gallery 2.jpg", caption: "Image Courtesy of S. Hafez"},
-		   {src: "Heshmat Gallery 3.jpg", caption: "Image Courtesy of S. Hafez"},
-		   {src: "Heshmat Gallery 4.jpg", caption: "Image Courtesy of S. Hafez"},
+		   {src: "Heshmat Gallery Red Shelf and Wall.jpg", caption: "Image Courtesy of S. Hafez"},
+		   {src: "Heshmat Gallery Red Shelf.jpg", caption: "Image Courtesy of S. Hafez"},
+		   {src: "Heshmat Gallery Room.jpg", caption: "Image Courtesy of S. Hafez"},
+		   {src: "Heshmat Gallery Wall.jpg", caption: "Image Courtesy of S. Hafez"},
 			],
 		   links: [
 		{
