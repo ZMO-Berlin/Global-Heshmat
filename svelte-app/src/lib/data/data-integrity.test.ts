@@ -44,7 +44,9 @@ function imageRefs(items: ReadonlyArray<(typeof artworks)[number] | (typeof resi
 }
 
 function videoRefs(items: ReadonlyArray<(typeof artworks)[number]>) {
-	return items.filter((item) => item.videoFile).map((item) => ({ owner: item.name, file: item.videoFile! }));
+	return items
+		.filter((item) => item.videoFile)
+		.map((item) => ({ owner: item.name, file: item.videoFile! }));
 }
 
 const allItems = [...artworks, ...residences];
@@ -72,7 +74,7 @@ describe('image references', () => {
 	it('every file in originals/ is referenced by a data file', () => {
 		const referencedStems = new Set([
 			...allImageRefs.map((r) => stem(r.file).normalize('NFC')),
-			...allVideoRefs.map((r) => stem(r.file).normalize('NFC')),
+			...allVideoRefs.map((r) => stem(r.file).normalize('NFC'))
 		]);
 		const orphans = [...originals].filter((f) => !referencedStems.has(stem(f)));
 		expect(orphans).toEqual([]);
