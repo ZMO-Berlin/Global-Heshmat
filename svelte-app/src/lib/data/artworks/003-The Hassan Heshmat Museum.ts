@@ -24,8 +24,7 @@ const artwork: Artwork = {
 		    {	src: "Mykerinos Triade_E_Gothe.jpg",
      	   caption: "Mykerios Triade"},
 		    {	src: "The couple_Sculpture Garden Museum.jpg"},
-			{src: "Heshmats Museum_Nader Alaa.jpg", 
-				caption: "Hassan Heshmat's gallery during his lifetime (From right to left: Alaa Heshmat & Nader Hegazy)"},
+		
 		   {src: "Heshmat Gallery 1.jpg", caption: "Image Courtesy of S. Hafez"},
 		   {src: "Heshmat Gallery 2.jpg", caption: "Image Courtesy of S. Hafez"},
 		   {src: "Heshmat Gallery 3.jpg", caption: "Image Courtesy of S. Hafez"},
