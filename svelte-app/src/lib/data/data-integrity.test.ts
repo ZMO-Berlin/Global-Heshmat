@@ -43,8 +43,13 @@ function imageRefs(items: ReadonlyArray<(typeof artworks)[number] | (typeof resi
 	return refs;
 }
 
+function videoRefs(items: ReadonlyArray<(typeof artworks)[number]>) {
+	return items.filter((item) => item.videoFile).map((item) => ({ owner: item.name, file: item.videoFile! }));
+}
+
 const allItems = [...artworks, ...residences];
 const allImageRefs = [...imageRefs(artworks), ...imageRefs(residences)];
+const allVideoRefs = videoRefs(artworks);
 
 describe('image references', () => {
 	it('every referenced image exists verbatim in originals/', () => {
@@ -65,7 +70,10 @@ describe('image references', () => {
 	// The reverse direction: nothing accumulates unnoticed. Orphaned originals
 	// once added up to >100 MB of never-served weight in the repo.
 	it('every file in originals/ is referenced by a data file', () => {
-		const referencedStems = new Set(allImageRefs.map((r) => stem(r.file).normalize('NFC')));
+		const referencedStems = new Set([
+			...allImageRefs.map((r) => stem(r.file).normalize('NFC')),
+			...allVideoRefs.map((r) => stem(r.file).normalize('NFC')),
+		]);
 		const orphans = [...originals].filter((f) => !referencedStems.has(stem(f)));
 		expect(orphans).toEqual([]);
 	});
