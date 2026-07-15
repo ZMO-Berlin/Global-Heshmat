@@ -53,8 +53,9 @@ const residence: Residence = {
 	years: '1945',
 	desc: 'Hassan Heshmat lived here as a young man',
 	images: [{src: "Heshmat 1942 Ezbet al Nakhl.jpg",
-	         caption: "Around 1942: Hassan Heshmat with clay plates and mugs. An order most probably commissioned by the British army. The photo was taken in Ezbet al Nakhl, Cairo, where Heshmat lived at the time."}]
-			]
+	         caption: "Around 1942: Hassan Heshmat with clay plates and mugs. An order most probably commissioned by the British army. The photo was taken in Ezbet al Nakhl, Cairo, where Heshmat lived at the time."
+	}
+],
 };
 
 export default residence;
