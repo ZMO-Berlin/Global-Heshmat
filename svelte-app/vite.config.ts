@@ -14,6 +14,16 @@ export default defineConfig({
 		// bar / menu "Install" entry) without ever nagging the visitor.
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
+			// Must mirror `export const trailingSlash = 'always'` in
+			// src/routes/+layout.ts. The plugin defaults to 'never', which
+			// precaches prerendered pages as `/artworks/foo` while the browser
+			// navigates to `/artworks/foo/`. That misses the precache, falls
+			// through to `navigateFallback` below, and serves the ROOT page —
+			// whose relative `./_app/…` URLs then 404 under /artworks/foo/,
+			// leaving every deep-linked page unstyled and mapless.
+			kit: {
+				trailingSlash: 'always'
+			},
 			// We call `registerSW()` ourselves from the root layout; 'auto'
 			// detects that virtual-module import and skips injecting a second
 			// registration (avoids double-registering the service worker).
