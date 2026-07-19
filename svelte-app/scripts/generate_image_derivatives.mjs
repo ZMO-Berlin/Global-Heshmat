@@ -4,7 +4,7 @@
  */
 import sharp from 'sharp';
 import { readdir, stat } from 'fs/promises';
-import { join, dirname, basename, extname } from 'path';
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { existsSync, mkdirSync } from 'fs';
 
@@ -29,9 +29,7 @@ const stem = (file) => file.replace(/\.[^./\\]+$/, '');
 async function generateDerivatives() {
 	try {
 		const files = await readdir(ORIGINALS_DIR);
-		const imageFiles = files.filter((f) =>
-			/\.(jpe?g|png|tiff?|webp|heic|heif)$/i.test(f)
-		);
+		const imageFiles = files.filter((f) => /\.(jpe?g|png|tiff?|webp|heic|heif)$/i.test(f));
 
 		console.log(`Found ${imageFiles.length} images to process`);
 
