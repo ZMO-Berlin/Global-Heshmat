@@ -15,8 +15,8 @@ const artwork: Artwork = {
 	desc: 'Made of stone, approximately three metres tall, Hassan Heshmat made the ‘Daughter of the Nile’. In February 1986, the Jollyville Mövenpick Hotel was set on fire during a major uprising by Egyptian security forces after rumours of a pay cut and extended service period. Further copies are today in the Hassan Heshmat Museum as well as in the public Kafraoui park.',
 	images: [
 		{
-			src: 'Tochter des Nils_beschmiert_Jollyville.jpg',
-			caption: 'Daughter of the Nile copy at Kafraoui Park, Cairo'
+			src: "Tochter des Nils_beschmiert_Jollyville.jpg",
+			caption: "Daughter of the Nile copy at Kafraoui Park, Cairo"
 		}
 	]
 };
