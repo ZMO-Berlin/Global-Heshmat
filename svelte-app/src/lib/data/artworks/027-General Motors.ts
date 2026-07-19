@@ -17,7 +17,7 @@ const artwork: Artwork = {
 	videoFile: 'Autohaus Lobby 6 October.mp4',
 	imageCaption: 'Hassan Heshmat in front of a mosaic at the General Motors Egypt Building'
 	
-
+	
 	
 	
 };
