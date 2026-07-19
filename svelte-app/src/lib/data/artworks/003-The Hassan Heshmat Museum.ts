@@ -33,9 +33,9 @@ const artwork: Artwork = {
 		   {src: "Balcony H. Heshmat in Ain Shams_Courtesy S. Hafez.jpg", caption: "Balcony Hassan Heshmat in Ain Shams, Image Courtesy of S. Hafez"},
 		   {src: "Kitchen private house H. Heshmat_Courtesy S. Hafez.jpg", caption: "Kitchen private house Hassan Heshmat, Image Courtesy of S. Hafez"},
 		   {src: "Kitchen Tiles.jpg", caption: "Kitchen Tiles, Image Courtesy of S. Hafez"},
-		   {src: "Kitchen tiles_Courtesy S. Hafez.jpg2.jpg", caption: "Kitchen Tiles, Image Courtesy of S. Hafez"},
+		   {src: "Kitchen tiles_Courtesy S. Hafez.jpg", caption: "Kitchen Tiles, Image Courtesy of S. Hafez"},
 		   {src: "Kitchen tiles_H Heshmat_Courtesy S. Hafez.jpg", caption: "Kitchen Tiles, Image Courtesy of S. Hafez"},
-		   {src: "Tiles kitchen priv. house H. Heshmat_Courtesy S. Hafez.jpg.jpg", caption: "Tiles kitchen private house Hassan Heshmat, Image Courtesy of S. Hafez"},
+		   {src: "Tiles kitchen priv. house H. Heshmat_Courtesy S. Hafez.jpg", caption: "Tiles kitchen private house Hassan Heshmat, Image Courtesy of S. Hafez"},
 
 			],
 		   links: [
