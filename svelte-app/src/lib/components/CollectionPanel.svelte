@@ -55,7 +55,7 @@
 	$effect(() => {
 		if (store.browseOpen) {
 			opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-			// After the `inert` attribute is removed, or the focus is refused.
+			// Deferred until after `inert` is removed, or the focus is refused.
 			requestAnimationFrame(() => panelEl?.focus());
 		} else if (opener) {
 			opener.focus();
@@ -63,7 +63,18 @@
 		}
 	});
 
+	/** Dismiss the panel and hand focus back to whatever opened it. */
 	function close() {
+		store.browseOpen = false;
+	}
+
+	/**
+	 * Dismiss because the visitor followed an entry. Focus belongs to the
+	 * destination — the sidebar moves it to the item's heading — so drop the
+	 * opener rather than yanking focus back up to the header button.
+	 */
+	function closeForNavigation() {
+		opener = null;
 		store.browseOpen = false;
 	}
 
@@ -108,7 +119,7 @@
 							class="collection-item"
 							class:current={currentPath === artworkPath(artwork.slug)}
 							aria-current={currentPath === artworkPath(artwork.slug) ? 'page' : undefined}
-							onclick={close}
+							onclick={closeForNavigation}
 						>
 							<span
 								class="collection-dot"
@@ -141,7 +152,7 @@
 							class="collection-item"
 							class:current={currentPath === residencePath(residence.slug)}
 							aria-current={currentPath === residencePath(residence.slug) ? 'page' : undefined}
-							onclick={close}
+							onclick={closeForNavigation}
 						>
 							<span class="collection-dot residence" aria-hidden="true"></span>
 							<span class="collection-name" dir="auto">{residence.name}</span>

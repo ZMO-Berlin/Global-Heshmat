@@ -30,6 +30,10 @@
 	// flight, so the continuations don't construct/drive a map that nothing
 	// will ever clean up (a leaked WebGL context).
 	let destroyed = false;
+	// Drives the loading veil: the basemap style is a network fetch, so on a
+	// cold or slow connection the map area would otherwise sit blank with no
+	// indication anything is happening.
+	let status = $state<'loading' | 'ready' | 'failed'>('loading');
 
 	function updateMapSource() {
 		// Before the style has loaded the sources don't exist yet; the map's
@@ -140,7 +144,15 @@
 		m.addControl(new maplibregl.GlobeControl(), 'top-right');
 		m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
 
+		m.on('error', (e) => {
+			// MapLibre reports tile and style failures here. Only a missing style
+			// leaves the map unusable — tile hiccups resolve themselves.
+			if (!m.isStyleLoaded()) status = 'failed';
+			console.error('MapLibre:', e.error?.message ?? e);
+		});
+
 		m.on('load', () => {
+			status = 'ready';
 			// Artwork points source
 			m.addSource('artworks', {
 				type: 'geojson',
@@ -371,6 +383,20 @@
 
 <div bind:this={mapContainer} class="map-container"></div>
 
+{#if status !== 'ready'}
+	<div class="map-status" role="status" aria-live="polite">
+		{#if status === 'failed'}
+			<p class="map-status-text">
+				The map could not be loaded. Use <strong>Browse</strong> in the header to see the collection as
+				a list.
+			</p>
+		{:else}
+			<span class="map-spinner" aria-hidden="true"></span>
+			<p class="map-status-text">Loading the map&hellip;</p>
+		{/if}
+	</div>
+{/if}
+
 <style>
 	.map-container {
 		position: absolute;
@@ -379,6 +405,53 @@
 		left: 0;
 		right: 0;
 		z-index: var(--z-map);
+	}
+
+	/* Sits over the map area only, so the header, filter bar and footer stay
+	   interactive while the basemap loads. */
+	.map-status {
+		position: absolute;
+		top: calc(var(--header-height) + var(--filter-height));
+		bottom: var(--footer-height);
+		left: 0;
+		right: 0;
+		z-index: var(--z-legend);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-3-5);
+		pointer-events: none;
+		background: var(--color-surface-warm);
+	}
+	.map-status-text {
+		max-width: 26rem;
+		padding: 0 var(--space-6);
+		text-align: center;
+		font-size: var(--text-md);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-relaxed);
+	}
+	.map-spinner {
+		width: 26px;
+		height: 26px;
+		border-radius: 50%;
+		border: 2.5px solid var(--color-border);
+		border-top-color: var(--color-primary);
+		animation: map-spin 900ms linear infinite;
+	}
+	@keyframes map-spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	/* The reduced-motion block in app.css clamps animation-duration globally,
+	   which would spin this at 0.01ms. Stop it outright instead. */
+	@media (prefers-reduced-motion: reduce) {
+		.map-spinner {
+			animation: none;
+			border-top-color: var(--color-border);
+		}
 	}
 
 	/* MapLibre creates popup DOM outside Svelte's reach, so the ghost

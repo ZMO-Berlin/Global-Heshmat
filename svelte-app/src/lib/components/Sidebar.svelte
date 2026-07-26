@@ -6,6 +6,7 @@
 	import VideoPlayer from './VideoPlayer.svelte';
 	import { aboutContent as about } from '$lib/data/about';
 	import { getMapStore } from '$lib/stores/map.svelte';
+	import { youTubeId } from '$lib/utils/video';
 
 	const store = getMapStore();
 
@@ -28,10 +29,29 @@
 		return [];
 	});
 
-	function getVideoId(url: string): string | null {
-		const match = url.match(/(?:v=|\/)([\w-]{11})/);
-		return match ? match[1] : null;
-	}
+	// Focus the panel heading when an item opens. Both routes into the sidebar
+	// unmount whatever the user was on — a search result unmounts the input
+	// they typed in, a collection-panel link unmounts the link itself — and
+	// SvelteKit then resets focus to <body>, stranding a keyboard user at the
+	// top of the document while the panel they opened sits below.
+	//
+	// Deferred to the next frame precisely because of that reset: focusing
+	// synchronously in the effect happens first and gets overwritten.
+	let headingEl: HTMLElement | undefined = $state();
+	let lastId: number | null = null;
+
+	$effect(() => {
+		if (!item) {
+			lastId = null;
+			return;
+		}
+		if (item.id === lastId) return;
+		lastId = item.id;
+		// No cleanup that cancels this frame: the effect re-runs when the store
+		// settles, and cancelling on re-run would kill the pending focus before
+		// it ever fired.
+		requestAnimationFrame(() => headingEl?.focus());
+	});
 
 	function close() {
 		// Artworks and residences both own a route, so navigating home clears
@@ -40,10 +60,15 @@
 	}
 </script>
 
-<div class="sidebar" class:open={item !== null}>
+<aside
+	class="sidebar"
+	class:open={item !== null}
+	aria-label={item ? `Details: ${item.name}` : 'Details'}
+	inert={item === null}
+>
 	{#if item}
 		<div class="sidebar-header">
-			<h2 dir="auto">{item.name}</h2>
+			<h2 dir="auto" tabindex="-1" bind:this={headingEl}>{item.name}</h2>
 			<button class="btn-close" onclick={close} aria-label="Close">
 				<X size={20} strokeWidth={2.25} />
 			</button>
@@ -84,7 +109,7 @@
 					{/if}
 
 					{#if artwork.video}
-						{@const videoId = getVideoId(artwork.video)}
+						{@const videoId = youTubeId(artwork.video)}
 						{#if videoId}
 							<div class="sidebar-video">
 								<iframe
@@ -131,4 +156,4 @@
 			</div>
 		</div>
 	{/if}
-</div>
+</aside>
