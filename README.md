@@ -204,6 +204,46 @@ git add originals static/images
 
 The script is incremental (only new or changed files are processed), converts HEIC/TIFF, and bakes in EXIF orientation. A master that emits decoder warnings is still accepted, and one that will not decode at all falls back to re-encoding from the largest derivative already on disk — this archive contains a couple of each. In the data files always reference the **original** filename (e.g. `"My Sculpture.jpeg"`); the app maps it to the `.webp` derivative by swapping the extension, so a `.jpg`/`.jpeg` mismatch still resolves. `npm run verify:build` fails if a referenced image has no derivative — catching typos and forgotten regenerations. Images whose source file isn't available yet are tracked in the `KNOWN_MISSING` allowlist near the top of [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs).
 
+### Git LFS
+
+`svelte-app/originals/` is tracked by [Git LFS](https://git-lfs.com) — see
+[`svelte-app/.gitattributes`](svelte-app/.gitattributes). Install the client once per machine:
+
+```bash
+git lfs install
+```
+
+**This is a forward-only arrangement.** Images added or replaced from now on are stored as LFS
+objects. The 139 files committed before the switch remain ordinary git blobs in history, so the
+existing ~283 MB is still there and a fresh clone is unchanged in size. Converting those too means
+rewriting history (`git lfs migrate import`) and force-pushing `main`, which changes every commit
+hash and invalidates every existing clone and open pull request — a deliberate, coordinated
+operation, not something to do casually.
+
+Two things to know before leaning on it further:
+
+- **Bandwidth is the binding constraint, not storage.** GitHub's free tier allows 1 GB of LFS
+  storage and 1 GB of transfer per month. At this collection's size a handful of full clones would
+  exhaust the monthly transfer, after which fetches fail until the quota resets or a data pack is
+  bought. Check what ZMO's plan actually includes before migrating the history.
+- **CI deliberately does not fetch LFS content.** Nothing in the build or the test suite reads
+  image bytes — the data-integrity test only compares filenames, and the derivatives under
+  `static/images/` are committed as ordinary files. So `actions/checkout` runs without `lfs: true`,
+  which keeps CI off the bandwidth quota entirely.
+
+The one workflow that does need the real files is regenerating derivatives. If `npm run images`
+reports that files are LFS pointers, fetch them first:
+
+```bash
+git lfs pull
+npm run images
+```
+
+Because these masters are never deployed and only their _filenames_ matter to the test suite, the
+alternative worth considering is moving them out of git altogether — to institutional storage or a
+Zenodo deposit with a DOI, which suits an archival project better than LFS — leaving a committed
+manifest for the integrity test to read.
+
 ### Data schema
 
 Each artwork file exports a single object with these fields:

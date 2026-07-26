@@ -16,7 +16,7 @@
  * Run with: npm run images
  */
 import sharp from 'sharp';
-import { readdir, stat } from 'node:fs/promises';
+import { readdir, stat, open } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync, mkdirSync } from 'node:fs';
@@ -43,6 +43,31 @@ for (const { dir } of VARIANTS) {
 }
 
 const stem = (file) => file.replace(/\.[^./\\]+$/, '');
+
+const LFS_MAGIC = 'version https://git-lfs.github.com/spec/v1';
+
+/**
+ * True when the file on disk is a Git LFS pointer rather than the image.
+ *
+ * originals/ is LFS-tracked going forward (see .gitattributes), and CI checks
+ * out without LFS content because nothing in the build reads image bytes. So a
+ * fresh clone can hold pointers, and sharp would report a confusing decode
+ * error rather than the real problem.
+ */
+async function isLfsPointer(path) {
+	const handle = await open(path, 'r');
+	try {
+		const { buffer, bytesRead } = await handle.read(
+			Buffer.alloc(LFS_MAGIC.length),
+			0,
+			LFS_MAGIC.length,
+			0
+		);
+		return bytesRead === LFS_MAGIC.length && buffer.toString('utf8') === LFS_MAGIC;
+	} finally {
+		await handle.close();
+	}
+}
 
 /** Largest variant — the fallback source when a master won't decode. */
 const LARGEST = VARIANTS.reduce((a, b) => (b.size > a.size ? b : a));
@@ -80,9 +105,15 @@ async function generateDerivatives() {
 	let skipped = 0;
 	let failed = 0;
 
+	const pointers = [];
 	for (const file of imageFiles) {
 		const inputPath = join(ORIGINALS_DIR, file);
 		const baseStem = stem(file);
+
+		if (await isLfsPointer(inputPath)) {
+			pointers.push(file);
+			continue;
+		}
 
 		for (const { dir, size, quality } of VARIANTS) {
 			const outPath = join(IMAGES_DIR, dir, `${baseStem}.webp`);
@@ -114,6 +145,15 @@ async function generateDerivatives() {
 				failed++;
 			}
 		}
+	}
+
+	if (pointers.length > 0) {
+		console.error(
+			`\n${pointers.length} file(s) in originals/ are Git LFS pointers, not images.\n` +
+				`Run \`git lfs pull\` to download them, then re-run \`npm run images\`.\n` +
+				`  e.g. ${pointers.slice(0, 3).join(', ')}`
+		);
+		failed += pointers.length;
 	}
 
 	console.log(`\n${written} written, ${skipped} already up to date, ${failed} failed`);
