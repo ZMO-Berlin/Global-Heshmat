@@ -16,6 +16,7 @@ interface SitemapEntry {
 export function GET(): Response {
 	const entries: SitemapEntry[] = [
 		{ loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
+		{ loc: `${SITE_URL}/collection/`, changefreq: 'weekly', priority: '0.9' },
 		...artworks.map((a) => ({
 			loc: `${SITE_URL}${artworkPath(a.slug)}`,
 			changefreq: 'monthly' as const,

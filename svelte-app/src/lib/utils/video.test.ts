@@ -6,8 +6,12 @@ describe('video URL helper', () => {
 		expect(videoUrl('Midan_Galaa.mp4')).toBe('/videos/Midan_Galaa.mp4');
 	});
 
-	it('preserves spaces and casing in the filename', () => {
-		expect(videoUrl('Some Clip.MP4')).toBe('/videos/Some Clip.MP4');
+	it('percent-encodes spaces and preserves casing', () => {
+		expect(videoUrl('Some Clip.MP4')).toBe('/videos/Some%20Clip.MP4');
+		// The real one: artwork 020's clip.
+		expect(videoUrl('Autohaus Lobby 6 October.mp4')).toBe(
+			'/videos/Autohaus%20Lobby%206%20October.mp4'
+		);
 	});
 });
 

@@ -7,6 +7,8 @@
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import { artworkPath, residencePath } from '$lib/config';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
+	import MarkerGlyph from './MarkerGlyph.svelte';
+	import ViewSwitcher from './ViewSwitcher.svelte';
 
 	/**
 	 * A text index of everything on the map.
@@ -103,6 +105,13 @@
 		</button>
 	</div>
 
+	<!-- The panel is the "how do I browse this" surface, so the other two views
+	     are offered here rather than crowding a header that already carries four
+	     controls at 360px. -->
+	<div class="collection-views">
+		<ViewSwitcher />
+	</div>
+
 	<div class="collection-body">
 		{#if total === 0}
 			<p class="collection-empty">No entries match the current filter.</p>
@@ -121,11 +130,7 @@
 							aria-current={currentPath === artworkPath(artwork.slug) ? 'page' : undefined}
 							onclick={closeForNavigation}
 						>
-							<span
-								class="collection-dot"
-								class:to-be-found={artwork.status === 'search'}
-								aria-hidden="true"
-							></span>
+							<MarkerGlyph kind={artwork.status === 'search' ? 'search' : 'located'} size={11} />
 							<span class="collection-name" dir="auto">{artwork.name}</span>
 							<span class="collection-city" dir="auto">
 								{artwork.city}
@@ -154,7 +159,7 @@
 							aria-current={currentPath === residencePath(residence.slug) ? 'page' : undefined}
 							onclick={closeForNavigation}
 						>
-							<span class="collection-dot residence" aria-hidden="true"></span>
+							<MarkerGlyph kind="residence" size={11} />
 							<span class="collection-name" dir="auto">{residence.name}</span>
 							<span class="collection-city" dir="auto">
 								<MapPin size={11} strokeWidth={2.5} />
@@ -214,6 +219,12 @@
 		text-transform: uppercase;
 		color: var(--color-text-muted);
 		margin-top: var(--space-1);
+	}
+
+	.collection-views {
+		padding: var(--space-3) var(--space-5);
+		border-bottom: 1px solid var(--color-border-light);
+		flex-shrink: 0;
 	}
 
 	.collection-body {
@@ -291,20 +302,9 @@
 		font-weight: var(--weight-medium);
 	}
 
-	/* Mirrors the map legend so the list and the markers read as one system. */
-	.collection-dot {
-		width: 9px;
-		height: 9px;
-		margin-top: 5px;
-		border-radius: 50%;
-		background: var(--color-primary);
-		flex-shrink: 0;
-	}
-	.collection-dot.to-be-found {
-		background: var(--color-search);
-	}
-	.collection-dot.residence {
-		background: var(--color-residence);
+	/* The glyph is the same shape the map draws — see MarkerGlyph.svelte. */
+	.collection-item :global(.glyph) {
+		margin-top: 4px;
 	}
 
 	@media (max-width: 768px) {

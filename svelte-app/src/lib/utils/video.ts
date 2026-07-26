@@ -7,9 +7,14 @@
  * transcoding/derivative pipeline is ever added for video.
  */
 
-/** URL for a local video stored in static/videos/. */
+/**
+ * URL for a local video stored in static/videos/.
+ *
+ * Percent-encoded for the same reason as the image URLs: the filenames carry
+ * spaces (e.g. "Autohaus Lobby 6 October.mp4").
+ */
 export function videoUrl(src: string): string {
-	return `/videos/${src}`;
+	return `/videos/${encodeURIComponent(src)}`;
 }
 
 /**

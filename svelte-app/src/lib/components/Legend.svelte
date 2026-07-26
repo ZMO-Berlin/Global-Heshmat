@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { ChevronDown } from '@lucide/svelte';
+	import MarkerGlyph from './MarkerGlyph.svelte';
+	import { MARKER_SPECS } from '$lib/utils/marker-icons';
 
 	// Collapsible so it can be folded away on a phone, where five rows plus the
 	// footer eat most of an already short map. Open by default; the user's
@@ -16,21 +18,23 @@
 	</button>
 	{#if open}
 		<div class="legend-items">
+			<!-- Swatches come from MARKER_SPECS, the same source the map draws
+			     from, so the legend cannot describe a shape the map isn't using. -->
 			<div class="legend-item">
-				<div class="legend-dot" style="background: var(--color-primary);"></div>
-				Located artwork
+				<MarkerGlyph kind="located" />
+				{MARKER_SPECS.located.label}
 			</div>
 			<div class="legend-item">
-				<div class="legend-dot" style="background: var(--color-search);"></div>
-				To be found
+				<MarkerGlyph kind="search" />
+				{MARKER_SPECS.search.label}
 			</div>
 			<div class="legend-item">
-				<div class="legend-dot" style="background: var(--color-residence);"></div>
+				<MarkerGlyph kind="residence" />
 				Places of residence
 			</div>
 			<div class="legend-item">
-				<div class="legend-dot ghost-dot"></div>
-				Former location
+				<MarkerGlyph kind="former" />
+				{MARKER_SPECS.former.label}
 			</div>
 			<div class="legend-item">
 				<div class="legend-line"></div>
@@ -41,12 +45,6 @@
 </aside>
 
 <style>
-	.ghost-dot {
-		background: transparent !important;
-		border: 2px dashed var(--color-text-muted) !important;
-		box-shadow: none !important;
-	}
-
 	/* The toggle wraps the title so the whole strip is the hit target. Plain
 	   button reset — the legend box itself supplies the chrome. */
 	.legend-toggle {
@@ -109,15 +107,6 @@
 		gap: var(--space-2-5);
 		margin: var(--space-1-5) 0;
 		color: var(--color-text-secondary);
-	}
-
-	.legend-dot {
-		width: 11px;
-		height: 11px;
-		border-radius: 50%;
-		border: 2px solid white;
-		box-shadow: 0 0 0 1px var(--color-border);
-		flex-shrink: 0;
 	}
 
 	.legend-line {
