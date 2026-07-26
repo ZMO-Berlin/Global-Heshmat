@@ -1,9 +1,10 @@
 import type { Artwork, Residence } from '$lib/data/types';
+import { FILTER_ALL, type MapFilter } from '$lib/utils/map-filter';
 
 // Shared reactive state for cross-component communication
 let selectedArtwork = $state<Artwork | null>(null);
 let selectedResidence = $state<Residence | null>(null);
-let activeFilter = $state<string>('all');
+let activeFilter = $state<MapFilter>(FILTER_ALL);
 let aboutOpen = $state<boolean>(false);
 let missingOpen = $state<boolean>(false);
 
@@ -28,7 +29,7 @@ export function getMapStore() {
 		get activeFilter() {
 			return activeFilter;
 		},
-		set activeFilter(value: string) {
+		set activeFilter(value: MapFilter) {
 			activeFilter = value;
 		},
 		get aboutOpen() {

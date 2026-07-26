@@ -236,6 +236,19 @@ body {
 	border-color: var(--color-search);
 	box-shadow: var(--shadow-chip-active-search);
 }
+/* Per-chip artwork count. Tabular numerals keep the counts from jittering the
+   chip widths, and the muted weight keeps them subordinate to the label. */
+.filter-count {
+	font-size: var(--text-xs);
+	font-weight: var(--weight-regular);
+	font-variant-numeric: tabular-nums;
+	opacity: 0.6;
+	margin-left: 1px;
+}
+.filter-chip.active .filter-count,
+.filter-chip.active-search .filter-count {
+	opacity: 0.75;
+}
 .filter-sep {
 	width: 1px;
 	height: 18px;

@@ -5,10 +5,21 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { artworks, countries } from '$lib/data/artworks';
+	import { residences } from '$lib/data/residences';
 	import type { IndexedArtwork } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
+	import {
+		FILTER_ALL,
+		FILTER_RESIDENCE,
+		FILTER_SEARCH,
+		type MapFilter
+	} from '$lib/utils/map-filter';
 
 	const store = getMapStore();
+
+	// Chip counts. Constant for the lifetime of the app (the data is compiled
+	// in), so computed once rather than in a $derived.
+	const searchCount = artworks.filter((a) => a.status === 'search').length;
 
 	let searchInput = $state('');
 	let searchOpen = $state(false);
@@ -73,7 +84,10 @@
 	// Combobox keyboard support: ArrowDown/ArrowUp move the highlighted
 	// result, Enter opens it, Escape dismisses the list. The highlight is
 	// exposed to screen readers via aria-activedescendant on the input.
-	const listboxId = $props.id();
+	const uid = $props.id();
+	const listboxId = `${uid}-results`;
+	// Associates the "Filter:" caption with the chip group for screen readers.
+	const filterLabelId = `${uid}-filter-label`;
 	let activeIndex = $state(-1);
 	const resultsOpen = $derived(searchOpen && searchInput.trim().length >= 2);
 
@@ -96,7 +110,7 @@
 		}
 	}
 
-	function setFilter(filter: string) {
+	function setFilter(filter: MapFilter) {
 		store.activeFilter = filter;
 		store.selectedArtwork = null;
 		store.selectedResidence = null;
@@ -147,29 +161,33 @@
 
 		<div
 			class="filter-chips"
+			role="group"
+			aria-labelledby={filterLabelId}
 			bind:this={chipsEl}
 			onscroll={updateArrows}
 			style="mask-image:{chipsMask};-webkit-mask-image:{chipsMask}"
 		>
-			<span>Filter:</span>
+			<span id={filterLabelId}>Filter:</span>
 
 			<button
 				class="filter-chip"
-				class:active={store.activeFilter === 'all'}
-				onclick={() => setFilter('all')}
+				class:active={store.activeFilter === FILTER_ALL}
+				aria-pressed={store.activeFilter === FILTER_ALL}
+				onclick={() => setFilter(FILTER_ALL)}
 			>
-				All
+				All <span class="filter-count">{artworks.length}</span>
 			</button>
 
 			<div class="filter-sep"></div>
 
-			{#each countries as country (country)}
+			{#each countries as country (country.name)}
 				<button
 					class="filter-chip"
-					class:active={store.activeFilter === country}
-					onclick={() => setFilter(country)}
+					class:active={store.activeFilter === country.name}
+					aria-pressed={store.activeFilter === country.name}
+					onclick={() => setFilter(country.name)}
 				>
-					{country}
+					{country.name} <span class="filter-count">{country.count}</span>
 				</button>
 			{/each}
 
@@ -177,18 +195,20 @@
 
 			<button
 				class="filter-chip"
-				class:active-search={store.activeFilter === 'search'}
-				onclick={() => setFilter('search')}
+				class:active-search={store.activeFilter === FILTER_SEARCH}
+				aria-pressed={store.activeFilter === FILTER_SEARCH}
+				onclick={() => setFilter(FILTER_SEARCH)}
 			>
-				To be found
+				To be found <span class="filter-count">{searchCount}</span>
 			</button>
 
 			<button
 				class="filter-chip"
-				class:active={store.activeFilter === 'residence'}
-				onclick={() => setFilter('residence')}
+				class:active={store.activeFilter === FILTER_RESIDENCE}
+				aria-pressed={store.activeFilter === FILTER_RESIDENCE}
+				onclick={() => setFilter(FILTER_RESIDENCE)}
 			>
-				Places of residence
+				Places of residence <span class="filter-count">{residences.length}</span>
 			</button>
 		</div>
 

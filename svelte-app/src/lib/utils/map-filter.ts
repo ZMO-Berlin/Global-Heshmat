@@ -21,8 +21,7 @@ export type MapFilter =
 	| typeof FILTER_ALL
 	| typeof FILTER_SEARCH
 	| typeof FILTER_RESIDENCE
-	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-	| (string & {});
+	| (string & NonNullable<unknown>);
 
 /** Artworks plotted under `filter`. */
 export function filterArtworks<T extends Artwork>(artworks: readonly T[], filter: MapFilter): T[] {
