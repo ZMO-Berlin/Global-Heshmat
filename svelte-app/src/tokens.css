@@ -23,6 +23,20 @@
 	--color-residence-rgb: 64 99 156;
 	--color-residence: rgb(var(--color-residence-rgb));
 
+	/* ───── Text-safe brand variants ─────
+	   The brand hues above are tuned for the map: large filled circles, where
+	   saturation matters more than contrast. As *text* they fall short of WCAG
+	   AA — --color-primary is 4.22:1 on white, --color-accent only 3.24:1.
+	   These are the same hues darkened just far enough to clear 4.5:1 against
+	   the hardest light surface they sit on (--color-surface-warm for the
+	   general ones, the matching *-light tint for the tags). Use these
+	   anywhere the colour carries a glyph; keep the originals for markers,
+	   fills, borders and rules. */
+	--color-primary-text: #177c71;
+	--color-search-text: #a65a33;
+	--color-accent-text: #916a24;
+	--color-moved-text: #7b5bbd;
+
 	/* ───── Layout surfaces ───── */
 	--color-header-bg-rgb: 22 25 46;
 	--color-header-bg: rgb(var(--color-header-bg-rgb));
@@ -41,8 +55,13 @@
 	--color-ink: var(--color-header-bg); /* high-contrast headings, semantic alias */
 	--color-text: #2c2a26;
 	--color-text-secondary: #5a564e;
-	--color-text-muted: #8a857c;
-	--color-text-placeholder: #b8a88a; /* warm tone for placeholders on surface-image */
+	/* Darkened from #8a857c, which read at 3.67:1 on white and 3.41:1 on
+	   surface-warm — below AA for the small text it carries (legend rows,
+	   addresses, captions, search-result locations). */
+	--color-text-muted: #757169;
+	/* Darkened from #b8a88a. Paired with opacity .6 on surface-image that was
+	   1.45:1 — effectively invisible. Used at full opacity now. */
+	--color-text-placeholder: #706654;
 
 	/* ───── UI ───── */
 	--color-border: #e8e3da;
@@ -76,17 +95,23 @@
 	--font-body: 'Outfit', system-ui, -apple-system, sans-serif;
 
 	/* Type scale
-	   base (13) = UI chrome: filter bar, meta tags, captions, small buttons
-	   md   (14) = body copy: descriptions, addresses, placeholder text */
-	--text-xs: 11px;
-	--text-sm: 12px;
-	--text-base: 13px;
-	--text-md: 14px;
-	--text-lg: 15px;
-	--text-xl: 18px;
-	--text-2xl: 22px;
-	--text-3xl: 24px;
-	--text-4xl: 26px;
+	   base (14) = UI chrome: filter bar, meta tags, captions, small buttons
+	   md   (16) = body copy: descriptions, addresses, placeholder text
+
+	   Nudged up one step across the board. The previous scale bottomed out at
+	   11px with 14px body copy, which is tight for an archive whose whole
+	   purpose is reading about the works; 16px body is the browser default and
+	   the usual floor for sustained reading. The chrome sizes moved less so
+	   the header and filter bar keep their proportions. */
+	--text-xs: 12px;
+	--text-sm: 13px;
+	--text-base: 14px;
+	--text-md: 16px;
+	--text-lg: 17px;
+	--text-xl: 20px;
+	--text-2xl: 23px;
+	--text-3xl: 25px;
+	--text-4xl: 28px;
 
 	/* Font weights — only those loaded from Google Fonts.
 	   Outfit: 300, 400, 500, 600.  Cormorant Garamond: 400, 500, 600, 700 (+ italic 400/500).

@@ -224,16 +224,19 @@ body {
 	border-color: var(--color-text-muted);
 	box-shadow: var(--shadow-sm);
 }
+/* The active fill uses the text-safe tone, not the marker hue: white on
+   --color-primary is only 4.22:1 (and 3.77:1 on --color-search), which the
+   12px chip label doesn't clear. Same hue, a shade deeper. */
 .filter-chip.active {
-	background: var(--color-primary);
+	background: var(--color-primary-text);
 	color: var(--color-on-dark);
-	border-color: var(--color-primary);
+	border-color: var(--color-primary-text);
 	box-shadow: var(--shadow-chip-active);
 }
 .filter-chip.active-search {
-	background: var(--color-search);
+	background: var(--color-search-text);
 	color: var(--color-on-dark);
-	border-color: var(--color-search);
+	border-color: var(--color-search-text);
 	box-shadow: var(--shadow-chip-active-search);
 }
 /* Per-chip artwork count. Tabular numerals keep the counts from jittering the
@@ -452,13 +455,12 @@ body {
 	width: 44px;
 	height: 44px;
 	margin-bottom: var(--space-2-5);
-	opacity: 0.4;
+	opacity: 0.75;
 }
 .sidebar-image-placeholder span {
 	font-family: var(--font-display);
 	font-size: var(--text-md);
 	font-style: italic;
-	opacity: 0.6;
 }
 .sidebar-content {
 	padding: var(--space-5-5) var(--space-7);
@@ -482,15 +484,15 @@ body {
 }
 .tag-located {
 	background: var(--color-primary-light);
-	color: var(--color-primary);
+	color: var(--color-primary-text);
 }
 .tag-search {
 	background: var(--color-search-light);
-	color: var(--color-search);
+	color: var(--color-search-text);
 }
 .tag-moved {
 	background: var(--color-moved-light);
-	color: var(--color-moved);
+	color: var(--color-moved-text);
 }
 /* No handpicked --color-residence-light exists, so derive a soft tint from the
    residence rgb triplet (same approach as --color-accent-light). */
@@ -505,13 +507,13 @@ body {
 	margin-bottom: var(--space-5-5);
 }
 .sidebar-desc a {
-	color: var(--color-primary);
+	color: var(--color-primary-text);
 	text-decoration-color: rgb(var(--color-primary-rgb) / 0.3);
 	text-underline-offset: 2px;
 	transition: text-decoration-color var(--duration-fast) var(--ease-out);
 }
 .sidebar-desc a:hover {
-	text-decoration-color: var(--color-primary);
+	text-decoration-color: var(--color-primary-text);
 }
 .sidebar-address {
 	font-family: var(--font-display);
@@ -573,7 +575,7 @@ body {
 .sidebar-links a:hover {
 	background: var(--color-accent-light);
 	border-color: var(--color-accent);
-	color: var(--color-accent);
+	color: var(--color-accent-text);
 }
 .sidebar-movement {
 	margin: var(--space-4-5) 0;
@@ -594,7 +596,7 @@ body {
 	border: 1px solid rgb(var(--color-search-rgb) / 0.15);
 }
 .sidebar-contact a {
-	color: var(--color-primary);
+	color: var(--color-primary-text);
 	font-weight: var(--weight-medium);
 }
 
@@ -715,13 +717,13 @@ body {
 	max-width: var(--prose-width); /* keep the measure readable on wide modals */
 }
 .modal-body a {
-	color: var(--color-primary);
+	color: var(--color-primary-text);
 	text-decoration-color: rgb(var(--color-primary-rgb) / 0.3);
 	text-underline-offset: 2px;
 	transition: text-decoration-color var(--duration-fast) var(--ease-out);
 }
 .modal-body a:hover {
-	text-decoration-color: var(--color-primary);
+	text-decoration-color: var(--color-primary-text);
 }
 .modal-body .impressum {
 	margin-top: var(--space-7);
@@ -768,7 +770,7 @@ body {
 .modal-body .videos a:hover {
 	background: var(--color-accent-light);
 	border-color: var(--color-accent);
-	color: var(--color-accent);
+	color: var(--color-accent-text);
 }
 
 /* ═══════════════════════════════════════════
@@ -1004,7 +1006,7 @@ body {
 	left: 0;
 	right: 0;
 	text-align: center;
-	color: rgb(var(--color-on-dark-rgb) / 0.4);
+	color: rgb(var(--color-on-dark-rgb) / 0.6);
 	font-size: var(--text-sm);
 	font-weight: var(--weight-medium);
 	letter-spacing: var(--tracking-mono);
