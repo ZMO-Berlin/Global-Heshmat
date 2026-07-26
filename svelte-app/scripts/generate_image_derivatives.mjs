@@ -42,7 +42,11 @@ for (const { dir } of VARIANTS) {
 	if (!existsSync(path)) mkdirSync(path, { recursive: true });
 }
 
-const stem = (file) => file.replace(/\.[^./\\]+$/, '');
+// NFC on the way out: several masters were added from macOS with decomposed
+// umlauts, and a decomposed filename percent-encodes to a URL that static
+// hosts resolving in NFC answer 404 for. The served names are normalised even
+// though the masters in originals/ keep whatever form they arrived with.
+const stem = (file) => file.normalize('NFC').replace(/\.[^./\\]+$/, '');
 
 const LFS_MAGIC = 'version https://git-lfs.github.com/spec/v1';
 

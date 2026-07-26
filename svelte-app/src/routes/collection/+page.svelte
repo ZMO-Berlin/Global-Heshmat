@@ -52,7 +52,9 @@
 	<div class="collection-page-inner">
 		<header class="page-head">
 			<div>
-				<h1>The collection</h1>
+				<!-- h2, not h1: the layout header carries the site's single <h1>,
+				     and every panel in this app (sidebar, browse list) sits at h2. -->
+				<h2>The collection</h2>
 				<p class="page-count">
 					{total}
 					{total === 1 ? 'entry' : 'entries'}{store.activeFilter !== 'all' ? ' in this filter' : ''}
@@ -66,6 +68,7 @@
 		{/if}
 
 		{#if visibleArtworks.length > 0}
+			<h3 class="section-head section-head-first">Artworks</h3>
 			<ul class="grid">
 				{#each visibleArtworks as artwork (artwork.id)}
 					{@const src = lead(artwork)}
@@ -90,7 +93,7 @@
 								{/if}
 							</div>
 							<div class="card-body">
-								<h2 dir="auto">{artwork.name}</h2>
+								<h3 dir="auto">{artwork.name}</h3>
 								<p class="card-meta" dir="auto">
 									<MarkerGlyph
 										kind={artwork.status === 'search' ? 'search' : 'located'}
@@ -109,7 +112,7 @@
 		{/if}
 
 		{#if visibleResidences.length > 0}
-			<h2 class="section-head">Places of residence</h2>
+			<h3 class="section-head">Places of residence</h3>
 			<ul class="grid">
 				{#each visibleResidences as residence (residence.id)}
 					{@const src = lead(residence)}
@@ -179,14 +182,14 @@
 		gap: var(--space-4);
 		margin-bottom: var(--space-6);
 	}
-	.page-head h1 {
+	.page-head h2 {
 		font-family: var(--font-display);
 		font-size: var(--text-4xl);
 		font-weight: var(--weight-semibold);
 		color: var(--color-ink);
 		line-height: var(--leading-tight);
 	}
-	.page-head h1::after {
+	.page-head h2::after {
 		content: '';
 		display: block;
 		width: 40px;
@@ -208,6 +211,13 @@
 		text-align: center;
 		font-style: italic;
 		color: var(--color-text-muted);
+	}
+	/* The first section sits directly under the page title, so it needs no rule
+	   above it separating it from anything. */
+	.section-head-first {
+		margin-top: 0;
+		padding-top: 0;
+		border-top: none;
 	}
 	.section-head {
 		font-family: var(--font-display);
@@ -288,7 +298,6 @@
 		gap: var(--space-1-5);
 		flex: 1;
 	}
-	.card-body h2,
 	.card-body h3 {
 		font-family: var(--font-display);
 		font-size: var(--text-lg);
@@ -338,7 +347,7 @@
 			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 			gap: var(--space-3-5);
 		}
-		.page-head h1 {
+		.page-head h2 {
 			font-size: var(--text-3xl);
 		}
 	}

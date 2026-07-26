@@ -35,6 +35,16 @@ describe('image URL helpers', () => {
 		);
 	});
 
+	it('normalises a decomposed filename to NFC before encoding', () => {
+		// "Malmö" written on macOS: o + U+0308. Encoding it as-is gives
+		// %CC%88, which NFC-resolving static hosts answer 404 for.
+		const decomposed = 'Tva\u030a_kvinnor_av_Hassan_Heshmat_Malmo\u0308.jpg';
+		const composed = 'Två_kvinnor_av_Hassan_Heshmat_Malmö.jpg';
+		expect(decomposed).not.toBe(composed);
+		expect(webUrl(decomposed)).toBe(webUrl(composed));
+		expect(webUrl(decomposed)).not.toContain('%CC%88');
+	});
+
 	it('maps an original to its full-size derivative', () => {
 		expect(fullUrl('Agiba_1.jpg')).toBe('/images/full/Agiba_1.webp');
 	});

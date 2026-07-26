@@ -95,6 +95,37 @@ describe('image references', () => {
 	});
 });
 
+describe('URL-safe filenames', () => {
+	/**
+	 * The derivatives are fetched over HTTP by their name, so the name has to
+	 * survive that trip. Ten files arrived from macOS with decomposed umlauts
+	 * ("a" + U+0308); percent-encoding that gives %CC%88, and a host resolving
+	 * paths in NFC answers 404. Every other check passed regardless, because
+	 * both sides of the comparison were normalised first — so the images simply
+	 * disappeared from the site with nothing failing.
+	 */
+	it('every served derivative filename is already NFC', () => {
+		const decomposed = [...webDerivatives, ...thumbDerivatives, ...fullDerivatives].filter(
+			(f) => f !== f.normalize('NFC')
+		);
+		expect(decomposed).toEqual([]);
+	});
+
+	it('every image reference in the data files is already NFC', () => {
+		const decomposed = allImageRefs
+			.filter((r) => r.file !== r.file.normalize('NFC'))
+			.map((r) => `${r.owner}: ${r.file}`);
+		expect(decomposed).toEqual([]);
+	});
+
+	it('every video reference is already NFC', () => {
+		const decomposed = allVideoRefs
+			.filter((r) => r.file !== r.file.normalize('NFC'))
+			.map((r) => `${r.owner}: ${r.file}`);
+		expect(decomposed).toEqual([]);
+	});
+});
+
 describe('video references', () => {
 	it('every referenced videoFile exists in static/videos/', () => {
 		const missing = artworks

@@ -28,9 +28,15 @@ export const IMAGE_WIDTHS = { thumb: 400, web: 1200, full: 2000 } as const;
  * rest is read as the width descriptor, so the candidate is invalid and the
  * browser silently drops it. Others carry umlauts or a backtick. Encoding the
  * segment makes the URL valid in `src`, `srcset` and the sitemap alike.
+ *
+ * NFC normalisation matters just as much. Ten of these filenames were written
+ * on macOS, which stores "ä" decomposed (a + U+0308). Percent-encoding that
+ * decomposed form yields %CC%88, and a static host that resolves paths in NFC
+ * answers 404 — so those images silently vanished while every check passed,
+ * because the integrity test normalises both sides before comparing.
  */
 function encodedStem(file: string): string {
-	return encodeURIComponent(file.replace(/\.[^./\\]+$/, ''));
+	return encodeURIComponent(file.normalize('NFC').replace(/\.[^./\\]+$/, ''));
 }
 
 /** URL for the small WebP thumbnail (gallery / lightbox thumb strips). */
