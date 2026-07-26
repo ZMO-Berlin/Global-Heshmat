@@ -6,8 +6,14 @@
 	import { resolve } from '$app/paths';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
-	import type { Artwork, Residence } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
+	import {
+		buildArtworkGeoJSON,
+		buildGhostGeoJSON,
+		buildRelocationGeoJSON,
+		buildResidenceGeoJSON
+	} from '$lib/utils/geojson';
+	import { FILTER_ALL, filterArtworks, filterResidences } from '$lib/utils/map-filter';
 
 	const store = getMapStore();
 
@@ -25,104 +31,14 @@
 	// will ever clean up (a leaked WebGL context).
 	let destroyed = false;
 
-	// Build GeoJSON from artworks
-	function buildGeoJSON(items: Artwork[]) {
-		return {
-			type: 'FeatureCollection' as const,
-			features: items.map((a) => ({
-				type: 'Feature' as const,
-				geometry: { type: 'Point' as const, coordinates: [a.lng, a.lat] },
-				properties: {
-					id: a.id,
-					name: a.name,
-					status: a.status,
-					country: a.country,
-					city: a.city
-				}
-			}))
-		};
-	}
-
-	function buildRelocationGeoJSON() {
-		return {
-			type: 'FeatureCollection' as const,
-			features: artworks
-				.filter((a) => a.movement)
-				.map((a) => ({
-					type: 'Feature' as const,
-					geometry: {
-						type: 'LineString' as const,
-						coordinates: [
-							[a.movement!.fromLng, a.movement!.fromLat],
-							[a.lng, a.lat]
-						]
-					},
-					properties: {
-						name: a.name,
-						year: a.movement!.year
-					}
-				}))
-		};
-	}
-
-	function buildGhostGeoJSON() {
-		return {
-			type: 'FeatureCollection' as const,
-			features: artworks
-				.filter((a) => a.movement)
-				.map((a) => ({
-					type: 'Feature' as const,
-					geometry: {
-						type: 'Point' as const,
-						coordinates: [a.movement!.fromLng, a.movement!.fromLat]
-					},
-					properties: {
-						name: 'Former location: ' + a.movement!.fromName
-					}
-				}))
-		};
-	}
-
-	function getFilteredArtworks(): Artwork[] {
-		if (store.activeFilter === 'all') return artworks;
-		if (store.activeFilter === 'search') return artworks.filter((a) => a.status === 'search');
-		// The "Places of residence" filter shows only residence markers (see
-		// getVisibleResidences), so no artworks are plotted under it.
-		if (store.activeFilter === 'residence') return [];
-		return artworks.filter((a) => a.country === store.activeFilter);
-	}
-
-	// Residences show on the default "all" view and under their own "Places of
-	// residence" filter. The country and "to be found" filters are artwork-only,
-	// so residences hide there.
-	function getVisibleResidences(): Residence[] {
-		return store.activeFilter === 'all' || store.activeFilter === 'residence' ? residences : [];
-	}
-
-	function buildResidenceGeoJSON(items: Residence[]) {
-		return {
-			type: 'FeatureCollection' as const,
-			features: items.map((r) => ({
-				type: 'Feature' as const,
-				geometry: { type: 'Point' as const, coordinates: [r.lng, r.lat] },
-				properties: {
-					id: r.id,
-					name: r.name,
-					country: r.country,
-					city: r.city
-				}
-			}))
-		};
-	}
-
 	function updateMapSource() {
 		// Before the style has loaded the sources don't exist yet; the map's
 		// 'load' handler calls this again, so early-returning here never
 		// loses an update.
 		if (!map || !map.getSource('artworks')) return;
-		const filtered = getFilteredArtworks();
-		const visibleResidences = getVisibleResidences();
-		(map.getSource('artworks') as MaplibreNS.GeoJSONSource).setData(buildGeoJSON(filtered));
+		const filtered = filterArtworks(artworks, store.activeFilter);
+		const visibleResidences = filterResidences(residences, store.activeFilter);
+		(map.getSource('artworks') as MaplibreNS.GeoJSONSource).setData(buildArtworkGeoJSON(filtered));
 		(map.getSource('residences') as MaplibreNS.GeoJSONSource)?.setData(
 			buildResidenceGeoJSON(visibleResidences)
 		);
@@ -228,7 +144,7 @@
 			// Artwork points source
 			m.addSource('artworks', {
 				type: 'geojson',
-				data: buildGeoJSON(getFilteredArtworks()),
+				data: buildArtworkGeoJSON(filterArtworks(artworks, store.activeFilter)),
 				cluster: true,
 				clusterMaxZoom: 12,
 				clusterRadius: 45
@@ -296,7 +212,7 @@
 			// Relocation lines
 			m.addSource('relocations', {
 				type: 'geojson',
-				data: buildRelocationGeoJSON()
+				data: buildRelocationGeoJSON(artworks)
 			});
 
 			m.addLayer({
@@ -314,7 +230,7 @@
 			// Ghost markers (former locations)
 			m.addSource('ghosts', {
 				type: 'geojson',
-				data: buildGhostGeoJSON()
+				data: buildGhostGeoJSON(artworks)
 			});
 
 			m.addLayer({
@@ -335,7 +251,7 @@
 			// artwork clusters.
 			m.addSource('residences', {
 				type: 'geojson',
-				data: buildResidenceGeoJSON(getVisibleResidences())
+				data: buildResidenceGeoJSON(filterResidences(residences, store.activeFilter))
 			});
 
 			m.addLayer({
@@ -437,7 +353,7 @@
 			// on a deep link (/?filter=Egypt) the filter was set long before
 			// the sources above existed. Only when the filter differs from the
 			// default, so a plain visit keeps the hand-tuned initial camera.
-			if (store.activeFilter !== 'all') updateMapSource();
+			if (store.activeFilter !== FILTER_ALL) updateMapSource();
 		});
 	});
 
