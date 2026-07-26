@@ -6,8 +6,14 @@
 	import { resolve } from '$app/paths';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
-	import type { Artwork, Residence } from '$lib/data/types';
 	import { getMapStore } from '$lib/stores/map.svelte';
+	import {
+		buildArtworkGeoJSON,
+		buildGhostGeoJSON,
+		buildRelocationGeoJSON,
+		buildResidenceGeoJSON
+	} from '$lib/utils/geojson';
+	import { FILTER_ALL, filterArtworks, filterResidences } from '$lib/utils/map-filter';
 
 	const store = getMapStore();
 
@@ -24,105 +30,19 @@
 	// flight, so the continuations don't construct/drive a map that nothing
 	// will ever clean up (a leaked WebGL context).
 	let destroyed = false;
-
-	// Build GeoJSON from artworks
-	function buildGeoJSON(items: Artwork[]) {
-		return {
-			type: 'FeatureCollection' as const,
-			features: items.map((a) => ({
-				type: 'Feature' as const,
-				geometry: { type: 'Point' as const, coordinates: [a.lng, a.lat] },
-				properties: {
-					id: a.id,
-					name: a.name,
-					status: a.status,
-					country: a.country,
-					city: a.city
-				}
-			}))
-		};
-	}
-
-	function buildRelocationGeoJSON() {
-		return {
-			type: 'FeatureCollection' as const,
-			features: artworks
-				.filter((a) => a.movement)
-				.map((a) => ({
-					type: 'Feature' as const,
-					geometry: {
-						type: 'LineString' as const,
-						coordinates: [
-							[a.movement!.fromLng, a.movement!.fromLat],
-							[a.lng, a.lat]
-						]
-					},
-					properties: {
-						name: a.name,
-						year: a.movement!.year
-					}
-				}))
-		};
-	}
-
-	function buildGhostGeoJSON() {
-		return {
-			type: 'FeatureCollection' as const,
-			features: artworks
-				.filter((a) => a.movement)
-				.map((a) => ({
-					type: 'Feature' as const,
-					geometry: {
-						type: 'Point' as const,
-						coordinates: [a.movement!.fromLng, a.movement!.fromLat]
-					},
-					properties: {
-						name: 'Former location: ' + a.movement!.fromName
-					}
-				}))
-		};
-	}
-
-	function getFilteredArtworks(): Artwork[] {
-		if (store.activeFilter === 'all') return artworks;
-		if (store.activeFilter === 'search') return artworks.filter((a) => a.status === 'search');
-		// The "Places of residence" filter shows only residence markers (see
-		// getVisibleResidences), so no artworks are plotted under it.
-		if (store.activeFilter === 'residence') return [];
-		return artworks.filter((a) => a.country === store.activeFilter);
-	}
-
-	// Residences show on the default "all" view and under their own "Places of
-	// residence" filter. The country and "to be found" filters are artwork-only,
-	// so residences hide there.
-	function getVisibleResidences(): Residence[] {
-		return store.activeFilter === 'all' || store.activeFilter === 'residence' ? residences : [];
-	}
-
-	function buildResidenceGeoJSON(items: Residence[]) {
-		return {
-			type: 'FeatureCollection' as const,
-			features: items.map((r) => ({
-				type: 'Feature' as const,
-				geometry: { type: 'Point' as const, coordinates: [r.lng, r.lat] },
-				properties: {
-					id: r.id,
-					name: r.name,
-					country: r.country,
-					city: r.city
-				}
-			}))
-		};
-	}
+	// Drives the loading veil: the basemap style is a network fetch, so on a
+	// cold or slow connection the map area would otherwise sit blank with no
+	// indication anything is happening.
+	let status = $state<'loading' | 'ready' | 'failed'>('loading');
 
 	function updateMapSource() {
 		// Before the style has loaded the sources don't exist yet; the map's
 		// 'load' handler calls this again, so early-returning here never
 		// loses an update.
 		if (!map || !map.getSource('artworks')) return;
-		const filtered = getFilteredArtworks();
-		const visibleResidences = getVisibleResidences();
-		(map.getSource('artworks') as MaplibreNS.GeoJSONSource).setData(buildGeoJSON(filtered));
+		const filtered = filterArtworks(artworks, store.activeFilter);
+		const visibleResidences = filterResidences(residences, store.activeFilter);
+		(map.getSource('artworks') as MaplibreNS.GeoJSONSource).setData(buildArtworkGeoJSON(filtered));
 		(map.getSource('residences') as MaplibreNS.GeoJSONSource)?.setData(
 			buildResidenceGeoJSON(visibleResidences)
 		);
@@ -224,11 +144,19 @@
 		m.addControl(new maplibregl.GlobeControl(), 'top-right');
 		m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
 
+		m.on('error', (e) => {
+			// MapLibre reports tile and style failures here. Only a missing style
+			// leaves the map unusable — tile hiccups resolve themselves.
+			if (!m.isStyleLoaded()) status = 'failed';
+			console.error('MapLibre:', e.error?.message ?? e);
+		});
+
 		m.on('load', () => {
+			status = 'ready';
 			// Artwork points source
 			m.addSource('artworks', {
 				type: 'geojson',
-				data: buildGeoJSON(getFilteredArtworks()),
+				data: buildArtworkGeoJSON(filterArtworks(artworks, store.activeFilter)),
 				cluster: true,
 				clusterMaxZoom: 12,
 				clusterRadius: 45
@@ -296,7 +224,7 @@
 			// Relocation lines
 			m.addSource('relocations', {
 				type: 'geojson',
-				data: buildRelocationGeoJSON()
+				data: buildRelocationGeoJSON(artworks)
 			});
 
 			m.addLayer({
@@ -314,7 +242,7 @@
 			// Ghost markers (former locations)
 			m.addSource('ghosts', {
 				type: 'geojson',
-				data: buildGhostGeoJSON()
+				data: buildGhostGeoJSON(artworks)
 			});
 
 			m.addLayer({
@@ -335,7 +263,7 @@
 			// artwork clusters.
 			m.addSource('residences', {
 				type: 'geojson',
-				data: buildResidenceGeoJSON(getVisibleResidences())
+				data: buildResidenceGeoJSON(filterResidences(residences, store.activeFilter))
 			});
 
 			m.addLayer({
@@ -437,7 +365,7 @@
 			// on a deep link (/?filter=Egypt) the filter was set long before
 			// the sources above existed. Only when the filter differs from the
 			// default, so a plain visit keeps the hand-tuned initial camera.
-			if (store.activeFilter !== 'all') updateMapSource();
+			if (store.activeFilter !== FILTER_ALL) updateMapSource();
 		});
 	});
 
@@ -455,6 +383,20 @@
 
 <div bind:this={mapContainer} class="map-container"></div>
 
+{#if status !== 'ready'}
+	<div class="map-status" role="status" aria-live="polite">
+		{#if status === 'failed'}
+			<p class="map-status-text">
+				The map could not be loaded. Use <strong>Browse</strong> in the header to see the collection as
+				a list.
+			</p>
+		{:else}
+			<span class="map-spinner" aria-hidden="true"></span>
+			<p class="map-status-text">Loading the map&hellip;</p>
+		{/if}
+	</div>
+{/if}
+
 <style>
 	.map-container {
 		position: absolute;
@@ -463,6 +405,53 @@
 		left: 0;
 		right: 0;
 		z-index: var(--z-map);
+	}
+
+	/* Sits over the map area only, so the header, filter bar and footer stay
+	   interactive while the basemap loads. */
+	.map-status {
+		position: absolute;
+		top: calc(var(--header-height) + var(--filter-height));
+		bottom: var(--footer-height);
+		left: 0;
+		right: 0;
+		z-index: var(--z-legend);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-3-5);
+		pointer-events: none;
+		background: var(--color-surface-warm);
+	}
+	.map-status-text {
+		max-width: 26rem;
+		padding: 0 var(--space-6);
+		text-align: center;
+		font-size: var(--text-md);
+		color: var(--color-text-secondary);
+		line-height: var(--leading-relaxed);
+	}
+	.map-spinner {
+		width: 26px;
+		height: 26px;
+		border-radius: 50%;
+		border: 2.5px solid var(--color-border);
+		border-top-color: var(--color-primary);
+		animation: map-spin 900ms linear infinite;
+	}
+	@keyframes map-spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	/* The reduced-motion block in app.css clamps animation-duration globally,
+	   which would spin this at 0.01ms. Stop it outright instead. */
+	@media (prefers-reduced-motion: reduce) {
+		.map-spinner {
+			animation: none;
+			border-top-color: var(--color-border);
+		}
 	}
 
 	/* MapLibre creates popup DOM outside Svelte's reach, so the ghost

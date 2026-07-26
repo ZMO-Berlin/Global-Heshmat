@@ -4,12 +4,12 @@
  * _template.ts — no registration needed.
  *
  * The slug-derivation and collision check live in
- * `$lib/utils/residence-index.ts` so they can be unit-tested independently of
- * the live filesystem.
+ * `$lib/utils/build-index.ts` (shared with the artworks collection) so they
+ * can be unit-tested independently of the live filesystem.
  */
 
 import type { Residence } from '../types';
-import { buildResidenceIndex } from '$lib/utils/residence-index';
+import { buildIndex } from '$lib/utils/build-index';
 
 // Negative patterns exclude the template and this index at glob time —
 // unlike a substring filter, a future data file that happens to contain
@@ -21,4 +21,4 @@ const modules = import.meta.glob<{ default: Residence }>(
 
 const raw: Residence[] = Object.values(modules).map((mod) => mod.default);
 
-export default buildResidenceIndex(raw);
+export default buildIndex(raw, 'residence');

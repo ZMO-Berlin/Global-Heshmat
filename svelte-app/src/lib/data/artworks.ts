@@ -1,8 +1,15 @@
 import allArtworks from './artworks/index';
+import { countryFacets } from '$lib/utils/map-filter';
 import type { IndexedArtwork } from './types';
 
 export const artworks: IndexedArtwork[] = allArtworks;
-export const countries = [...new Set(artworks.map((a) => a.country))];
+
+/**
+ * Country filter chips: alphabetical, each with its artwork count. Sorted
+ * deliberately — the raw insertion order is artwork-id order, which reads as
+ * arbitrary to a visitor scanning the rail.
+ */
+export const countries = countryFacets(artworks);
 
 const bySlug = new Map<string, IndexedArtwork>(artworks.map((a) => [a.slug, a]));
 

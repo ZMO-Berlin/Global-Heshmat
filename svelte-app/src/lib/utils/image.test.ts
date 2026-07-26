@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { thumbUrl, webUrl } from './image';
+import { IMAGE_WIDTHS, fullUrl, srcSet, thumbUrl, webUrl } from './image';
 
 describe('image URL helpers', () => {
 	it('maps an original to its web derivative, swapping the extension', () => {
@@ -27,5 +27,22 @@ describe('image URL helpers', () => {
 		expect(webUrl('Mosaik Officers Club Zamalek_darüber Fathy.jpeg')).toBe(
 			'/images/web/Mosaik Officers Club Zamalek_darüber Fathy.webp'
 		);
+	});
+
+	it('maps an original to its full-size derivative', () => {
+		expect(fullUrl('Agiba_1.jpg')).toBe('/images/full/Agiba_1.webp');
+	});
+
+	it('builds a srcset pairing the web and full derivatives with width descriptors', () => {
+		expect(srcSet('Agiba_1.jpg')).toBe(
+			'/images/web/Agiba_1.webp 1200w, /images/full/Agiba_1.webp 2000w'
+		);
+	});
+
+	it('keeps the srcset descriptors in step with the declared widths', () => {
+		// Guards against the widths drifting from what the generator writes.
+		const set = srcSet('x.jpg');
+		expect(set).toContain(`${IMAGE_WIDTHS.web}w`);
+		expect(set).toContain(`${IMAGE_WIDTHS.full}w`);
 	});
 });

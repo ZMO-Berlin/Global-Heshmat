@@ -24,6 +24,7 @@ function fileSet(dir: string): Set<string> {
 const originals = fileSet(ORIGINALS_DIR);
 const webDerivatives = fileSet(`${STATIC_DIR}images/web`);
 const thumbDerivatives = fileSet(`${STATIC_DIR}images/thumb`);
+const fullDerivatives = fileSet(`${STATIC_DIR}images/full`);
 const videos = fileSet(`${STATIC_DIR}videos`);
 
 /** Mirror of the stem logic in src/lib/utils/image.ts. */
@@ -61,10 +62,15 @@ describe('image references', () => {
 		expect(missing).toEqual([]);
 	});
 
-	it('every referenced image has web + thumb WebP derivatives', () => {
+	it('every referenced image has thumb + web + full WebP derivatives', () => {
 		const missing = allImageRefs
 			.map((r) => ({ ...r, webp: `${stem(r.file)}.webp`.normalize('NFC') }))
-			.filter((r) => !webDerivatives.has(r.webp) || !thumbDerivatives.has(r.webp))
+			.filter(
+				(r) =>
+					!thumbDerivatives.has(r.webp) ||
+					!webDerivatives.has(r.webp) ||
+					!fullDerivatives.has(r.webp)
+			)
 			.map((r) => `${r.owner}: ${r.file} → ${r.webp}`);
 		expect(missing).toEqual([]);
 	});
@@ -82,7 +88,7 @@ describe('image references', () => {
 
 	it('every derivative corresponds to a file in originals/ (no stale derivatives)', () => {
 		const originalStems = new Set([...originals].map((f) => stem(f)));
-		const stale = [...webDerivatives, ...thumbDerivatives].filter(
+		const stale = [...webDerivatives, ...thumbDerivatives, ...fullDerivatives].filter(
 			(f) => !originalStems.has(stem(f))
 		);
 		expect(stale).toEqual([]);

@@ -47,3 +47,140 @@
 		</div>
 	</div>
 </footer>
+
+<style>
+	/* Site footer: ZMO brand mark and project credits. */
+	/* ═══════════════════════════════════════════
+	   Site Footer
+	   ═══════════════════════════════════════════ */
+	.site-footer {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: var(--z-footer);
+		height: var(--footer-height);
+		background: var(--color-header-bg);
+		color: var(--color-header-text);
+		border-top: 2px solid var(--color-accent);
+		box-shadow:
+			0 -1px 0 rgb(var(--color-accent-rgb) / 0.15),
+			var(--shadow-bar-dark-inverted);
+		display: flex;
+		align-items: center;
+		padding: 0 var(--space-7);
+	}
+
+	.site-footer-inner {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-8);
+	}
+
+	.site-footer-brand {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3-5);
+		flex-shrink: 0;
+	}
+
+	.site-footer-logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 38px;
+		height: 38px;
+		transition: opacity var(--duration-fast) var(--ease-out);
+	}
+
+	.site-footer-logo:hover {
+		opacity: 0.8;
+	}
+
+	.site-footer-logo img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		display: block;
+	}
+
+	.site-footer-label {
+		font-family: var(--font-body);
+		font-size: var(--text-lg);
+		font-weight: var(--weight-semibold);
+		color: var(--color-header-text);
+		letter-spacing: var(--tracking-wide);
+		white-space: nowrap;
+	}
+
+	.site-footer-credits {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4-5);
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
+
+	.site-footer-credit {
+		display: inline-flex;
+		align-items: baseline;
+		gap: var(--space-2);
+		font-size: var(--text-sm);
+	}
+
+	.site-footer-role {
+		font-family: var(--font-body);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-widest);
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.site-footer-credits a {
+		color: var(--color-header-text);
+		text-decoration: none;
+		border-bottom: 1px solid rgb(var(--color-header-text-rgb) / 0.2);
+		padding-bottom: 1px;
+		transition:
+			color var(--duration-fast) var(--ease-out),
+			border-color var(--duration-fast) var(--ease-out);
+	}
+
+	.site-footer-credits a:hover {
+		color: var(--color-accent);
+		border-bottom-color: var(--color-accent);
+	}
+
+	@media (max-width: 768px) {
+		.site-footer {
+			padding: 0 var(--space-3-5);
+		}
+
+		.site-footer-inner {
+			gap: var(--space-3);
+		}
+
+		.site-footer-label {
+			display: none;
+		}
+
+		.site-footer-credits {
+			/* Fill the row and center the wrapped names so a short second line
+				   reads as balanced instead of a lone name dangling off the right. */
+			flex: 1;
+			justify-content: center;
+			gap: var(--space-1-5) var(--space-3);
+		}
+
+		.site-footer-role {
+			display: none;
+		}
+
+		.site-footer-credit {
+			font-size: var(--text-xs);
+		}
+	}
+</style>

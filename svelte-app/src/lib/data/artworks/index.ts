@@ -4,12 +4,13 @@
  *
  * Uses Vite's import.meta.glob to eagerly load all .ts files in this folder,
  * excluding the template and this index file. The slug-derivation and
- * collision check live in `$lib/utils/artwork-index.ts` so they can be
- * unit-tested independently of the live filesystem.
+ * collision check live in `$lib/utils/build-index.ts` (shared with the
+ * residences collection) so they can be unit-tested independently of the
+ * live filesystem.
  */
 
 import type { Artwork } from '../types';
-import { buildArtworkIndex } from '$lib/utils/artwork-index';
+import { buildIndex } from '$lib/utils/build-index';
 
 // Negative patterns exclude the template and this index at glob time —
 // unlike a substring filter, a future data file that happens to contain
@@ -21,4 +22,4 @@ const modules = import.meta.glob<{ default: Artwork }>(
 
 const raw: Artwork[] = Object.values(modules).map((mod) => mod.default);
 
-export default buildArtworkIndex(raw);
+export default buildIndex(raw, 'artwork');
