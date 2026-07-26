@@ -40,6 +40,29 @@ body {
 	outline-color: var(--focus-ring-color-on-dark);
 }
 
+/* Skip link — visually hidden until focused, then pinned over the header.
+   Uses clip-path rather than display:none so it stays focusable. */
+.skip-link {
+	position: fixed;
+	top: var(--space-2);
+	left: var(--space-2);
+	z-index: calc(var(--z-lightbox-ui) + 1);
+	padding: var(--space-2-5) var(--space-4);
+	background: var(--color-surface);
+	color: var(--color-ink);
+	border: 1px solid var(--color-accent);
+	border-radius: var(--radius-sm);
+	box-shadow: var(--shadow-md);
+	font-size: var(--text-base);
+	font-weight: var(--weight-medium);
+	text-decoration: none;
+	transform: translateY(calc(-100% - var(--space-4)));
+	transition: transform var(--duration-fast) var(--ease-out);
+}
+.skip-link:focus-visible {
+	transform: translateY(0);
+}
+
 /* ═══════════════════════════════════════════
    Header
    ═══════════════════════════════════════════ */
@@ -409,7 +432,10 @@ body {
 	margin-top: var(--space-2);
 	border-radius: 1px;
 }
-.sidebar-close {
+/* Shared circular close button. Previously named .sidebar-close and reused by
+   Modal.svelte, which meant the modal's chrome was styled by a class named for
+   a different component. */
+.btn-close {
 	width: 34px;
 	height: 34px;
 	border: none;
@@ -424,7 +450,7 @@ body {
 	flex-shrink: 0;
 	transition: all var(--duration-fast) var(--ease-out);
 }
-.sidebar-close:hover {
+.btn-close:hover {
 	background: var(--color-close-bg-hover);
 	color: var(--color-text);
 }
@@ -1199,7 +1225,16 @@ body {
 		padding: 0 var(--space-3-5);
 	}
 	.header h1 {
-		font-size: var(--text-lg);
+		font-size: var(--text-base);
+		white-space: nowrap;
+		/* Absorb any remaining squeeze here instead of letting the button row
+		   overflow the viewport. */
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.header-right {
+		flex-shrink: 0;
 	}
 	.header-right {
 		gap: var(--space-1-5);
@@ -1248,7 +1283,7 @@ body {
 		font-size: var(--text-xs);
 	}
 	.search-input {
-		width: 160px;
+		width: 140px;
 	}
 	.search-results {
 		width: 280px;

@@ -44,7 +44,7 @@
 	{#if item}
 		<div class="sidebar-header">
 			<h2 dir="auto">{item.name}</h2>
-			<button class="sidebar-close" onclick={close} aria-label="Close">
+			<button class="btn-close" onclick={close} aria-label="Close">
 				<X size={20} strokeWidth={2.25} />
 			</button>
 		</div>

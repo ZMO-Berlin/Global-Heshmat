@@ -35,7 +35,7 @@
 		<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby={titleId} use:trapFocus>
 			<div class="modal-header">
 				<h2 id={titleId}>{title}</h2>
-				<button class="sidebar-close" onclick={onclose} aria-label="Close">
+				<button class="btn-close" onclick={onclose} aria-label="Close">
 					<X size={20} strokeWidth={2.25} />
 				</button>
 			</div>

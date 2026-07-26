@@ -7,6 +7,7 @@ let selectedResidence = $state<Residence | null>(null);
 let activeFilter = $state<MapFilter>(FILTER_ALL);
 let aboutOpen = $state<boolean>(false);
 let missingOpen = $state<boolean>(false);
+let browseOpen = $state<boolean>(false);
 
 export function getMapStore() {
 	return {
@@ -43,6 +44,12 @@ export function getMapStore() {
 		},
 		set missingOpen(value: boolean) {
 			missingOpen = value;
+		},
+		get browseOpen() {
+			return browseOpen;
+		},
+		set browseOpen(value: boolean) {
+			browseOpen = value;
 		}
 	};
 }
