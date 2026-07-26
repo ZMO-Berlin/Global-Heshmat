@@ -157,3 +157,244 @@
 		</div>
 	{/if}
 </aside>
+
+<style>
+	/* Detail panel for the selected artwork or place of residence.
+	   Rules reaching into .sidebar-desc are :global() because that block holds
+	   {@html} from the data files, which Svelte's scoping class never touches. */
+	/* ═══════════════════════════════════════════
+	   Sidebar
+	   ═══════════════════════════════════════════ */
+	.sidebar {
+		position: fixed;
+		top: calc(var(--header-height) + var(--filter-height));
+		right: 0;
+		bottom: var(--footer-height);
+		width: var(--sidebar-width);
+		background: var(--color-surface);
+		z-index: var(--z-sidebar);
+		transform: translateX(100%);
+		transition: transform var(--duration-slower) var(--ease-out);
+		box-shadow: var(--shadow-sidebar);
+		display: flex;
+		flex-direction: column;
+	}
+
+	.sidebar.open {
+		transform: translateX(0);
+	}
+
+	.sidebar-header {
+		padding: var(--space-5-5) var(--space-7) var(--space-4-5);
+		border-bottom: 1px solid var(--color-border);
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		flex-shrink: 0;
+	}
+
+	/* Editorial accent rule under the title — a small museum-catalogue flourish
+	   that visually anchors the article that follows. */
+	.sidebar-header h2 {
+		font-family: var(--font-display);
+		font-size: var(--text-3xl);
+		font-weight: var(--weight-semibold);
+		color: var(--color-ink);
+		line-height: var(--leading-tight);
+		flex: 1;
+		padding-right: var(--space-3-5);
+	}
+
+	.sidebar-header h2::after {
+		content: '';
+		display: block;
+		width: 36px;
+		height: 2px;
+		background: var(--color-accent);
+		margin-top: var(--space-2);
+		border-radius: 1px;
+	}
+
+	.sidebar-body {
+		padding: 0 0 var(--space-7);
+		overflow-y: auto;
+		flex: 1;
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-border) transparent;
+	}
+
+	.sidebar-image {
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		overflow: hidden;
+		background: var(--color-surface-image);
+		position: relative;
+	}
+
+	.sidebar-image-placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-text-placeholder);
+	}
+
+	/* The icon is a Lucide component, so its <svg> is compiled in that
+	   component's scope, not ours — the selector must be :global(). */
+	.sidebar-image-placeholder :global(svg) {
+		width: 44px;
+		height: 44px;
+		margin-bottom: var(--space-2-5);
+		opacity: 0.75;
+	}
+
+	.sidebar-image-placeholder span {
+		font-family: var(--font-display);
+		font-size: var(--text-md);
+		font-style: italic;
+	}
+
+	.sidebar-content {
+		padding: var(--space-5-5) var(--space-7);
+	}
+
+	.sidebar-meta {
+		font-size: var(--text-base);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-4-5);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		align-items: center;
+	}
+
+	.sidebar-meta .tag {
+		padding: 3px var(--space-2-5);
+		border-radius: var(--radius-sm);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-wider);
+		text-transform: uppercase;
+	}
+
+	.tag-located {
+		background: var(--color-primary-light);
+		color: var(--color-primary-text);
+	}
+
+	.tag-search {
+		background: var(--color-search-light);
+		color: var(--color-search-text);
+	}
+
+	.tag-moved {
+		background: var(--color-moved-light);
+		color: var(--color-moved-text);
+	}
+
+	/* No handpicked --color-residence-light exists, so derive a soft tint from the
+	   residence rgb triplet (same approach as --color-accent-light). */
+	.tag-residence {
+		background: rgb(var(--color-residence-rgb) / 0.12);
+		color: var(--color-residence);
+	}
+
+	.sidebar-desc {
+		font-size: var(--text-md);
+		line-height: var(--leading-prose);
+		color: var(--color-text);
+		margin-bottom: var(--space-5-5);
+	}
+
+	.sidebar-desc :global(a) {
+		color: var(--color-primary-text);
+		text-decoration-color: rgb(var(--color-primary-rgb) / 0.3);
+		text-underline-offset: 2px;
+		transition: text-decoration-color var(--duration-fast) var(--ease-out);
+	}
+
+	.sidebar-desc :global(a:hover) {
+		text-decoration-color: var(--color-primary-text);
+	}
+
+	.sidebar-address {
+		font-family: var(--font-display);
+		font-size: var(--text-md);
+		color: var(--color-text-muted);
+		margin-bottom: var(--space-4-5);
+		font-style: italic;
+		line-height: var(--leading-normal);
+	}
+
+	.sidebar-video {
+		margin: var(--space-4-5) 0;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		box-shadow: var(--shadow-sm);
+	}
+
+	.sidebar-video iframe {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		border: none;
+	}
+
+	.sidebar-links {
+		margin-top: var(--space-4-5);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-1-5);
+	}
+
+	.sidebar-links a {
+		display: inline-block;
+		padding: var(--space-1-5) var(--space-3-5);
+		background: var(--color-surface-warm);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		color: var(--color-ink);
+		text-decoration: none;
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		transition: all var(--duration-base) var(--ease-out);
+	}
+
+	.sidebar-links a:hover {
+		background: var(--color-accent-light);
+		border-color: var(--color-accent);
+		color: var(--color-accent-text);
+	}
+
+	.sidebar-movement {
+		margin: var(--space-4-5) 0;
+		padding: var(--space-3-5) var(--space-4-5);
+		background: var(--color-moved-light);
+		border-left: 3px solid var(--color-moved);
+		border-radius: 0 var(--radius-md) var(--radius-md) 0;
+		font-size: var(--text-base);
+		line-height: var(--leading-relaxed);
+	}
+
+	.sidebar-contact {
+		margin-top: var(--space-5-5);
+		padding: var(--space-3-5) var(--space-4-5);
+		background: var(--color-search-light);
+		border-radius: var(--radius-md);
+		font-size: var(--text-base);
+		line-height: var(--leading-relaxed);
+		border: 1px solid rgb(var(--color-search-rgb) / 0.15);
+	}
+
+	.sidebar-contact a {
+		color: var(--color-primary-text);
+		font-weight: var(--weight-medium);
+	}
+
+	@media (max-width: 768px) {
+		.sidebar {
+			width: 100%;
+		}
+	}
+</style>
