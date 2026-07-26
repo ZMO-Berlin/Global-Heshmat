@@ -17,7 +17,7 @@ const artwork: Artwork = {
 	         caption: "Photo: Ephraim Gothe, 2025"},
 		{ 		src: "Hasan_Heshmat_Wandbild_Zamalek_RAND.jpg",
          		caption: "Wall Mosaic in the Armed Officers' Club"},
-	   {	src: "Mosaik Officers Club Zamalek_darüber Fathy.jpeg",
+	   {	src: "Mosaik Officers Club Zamalek_darüber Fathy.jpeg",
      	   caption: "Frieze by Fathy Mahmoud (top) and Hassan Heshmat (below)"},
 		{ 		src: "Image_Samar_Heshmat.jpg",
          		caption: "Wall Mosaic in the Armed Officers' Club"},

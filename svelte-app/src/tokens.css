@@ -196,6 +196,10 @@
 	--z-map: 1;
 	--z-footer: 10;
 	--z-legend: 20;
+	/* Full-area page content that replaces the map (the collection grid). Above
+	   the map and its loading veil, below the sliding panels so the list can
+	   still open over it. */
+	--z-page: 25;
 	--z-sidebar: 30;
 	--z-filter: 40;
 	--z-header: 50;

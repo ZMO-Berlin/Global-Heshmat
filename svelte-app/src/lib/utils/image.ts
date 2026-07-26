@@ -20,24 +20,38 @@
 /** Intrinsic widths of the derivatives, for `srcset` descriptors. */
 export const IMAGE_WIDTHS = { thumb: 400, web: 1200, full: 2000 } as const;
 
-/** Strip the file extension from a stored image filename. */
-function stem(file: string): string {
-	return file.replace(/\.[^./\\]+$/, '');
+/**
+ * Strip the extension and percent-encode the result.
+ *
+ * Encoding is not optional here. 50 of the 139 filenames in this archive
+ * contain spaces, and a space inside a `srcset` URL terminates the URL — the
+ * rest is read as the width descriptor, so the candidate is invalid and the
+ * browser silently drops it. Others carry umlauts or a backtick. Encoding the
+ * segment makes the URL valid in `src`, `srcset` and the sitemap alike.
+ *
+ * NFC normalisation matters just as much. Ten of these filenames were written
+ * on macOS, which stores "ä" decomposed (a + U+0308). Percent-encoding that
+ * decomposed form yields %CC%88, and a static host that resolves paths in NFC
+ * answers 404 — so those images silently vanished while every check passed,
+ * because the integrity test normalises both sides before comparing.
+ */
+function encodedStem(file: string): string {
+	return encodeURIComponent(file.normalize('NFC').replace(/\.[^./\\]+$/, ''));
 }
 
 /** URL for the small WebP thumbnail (gallery / lightbox thumb strips). */
 export function thumbUrl(src: string): string {
-	return `/images/thumb/${stem(src)}.webp`;
+	return `/images/thumb/${encodedStem(src)}.webp`;
 }
 
 /** URL for the 1200px WebP derivative (sidebar gallery). */
 export function webUrl(src: string): string {
-	return `/images/web/${stem(src)}.webp`;
+	return `/images/web/${encodedStem(src)}.webp`;
 }
 
 /** URL for the 2000px WebP derivative (lightbox on large / high-DPI screens). */
 export function fullUrl(src: string): string {
-	return `/images/full/${stem(src)}.webp`;
+	return `/images/full/${encodedStem(src)}.webp`;
 }
 
 /**

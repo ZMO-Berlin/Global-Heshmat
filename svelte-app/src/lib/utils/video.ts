@@ -7,9 +7,15 @@
  * transcoding/derivative pipeline is ever added for video.
  */
 
-/** URL for a local video stored in static/videos/. */
+/**
+ * URL for a local video stored in static/videos/.
+ *
+ * Percent-encoded and NFC-normalised for the same reasons as the image URLs:
+ * the filenames carry spaces (e.g. "Autohaus Lobby 6 October.mp4"), and a
+ * decomposed umlaut would encode to a path the host answers 404 for.
+ */
 export function videoUrl(src: string): string {
-	return `/videos/${src}`;
+	return `/videos/${encodeURIComponent(src.normalize('NFC'))}`;
 }
 
 /**

@@ -14,6 +14,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import AboutModal from '$lib/components/AboutModal.svelte';
 	import MissingWorksModal from '$lib/components/MissingWorksModal.svelte';
+	import { page } from '$app/state';
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import { setupUrlSync } from '$lib/stores/url-sync.svelte';
 
@@ -98,11 +99,14 @@
 <Header onreset={resetView} />
 <FilterBar />
 <main>
-	<MapView bind:this={mapView} />
+	<MapView bind:this={mapView} showStatus={page.route.id !== '/collection'} />
 	<CollectionPanel />
 </main>
 <Sidebar />
-<Legend />
+<!-- The legend explains marker shapes, so it only belongs over the map. -->
+{#if page.route.id !== '/collection'}
+	<Legend />
+{/if}
 <Footer />
 <AboutModal />
 <MissingWorksModal />

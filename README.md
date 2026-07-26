@@ -40,6 +40,8 @@ Global-Heshmat/
     │   │   │   ├── Lightbox.svelte        # Full-screen image viewer
     │   │   │   ├── FilterBar.svelte       # Country/status filters + search
     │   │   │   ├── CollectionPanel.svelte # Browsable text index of the collection
+    │   │   │   ├── ViewSwitcher.svelte    # Map / Grid / List switch
+    │   │   │   ├── MarkerGlyph.svelte     # SVG twin of the map's marker shapes
     │   │   │   ├── Header.svelte          # Top navigation bar
     │   │   │   ├── Legend.svelte          # Map legend (collapsible)
     │   │   │   ├── Footer.svelte          # Brand mark + project credits
@@ -64,6 +66,7 @@ Global-Heshmat/
     │   │   │   ├── build-index.ts         # Slug derivation + collision checks
     │   │   │   ├── map-filter.ts          # Filter predicates and country facets
     │   │   │   ├── geojson.ts             # Pure GeoJSON builders for the map layers
+    │   │   │   ├── marker-icons.ts        # Marker shape specs + canvas icon drawing
     │   │   │   ├── slug.ts                # URL slug helper
     │   │   │   ├── image.ts               # Image filenames -> WebP derivatives + srcset
     │   │   │   ├── video.ts               # Local video URLs + YouTube id parsing
@@ -77,6 +80,7 @@ Global-Heshmat/
     │   │   ├── +layout.ts                 # prerender, ssr, trailingSlash settings
     │   │   ├── +page.svelte               # Home — SEO + back-compat ?artwork= redirect
     │   │   ├── +error.svelte              # 404 / error screen
+    │   │   ├── collection/+page.svelte    # Photo grid of the whole collection
     │   │   ├── artworks/[slug]/
     │   │   │   ├── +page.ts               # entries() for prerender, load() for artwork
     │   │   │   └── +page.svelte           # Per-artwork SEO + store sync
@@ -110,6 +114,7 @@ Global-Heshmat/
 | --------------------- | ---------------------------------------------------------------------------------- |
 | `/`                   | Map view with no artwork preselected                                               |
 | `/artworks/<slug>/`   | Same map, sidebar pre-opened on the artwork; one prerendered HTML file per artwork |
+| `/collection/`        | Photo grid of every artwork and place of residence, honouring the active filter    |
 | `/residences/<slug>/` | Same, for the places where Heshmat lived or worked                                 |
 | `/sitemap.xml`        | Auto-generated sitemap listing the home page and every artwork and residence URL   |
 | `/robots.txt`         | Allows all crawlers; points to the sitemap                                         |
@@ -127,7 +132,9 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Relocation visualisation** — dashed lines connecting original and current locations
 - **Places of residence** — a separate, unclustered marker layer for where Heshmat lived and worked
 - **Country & status filters** — chips auto-generated from the data, sorted alphabetically with per-country counts
+- **Three ways to read the collection** — the map, a photo grid at `/collection/`, and a side list, switchable from any of them. The grid matters because 26 of the 39 works are in Egypt and most of those in Cairo districts, so at world zoom the map shows the collection as a single dot
 - **Browsable collection index** — a grouped, filter-aware text list of every entry, opened from the header or the skip link. It is also the site's internal link graph: every prerendered page carries real links to all 43 entries
+- **Shape-coded markers** — located (disc), to be found (ring), place of residence (diamond) and former location (dashed ring). Shape rather than hue carries the distinction: under tritanopia the located and residence colours measure ΔE 12.4, indistinguishable at marker size. `MARKER_SPECS` is the single source, so the map canvas, the legend and the list cannot drift apart
 - **Real-time search** — searches across names, cities, countries, and addresses
 - **Sidebar detail view** — images, description, status tags, address, external links
 - **Multi-image gallery** — thumbnail strip, prev/next navigation, image counter
@@ -192,6 +199,11 @@ Originals (some up to ~18 MB, a few in browser-unfriendly formats like HEIC/TIFF
 - `static/images/web/<stem>.webp` — `<=1200px`, the sidebar gallery and the small `srcset` candidate.
 - `static/images/full/<stem>.webp` — `<=2000px`, the lightbox on large and high-DPI screens.
 
+Filenames are normalised to NFC on the way out, and the URL helpers normalise before
+percent-encoding. This is not cosmetic: a macOS-decomposed "ä" encodes to `%CC%88`, which static
+hosts resolving paths in NFC answer 404 for — ten images were silently missing from the deployed
+site for exactly this reason. Tests assert that derivatives and data references stay NFC.
+
 The gallery and lightbox both ship a `srcset` spanning the last two, with a `sizes` hint describing the slot, so the browser picks by viewport and pixel density rather than always taking the largest file.
 
 After adding or replacing any image in `originals/`, regenerate the derivatives and commit them:
@@ -203,6 +215,46 @@ git add originals static/images
 ```
 
 The script is incremental (only new or changed files are processed), converts HEIC/TIFF, and bakes in EXIF orientation. A master that emits decoder warnings is still accepted, and one that will not decode at all falls back to re-encoding from the largest derivative already on disk — this archive contains a couple of each. In the data files always reference the **original** filename (e.g. `"My Sculpture.jpeg"`); the app maps it to the `.webp` derivative by swapping the extension, so a `.jpg`/`.jpeg` mismatch still resolves. `npm run verify:build` fails if a referenced image has no derivative — catching typos and forgotten regenerations. Images whose source file isn't available yet are tracked in the `KNOWN_MISSING` allowlist near the top of [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs).
+
+### Git LFS
+
+`svelte-app/originals/` is tracked by [Git LFS](https://git-lfs.com) — see
+[`svelte-app/.gitattributes`](svelte-app/.gitattributes). Install the client once per machine:
+
+```bash
+git lfs install
+```
+
+**This is a forward-only arrangement.** Images added or replaced from now on are stored as LFS
+objects. The 139 files committed before the switch remain ordinary git blobs in history, so the
+existing ~283 MB is still there and a fresh clone is unchanged in size. Converting those too means
+rewriting history (`git lfs migrate import`) and force-pushing `main`, which changes every commit
+hash and invalidates every existing clone and open pull request — a deliberate, coordinated
+operation, not something to do casually.
+
+Two things to know before leaning on it further:
+
+- **Bandwidth is the binding constraint, not storage.** GitHub's free tier allows 1 GB of LFS
+  storage and 1 GB of transfer per month. At this collection's size a handful of full clones would
+  exhaust the monthly transfer, after which fetches fail until the quota resets or a data pack is
+  bought. Check what ZMO's plan actually includes before migrating the history.
+- **CI deliberately does not fetch LFS content.** Nothing in the build or the test suite reads
+  image bytes — the data-integrity test only compares filenames, and the derivatives under
+  `static/images/` are committed as ordinary files. So `actions/checkout` runs without `lfs: true`,
+  which keeps CI off the bandwidth quota entirely.
+
+The one workflow that does need the real files is regenerating derivatives. If `npm run images`
+reports that files are LFS pointers, fetch them first:
+
+```bash
+git lfs pull
+npm run images
+```
+
+Because these masters are never deployed and only their _filenames_ matter to the test suite, the
+alternative worth considering is moving them out of git altogether — to institutional storage or a
+Zenodo deposit with a DOI, which suits an archival project better than LFS — leaving a committed
+manifest for the integrity test to read.
 
 ### Data schema
 

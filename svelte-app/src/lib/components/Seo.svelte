@@ -18,9 +18,24 @@
 		artwork?: IndexedArtwork | null;
 		/** When provided, render residence-specific metadata. Otherwise site metadata. */
 		residence?: IndexedResidence | null;
+		/**
+		 * Overrides for an ordinary content page (the collection grid), which is
+		 * neither an artwork nor a residence but still wants its own title,
+		 * description and canonical URL rather than the site defaults.
+		 */
+		title?: string;
+		description?: string;
+		/** Site-relative path used for the canonical URL, e.g. "/collection/". */
+		path?: string;
 	}
 
-	const { artwork = null, residence = null }: Props = $props();
+	const {
+		artwork = null,
+		residence = null,
+		title: titleOverride,
+		description: descriptionOverride,
+		path
+	}: Props = $props();
 
 	const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
@@ -36,33 +51,39 @@
 	const residenceImage = $derived(residence?.images?.[0]?.src ?? residence?.image);
 
 	const title = $derived(
-		artwork
-			? `${artwork.name} — ${SITE_NAME}`
-			: residence
-				? `${residence.name} — ${SITE_NAME}`
-				: `${SITE_NAME} — ${SITE_TAGLINE}`
+		titleOverride
+			? titleOverride
+			: artwork
+				? `${artwork.name} — ${SITE_NAME}`
+				: residence
+					? `${residence.name} — ${SITE_NAME}`
+					: `${SITE_NAME} — ${SITE_TAGLINE}`
 	);
 
 	const description = $derived(
-		artwork
-			? truncate(
-					`${artwork.name} — ${artwork.city}, ${artwork.country}. ${stripHtml(artwork.desc)}`,
-					200
-				)
-			: residence
+		descriptionOverride
+			? descriptionOverride
+			: artwork
 				? truncate(
-						`${residence.name} — ${residence.city}, ${residence.country}. ${stripHtml(residence.desc)}`,
+						`${artwork.name} — ${artwork.city}, ${artwork.country}. ${stripHtml(artwork.desc)}`,
 						200
 					)
-				: SITE_DESCRIPTION
+				: residence
+					? truncate(
+							`${residence.name} — ${residence.city}, ${residence.country}. ${stripHtml(residence.desc)}`,
+							200
+						)
+					: SITE_DESCRIPTION
 	);
 
 	const canonicalUrl = $derived(
-		artwork
-			? absoluteUrl(artworkPath(artwork.slug))
-			: residence
-				? absoluteUrl(residencePath(residence.slug))
-				: `${SITE_URL}/`
+		path
+			? absoluteUrl(path)
+			: artwork
+				? absoluteUrl(artworkPath(artwork.slug))
+				: residence
+					? absoluteUrl(residencePath(residence.slug))
+					: `${SITE_URL}/`
 	);
 
 	const jsonLd = $derived(

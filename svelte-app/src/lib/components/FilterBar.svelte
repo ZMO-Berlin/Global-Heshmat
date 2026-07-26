@@ -115,10 +115,15 @@
 		store.selectedArtwork = null;
 		store.selectedResidence = null;
 		// A detail route owns the selection it displays; picking a filter
-		// dismisses that view, so also navigate home rather than leaving a
-		// stale /artworks/<slug> or /residences/<slug> URL behind. The
-		// filter itself is re-appended to the URL by the url-sync effect.
-		if (page.route.id !== '/') goto(resolve('/'));
+		// dismisses that view, so navigate home rather than leaving a stale
+		// /artworks/<slug> or /residences/<slug> URL behind. The filter itself
+		// is re-appended to the URL by the url-sync effect.
+		//
+		// The collection grid is filterable in its own right, so filtering from
+		// there must stay put — only detail routes bounce home.
+		const ownsASelection =
+			page.route.id === '/artworks/[slug]' || page.route.id === '/residences/[slug]';
+		if (ownsASelection) goto(resolve('/'));
 	}
 
 	// Navigate to the artwork's canonical URL, exactly like clicking its map

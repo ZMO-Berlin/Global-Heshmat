@@ -14,8 +14,17 @@
 		buildResidenceGeoJSON
 	} from '$lib/utils/geojson';
 	import { FILTER_ALL, filterArtworks, filterResidences } from '$lib/utils/map-filter';
+	import { MARKER_IMAGE_IDS, registerMarkerIcons } from '$lib/utils/marker-icons';
 
 	const store = getMapStore();
+
+	/**
+	 * False while another view covers the map (the collection grid). The veil
+	 * would be invisible underneath it anyway, but it carries aria-live, so
+	 * leaving it mounted announces "Loading the map…" to someone reading the
+	 * grid.
+	 */
+	let { showStatus = true }: { showStatus?: boolean } = $props();
 
 	// `maplibre-gl` touches `window` at module load, so import it lazily inside
 	// onMount to keep this component SSR-safe. Types stay imported with
@@ -153,6 +162,16 @@
 
 		m.on('load', () => {
 			status = 'ready';
+
+			// Shapes, not just colours: see $lib/utils/marker-icons.ts. Registered
+			// before any layer references them, and redrawn from the same design
+			// tokens the legend uses.
+			registerMarkerIcons(m, {
+				located: colorPrimary,
+				search: colorSearch,
+				residence: colorResidence,
+				former: colorTextMuted
+			});
 			// Artwork points source
 			m.addSource('artworks', {
 				type: 'geojson',
@@ -193,31 +212,32 @@
 				}
 			});
 
-			// Located markers (unclustered)
+			// Located markers (unclustered). `icon-allow-overlap` and
+			// `icon-ignore-placement` are essential: symbol layers hide colliding
+			// icons by default, which would silently drop markers in the dense
+			// Cairo cluster at mid zoom.
 			m.addLayer({
 				id: 'artwork-located',
-				type: 'circle',
+				type: 'symbol',
 				source: 'artworks',
 				filter: ['all', ['!', ['has', 'point_count']], ['==', ['get', 'status'], 'located']],
-				paint: {
-					'circle-color': colorPrimary,
-					'circle-radius': 8,
-					'circle-stroke-width': 2.5,
-					'circle-stroke-color': colorOnDark
+				layout: {
+					'icon-image': MARKER_IMAGE_IDS.located,
+					'icon-allow-overlap': true,
+					'icon-ignore-placement': true
 				}
 			});
 
 			// Search markers (unclustered)
 			m.addLayer({
 				id: 'artwork-search',
-				type: 'circle',
+				type: 'symbol',
 				source: 'artworks',
 				filter: ['all', ['!', ['has', 'point_count']], ['==', ['get', 'status'], 'search']],
-				paint: {
-					'circle-color': colorSearch,
-					'circle-radius': 8,
-					'circle-stroke-width': 2.5,
-					'circle-stroke-color': colorOnDark
+				layout: {
+					'icon-image': MARKER_IMAGE_IDS.search,
+					'icon-allow-overlap': true,
+					'icon-ignore-placement': true
 				}
 			});
 
@@ -245,17 +265,18 @@
 				data: buildGhostGeoJSON(artworks)
 			});
 
+			// Former locations. Now an actually-dashed ring: the old solid hollow
+			// circle did not match the dashed swatch in the legend.
 			m.addLayer({
 				id: 'ghost-markers',
-				type: 'circle',
+				type: 'symbol',
 				source: 'ghosts',
-				paint: {
-					'circle-color': 'transparent',
-					'circle-radius': 7,
-					'circle-stroke-width': 2.5,
-					'circle-stroke-color': colorTextMuted,
-					'circle-stroke-opacity': 0.8
-				}
+				layout: {
+					'icon-image': MARKER_IMAGE_IDS.former,
+					'icon-allow-overlap': true,
+					'icon-ignore-placement': true
+				},
+				paint: { 'icon-opacity': 0.85 }
 			});
 
 			// Places of residence — a separate, unclustered source so they read
@@ -268,13 +289,12 @@
 
 			m.addLayer({
 				id: 'residence-markers',
-				type: 'circle',
+				type: 'symbol',
 				source: 'residences',
-				paint: {
-					'circle-color': colorResidence,
-					'circle-radius': 8,
-					'circle-stroke-width': 2.5,
-					'circle-stroke-color': colorOnDark
+				layout: {
+					'icon-image': MARKER_IMAGE_IDS.residence,
+					'icon-allow-overlap': true,
+					'icon-ignore-placement': true
 				}
 			});
 
@@ -383,7 +403,7 @@
 
 <div bind:this={mapContainer} class="map-container"></div>
 
-{#if status !== 'ready'}
+{#if showStatus && status !== 'ready'}
 	<div class="map-status" role="status" aria-live="polite">
 		{#if status === 'failed'}
 			<p class="map-status-text">

@@ -98,6 +98,46 @@ if (existsSync(join(BUILD_DIR, 'index.html'))) {
 	);
 }
 
+// ── Collection page ─────────────────────────────────────────────────
+//
+// The grid is the site's second real page and carries the internal link
+// graph, so a build that silently stopped emitting it (a prerender change,
+// a renamed route) would cost every artwork its inbound links.
+const COLLECTION = 'collection/index.html';
+check(
+	'collection grid prerendered to collection/index.html',
+	existsSync(join(BUILD_DIR, COLLECTION))
+);
+
+if (existsSync(join(BUILD_DIR, COLLECTION))) {
+	const html = read(COLLECTION);
+	check('collection page has exactly one <title>', (html.match(/<title>/g) || []).length === 1);
+	check(
+		'collection page canonical points at /collection/',
+		html.includes(`<link rel="canonical" href="${SITE_URL}/collection/"`),
+		'canonical missing or pointing elsewhere'
+	);
+	const artworkLinks = (html.match(/href="[^"]*artworks\/[^"]+"/g) || []).length;
+	check(
+		`collection page links to artworks (${artworkLinks} found)`,
+		artworkLinks >= 30,
+		'the grid should link every artwork — internal linking regressed'
+	);
+	// srcset URLs must be percent-encoded: a raw space terminates the URL and
+	// the browser drops the candidate. 50 of the source filenames have spaces.
+	const badSrcset = (html.match(/srcset="[^"]*"/g) || []).filter((attr) =>
+		attr
+			.slice(8, -1)
+			.split(',')
+			.some((candidate) => candidate.trim().split(/\s+/).length !== 2)
+	);
+	check(
+		'every srcset on the collection page is well formed',
+		badSrcset.length === 0,
+		badSrcset[0] ? `e.g. ${badSrcset[0].slice(0, 120)}` : ''
+	);
+}
+
 // ── Sitemap ─────────────────────────────────────────────────────────
 check('sitemap.xml present', existsSync(join(BUILD_DIR, 'sitemap.xml')));
 
@@ -108,6 +148,10 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 		sitemap.includes('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"')
 	);
 	check('sitemap lists the home URL', sitemap.includes(`<loc>${SITE_URL}/</loc>`));
+	check(
+		'sitemap lists the collection page',
+		sitemap.includes(`<loc>${SITE_URL}/collection/</loc>`)
+	);
 
 	// Every artwork directory should appear in the sitemap.
 	const artworksDir = join(BUILD_DIR, 'artworks');
