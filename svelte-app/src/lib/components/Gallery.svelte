@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, Maximize2 } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
-	import { thumbUrl, webUrl } from '$lib/utils/image';
+	import { srcSet, thumbUrl, webUrl } from '$lib/utils/image';
+	import { hideOnError, hideParentOnError } from '$lib/utils/hide-on-error';
 	import Lightbox from './Lightbox.svelte';
 
 	let { images, name }: { images: ArtworkImage[]; name: string } = $props();
@@ -40,11 +41,16 @@
 			onclick={() => (lightboxOpen = true)}
 			aria-label="View image full screen"
 		>
+			<!-- The gallery slot is the sidebar width on desktop and the full
+			     viewport on mobile; `sizes` says so, otherwise the browser assumes
+			     100vw and pulls the 2000px candidate on a phone. -->
 			<img
 				src={webUrl(images[current].src)}
+				srcset={srcSet(images[current].src)}
+				sizes="(max-width: 768px) 100vw, 460px"
 				alt={images[current].caption || name}
-				onload={(e) => ((e.currentTarget as HTMLImageElement).style.display = '')}
-				onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
+				decoding="async"
+				use:hideOnError
 			/>
 		</button>
 
@@ -88,10 +94,8 @@
 						src={thumbUrl(img.src)}
 						alt=""
 						loading="lazy"
-						onload={(e) =>
-							((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
-						onerror={(e) =>
-							((e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none')}
+						decoding="async"
+						use:hideParentOnError
 					/>
 				</button>
 			{/each}

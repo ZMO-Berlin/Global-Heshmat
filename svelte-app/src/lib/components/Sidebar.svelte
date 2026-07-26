@@ -4,6 +4,7 @@
 	import { resolve } from '$app/paths';
 	import Gallery from './Gallery.svelte';
 	import VideoPlayer from './VideoPlayer.svelte';
+	import { aboutContent as about } from '$lib/data/about';
 	import { getMapStore } from '$lib/stores/map.svelte';
 
 	const store = getMapStore();
@@ -113,7 +114,7 @@
 					{#if isSearch}
 						<div class="sidebar-contact">
 							Do you know where this artwork is? Please contact
-							<a href="mailto:sonja.hegasy@zmo.de">sonja.hegasy@zmo.de</a>
+							<a href="mailto:{about.contactEmail}">{about.contactEmail}</a>
 						</div>
 					{/if}
 				{:else if residence}

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
-	import { thumbUrl, webUrl } from '$lib/utils/image';
+	import { fullUrl, srcSet, thumbUrl } from '$lib/utils/image';
+	import { hideOnError, hideParentOnError } from '$lib/utils/hide-on-error';
 	import { trapFocus } from '$lib/utils/focus-trap';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -77,12 +78,16 @@
 	{/if}
 
 	<div class="lightbox-content">
+		<!-- The lightbox stage is 85vw, so a wide or high-DPI screen gets the
+		     2000px candidate while a phone stays on the 1200px one. -->
 		<img
 			class="lightbox-img"
-			src={webUrl(images[current].src)}
+			src={fullUrl(images[current].src)}
+			srcset={srcSet(images[current].src)}
+			sizes="85vw"
 			alt={images[current].caption || name}
-			onload={(e) => ((e.currentTarget as HTMLImageElement).style.display = '')}
-			onerror={(e) => ((e.currentTarget as HTMLImageElement).style.display = 'none')}
+			decoding="async"
+			use:hideOnError
 		/>
 		{#if images[current].caption}
 			<div class="lightbox-caption">{images[current].caption}</div>
@@ -111,10 +116,8 @@
 						src={thumbUrl(img.src)}
 						alt=""
 						loading="lazy"
-						onload={(e) =>
-							((e.currentTarget as HTMLImageElement).parentElement!.style.display = '')}
-						onerror={(e) =>
-							((e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none')}
+						decoding="async"
+						use:hideParentOnError
 					/>
 				</button>
 			{/each}

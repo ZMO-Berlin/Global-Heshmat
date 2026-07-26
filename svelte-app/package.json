@@ -17,6 +17,7 @@
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
+		"images": "node scripts/generate_image_derivatives.mjs",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"verify:build": "node scripts/verify-build.mjs",

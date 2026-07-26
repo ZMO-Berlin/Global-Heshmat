@@ -204,16 +204,16 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 //
 // Each artwork/residence data file references images by their ORIGINAL
 // filename (e.g. "Foo Bar.jpeg"). At runtime the app (src/lib/utils/image.ts)
-// loads the generated derivative at /images/web/<stem>.webp and
-// /images/thumb/<stem>.webp, swapping the extension for .webp. This guards
-// the filename-drift class of bug: a reference whose stem has no matching
-// derivative — a typo, wrong case, space-vs-underscore, NFC/NFD Unicode
-// mismatch, or simply forgetting to run
-// scripts/generate_image_derivatives.py after adding an image.
+// loads the generated derivatives at /images/{thumb,web,full}/<stem>.webp,
+// swapping the extension for .webp. This guards the filename-drift class of
+// bug: a reference whose stem has no matching derivative — a typo, wrong case,
+// space-vs-underscore, NFC/NFD Unicode mismatch, or simply forgetting to run
+// `npm run images` after adding an image.
 const DATA_ROOT = join(__dirname, '..', 'src', 'lib', 'data');
 const DATA_DIRS = [join(DATA_ROOT, 'artworks'), join(DATA_ROOT, 'residences')];
-const WEB_DIR = join(BUILD_DIR, 'images', 'web');
-const THUMB_DIR = join(BUILD_DIR, 'images', 'thumb');
+// Keep in sync with VARIANTS in scripts/generate_image_derivatives.mjs.
+const VARIANT_DIRS = ['thumb', 'web', 'full'];
+const variantPath = (name) => join(BUILD_DIR, 'images', name);
 
 // Referenced filenames whose SOURCE image is not on disk yet (a colleague
 // still needs to supply them). Tracked here so the build stays green while
@@ -229,15 +229,16 @@ const stemOf = (file) => file.replace(/\.[^./\\]+$/, '');
 const IMG_EXT = /\.(?:jpe?g|png|webp|tiff?|heic|heif)$/i;
 const REF_RE = /(?:src|image)\s*:\s*["']([^"']+)["']/g;
 
+const allVariantDirsPresent = VARIANT_DIRS.every((d) => existsSync(variantPath(d)));
+
 check(
-	'image derivative folders present in build (web/ + thumb/)',
-	existsSync(WEB_DIR) && existsSync(THUMB_DIR),
-	'run scripts/generate_image_derivatives.py and commit static/images/web + thumb'
+	`image derivative folders present in build (${VARIANT_DIRS.join(' + ')})`,
+	allVariantDirsPresent,
+	'run `npm run images` and commit static/images/'
 );
 
-if (existsSync(WEB_DIR) && existsSync(THUMB_DIR)) {
-	const webSet = new Set(readdirSync(WEB_DIR));
-	const thumbSet = new Set(readdirSync(THUMB_DIR));
+if (allVariantDirsPresent) {
+	const variantSets = VARIANT_DIRS.map((d) => [d, new Set(readdirSync(variantPath(d)))]);
 
 	let refCount = 0;
 	let knownMissingSeen = 0;
@@ -258,11 +259,9 @@ if (existsSync(WEB_DIR) && existsSync(THUMB_DIR)) {
 				}
 				refCount++;
 				const webp = stemOf(name) + '.webp';
-				const inWeb = webSet.has(webp);
-				const inThumb = thumbSet.has(webp);
-				if (!inWeb || !inThumb) {
-					const where = !inWeb && !inThumb ? 'web/ and thumb/' : !inWeb ? 'web/' : 'thumb/';
-					broken.push(`${file}: "${name}" → missing ${webp} in ${where}`);
+				const absent = variantSets.filter(([, set]) => !set.has(webp)).map(([d]) => `${d}/`);
+				if (absent.length > 0) {
+					broken.push(`${file}: "${name}" → missing ${webp} in ${absent.join(' and ')}`);
 				}
 			}
 		}
