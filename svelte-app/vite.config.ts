@@ -77,11 +77,16 @@ export default defineConfig({
 				navigateFallback: '/',
 				runtimeCaching: [
 					{
-						// Artwork images — cache-first, capped so it can't grow unbounded.
+						// Artwork images — respond with the cached image immediately
+						// but revalidate in the background so clients get fresher
+						// derivatives without forcing a full reload.
 						urlPattern: ({ url, sameOrigin }) => sameOrigin && url.pathname.startsWith('/images/'),
-						handler: 'CacheFirst',
+						handler: 'StaleWhileRevalidate',
 						options: {
-							cacheName: 'artwork-images',
+							// Bump the cache name to force a fresh cache when the
+							// service worker updates — this avoids serving stale
+							// image files with identical URLs.
+							cacheName: 'artwork-images-v2',
 							expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 30 },
 							cacheableResponse: { statuses: [0, 200] }
 						}
