@@ -13,7 +13,7 @@ const artwork: Artwork = {
 	status: 'located',
 	address: 'Mobäcksgatan 11-25, 216 24, Malmö',
 	desc: 'Fountain, Malmö, 1985',
-	image: 'Två_kvinnor_av_Hassan_Heshmat_Malmö.jpg',
+	image: 'Två_kvinnor_av_Hassan_Heshmat_Malmö.jpg',
 	imageCaption: 'Two Women with a Breadbasket'
 
 	

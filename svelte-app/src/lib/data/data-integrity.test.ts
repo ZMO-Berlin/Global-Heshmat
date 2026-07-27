@@ -24,6 +24,7 @@ function fileSet(dir: string): Set<string> {
 const originals = fileSet(ORIGINALS_DIR);
 const webDerivatives = fileSet(`${STATIC_DIR}images/web`);
 const thumbDerivatives = fileSet(`${STATIC_DIR}images/thumb`);
+const fullDerivatives = fileSet(`${STATIC_DIR}images/full`);
 const videos = fileSet(`${STATIC_DIR}videos`);
 
 /** Mirror of the stem logic in src/lib/utils/image.ts. */
@@ -61,10 +62,15 @@ describe('image references', () => {
 		expect(missing).toEqual([]);
 	});
 
-	it('every referenced image has web + thumb WebP derivatives', () => {
+	it('every referenced image has thumb + web + full WebP derivatives', () => {
 		const missing = allImageRefs
 			.map((r) => ({ ...r, webp: `${stem(r.file)}.webp`.normalize('NFC') }))
-			.filter((r) => !webDerivatives.has(r.webp) || !thumbDerivatives.has(r.webp))
+			.filter(
+				(r) =>
+					!thumbDerivatives.has(r.webp) ||
+					!webDerivatives.has(r.webp) ||
+					!fullDerivatives.has(r.webp)
+			)
 			.map((r) => `${r.owner}: ${r.file} → ${r.webp}`);
 		expect(missing).toEqual([]);
 	});
@@ -82,10 +88,41 @@ describe('image references', () => {
 
 	it('every derivative corresponds to a file in originals/ (no stale derivatives)', () => {
 		const originalStems = new Set([...originals].map((f) => stem(f)));
-		const stale = [...webDerivatives, ...thumbDerivatives].filter(
+		const stale = [...webDerivatives, ...thumbDerivatives, ...fullDerivatives].filter(
 			(f) => !originalStems.has(stem(f))
 		);
 		expect(stale).toEqual([]);
+	});
+});
+
+describe('URL-safe filenames', () => {
+	/**
+	 * The derivatives are fetched over HTTP by their name, so the name has to
+	 * survive that trip. Ten files arrived from macOS with decomposed umlauts
+	 * ("a" + U+0308); percent-encoding that gives %CC%88, and a host resolving
+	 * paths in NFC answers 404. Every other check passed regardless, because
+	 * both sides of the comparison were normalised first — so the images simply
+	 * disappeared from the site with nothing failing.
+	 */
+	it('every served derivative filename is already NFC', () => {
+		const decomposed = [...webDerivatives, ...thumbDerivatives, ...fullDerivatives].filter(
+			(f) => f !== f.normalize('NFC')
+		);
+		expect(decomposed).toEqual([]);
+	});
+
+	it('every image reference in the data files is already NFC', () => {
+		const decomposed = allImageRefs
+			.filter((r) => r.file !== r.file.normalize('NFC'))
+			.map((r) => `${r.owner}: ${r.file}`);
+		expect(decomposed).toEqual([]);
+	});
+
+	it('every video reference is already NFC', () => {
+		const decomposed = allVideoRefs
+			.filter((r) => r.file !== r.file.normalize('NFC'))
+			.map((r) => `${r.owner}: ${r.file}`);
+		expect(decomposed).toEqual([]);
 	});
 });
 

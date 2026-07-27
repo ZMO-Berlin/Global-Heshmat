@@ -27,7 +27,7 @@ const artwork: Artwork = {
      	   caption: "Historical Photo"},
 		   { 		src: "Hasselt_Memorial.jpg",
          		caption: "Photo of the memorial"},
-	   {	src: "Hasselt_Rückseite_Foto_The_monument_made_this_ year_for_a_church_in_Belgium_1970.jpg",
+	   {	src: "Hasselt_Rückseite_Foto_The_monument_made_this_ year_for_a_church_in_Belgium_1970.jpg",
      	   caption: "Backside of Photo"},
 		   ],
 		links: [

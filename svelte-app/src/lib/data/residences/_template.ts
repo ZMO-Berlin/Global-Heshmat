@@ -18,10 +18,11 @@
  *     is auto-collected via Vite's import.meta.glob — no registration.
  *
  *  ── NOTE ───────────────────────────────────────────────────
- *  Residence markers are NOT drawn on the map yet — the category is a
- *  legend/filter placeholder for now. Files added here are stored and
- *  ready; plotting is switched on later in MapView.svelte once enough
- *  residences have been collected.
+ *  Residences are plotted as their own marker layer (a distinct blue, and
+ *  never merged into the artwork clusters). They show on the default "all"
+ *  view and under the "Places of residence" filter; the country and
+ *  "to be found" filters are artwork-only, so residences hide there.
+ *  Each one also gets its own prerendered page at /residences/<slug>/.
  *
  *  ── FIELD REFERENCE ────────────────────────────────────────
  *  id        Unique number (check the highest existing id, then +1).

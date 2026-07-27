@@ -10,9 +10,11 @@
 	import MapView from '$lib/components/MapView.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Legend from '$lib/components/Legend.svelte';
+	import CollectionPanel from '$lib/components/CollectionPanel.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import AboutModal from '$lib/components/AboutModal.svelte';
 	import MissingWorksModal from '$lib/components/MissingWorksModal.svelte';
+	import { page } from '$app/state';
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import { setupUrlSync } from '$lib/stores/url-sync.svelte';
 
@@ -65,6 +67,8 @@
 				store.missingOpen = false;
 			} else if (store.aboutOpen) {
 				store.aboutOpen = false;
+			} else if (store.browseOpen) {
+				store.browseOpen = false;
 			} else if (store.selectedArtwork || store.selectedResidence) {
 				goto(resolve('/'));
 			}
@@ -72,13 +76,37 @@
 	}}
 />
 
+<!-- First tab stop on the page. The map is a canvas with no focusable markers,
+     so without this a keyboard user tabs through the chrome and reaches nothing
+     they can actually read. -->
+<!-- preventDefault: the panel is `inert` until it opens, so a plain hash jump
+     would target an element the caret can't enter. Opening it moves focus
+     there instead (see CollectionPanel). The href stays for discoverability
+     and for the no-JS case. -->
+<a
+	class="skip-link"
+	href="#collection"
+	onclick={(e) => {
+		e.preventDefault();
+		store.browseOpen = true;
+	}}
+>
+	Skip to the collection list
+</a>
+
 {@render children()}
 
 <Header onreset={resetView} />
 <FilterBar />
-<MapView bind:this={mapView} />
+<main>
+	<MapView bind:this={mapView} showStatus={page.route.id !== '/collection'} />
+	<CollectionPanel />
+</main>
 <Sidebar />
-<Legend />
+<!-- The legend explains marker shapes, so it only belongs over the map. -->
+{#if page.route.id !== '/collection'}
+	<Legend />
+{/if}
 <Footer />
 <AboutModal />
 <MissingWorksModal />

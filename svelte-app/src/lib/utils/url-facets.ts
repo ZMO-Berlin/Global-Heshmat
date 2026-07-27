@@ -5,14 +5,16 @@
  * browser-side store sync so they can be unit-tested without a window.
  */
 
+import { FILTER_ALL, type MapFilter } from './map-filter';
+
 export interface FacetState {
 	aboutOpen: boolean;
-	activeFilter: string;
+	activeFilter: MapFilter;
 }
 
 export const DEFAULT_FACETS: FacetState = {
 	aboutOpen: false,
-	activeFilter: 'all'
+	activeFilter: FILTER_ALL
 };
 
 /** Parse a URL's query string into facet state. Unknown params are ignored. */
