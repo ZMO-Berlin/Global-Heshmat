@@ -128,6 +128,7 @@
 		align-items: baseline;
 		gap: var(--space-2);
 		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
 	}
 
 	.site-footer-role {
@@ -154,6 +155,34 @@
 		border-bottom-color: var(--color-accent);
 	}
 
+	/* ───── Narrowing the bar ─────
+	   The credits are the widest thing in the footer, so each tier below drops
+	   the next-least-essential piece of their horizontal budget rather than
+	   letting them wrap: a second line orphans one credit against the right
+	   edge and pushes the block out of the fixed 64px bar. */
+
+	/* Inline role + name needs ~1275px beside the ZMO wordmark. Stacking the
+	   role over the name nearly halves the strip (810px → ~470px) and keeps all
+	   four credits on one row, still centred against the logo. */
+	@media (max-width: 1280px) {
+		.site-footer-credits {
+			gap: var(--space-4);
+		}
+
+		.site-footer-credit {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--space-1);
+		}
+	}
+
+	/* The wordmark goes next; the logo still carries the brand and links out. */
+	@media (max-width: 1024px) {
+		.site-footer-label {
+			display: none;
+		}
+	}
+
 	@media (max-width: 768px) {
 		.site-footer {
 			padding: 0 var(--space-3-5);
@@ -162,14 +191,13 @@
 		.site-footer-inner {
 			gap: var(--space-3);
 		}
+	}
 
-		.site-footer-label {
-			display: none;
-		}
-
+	/* Below ~570px even the stacked roles stop fitting, so drop them and run the
+	   names as one centred list. Fill the row and center so a wrapped second
+	   line reads as balanced instead of a lone name dangling off the right. */
+	@media (max-width: 640px) {
 		.site-footer-credits {
-			/* Fill the row and center the wrapped names so a short second line
-				   reads as balanced instead of a lone name dangling off the right. */
 			flex: 1;
 			justify-content: center;
 			gap: var(--space-1-5) var(--space-3);
@@ -180,7 +208,19 @@
 		}
 
 		.site-footer-credit {
+			flex-direction: row;
+			align-items: baseline;
+			gap: var(--space-3);
 			font-size: var(--text-xs);
+		}
+
+		/* With the roles gone, a hairline dot keeps the names reading as one
+		   list rather than four loose words. The empty alt text keeps it out of
+		   the accessibility tree; browsers without that syntax just drop the
+		   separator, which costs nothing. */
+		.site-footer-credit:not(:last-child)::after {
+			content: '·' / '';
+			color: rgb(var(--color-header-text-rgb) / 0.45);
 		}
 	}
 </style>
