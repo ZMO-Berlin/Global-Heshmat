@@ -137,6 +137,8 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		/* Honour EXIF orientation — some source photos are stored rotated. */
+		image-orientation: from-image;
 		display: block;
 		transition: transform calc(var(--duration-slower) + 100ms) var(--ease-out);
 	}

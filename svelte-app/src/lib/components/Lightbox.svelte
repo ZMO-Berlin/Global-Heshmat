@@ -183,6 +183,8 @@
 		max-width: 85vw;
 		max-height: 75vh;
 		object-fit: contain;
+		/* Honour EXIF orientation — some source photos are stored rotated. */
+		image-orientation: from-image;
 		border-radius: var(--radius-sm);
 		user-select: none;
 		box-shadow: var(--shadow-lightbox-img);
