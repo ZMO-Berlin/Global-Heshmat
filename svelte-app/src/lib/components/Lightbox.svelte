@@ -139,7 +139,13 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+		/* `safe` centring degrades to start-alignment when the stage plus its
+		   counter, caption and thumb strip exceed a short viewport, so the
+		   overflow lands at the bottom where it can be scrolled to rather than
+		   above the top edge where it is unreachable. */
+		justify-content: safe center;
+		overflow-y: auto;
+		padding: var(--space-8) 0;
 		animation: fadeIn var(--duration-slow) var(--ease-out);
 	}
 
@@ -170,13 +176,17 @@
 		border-color: rgb(var(--color-on-dark-rgb) / 0.3);
 	}
 
+	/* The stage is a column so the caption sits in flow under the image and the
+	   overlay's centring accounts for its height. Only the image is capped at
+	   75vh; the caption adds below it. */
 	.lightbox-content {
 		position: relative;
 		max-width: 85vw;
-		max-height: 75vh;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: var(--space-4);
 	}
 
 	.lightbox-img {
@@ -190,16 +200,18 @@
 		box-shadow: var(--shadow-lightbox-img);
 	}
 
+	/* width:0 + min-width:100% keeps the stage sized by the image alone, so a
+	   long caption wraps at the image's width instead of stretching the stage
+	   out towards 85vw and reading as detached from the photo. */
 	.lightbox-caption {
-		position: absolute;
-		bottom: -34px;
-		left: 0;
-		right: 0;
+		width: 0;
+		min-width: 100%;
 		text-align: center;
 		color: rgb(var(--color-on-dark-rgb) / 0.7);
 		font-family: var(--font-display);
 		font-size: var(--text-md);
 		font-style: italic;
+		line-height: var(--leading-snug);
 	}
 
 	.lightbox-counter {
@@ -315,7 +327,6 @@
 
 		.lightbox-content {
 			max-width: 95vw;
-			max-height: 70vh;
 		}
 
 		.lightbox-img {
