@@ -7,6 +7,10 @@ package-lock.json
 build
 dist
 
+# Browser test output
+playwright-report
+test-results
+
 # Hand-edited data files — kept out of Prettier so colleagues can add or
 # tweak entries without formatting churn failing CI. Both collections are
 # ignored symmetrically (artworks AND residences).

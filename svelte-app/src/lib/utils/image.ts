@@ -63,3 +63,16 @@ export function fullUrl(src: string): string {
 export function srcSet(src: string): string {
 	return `${webUrl(src)} ${IMAGE_WIDTHS.web}w, ${fullUrl(src)} ${IMAGE_WIDTHS.full}w`;
 }
+
+/** Responsive candidates for collection cards, whose slots never need the 2000px master. */
+export function cardSrcSet(src: string): string {
+	return `${thumbUrl(src)} ${IMAGE_WIDTHS.thumb}w, ${webUrl(src)} ${IMAGE_WIDTHS.web}w`;
+}
+
+/** Lead photo for cards and metadata, preferring the modern multi-image field. */
+export function leadImage(item: {
+	images?: readonly { src: string }[];
+	image?: string;
+}): string | undefined {
+	return item.images?.[0]?.src ?? item.image;
+}

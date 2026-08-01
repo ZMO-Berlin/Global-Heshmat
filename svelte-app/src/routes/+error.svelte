@@ -69,7 +69,7 @@
 		text-align: center;
 		background: var(--color-surface);
 		border-radius: var(--radius-lg);
-		border-top: 3px solid var(--color-accent);
+		border: 1px solid var(--color-border);
 		box-shadow: var(--shadow-lg);
 		padding: var(--space-8) var(--space-7);
 		color: var(--color-text-muted);
@@ -111,6 +111,7 @@
 		margin-top: var(--space-6);
 	}
 	.error-btn {
+		min-height: 44px;
 		font-family: var(--font-body);
 		font-size: var(--text-base);
 		font-weight: var(--weight-medium);
@@ -121,7 +122,11 @@
 		color: var(--color-ink);
 		text-decoration: none;
 		cursor: pointer;
-		transition: all var(--duration-base) var(--ease-out);
+		transition:
+			background-color var(--duration-base) var(--ease-out),
+			border-color var(--duration-base) var(--ease-out),
+			box-shadow var(--duration-base) var(--ease-out),
+			color var(--duration-base) var(--ease-out);
 	}
 	.error-btn:hover {
 		border-color: var(--color-text-muted);

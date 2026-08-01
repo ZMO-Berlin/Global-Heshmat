@@ -155,7 +155,9 @@
 	}
 
 	.modal-body :global(.videos a) {
-		display: block;
+		display: flex;
+		align-items: center;
+		min-height: 44px;
 		margin: var(--space-2) 0;
 		padding: var(--space-2-5) var(--space-4);
 		background: var(--color-surface-warm);
@@ -164,7 +166,10 @@
 		text-decoration: none;
 		font-size: var(--text-base);
 		font-weight: var(--weight-medium);
-		transition: all var(--duration-base) var(--ease-out);
+		transition:
+			background-color var(--duration-base) var(--ease-out),
+			border-color var(--duration-base) var(--ease-out),
+			color var(--duration-base) var(--ease-out);
 	}
 
 	.modal-body :global(.videos a:hover) {

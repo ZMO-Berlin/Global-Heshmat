@@ -26,6 +26,7 @@
 		class="switch"
 		class:active={onMap}
 		href={resolve('/')}
+		aria-label="Map view"
 		aria-current={onMap ? 'page' : undefined}
 		onclick={() => (store.browseOpen = false)}
 	>
@@ -36,6 +37,7 @@
 		class="switch"
 		class:active={onGrid}
 		href={resolve('/collection')}
+		aria-label="Grid view"
 		aria-current={onGrid ? 'page' : undefined}
 		onclick={() => (store.browseOpen = false)}
 	>
@@ -45,6 +47,7 @@
 	<button
 		class="switch"
 		class:active={store.browseOpen}
+		aria-label="List view"
 		aria-pressed={store.browseOpen}
 		onclick={() => (store.browseOpen = !store.browseOpen)}
 	>
@@ -65,6 +68,7 @@
 	}
 	.switch {
 		display: inline-flex;
+		min-height: 40px;
 		align-items: center;
 		gap: var(--space-1-5);
 		padding: var(--space-1-5) var(--space-3-5);
@@ -105,6 +109,8 @@
 			display: none;
 		}
 		.switch {
+			min-width: 44px;
+			height: 44px;
 			padding: var(--space-1-5) var(--space-2-5);
 		}
 	}

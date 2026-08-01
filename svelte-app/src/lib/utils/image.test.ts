@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { IMAGE_WIDTHS, fullUrl, srcSet, thumbUrl, webUrl } from './image';
+import { cardSrcSet, IMAGE_WIDTHS, fullUrl, leadImage, srcSet, thumbUrl, webUrl } from './image';
 
 describe('image URL helpers', () => {
 	it('maps an original to its web derivative, swapping the extension', () => {
@@ -72,5 +72,19 @@ describe('image URL helpers', () => {
 		const set = srcSet('x.jpg');
 		expect(set).toContain(`${IMAGE_WIDTHS.web}w`);
 		expect(set).toContain(`${IMAGE_WIDTHS.full}w`);
+	});
+
+	it('offers a 400px candidate for collection cards', () => {
+		expect(cardSrcSet('Agiba_1.jpg')).toBe(
+			'/images/thumb/Agiba_1.webp 400w, /images/web/Agiba_1.webp 1200w'
+		);
+	});
+
+	it('prefers the first gallery image as the lead image', () => {
+		expect(leadImage({ image: 'legacy.jpg', images: [{ src: 'gallery.jpg' }] })).toBe(
+			'gallery.jpg'
+		);
+		expect(leadImage({ image: 'legacy.jpg' })).toBe('legacy.jpg');
+		expect(leadImage({})).toBeUndefined();
 	});
 });

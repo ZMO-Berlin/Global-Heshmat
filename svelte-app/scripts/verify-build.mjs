@@ -11,7 +11,7 @@
  *
  * Exits non-zero on the first failed check so CI fails loudly.
  */
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -60,6 +60,38 @@ check('404.html present', existsSync(join(BUILD_DIR, '404.html')));
 // The social-preview image referenced by every page's og:image/twitter:image
 // (see src/lib/components/Seo.svelte) must actually ship in the build.
 check('og-image.png present', existsSync(join(BUILD_DIR, 'og-image.png')));
+
+// The optional map renderer is intentionally fetched only when the map view
+// mounts. Guard both pieces of that contract: the self-hosted RTL worker ships,
+// and oversized optional chunks do not silently return to the PWA app shell.
+check('self-hosted RTL text plugin present', existsSync(join(BUILD_DIR, 'rtl-text-plugin.js')));
+const serviceWorkerPath = join(BUILD_DIR, 'sw.js');
+check('service worker present', existsSync(serviceWorkerPath));
+if (existsSync(serviceWorkerPath)) {
+	const serviceWorker = read('sw.js');
+	const chunksDir = join(BUILD_DIR, '_app', 'immutable', 'chunks');
+	const oversizedChunks = existsSync(chunksDir)
+		? readdirSync(chunksDir).filter(
+				(file) => file.endsWith('.js') && statSync(join(chunksDir, file)).size > 500 * 1024
+			)
+		: [];
+	for (const chunk of oversizedChunks) {
+		check(
+			`optional chunk ${chunk} is not precached`,
+			!serviceWorker.includes(chunk),
+			'large optional JavaScript should be cached only after its view is opened'
+		);
+	}
+	check(
+		'self-hosted RTL plugin is not precached',
+		!/(?:^|[{,])url:["'][^"']*rtl-text-plugin\.js["']/.test(serviceWorker)
+	);
+	check(
+		'service worker precache URLs target deployed paths',
+		!/(?:^|[{,])url:["'](?:client|prerendered)\//.test(serviceWorker),
+		'intermediate SvelteKit build paths must be rewritten before deployment'
+	);
+}
 
 // ── Home page SEO ───────────────────────────────────────────────────
 check('index.html present', existsSync(join(BUILD_DIR, 'index.html')));
@@ -136,6 +168,11 @@ if (existsSync(join(BUILD_DIR, COLLECTION))) {
 		badSrcset.length === 0,
 		badSrcset[0] ? `e.g. ${badSrcset[0].slice(0, 120)}` : ''
 	);
+	check(
+		'collection page does not preload the optional map stack',
+		!html.includes('maplibre') && !html.includes('MapView'),
+		'MapView and MapLibre styles must remain behind the client-side map import'
+	);
 }
 
 // ── Sitemap ─────────────────────────────────────────────────────────
@@ -168,31 +205,31 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 		);
 	}
 
-	// ── Per-artwork SEO (sample the first one) ──────────────────────
-	if (slugs.length > 0) {
-		const sample = slugs[0];
-		const html = read(join('artworks', sample, 'index.html'));
+	// ── Per-artwork SEO ─────────────────────────────────────────────
+	for (const slug of slugs) {
+		const html = read(join('artworks', slug, 'index.html'));
 		check(
-			`artwork page /${sample}/ has exactly one <title>`,
+			`artwork page /${slug}/ has exactly one <title>`,
 			(html.match(/<title>/g) ?? []).length === 1
 		);
 		check(
-			`artwork page /${sample}/ canonical points at the artwork URL`,
-			new RegExp(`rel="canonical"\\s+href="${SITE_URL}/artworks/${sample}/"`).test(html)
+			`artwork page /${slug}/ canonical points at the artwork URL`,
+			new RegExp(`rel="canonical"\\s+href="${SITE_URL}/artworks/${slug}/"`).test(html)
 		);
 		check(
-			`artwork page /${sample}/ JSON-LD declares @type VisualArtwork`,
+			`artwork page /${slug}/ JSON-LD declares @type VisualArtwork`,
 			/<script type="application\/ld\+json">[^<]*"@type":"VisualArtwork"/.test(html)
 		);
 		check(
-			`artwork page /${sample}/ og:type is "article"`,
+			`artwork page /${slug}/ og:type is "article"`,
 			/property="og:type"\s+content="article"/.test(html)
 		);
 		check(
-			`artwork page /${sample}/ includes the GSC verification meta`,
+			`artwork page /${slug}/ includes the GSC verification meta`,
 			new RegExp(`name="google-site-verification"[^>]*content="${GSC_TOKEN}"`).test(html)
 		);
-	} else {
+	}
+	if (slugs.length === 0) {
 		successes.push(
 			'no artwork pages to check (artworks folder is empty — skipping per-artwork assertions)'
 		);
@@ -213,31 +250,31 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 		);
 	}
 
-	// ── Per-residence SEO (sample the first one) ────────────────────
-	if (resSlugs.length > 0) {
-		const sample = resSlugs[0];
-		const html = read(join('residences', sample, 'index.html'));
+	// ── Per-residence SEO ───────────────────────────────────────────
+	for (const slug of resSlugs) {
+		const html = read(join('residences', slug, 'index.html'));
 		check(
-			`residence page /${sample}/ has exactly one <title>`,
+			`residence page /${slug}/ has exactly one <title>`,
 			(html.match(/<title>/g) ?? []).length === 1
 		);
 		check(
-			`residence page /${sample}/ canonical points at the residence URL`,
-			new RegExp(`rel="canonical"\\s+href="${SITE_URL}/residences/${sample}/"`).test(html)
+			`residence page /${slug}/ canonical points at the residence URL`,
+			new RegExp(`rel="canonical"\\s+href="${SITE_URL}/residences/${slug}/"`).test(html)
 		);
 		check(
-			`residence page /${sample}/ JSON-LD declares @type Place`,
+			`residence page /${slug}/ JSON-LD declares @type Place`,
 			/<script type="application\/ld\+json">[^<]*"@type":"Place"/.test(html)
 		);
 		check(
-			`residence page /${sample}/ og:type is "article"`,
+			`residence page /${slug}/ og:type is "article"`,
 			/property="og:type"\s+content="article"/.test(html)
 		);
 		check(
-			`residence page /${sample}/ includes the GSC verification meta`,
+			`residence page /${slug}/ includes the GSC verification meta`,
 			new RegExp(`name="google-site-verification"[^>]*content="${GSC_TOKEN}"`).test(html)
 		);
-	} else {
+	}
+	if (resSlugs.length === 0) {
 		successes.push(
 			'no residence pages to check (residences folder is empty — skipping per-residence assertions)'
 		);

@@ -118,6 +118,7 @@
 	}
 
 	.header-btn {
+		min-height: 36px;
 		background: transparent;
 		border: 1px solid rgb(var(--color-header-text-rgb) / 0.2);
 		color: var(--color-header-text);
@@ -130,7 +131,11 @@
 		letter-spacing: var(--tracking-wider);
 		text-transform: uppercase;
 		white-space: nowrap;
-		transition: all var(--duration-slow) var(--ease-out);
+		transition:
+			background-color var(--duration-slow) var(--ease-out),
+			border-color var(--duration-slow) var(--ease-out),
+			color var(--duration-slow) var(--ease-out),
+			opacity var(--duration-slow) var(--ease-out);
 	}
 
 	.header-btn:hover {
@@ -182,6 +187,8 @@
 		}
 
 		.header-btn {
+			min-width: 44px;
+			height: 44px;
 			padding: 6px var(--space-2-5);
 			font-size: var(--text-xs);
 			letter-spacing: normal;

@@ -263,6 +263,7 @@
 	}
 	.collection-item {
 		display: grid;
+		min-height: 44px;
 		grid-template-columns: auto 1fr;
 		gap: 0 var(--space-2-5);
 		padding: var(--space-2-5) var(--space-5);

@@ -91,8 +91,8 @@
 	--prose-width: 62ch; /* readable measure for long-form text */
 
 	/* ───── Typography ───── */
-	--font-display: 'Cormorant Garamond', 'Georgia', serif;
-	--font-body: 'Outfit', system-ui, -apple-system, sans-serif;
+	--font-display: 'Cormorant Garamond Variable', 'Georgia', serif;
+	--font-body: 'Outfit Variable', system-ui, -apple-system, sans-serif;
 
 	/* Type scale
 	   base (14) = UI chrome: filter bar, meta tags, captions, small buttons
@@ -209,13 +209,14 @@
 	--z-lightbox-ui: 201;
 }
 
-/* Honour the user's reduced-motion preference. Keep transitions instant
-   but non-zero so :hover/:focus state still has a defined transition target. */
+/* Honour the user's reduced-motion preference without removing useful state
+	feedback. Spatial motion is disabled in the components that own it; these
+	short durations retain legible focus, colour, and selection changes. */
 @media (prefers-reduced-motion: reduce) {
 	:root {
-		--duration-fast: 0.01ms;
-		--duration-base: 0.01ms;
-		--duration-slow: 0.01ms;
-		--duration-slower: 0.01ms;
+		--duration-fast: 80ms;
+		--duration-base: 80ms;
+		--duration-slow: 80ms;
+		--duration-slower: 80ms;
 	}
 }

@@ -66,8 +66,8 @@ body {
    Modal.svelte, which meant the modal's chrome was styled by a class named for
    a different component. */
 .btn-close {
-	width: 34px;
-	height: 34px;
+	width: 44px;
+	height: 44px;
 	border: none;
 	background: var(--color-close-bg);
 	border-radius: 50%;
@@ -78,7 +78,9 @@ body {
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-	transition: all var(--duration-fast) var(--ease-out);
+	transition:
+		background-color var(--duration-fast) var(--ease-out),
+		color var(--duration-fast) var(--ease-out);
 }
 .btn-close:hover {
 	background: var(--color-close-bg-hover);
@@ -105,15 +107,11 @@ body {
 
 /* ═══════════════════════════════════════════
    Reduced motion
-   In addition to the duration overrides in tokens.css, kill the
-   gallery hover-zoom outright — instant scale jumps still feel jarring. */
+   Spatial entrances are disabled while short colour/focus feedback remains. */
 @media (prefers-reduced-motion: reduce) {
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
+	.modal-overlay,
+	.modal-card,
+	.lightbox-overlay {
+		animation: none !important;
 	}
 }

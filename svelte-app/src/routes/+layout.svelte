@@ -1,5 +1,10 @@
 <script lang="ts">
 	import '../app.css';
+	import '@fontsource-variable/cormorant-garamond/wght.css';
+	import '@fontsource-variable/cormorant-garamond/wght-italic.css';
+	import '@fontsource-variable/outfit/wght.css';
+	import cormorantLatin from '@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-normal.woff2?url';
+	import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 	import type { Snippet } from 'svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -7,7 +12,7 @@
 	import logo from '$lib/assets/logo-zmo.png';
 	import Header from '$lib/components/Header.svelte';
 	import FilterBar from '$lib/components/FilterBar.svelte';
-	import MapView from '$lib/components/MapView.svelte';
+	import type MapView from '$lib/components/MapView.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Legend from '$lib/components/Legend.svelte';
 	import CollectionPanel from '$lib/components/CollectionPanel.svelte';
@@ -33,12 +38,47 @@
 	// Dynamically imported so the virtual module is only pulled in the browser
 	// bundle, never during prerendering.
 	onMount(() => {
-		void import('virtual:pwa-register').then(({ registerSW }) => {
-			registerSW({ immediate: true });
-		});
+		let registrationTimer: ReturnType<typeof setTimeout> | undefined;
+		const register = () => {
+			// PWA installation downloads the app shell in the background. Give the
+			// first gallery render priority so those requests do not compete with
+			// visible artwork images on a visitor's first load.
+			registrationTimer = setTimeout(() => {
+				void import('virtual:pwa-register').then(({ registerSW }) => registerSW());
+			}, 3000);
+		};
+
+		if (document.readyState === 'complete') register();
+		else window.addEventListener('load', register, { once: true });
+
+		return () => {
+			window.removeEventListener('load', register);
+			if (registrationTimer) clearTimeout(registrationTimer);
+		};
 	});
 
 	let mapView: MapView | undefined = $state();
+	type MapViewConstructor = (typeof import('$lib/components/MapView.svelte'))['default'];
+	let MapViewComponent: MapViewConstructor | undefined = $state();
+	let mapImportStarted = false;
+	const onCollectionRoute = $derived(page.url.pathname.replace(/\/$/, '').endsWith('/collection'));
+	// A direct collection visit should not pay for WebGL, basemap data, or the
+	// MapLibre bundle. Once the map has been requested, keep it mounted while
+	// switching views so the visitor does not repeatedly rebuild its context.
+	// Use the pathname rather than route.id: the latter can be transient while
+	// a prerendered deep link hydrates and would permanently trip this latch.
+	let mapActivated = $state(!page.url.pathname.replace(/\/$/, '').endsWith('/collection'));
+	$effect(() => {
+		if (!onCollectionRoute) {
+			mapActivated = true;
+			if (!mapImportStarted) {
+				mapImportStarted = true;
+				void import('$lib/components/MapView.svelte').then(({ default: component }) => {
+					MapViewComponent = component;
+				});
+			}
+		}
+	});
 
 	// Reset goes back to the canonical home URL and recenters the map.
 	function resetView() {
@@ -52,12 +92,8 @@
 
 <svelte:head>
 	<link rel="icon" href={logo} type="image/png" />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap"
-		rel="stylesheet"
-	/>
+	<link rel="preload" href={cormorantLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+	<link rel="preload" href={outfitLatin} as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
 <svelte:window
@@ -99,12 +135,14 @@
 <Header onreset={resetView} />
 <FilterBar />
 <main>
-	<MapView bind:this={mapView} showStatus={page.route.id !== '/collection'} />
+	{#if mapActivated && MapViewComponent}
+		<MapViewComponent bind:this={mapView} showStatus={!onCollectionRoute} />
+	{/if}
 	<CollectionPanel />
 </main>
 <Sidebar />
 <!-- The legend explains marker shapes, so it only belongs over the map. -->
-{#if page.route.id !== '/collection'}
+{#if !onCollectionRoute}
 	<Legend />
 {/if}
 <Footer />

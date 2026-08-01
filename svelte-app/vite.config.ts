@@ -2,9 +2,26 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vite';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const rtlTextPluginPath = fileURLToPath(
+	new URL('./node_modules/@mapbox/mapbox-gl-rtl-text/dist/mapbox-gl-rtl-text.js', import.meta.url)
+);
 
 export default defineConfig({
 	plugins: [
+		{
+			name: 'emit-local-rtl-text-plugin',
+			apply: 'build',
+			generateBundle() {
+				this.emitFile({
+					type: 'asset',
+					fileName: 'rtl-text-plugin.js',
+					source: readFileSync(rtlTextPluginPath)
+				});
+			}
+		},
 		sveltekit(),
 		// Progressive Web App: installable + offline-capable, with NO intrusive
 		// browser prompts. `registerType: 'autoUpdate'` means a new version is
@@ -13,6 +30,15 @@ export default defineConfig({
 		// installable through the browser's own passive affordance (the address
 		// bar / menu "Install" entry) without ever nagging the visitor.
 		SvelteKitPWA({
+			// adapter-static emits relative application asset URLs, but PWA files
+			// live at the deployed origin root. Pin both integration bases so a
+			// deep route registers /sw.js instead of /collection/sw.js.
+			base: '/',
+			scope: '/',
+			// The lower Workbox limit below intentionally excludes the optional
+			// map renderer. Keep that expected exclusion as a visible build warning
+			// instead of treating it as a configuration error.
+			showMaximumFileSizeToCacheInBytesWarning: true,
 			registerType: 'autoUpdate',
 			// Must mirror `export const trailingSlash = 'always'` in
 			// src/routes/+layout.ts. The plugin defaults to 'never', which
@@ -22,6 +48,10 @@ export default defineConfig({
 			// whose relative `./_app/…` URLs then 404 under /artworks/foo/,
 			// leaving every deep-linked page unstyled and mapless.
 			kit: {
+				// Required alongside the top-level PWA base: this controls how the
+				// SvelteKit integration rewrites its intermediate client/ and
+				// prerendered/ paths into deployed URLs.
+				base: '/',
 				trailingSlash: 'always'
 			},
 			// We call `registerSW()` ourselves from the root layout; 'auto'
@@ -61,21 +91,46 @@ export default defineConfig({
 				]
 			},
 			workbox: {
-				// Precache the app shell ONLY — the JS/CSS bundles, the prerendered
-				// HTML pages, and the manifest. The 400+ artwork images under
+				// Precache the app shell ONLY — JS/CSS, the two primary entry pages,
+				// and the manifest. Detail pages remain network-first instead of all
+				// 43 being downloaded during installation. The 400+ artwork images under
 				// /images/** are intentionally excluded (precaching them would mean
 				// downloading hundreds of MB on first visit); they are instead
 				// cached on demand via runtimeCaching below.
-				globPatterns: ['client/**/*.{js,css,webmanifest}', 'prerendered/**/*.html'],
-				globIgnores: ['**/images/**'],
-				// The maplibre-gl vendor chunk is large but worth precaching.
-				maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-				// SvelteKit already content-hashes assets, so stop Workbox adding
-				// its own cache-busting query onto those immutable URLs.
-				dontCacheBustURLsMatching: /-[a-f0-9]{8}\./,
+				globPatterns: [
+					'client/**/*.{js,css,webmanifest}',
+					'prerendered/pages/index.html',
+					'prerendered/pages/collection/index.html'
+				],
+				globIgnores: [
+					'**/images/**',
+					// The map is an optional view. Keep its large renderer and RTL
+					// worker out of the install-time app shell and cache them on demand.
+					'**/maplibre-*.js',
+					'**/maplibre.*.css',
+					'**/rtl-text-plugin.js'
+				],
+				// Vite 8 preserves the logical MapLibre name only in its manifest,
+				// not in the emitted filename. Workbox's measured-size limit keeps
+				// that optional 970 KiB renderer out of the install-time app shell
+				// while retaining the SvelteKit integration's required URL transform.
+				maximumFileSizeToCacheInBytes: 500 * 1024,
 				// Offline fallback for any not-yet-visited route.
 				navigateFallback: '/',
 				runtimeCaching: [
+					{
+						urlPattern: ({ url, sameOrigin }) =>
+							sameOrigin &&
+							((url.pathname.includes('/_app/immutable/chunks/') && url.pathname.endsWith('.js')) ||
+								(url.pathname.includes('/maplibre.') && url.pathname.endsWith('.css')) ||
+								url.pathname.endsWith('/rtl-text-plugin.js')),
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'map-renderer-v1',
+							expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 365 },
+							cacheableResponse: { statuses: [0, 200] }
+						}
+					},
 					{
 						// Artwork images — respond with the cached image immediately
 						// but revalidate in the background so clients get fresher
@@ -92,16 +147,14 @@ export default defineConfig({
 						}
 					},
 					{
-						urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
-						handler: 'StaleWhileRevalidate',
-						options: { cacheName: 'google-fonts-stylesheets' }
-					},
-					{
-						urlPattern: ({ url }) => url.origin === 'https://fonts.gstatic.com',
+						// Cache previously viewed map regions and style assets. A cold
+						// offline visit still degrades to the collection list.
+						urlPattern: ({ url }) =>
+							url.hostname === 'cartocdn.com' || url.hostname.endsWith('.cartocdn.com'),
 						handler: 'CacheFirst',
 						options: {
-							cacheName: 'google-fonts-webfonts',
-							expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 },
+							cacheName: 'carto-map-assets-v1',
+							expiration: { maxEntries: 400, maxAgeSeconds: 60 * 60 * 24 * 30 },
 							cacheableResponse: { statuses: [0, 200] }
 						}
 					}
@@ -110,16 +163,26 @@ export default defineConfig({
 		})
 	],
 	build: {
-		// The client bundle is dominated by maplibre-gl (~600 kB), which is
-		// the whole point of this app — there's no UX win in lazy-loading it.
-		// Raise the warning threshold so the build log stays clean.
+		// MapLibre is intentionally lazy and isolated from the grid-first route.
+		// Its renderer remains a large optional chunk, so keep the threshold high
+		// enough that warnings still identify unexpected non-map growth.
 		chunkSizeWarningLimit: 1200,
 		// Suppress Rolldown's informational plugin-timings report. The timings
 		// don't indicate a problem here — they're dominated by SvelteKit's own
 		// build plugins, which we don't control.
-		rollupOptions: {
+		rolldownOptions: {
 			checks: {
 				pluginTimings: false
+			},
+			output: {
+				codeSplitting: {
+					groups: [
+						{
+							name: 'maplibre',
+							test: /node_modules[\\/]maplibre-gl/
+						}
+					]
+				}
 			}
 		}
 	},
