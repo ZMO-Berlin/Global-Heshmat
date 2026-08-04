@@ -15,8 +15,8 @@ const artwork: Artwork = {
 	desc: 'Currently there is no statue of Hassan Heshmat in the ongoing exhibition (May 2026)',
 	images: [{src: "Museum_of_Egyptian_Modern_Art.jpg",
 		caption: "Museum of Egyptian Modern Art"},
-	{src: "ticket.jpg",
-		caption: "Ticket Museum of Egyptian Modern Art "}	
+	{src: "ticket museum of egyptian modern art.jpg",
+		caption: "Ticket Museum of Egyptian Modern Art "} 	
 ]
 
 };
