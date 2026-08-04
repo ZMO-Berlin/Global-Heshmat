@@ -19,5 +19,6 @@ const artwork: Artwork = {
 		caption: "Ticket Museum of Egyptian Modern Art "}	
 ]
 
+};
 
 export default artwork;
