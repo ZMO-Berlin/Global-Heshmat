@@ -1,0 +1,63 @@
+name: Report an artwork location
+description: Help us locate a work by Hassan Heshmat, or tell us about one we have missed.
+title: '[Artwork] '
+labels: ['artwork report']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping. Several of Heshmat's works in public space have not
+        been located yet, and others are almost certainly still unknown to us.
+
+        If you would rather write privately, email **sonja.hegasy@zmo.de** instead.
+
+        Please note: the project documents works **in public space**. It does not
+        list works held in private homes, or past exhibitions in galleries and museums.
+  - type: input
+    id: artwork
+    attributes:
+      label: Which artwork?
+      description: The title as shown on the site, or a short description if it is a work we do not list yet.
+      placeholder: e.g. "The Dawn of Egypt" — or "a bronze relief of two seated figures"
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What are you reporting?
+      options:
+        - A location for a work listed as "not located"
+        - A work missing from the site entirely
+        - A correction to a location we already show
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Where is it?
+      description: As precise as you can be — city, street, building, or coordinates.
+      placeholder: e.g. "Cairo, Zamalek — in the courtyard of the officers' club" or a latitude, longitude pair
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: How do you know?
+      description: Photographs, publications, personal knowledge, a link — whatever you have. You can drag images directly into this box.
+    validations:
+      required: false
+  - type: input
+    id: contact
+    attributes:
+      label: May we contact you?
+      description: Optional. An email address if you are happy for us to follow up with questions.
+    validations:
+      required: false
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Image rights
+      options:
+        - label: If I attached photographs, I am the rights-holder or have permission to share them, and the project may use them with attribution.
+          required: false

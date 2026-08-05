@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Email the project directly
+    url: mailto:sonja.hegasy@zmo.de
+    about: Prefer to write privately? Contact Dr Sonja Hegasy at ZMO.
+  - name: Project page at ZMO
+    url: https://www.zmo.de/forschung/religion-und-intellektuelle-kultur/sonja-hegasy
+    about: Background on the research project behind this site.
+  - name: The live site
+    url: https://heshmat.zmo.de/
+    about: Browse the map of Heshmat's works in public space.

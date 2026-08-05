@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: If you use this project or its data, please cite it as below.
+title: 'Global Heshmat: Following the Egyptian Sculptor Hassan Heshmat Around the World'
+abstract: >-
+  An interactive cartographic web application tracing the public artworks of the
+  Egyptian sculptor Hassan Heshmat (1920-2006) across Egypt, Europe, and beyond,
+  together with the places where he lived and worked. Source code is MIT
+  licensed; editorial content is CC BY 4.0; photographs remain the property of
+  their respective rights-holders.
+type: software
+authors:
+  - family-names: Hegasy
+    given-names: Sonja
+    name-suffix: Dr
+    affiliation: Leibniz-Zentrum Moderner Orient (ZMO), Berlin
+    website: 'https://www.zmo.de/en/people/dr-sonja-hegasy'
+  - family-names: Purtzel
+    given-names: Jan
+    affiliation: Leibniz-Zentrum Moderner Orient (ZMO), Berlin
+  - family-names: Madore
+    given-names: Frédérick
+    name-suffix: Dr
+    affiliation: University of Bayreuth
+    website: 'https://www.frederickmadore.com/'
+  - family-names: Hafez
+    given-names: Samar
+    affiliation: Alexandria
+repository-code: 'https://github.com/ZMO-Berlin/Global-Heshmat'
+url: 'https://heshmat.zmo.de/'
+license:
+  - MIT
+  - CC-BY-4.0
+keywords:
+  - Hassan Heshmat
+  - Egyptian art
+  - sculpture
+  - public art
+  - art history
+  - digital humanities
+  - interactive map
