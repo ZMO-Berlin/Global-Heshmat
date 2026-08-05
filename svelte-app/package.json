@@ -2,6 +2,25 @@
 	"name": "global-heshmat",
 	"private": true,
 	"version": "0.0.1",
+	"description": "Interactive map tracing the public artworks of Egyptian sculptor Hassan Heshmat (1920–2006) across Egypt, Europe, and beyond. A project by ZMO Berlin.",
+	"homepage": "https://heshmat.zmo.de/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ZMO-Berlin/Global-Heshmat.git",
+		"directory": "svelte-app"
+	},
+	"bugs": {
+		"url": "https://github.com/ZMO-Berlin/Global-Heshmat/issues"
+	},
+	"author": "Leibniz-Zentrum Moderner Orient (ZMO), Berlin (https://www.zmo.de)",
+	"license": "MIT",
+	"keywords": [
+		"sveltekit",
+		"maplibre-gl",
+		"digital-humanities",
+		"interactive-map",
+		"art-history"
+	],
 	"type": "module",
 	"engines": {
 		"node": "^22.13.0 || ^24.0.0"

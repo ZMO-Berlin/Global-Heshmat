@@ -317,3 +317,41 @@ The verification meta tag for Google Search Console lives in [`svelte-app/src/ap
 - **Content:** Dr Sonja Hegasy, ZMO
 - **Development:** [Frédérick Madore](https://www.frederickmadore.com/), University of Bayreuth
 - [www.zmo.de](http://www.zmo.de)
+
+## Licensing
+
+This repository is deliberately licensed in three parts, because it contains three
+different kinds of material:
+
+| Material                                                          | Licence                                                                     |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Source code** — everything under `svelte-app/src`, `scripts/`    | [MIT](LICENSE)                                                              |
+| **Editorial content** — artwork and residence records, about texts | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)                   |
+| **Photographs and video** — `originals/`, `static/images`, `static/videos` | **All rights reserved.** Not covered by either licence.             |
+
+The photographs were generously provided by the family of Hassan Heshmat, the Hassan
+Heshmat Museum, and individual photographers. They remain the property of their
+respective rights-holders and may not be reused without permission. If you are a
+rights-holder and believe an image has been used or attributed incorrectly, please
+get in touch so it can be corrected or removed.
+
+## Citing this project
+
+A [`CITATION.cff`](CITATION.cff) file is included, so GitHub renders a **"Cite this
+repository"** button in the sidebar with ready-made APA and BibTeX output.
+
+The accompanying open access publication (Arabic/German) is available from the ZMO
+repository: <https://repositorium.zmo.de/receive/zmo_mods_00002340>
+
+## Contributing
+
+Several works have not been located yet. If you recognise a statue or monument, or
+know of other works by Heshmat in public space, please
+[open an artwork report](https://github.com/ZMO-Berlin/Global-Heshmat/issues/new?template=artwork-location.yml)
+or email <sonja.hegasy@zmo.de>.
+
+For code changes, run the full gate before opening a pull request:
+
+```bash
+cd svelte-app && npm run validate
+```
