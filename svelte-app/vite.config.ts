@@ -122,12 +122,16 @@ export default defineConfig({
 						urlPattern: ({ url, sameOrigin }) =>
 							sameOrigin &&
 							((url.pathname.includes('/_app/immutable/chunks/') && url.pathname.endsWith('.js')) ||
+								// MapLibre v6 emits its ESM worker as a separate asset outside
+								// chunks/. Without this it is re-fetched on every visit.
+								(url.pathname.includes('/_app/immutable/workers/') &&
+									url.pathname.endsWith('.js')) ||
 								(url.pathname.includes('/maplibre.') && url.pathname.endsWith('.css')) ||
 								url.pathname.endsWith('/rtl-text-plugin.js')),
 						handler: 'CacheFirst',
 						options: {
 							cacheName: 'map-renderer-v1',
-							expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 365 },
+							expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 * 24 * 365 },
 							cacheableResponse: { statuses: [0, 200] }
 						}
 					},

@@ -2,6 +2,10 @@
 	import { onDestroy, onMount, untrack } from 'svelte';
 	import { base } from '$app/paths';
 	import 'maplibre-gl/dist/maplibre-gl.css';
+	// MapLibre v6 is ESM-only and resolves its worker from `import.meta.url`, which
+	// bundlers cannot statically analyse. Vite emits the worker as an asset here and
+	// `setWorkerUrl` points MapLibre at it; without this the worker 404s in the build.
+	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 	import type * as Maplibre from 'maplibre-gl';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
@@ -82,6 +86,7 @@
 	onMount(async () => {
 		maplibregl = await import('maplibre-gl');
 		if (destroyed) return;
+		maplibregl.setWorkerUrl(workerUrl);
 
 		if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
 			void maplibregl.setRTLTextPlugin(`${base}/rtl-text-plugin.js`, true).catch(() => {
