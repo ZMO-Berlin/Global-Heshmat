@@ -8,7 +8,6 @@
 	import { artworkPath, residencePath } from '$lib/config';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 	import MarkerGlyph from './MarkerGlyph.svelte';
-	import ViewSwitcher from './ViewSwitcher.svelte';
 
 	/**
 	 * A text index of everything on the map.
@@ -105,12 +104,9 @@
 		</button>
 	</div>
 
-	<!-- The panel is the "how do I browse this" surface, so the other two views
-	     are offered here rather than crowding a header that already carries four
-	     controls at 360px. -->
-	<div class="collection-views">
-		<ViewSwitcher />
-	</div>
+	<!-- No view switcher here: the header carries the only one, and it stays
+	     visible above this panel (z-index 50 vs 30), so a copy would just be a
+	     second identical control a few pixels below the first. -->
 
 	<div class="collection-body">
 		{#if total === 0}
@@ -219,12 +215,6 @@
 		text-transform: uppercase;
 		color: var(--color-text-muted);
 		margin-top: var(--space-1);
-	}
-
-	.collection-views {
-		padding: var(--space-3) var(--space-5);
-		border-bottom: 1px solid var(--color-border-light);
-		flex-shrink: 0;
 	}
 
 	.collection-body {

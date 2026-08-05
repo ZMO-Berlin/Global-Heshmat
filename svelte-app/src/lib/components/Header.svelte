@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Globe, List } from '@lucide/svelte';
 	import { getMapStore } from '$lib/stores/map.svelte';
+	import ViewSwitcher from './ViewSwitcher.svelte';
 
 	let { onreset }: { onreset: () => void } = $props();
 	const store = getMapStore();
@@ -16,22 +16,10 @@
 		<span class="header-subtitle">&mdash; Following Hassan Heshmat around the world</span>
 	</h1>
 	<div class="header-right">
-		<!-- The collection list is the keyboard/screen-reader route into the
-		     works, so it leads the button row. -->
-		<button
-			class="header-btn header-btn-icon"
-			aria-label="Browse the collection"
-			aria-expanded={store.browseOpen}
-			aria-controls="collection"
-			onclick={() => (store.browseOpen = !store.browseOpen)}
-		>
-			<List size={14} strokeWidth={2.5} aria-hidden="true" />
-			<span class="browse-label">Browse</span>
-		</button>
-		<button class="header-btn header-btn-icon" aria-label="World view" onclick={onreset}>
-			<Globe size={14} strokeWidth={2.5} aria-hidden="true" />
-			<span class="reset-label">World View</span>
-		</button>
+		<!-- Map / Grid / List. This leads the row because the list is the
+		     keyboard and screen-reader route into the works. The map segment
+		     doubles as the old World View control via `onreset`. -->
+		<ViewSwitcher variant="header" {onreset} />
 		<button class="header-btn" onclick={() => (store.aboutOpen = true)}>About</button>
 		<button class="header-btn header-btn-cta" onclick={() => (store.missingOpen = true)}>
 			<span class="cta-full">Help us find missing works</span>
@@ -50,20 +38,8 @@
 		color: rgb(var(--color-header-text-rgb) / 0.65);
 		margin-left: var(--space-1);
 	}
-	.header-btn-icon {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-1-5);
-	}
 	@media (max-width: 768px) {
 		.header-subtitle {
-			display: none;
-		}
-		/* Icon-only on phones. Four controls plus the wordmark do not fit a
-		   360-390px header as text; both read clearly as icons and keep their
-		   accessible names via aria-label. */
-		.browse-label,
-		.reset-label {
 			display: none;
 		}
 	}
@@ -75,7 +51,7 @@
 		}
 	}
 
-	/* Top bar: wordmark, subtitle and the four navigation controls. */
+	/* Top bar: wordmark, subtitle, the view switcher and the two buttons. */
 	/* ═══════════════════════════════════════════
 	   Header
 	   ═══════════════════════════════════════════ */

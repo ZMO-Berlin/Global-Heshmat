@@ -50,12 +50,34 @@ test('filters and keyboard search keep navigation shareable', async ({ page }) =
 	await expect(detailHeading).toBeFocused();
 });
 
+test('the header view switcher reaches the grid and marks the current view', async ({ page }) => {
+	await page.goto('/');
+	const grid = page.getByRole('link', { name: 'Grid view' });
+	// Reaching the grid must not require opening the list panel first.
+	await expect(grid).toBeVisible();
+	await grid.click();
+
+	await expect(page).toHaveURL(/\/collection\/?(?:\?.*)?$/);
+	await expect(page.getByRole('heading', { name: 'The collection', exact: true })).toBeVisible();
+	await expect(grid).toHaveAttribute('aria-current', 'page');
+	// Exactly one switcher on the page — the header's.
+	await expect(page.getByRole('group', { name: /how to view the collection/i })).toHaveCount(1);
+
+	// The map segment carries the old World View reset, so it goes back home.
+	await page.getByRole('link', { name: 'World view' }).click();
+	await expect(page).toHaveURL(/\/(?:\?.*)?$/);
+});
+
 test('browse panel and modal restore and contain keyboard focus', async ({ page }) => {
 	await page.goto('/');
-	const browse = page.getByRole('button', { name: 'Browse the collection' });
+	// The list is the third segment of the header view switcher; opening it is a
+	// disclosure, so focus must land in the panel and come back here on Escape.
+	const browse = page.getByRole('button', { name: 'List view' });
+	await expect(browse).toHaveAttribute('aria-expanded', 'false');
 	await browse.click();
 	const collection = page.getByRole('region', { name: /Browse the collection/ });
 	await expect(collection).toBeFocused();
+	await expect(browse).toHaveAttribute('aria-expanded', 'true');
 	await page.keyboard.press('Escape');
 	await expect(collection).toHaveAttribute('inert', '');
 	await expect(browse).toBeFocused();
@@ -87,6 +109,20 @@ test.describe('mobile ergonomics', () => {
 			const box = await control.boundingBox();
 			expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
 		}
+
+		// The header controls must share one top and bottom edge. The view
+		// switcher is a bordered, padded wrapper around its segments, so it is
+		// easy for it to end up taller than the plain buttons beside it and sit
+		// visibly proud of them even while the centres still line up.
+		const edges = await page.evaluate(() =>
+			[...document.querySelectorAll('.header-right > *')].map((el) => {
+				const b = el.getBoundingClientRect();
+				return { top: Math.round(b.top), bottom: Math.round(b.bottom) };
+			})
+		);
+		expect(edges.length).toBeGreaterThanOrEqual(3);
+		for (const edge of edges) expect(edge).toEqual(edges[0]);
+
 		await expectAccessible(page);
 	});
 });

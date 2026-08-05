@@ -2,7 +2,6 @@
 	import { resolve } from '$app/paths';
 	import CollectionCard from '$lib/components/CollectionCard.svelte';
 	import Seo from '$lib/components/Seo.svelte';
-	import ViewSwitcher from '$lib/components/ViewSwitcher.svelte';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
 	import { getMapStore } from '$lib/stores/map.svelte';
@@ -29,15 +28,14 @@
 
 <div class="collection-page">
 	<div class="collection-page-inner">
+		<!-- The view switcher lives in the site header, which sits directly above
+		     this heading; repeating it here would stack two identical controls. -->
 		<header class="page-head">
-			<div>
-				<h2>The collection</h2>
-				<p class="page-count">
-					{total}
-					{total === 1 ? 'entry' : 'entries'}{store.activeFilter !== 'all' ? ' in this filter' : ''}
-				</p>
-			</div>
-			<ViewSwitcher />
+			<h2>The collection</h2>
+			<p class="page-count">
+				{total}
+				{total === 1 ? 'entry' : 'entries'}{store.activeFilter !== 'all' ? ' in this filter' : ''}
+			</p>
 		</header>
 
 		{#if total === 0}
@@ -104,11 +102,6 @@
 		padding: var(--space-7) var(--space-7) var(--space-8);
 	}
 	.page-head {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		gap: var(--space-4);
 		margin-bottom: var(--space-6);
 	}
 	.page-head h2 {
