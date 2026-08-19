@@ -12,7 +12,7 @@ const artwork: Artwork = {
 	city: 'Paris',
 	status: 'search',
 	address: '1160 Aeroport Charles de Gaulle, 77990 Mauregard',
-	desc: 'The photo shows the Mykerinos Triad in the garden of the Hassan Heshmat Museum, a copy of which stood at the entrance of the Egypt Air office in Paris according to the artist’s autobiography. We do not know whether this was at one of the airports or in the inner city?',
+	desc: 'According to his autobiography, Heshmat created a large stone facade and the Mykerinos Triad for the interior and exterior of the Egypt Air office in Paris. The photo shows the Triad in his garden. We do not know whether this was at one of the airports or in the inner city.',
 	images: [{src: "Egypt_Air_Paris_HH_Museum.jpg",
 	         caption: "Mykerinos Triad, taken by Ephraim Gothe"},
 		{ 		src: "Egypt_Air_HH_Museum.jpg",
