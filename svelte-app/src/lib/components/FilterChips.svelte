@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import { artworks, countries } from '$lib/data/artworks';
+	import { artworks } from '$lib/data/artworks';
+	import { countries } from '$lib/data/countries';
 	import { residences } from '$lib/data/residences';
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import {
@@ -13,6 +14,10 @@
 	let { onselect }: { onselect: (filter: MapFilter) => void } = $props();
 	const store = getMapStore();
 	const searchCount = artworks.filter((artwork) => artwork.status === 'search').length;
+	// Every chip's number is what that chip plots. "All" and the country chips
+	// span both collections; "To be found" is artwork-only (residences have no
+	// status) and "Places of residence" is residence-only.
+	const allCount = artworks.length + residences.length;
 
 	let chipsEl: HTMLDivElement | undefined = $state();
 	let canLeft = $state(false);
@@ -84,7 +89,7 @@
 			aria-pressed={store.activeFilter === FILTER_ALL}
 			onclick={() => onselect(FILTER_ALL)}
 		>
-			All <span class="filter-count">{artworks.length}</span>
+			All <span class="filter-count">{allCount}</span>
 		</button>
 
 		<div class="filter-sep"></div>
