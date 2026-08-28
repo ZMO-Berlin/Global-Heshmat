@@ -48,6 +48,21 @@
 		return () => observer.disconnect();
 	});
 
+	$effect(() => {
+		void store.activeFilter;
+		const el = chipsEl;
+		if (!el) return;
+		const activeEl = el.querySelector<HTMLElement>(
+			'.filter-chip.active, .filter-chip.active-search'
+		);
+		if (activeEl) {
+			const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+			const chipCenter = activeEl.offsetLeft + activeEl.offsetWidth / 2;
+			const targetScroll = chipCenter - el.clientWidth / 2;
+			el.scrollTo({ left: Math.max(0, targetScroll), behavior });
+		}
+	});
+
 	const chipsMask = $derived(
 		canLeft && canRight
 			? 'linear-gradient(to right, transparent, #000 22px, #000 calc(100% - 22px), transparent)'
@@ -155,6 +170,7 @@
 		overflow-x: auto;
 		scrollbar-width: none;
 		-webkit-overflow-scrolling: touch;
+		overscroll-behavior-x: contain;
 	}
 	.filter-chips::-webkit-scrollbar {
 		display: none;
@@ -166,6 +182,7 @@
 		letter-spacing: var(--tracking-wide);
 		color: var(--color-text-muted);
 		margin-inline-end: var(--space-1);
+		flex-shrink: 0;
 	}
 	.filter-arrow {
 		position: absolute;
@@ -215,6 +232,11 @@
 			color var(--duration-base) var(--ease-out);
 		user-select: none;
 		white-space: nowrap;
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-1);
 	}
 	.filter-chip:hover {
 		border-color: var(--color-text-muted);
@@ -254,14 +276,15 @@
 		.filter-chips > span:first-child {
 			display: none;
 		}
-		.filter-arrow,
-		.filter-chip {
-			min-width: 44px;
-			height: 44px;
+		.filter-arrow {
+			display: none;
 		}
 		.filter-chip {
-			padding: 4px var(--space-2-5);
+			min-height: 44px;
+			height: 44px;
+			padding: 0 var(--space-3-5);
 			font-size: var(--text-xs);
+			flex-shrink: 0;
 		}
 	}
 </style>

@@ -208,9 +208,15 @@
 	}
 	@media (max-width: 768px) {
 		.search-input {
-			width: 140px;
+			width: clamp(120px, 28vw, 140px);
 			height: 44px;
+			min-height: 44px;
 			font-size: var(--text-md);
+			padding-left: 30px;
+			padding-right: var(--space-2-5);
+		}
+		:global(.search-icon) {
+			left: 10px;
 		}
 		.search-results {
 			width: min(280px, calc(100vw - var(--space-7)));
