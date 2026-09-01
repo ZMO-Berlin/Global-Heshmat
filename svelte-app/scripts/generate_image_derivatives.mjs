@@ -19,12 +19,15 @@ import sharp from 'sharp';
 import { readdir, stat, open } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, watch as fsWatch } from 'node:fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const ORIGINALS_DIR = join(ROOT, 'originals');
 const IMAGES_DIR = join(ROOT, 'static', 'images');
+const WATCH_MODE = process.argv.includes('--watch');
+
+if (!existsSync(ORIGINALS_DIR)) mkdirSync(ORIGINALS_DIR, { recursive: true });
 
 /**
  * Keep in sync with `src/lib/utils/image.ts`, which builds the URLs, and with
@@ -100,6 +103,14 @@ async function render(source, outPath, size, quality) {
 		.toFile(outPath);
 }
 
+function debounce(fn, delayMs) {
+	let timer;
+	return (...args) => {
+		clearTimeout(timer);
+		timer = setTimeout(() => fn(...args), delayMs);
+	};
+}
+
 async function generateDerivatives() {
 	const files = await readdir(ORIGINALS_DIR);
 	const imageFiles = files.filter((f) => /\.(jpe?g|png|tiff?|webp|heic|heif)$/i.test(f));
@@ -165,7 +176,38 @@ async function generateDerivatives() {
 	if (failed > 0) process.exitCode = 1;
 }
 
-generateDerivatives().catch((err) => {
+async function watchForChanges() {
+	const runSoon = debounce(() => {
+		generateDerivatives().catch((err) => {
+			console.error('Error:', err.message);
+			process.exit(1);
+		});
+	}, 500);
+
+	const watcher = fsWatch(ORIGINALS_DIR, { persistent: true }, (_eventType, filename) => {
+		if (!filename) return;
+		if (!/\.(jpe?g|png|tiff?|webp|heic|heif)$/i.test(filename)) return;
+		runSoon();
+	});
+
+	console.log(`Watching ${ORIGINALS_DIR} for new JPG/PNG uploads...`);
+	process.on('SIGINT', () => {
+		watcher.close();
+		process.exit(0);
+	});
+}
+
+async function main() {
+	if (WATCH_MODE) {
+		await generateDerivatives();
+		await watchForChanges();
+		return;
+	}
+
+	await generateDerivatives();
+}
+
+main().catch((err) => {
 	console.error('Error:', err.message);
 	process.exit(1);
 });

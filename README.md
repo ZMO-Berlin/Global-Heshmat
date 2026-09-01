@@ -214,6 +214,24 @@ site for exactly this reason. Tests assert that derivatives and data references 
 
 The gallery and lightbox both ship a `srcset` spanning the last two, with a `sizes` hint describing the slot, so the browser picks by viewport and pixel density rather than always taking the largest file.
 
+### Uploading new images
+
+For any new JPG/PNG upload, place the original master in `svelte-app/originals/` and let the generator convert it automatically.
+
+```bash
+cd svelte-app
+npm run images:watch
+```
+
+Or, for a one-off conversion after a new file is added:
+
+```bash
+cd svelte-app
+npm run images
+```
+
+The script watches `originals/` for new uploads and generates the matching WebP thumbnails, web-size, and full-size variants into `static/images/{thumb,web,full}/` without you having to touch the generated output files manually.
+
 After adding or replacing any image in `originals/`, regenerate the derivatives and commit them:
 
 ```bash
