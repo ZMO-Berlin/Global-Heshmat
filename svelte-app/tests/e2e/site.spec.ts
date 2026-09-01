@@ -125,4 +125,21 @@ test.describe('mobile ergonomics', () => {
 
 		await expectAccessible(page);
 	});
+
+	test('filter chips do not shrink below content and active chip is visible', async ({ page }) => {
+		await page.goto('/?filter=Hungary');
+		const hungaryChip = page.getByRole('button', { name: /^Hungary \d+$/ });
+		await expect(hungaryChip).toBeVisible();
+		await expect(hungaryChip).toHaveAttribute('aria-pressed', 'true');
+
+		// Hungary button width must comfortably fit "Hungary 1" + padding (should be >= 70px, not squeezed into 44px circle)
+		const box = await hungaryChip.boundingBox();
+		expect(box?.width ?? 0).toBeGreaterThanOrEqual(70);
+		expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+		// Arrow overlay buttons must be hidden on mobile
+		for (const arrow of await page.locator('.filter-arrow').all()) {
+			await expect(arrow).toBeHidden();
+		}
+	});
 });

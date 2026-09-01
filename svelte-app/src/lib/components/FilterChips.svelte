@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import { artworks, countries } from '$lib/data/artworks';
+	import { artworks } from '$lib/data/artworks';
+	import { countries } from '$lib/data/countries';
 	import { residences } from '$lib/data/residences';
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import {
@@ -13,6 +14,10 @@
 	let { onselect }: { onselect: (filter: MapFilter) => void } = $props();
 	const store = getMapStore();
 	const searchCount = artworks.filter((artwork) => artwork.status === 'search').length;
+	// Every chip's number is what that chip plots. "All" and the country chips
+	// span both collections; "To be found" is artwork-only (residences have no
+	// status) and "Places of residence" is residence-only.
+	const allCount = artworks.length + residences.length;
 
 	let chipsEl: HTMLDivElement | undefined = $state();
 	let canLeft = $state(false);
@@ -41,6 +46,21 @@
 		observer.observe(el);
 		void document.fonts?.ready.then(updateArrows);
 		return () => observer.disconnect();
+	});
+
+	$effect(() => {
+		void store.activeFilter;
+		const el = chipsEl;
+		if (!el) return;
+		const activeEl = el.querySelector<HTMLElement>(
+			'.filter-chip.active, .filter-chip.active-search'
+		);
+		if (activeEl) {
+			const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+			const chipCenter = activeEl.offsetLeft + activeEl.offsetWidth / 2;
+			const targetScroll = chipCenter - el.clientWidth / 2;
+			el.scrollTo({ left: Math.max(0, targetScroll), behavior });
+		}
 	});
 
 	const chipsMask = $derived(
@@ -84,7 +104,7 @@
 			aria-pressed={store.activeFilter === FILTER_ALL}
 			onclick={() => onselect(FILTER_ALL)}
 		>
-			All <span class="filter-count">{artworks.length}</span>
+			All <span class="filter-count">{allCount}</span>
 		</button>
 
 		<div class="filter-sep"></div>
@@ -150,6 +170,7 @@
 		overflow-x: auto;
 		scrollbar-width: none;
 		-webkit-overflow-scrolling: touch;
+		overscroll-behavior-x: contain;
 	}
 	.filter-chips::-webkit-scrollbar {
 		display: none;
@@ -161,6 +182,7 @@
 		letter-spacing: var(--tracking-wide);
 		color: var(--color-text-muted);
 		margin-inline-end: var(--space-1);
+		flex-shrink: 0;
 	}
 	.filter-arrow {
 		position: absolute;
@@ -210,6 +232,11 @@
 			color var(--duration-base) var(--ease-out);
 		user-select: none;
 		white-space: nowrap;
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-1);
 	}
 	.filter-chip:hover {
 		border-color: var(--color-text-muted);
@@ -249,14 +276,15 @@
 		.filter-chips > span:first-child {
 			display: none;
 		}
-		.filter-arrow,
-		.filter-chip {
-			min-width: 44px;
-			height: 44px;
+		.filter-arrow {
+			display: none;
 		}
 		.filter-chip {
-			padding: 4px var(--space-2-5);
+			min-height: 44px;
+			height: 44px;
+			padding: 0 var(--space-3-5);
 			font-size: var(--text-xs);
+			flex-shrink: 0;
 		}
 	}
 </style>

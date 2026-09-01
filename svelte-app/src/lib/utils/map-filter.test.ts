@@ -71,27 +71,42 @@ describe('filterArtworks', () => {
 });
 
 describe('filterResidences', () => {
-	const places = [residence({ id: 1 }), residence({ id: 2, name: 'Leverkusen' })];
+	const places = [
+		residence({ id: 1, name: 'Hotel Schmidt', country: 'Germany' }),
+		residence({ id: 2, name: 'Leverkusen', country: 'Germany' }),
+		residence({ id: 3, name: 'Ezbet En-Nakhl', city: 'Cairo', country: 'Egypt' })
+	];
 
 	it('shows residences on the default view', () => {
-		expect(filterResidences(places, FILTER_ALL)).toHaveLength(2);
+		expect(filterResidences(places, FILTER_ALL)).toHaveLength(3);
 	});
 
 	it('shows residences under their own category', () => {
-		expect(filterResidences(places, FILTER_RESIDENCE)).toHaveLength(2);
+		expect(filterResidences(places, FILTER_RESIDENCE)).toHaveLength(3);
 	});
 
-	it('hides residences under a country filter — those are artwork-only', () => {
-		expect(filterResidences(places, 'Germany')).toEqual([]);
+	it('shows the residences of a country under that country filter', () => {
+		expect(filterResidences(places, 'Germany').map((r) => r.id)).toEqual([1, 2]);
+		expect(filterResidences(places, 'Egypt').map((r) => r.id)).toEqual([3]);
 	});
 
-	it('hides residences under the "to be found" filter', () => {
+	it('returns an empty list for a country with no residences', () => {
+		expect(filterResidences(places, 'Sweden')).toEqual([]);
+	});
+
+	it('hides residences under the "to be found" filter — that status is artwork-only', () => {
 		expect(filterResidences(places, FILTER_SEARCH)).toEqual([]);
+	});
+
+	it('does not mutate or alias the input array', () => {
+		const result = filterResidences(places, FILTER_ALL);
+		expect(result).not.toBe(places);
+		expect(places).toHaveLength(3);
 	});
 });
 
 describe('countryFacets', () => {
-	it('counts artworks per country', () => {
+	it('counts entries per country', () => {
 		expect(countryFacets(items)).toEqual([
 			{ name: 'Egypt', count: 2 },
 			{ name: 'Germany', count: 1 },
@@ -99,7 +114,21 @@ describe('countryFacets', () => {
 		]);
 	});
 
-	it('sorts alphabetically rather than by insertion (artwork-id) order', () => {
+	it('counts artworks and residences together, matching what a country filter plots', () => {
+		const mixed = [...items, residence({ id: 1 }), residence({ id: 2, name: 'Leverkusen' })];
+		expect(countryFacets(mixed)).toEqual([
+			{ name: 'Egypt', count: 2 },
+			{ name: 'Germany', count: 3 },
+			{ name: 'Sweden', count: 1 }
+		]);
+	});
+
+	it('lists a country reached only by a residence', () => {
+		const mixed = [artwork({ id: 1, country: 'Egypt' }), residence({ id: 1, country: 'Germany' })];
+		expect(countryFacets(mixed).map((c) => c.name)).toEqual(['Egypt', 'Germany']);
+	});
+
+	it('sorts alphabetically rather than by insertion (id) order', () => {
 		const scrambled = [
 			artwork({ id: 1, country: 'Sweden' }),
 			artwork({ id: 2, country: 'Belgium' }),
