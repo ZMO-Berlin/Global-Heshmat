@@ -22,7 +22,9 @@ const artwork: Artwork = {
 			 {src: "Wärmetechnisches_Labor.jpg",
 	         caption: "Thermal Engineering Laboratory"},
 			 {src: "Technikerbau_Plan.tif",
-	         caption: "Engineering Construction Plan"}]
+	         caption: "Engineering Construction Plan"},
+			{src: "Ein_Ägypter_erlebte_das_Porzellan.jpg",
+						 caption: "Article from a German local newspaper (Selber Tagblatt, 28–29 June 1958)"}]
 	
 	
 };
