@@ -1,7 +1,6 @@
 // A place where Hassan Heshmat lived or worked. Field reference and
 // instructions: src/lib/data/residences/_template.ts
 
-import baby from '@lucide/svelte/icons/baby';
 import type { Residence } from '../types';
 
 const residence: Residence = {
