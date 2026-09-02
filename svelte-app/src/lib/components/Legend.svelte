@@ -79,12 +79,15 @@
 		bottom: calc(var(--footer-height) + 20px);
 		left: 28px;
 		z-index: var(--z-legend);
-		background: var(--color-surface);
+		background: rgb(255 255 255 / 0.92);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
 		padding: var(--space-4) var(--space-5);
 		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+		border-top: 2px solid var(--color-accent);
 		box-shadow: var(--shadow-md);
 		font-size: var(--text-sm);
-		border-top: 2px solid var(--color-accent);
 	}
 
 	.legend h2 {

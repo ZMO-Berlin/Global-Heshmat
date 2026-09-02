@@ -104,6 +104,17 @@ export function installMapContent({
 
 	map.addSource('relocations', { type: 'geojson', data: buildRelocationGeoJSON(artworks) });
 	map.addLayer({
+		id: 'relocation-lines-glow',
+		type: 'line',
+		source: 'relocations',
+		paint: {
+			'line-color': palette.accent,
+			'line-width': 5,
+			'line-blur': 2,
+			'line-opacity': 0.25
+		}
+	});
+	map.addLayer({
 		id: 'relocation-lines',
 		type: 'line',
 		source: 'relocations',
@@ -111,7 +122,7 @@ export function installMapContent({
 			'line-color': palette.accent,
 			'line-width': 2,
 			'line-dasharray': [4, 3],
-			'line-opacity': 0.8
+			'line-opacity': 0.9
 		}
 	});
 

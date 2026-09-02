@@ -6,6 +6,7 @@ package-lock.json
 .svelte-kit
 build
 dist
+.impeccable
 
 # Browser test output
 playwright-report

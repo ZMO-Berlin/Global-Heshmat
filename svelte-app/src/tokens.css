@@ -79,7 +79,7 @@
 
 	/* ───── Scrim (modal/lightbox backdrops) ───── */
 	--scrim-modal: rgb(var(--color-header-bg-rgb) / 0.55);
-	--scrim-lightbox: rgb(var(--color-header-bg-rgb) / 0.94);
+	--scrim-lightbox: rgb(var(--color-header-bg-rgb) / 0.98);
 	--scrim-blur: 4px;
 	--scrim-blur-strong: 8px;
 
@@ -98,20 +98,19 @@
 	   base (14) = UI chrome: filter bar, meta tags, captions, small buttons
 	   md   (16) = body copy: descriptions, addresses, placeholder text
 
-	   Nudged up one step across the board. The previous scale bottomed out at
-	   11px with 14px body copy, which is tight for an archive whose whole
-	   purpose is reading about the works; 16px body is the browser default and
-	   the usual floor for sustained reading. The chrome sizes moved less so
-	   the header and filter bar keep their proportions. */
+	   Expanded with true editorial display hierarchy for Cormorant Garamond.
+	   The scale provides distinct, perceptible jumps between adjacent steps,
+	   topping out at 48px for hero and exhibition headings. */
 	--text-xs: 12px;
 	--text-sm: 13px;
 	--text-base: 14px;
 	--text-md: 16px;
-	--text-lg: 17px;
-	--text-xl: 20px;
-	--text-2xl: 23px;
-	--text-3xl: 25px;
-	--text-4xl: 28px;
+	--text-lg: 18px;
+	--text-xl: 21px;
+	--text-2xl: 26px;
+	--text-3xl: 32px;
+	--text-4xl: 40px;
+	--text-5xl: 48px;
 
 	/* Font weights — only those loaded from Google Fonts.
 	   Outfit: 300, 400, 500, 600.  Cormorant Garamond: 400, 500, 600, 700 (+ italic 400/500).
@@ -125,8 +124,8 @@
 
 	/* Line heights — names follow the role rather than the ratio so that
 	   tweaking the scale later doesn't require a global rename. */
-	--leading-tight: 1.25; /* display headings */
-	--leading-snug: 1.4; /* short blocks, captions */
+	--leading-tight: 1.2; /* display headings */
+	--leading-snug: 1.35; /* short blocks, captions */
 	--leading-normal: 1.5; /* default UI text */
 	--leading-relaxed: 1.65; /* small cards, insets */
 	--leading-prose: 1.75; /* article body */
@@ -134,7 +133,7 @@
 
 	/* Letter-spacing — tight keeps display crisp; widest is reserved for
 	   small-caps style section labels (always paired with text-transform: uppercase). */
-	--tracking-tight: -0.01em;
+	--tracking-tight: -0.015em;
 	--tracking-normal: 0;
 	--tracking-wide: 0.02em;
 	--tracking-wider: 0.04em;
@@ -157,9 +156,8 @@
 	--space-8: 32px;
 
 	/* ───── Shadows ─────
-	   The *-dark variants use pure black for extra punch against the navy
-	   header/footer; the tinted ones use the header-bg triplet for subtler
-	   ambient depth on light surfaces. */
+	   Ambient depth using the header-bg triplet for warm, natural depth
+	   against light surfaces. Softened chrome shadows let the artifact recede. */
 	--shadow-sm:
 		0 1px 3px rgb(var(--color-header-bg-rgb) / 0.06),
 		0 1px 2px rgb(var(--color-header-bg-rgb) / 0.04);
@@ -172,8 +170,9 @@
 	--shadow-sidebar:
 		-6px 0 32px rgb(var(--color-header-bg-rgb) / 0.1),
 		-1px 0 0 rgb(var(--color-header-bg-rgb) / 0.04);
-	--shadow-bar-dark: 0 4px 20px rgb(0 0 0 / 0.35);
-	--shadow-bar-dark-inverted: 0 -4px 20px rgb(0 0 0 / 0.35);
+	--shadow-bar-dark: 0 2px 12px rgb(var(--color-header-bg-rgb) / 0.18), 0 1px 3px rgb(0 0 0 / 0.12);
+	--shadow-bar-dark-inverted:
+		0 -2px 12px rgb(var(--color-header-bg-rgb) / 0.18), 0 -1px 3px rgb(0 0 0 / 0.12);
 	--shadow-lightbox-img: 0 8px 40px rgb(0 0 0 / 0.4);
 	--shadow-chip-active: 0 2px 8px rgb(var(--color-primary-rgb) / 0.3);
 	--shadow-chip-active-search: 0 2px 8px rgb(var(--color-search-rgb) / 0.3);

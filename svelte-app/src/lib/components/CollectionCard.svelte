@@ -74,30 +74,37 @@
 		text-decoration: none;
 		color: inherit;
 		box-shadow: var(--shadow-sm);
+		position: relative;
 		transition:
-			transform var(--duration-base) var(--ease-out),
-			box-shadow var(--duration-base) var(--ease-out),
-			border-color var(--duration-base) var(--ease-out);
+			transform var(--duration-slow) var(--ease-out),
+			box-shadow var(--duration-slow) var(--ease-out),
+			border-color var(--duration-slow) var(--ease-out);
 	}
 	.card:hover {
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-md);
-		border-color: var(--color-accent);
+		transform: translateY(-3px);
+		box-shadow:
+			0 10px 24px -4px rgb(var(--color-header-bg-rgb) / 0.1),
+			0 4px 8px -2px rgb(var(--color-header-bg-rgb) / 0.05);
+		border-color: rgb(var(--color-accent-rgb) / 0.6);
 	}
 	.card-figure {
 		aspect-ratio: 4 / 3;
 		background: var(--color-surface-image);
 		overflow: hidden;
+		position: relative;
 	}
 	.card-figure img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		display: block;
-		transition: transform var(--duration-slower) var(--ease-out);
+		transition:
+			transform var(--duration-slower) var(--ease-out),
+			filter var(--duration-slower) var(--ease-out);
 	}
 	.card:hover .card-figure img {
-		transform: scale(1.04);
+		transform: scale(1.03);
+		filter: brightness(1.02);
 	}
 	.card-placeholder {
 		width: 100%;
@@ -129,6 +136,10 @@
 		line-height: var(--leading-snug);
 		color: var(--color-ink);
 		overflow-wrap: anywhere;
+		transition: color var(--duration-base) var(--ease-out);
+	}
+	.card:hover .card-body h3 {
+		color: var(--color-accent-text);
 	}
 	.card-meta {
 		display: flex;

@@ -92,6 +92,7 @@
 		font-weight: var(--weight-semibold);
 		color: var(--color-ink);
 		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
 	}
 
 	.modal-body {
@@ -176,5 +177,18 @@
 		background: var(--color-accent-light);
 		border-color: var(--color-accent);
 		color: var(--color-accent-text);
+	}
+
+	@media (max-width: 600px) {
+		.modal-header {
+			padding: var(--space-4-5) var(--space-5);
+		}
+		.modal-header h2 {
+			font-size: var(--text-2xl);
+		}
+		.modal-body {
+			padding: var(--space-5);
+			font-size: var(--text-md);
+		}
 	}
 </style>

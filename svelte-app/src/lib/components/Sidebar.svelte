@@ -201,17 +201,19 @@
 		font-weight: var(--weight-semibold);
 		color: var(--color-ink);
 		line-height: var(--leading-tight);
+		letter-spacing: var(--tracking-tight);
 		flex: 1;
 		padding-right: var(--space-3-5);
+		outline: none;
 	}
 
 	.sidebar-header h2::after {
 		content: '';
 		display: block;
-		width: 36px;
+		width: 40px;
 		height: 2px;
 		background: var(--color-accent);
-		margin-top: var(--space-2);
+		margin-top: var(--space-2-5);
 		border-radius: 1px;
 	}
 

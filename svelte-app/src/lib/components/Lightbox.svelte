@@ -59,6 +59,7 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <div
 	class="lightbox-overlay"
+	class:has-thumbs={multi}
 	bind:this={overlayEl}
 	onclick={handleOverlayClick}
 	role="dialog"
@@ -145,7 +146,7 @@
 		   above the top edge where it is unreachable. */
 		justify-content: safe center;
 		overflow-y: auto;
-		padding: var(--space-8) 0;
+		padding: var(--space-5) 0 var(--space-3);
 		animation: fadeIn var(--duration-slow) var(--ease-out);
 	}
 
@@ -181,7 +182,7 @@
 
 	/* The stage is a column so the caption sits in flow under the image and the
 	   overlay's centring accounts for its height. Only the image is capped at
-	   75vh; the caption adds below it. */
+	   a dynamic height so the caption and thumbnails stay in view without overflow. */
 	.lightbox-content {
 		position: relative;
 		max-width: 85vw;
@@ -189,18 +190,22 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-4);
+		gap: var(--space-3);
 	}
 
 	.lightbox-img {
 		max-width: 85vw;
-		max-height: 75vh;
+		max-height: calc(100dvh - 150px);
 		object-fit: contain;
 		/* Honour EXIF orientation — some source photos are stored rotated. */
 		image-orientation: from-image;
 		border-radius: var(--radius-sm);
 		user-select: none;
 		box-shadow: var(--shadow-lightbox-img);
+	}
+
+	.has-thumbs .lightbox-img {
+		max-height: calc(100dvh - 230px);
 	}
 
 	/* width:0 + min-width:100% keeps the stage sized by the image alone, so a
@@ -272,38 +277,49 @@
 
 	.lightbox-thumbs {
 		display: flex;
-		gap: var(--space-1-5);
-		padding: var(--space-3-5) var(--space-4);
-		max-width: 80vw;
+		gap: var(--space-2);
+		padding: var(--space-2) var(--space-3);
+		max-width: 85vw;
 		overflow-x: auto;
-		margin-top: var(--space-7);
+		margin-top: var(--space-3);
+		background: rgb(var(--color-header-bg-rgb) / 0.7);
+		border: 1px solid rgb(var(--color-on-dark-rgb) / 0.12);
+		border-radius: var(--radius-md);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
 		scrollbar-width: thin;
-		scrollbar-color: rgb(var(--color-on-dark-rgb) / 0.2) transparent;
+		scrollbar-color: rgb(var(--color-on-dark-rgb) / 0.25) transparent;
+		box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+		flex-shrink: 0;
 	}
 
 	.lightbox-thumb {
-		width: 64px;
-		height: 44px;
+		width: 60px;
+		height: 42px;
 		flex-shrink: 0;
 		padding: 0;
 		background: none;
-		border-radius: var(--radius-xs);
+		border-radius: var(--radius-sm);
 		overflow: hidden;
 		cursor: pointer;
 		border: 2px solid transparent;
-		opacity: 0.35;
+		opacity: 0.55;
 		transition:
-			border-color var(--duration-base) var(--ease-out),
-			opacity var(--duration-base) var(--ease-out);
+			border-color var(--duration-fast) var(--ease-out),
+			opacity var(--duration-fast) var(--ease-out),
+			transform var(--duration-fast) var(--ease-out);
 	}
 
 	.lightbox-thumb:hover {
-		opacity: 0.65;
+		opacity: 0.85;
+		transform: translateY(-2px);
 	}
 
 	.lightbox-thumb.active {
 		opacity: 1;
 		border-color: var(--color-accent);
+		box-shadow: 0 0 0 1px var(--color-accent);
+		transform: translateY(-2px);
 	}
 
 	.lightbox-thumb img {
@@ -314,6 +330,10 @@
 	}
 
 	@media (max-width: 768px) {
+		.lightbox-overlay {
+			padding: var(--space-3) 0 var(--space-2);
+		}
+
 		.lightbox-nav {
 			width: 44px;
 			height: 44px;
@@ -327,18 +347,29 @@
 			right: 10px;
 		}
 
-		.lightbox-thumb {
-			width: 48px;
-			height: 44px;
-		}
-
 		.lightbox-content {
 			max-width: 95vw;
 		}
 
 		.lightbox-img {
 			max-width: 95vw;
-			max-height: 70vh;
+			max-height: calc(100dvh - 140px);
+		}
+
+		.has-thumbs .lightbox-img {
+			max-height: calc(100dvh - 200px);
+		}
+
+		.lightbox-thumbs {
+			max-width: 95vw;
+			padding: var(--space-1-5) var(--space-2);
+			gap: var(--space-1-5);
+			margin-top: var(--space-2);
+		}
+
+		.lightbox-thumb {
+			width: 48px;
+			height: 36px;
 		}
 	}
 </style>
