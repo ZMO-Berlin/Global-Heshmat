@@ -6,6 +6,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 14,
+	slug: "agiba-petroleum-company-factory-premises",
 	name: 'Agiba Petroleum Company (Factory Premises)',
 	lat: 30.047016601908343,
 	lng: 31.332004753918046,

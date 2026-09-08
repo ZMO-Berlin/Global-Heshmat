@@ -2,6 +2,8 @@ import type { Artwork } from '../types';
 
 const artwork: Artwork = {
 	id: 11,
+	slug: "sheraton-heliopolis-today-hilton-cairo-heliopolis",
+	displayTitle: "Sheraton Heliopolis",
 	name: 'Sheraton Heliopolis (Today: "Hilton Cairo Heliopolis")',
 	lat: 30.10685703284742,
 	lng: 31.364599164833812,

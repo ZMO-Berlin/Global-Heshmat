@@ -1,6 +1,8 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { onDestroy, onMount, untrack } from 'svelte';
-	import { base } from '$app/paths';
+	import { base, resolve } from '$app/paths';
+	import { goto } from '$app/navigation';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	// MapLibre v6 is ESM-only and resolves its worker from `import.meta.url`, which
 	// bundlers cannot statically analyse. Vite emits the worker as an asset here and
@@ -11,8 +13,13 @@
 	import { residences } from '$lib/data/residences';
 	import { installMapContent, type MapPalette } from '$lib/map/map-content';
 	import { getMapStore } from '$lib/stores/map.svelte';
-	import { buildArtworkGeoJSON, buildResidenceGeoJSON } from '$lib/utils/geojson';
-	import { FILTER_ALL, filterArtworks, filterResidences } from '$lib/utils/map-filter';
+	import {
+		buildArtworkGeoJSON,
+		buildResidenceGeoJSON,
+		buildGhostGeoJSON,
+		buildRelocationGeoJSON
+	} from '$lib/utils/geojson';
+	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 
 	let { showStatus = true }: { showStatus?: boolean } = $props();
 	const store = getMapStore();
@@ -44,9 +51,13 @@
 
 	function updateMapSource() {
 		if (!map || !map.getSource('artworks')) return;
-		const filtered = filterArtworks(artworks, store.activeFilter);
-		const visibleResidences = filterResidences(residences, store.activeFilter);
+		const filtered = filterArtworks(artworks, store.filters);
+		const visibleResidences = filterResidences(residences, store.filters);
 		(map.getSource('artworks') as Maplibre.GeoJSONSource).setData(buildArtworkGeoJSON(filtered));
+		(map.getSource('ghosts') as Maplibre.GeoJSONSource)?.setData(buildGhostGeoJSON(filtered));
+		(map.getSource('relocations') as Maplibre.GeoJSONSource)?.setData(
+			buildRelocationGeoJSON(filtered)
+		);
 		(map.getSource('residences') as Maplibre.GeoJSONSource)?.setData(
 			buildResidenceGeoJSON(visibleResidences)
 		);
@@ -71,7 +82,7 @@
 
 	$effect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-		store.activeFilter;
+		store.filters;
 		updateMapSource();
 	});
 	$effect(() => {
@@ -83,55 +94,67 @@
 		if (residence) moveTo([residence.lng, residence.lat], 14);
 	});
 
-	onMount(async () => {
-		maplibregl = await import('maplibre-gl');
-		if (destroyed) return;
-		maplibregl.setWorkerUrl(workerUrl);
+	async function initialize() {
+		status = 'loading';
+		if (loadTimeout) clearTimeout(loadTimeout);
+		map?.remove();
+		map = undefined;
+		try {
+			maplibregl = await import('maplibre-gl');
+			if (destroyed) return;
+			maplibregl.setWorkerUrl(workerUrl);
 
-		if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
-			void maplibregl.setRTLTextPlugin(`${base}/rtl-text-plugin.js`, true).catch(() => {
-				// The basemap remains usable if optional RTL shaping cannot initialise.
-			});
-		}
-
-		const instance = new maplibregl.Map({
-			container: mapContainer,
-			style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-			center: [20, 35],
-			zoom: 3,
-			attributionControl: false
-		});
-		map = instance;
-		instance.addControl(new maplibregl.NavigationControl(), 'top-right');
-		instance.addControl(new maplibregl.GlobeControl(), 'top-right');
-		instance.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
-		// Some network failures stall before MapLibre emits an error. Do not
-		// leave visitors behind an indefinite spinner when the external style
-		// endpoint is unavailable.
-		loadTimeout = setTimeout(() => {
-			if (!instance.isStyleLoaded()) status = 'failed';
-		}, 15_000);
-
-		instance.on('error', (event) => {
-			if (!instance.isStyleLoaded()) {
-				status = 'failed';
-				if (loadTimeout) clearTimeout(loadTimeout);
+			if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
+				void maplibregl.setRTLTextPlugin(`${base}/rtl-text-plugin.js`, true).catch(() => {
+					// The basemap remains usable if optional RTL shaping cannot initialise.
+				});
 			}
-			console.error('MapLibre:', event.error?.message ?? event);
-		});
-		instance.on('load', () => {
-			if (loadTimeout) clearTimeout(loadTimeout);
-			status = 'ready';
-			installMapContent({
-				map: instance,
-				maplibregl,
-				activeFilter: store.activeFilter,
-				palette: readPalette(),
-				reducedMotion,
-				isDestroyed: () => destroyed
+
+			const instance = new maplibregl.Map({
+				container: mapContainer,
+				style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+				center: [20, 35],
+				zoom: 3,
+				attributionControl: false
 			});
-			if (store.activeFilter !== FILTER_ALL) updateMapSource();
-		});
+			map = instance;
+			instance.addControl(new maplibregl.NavigationControl(), 'top-right');
+			instance.addControl(new maplibregl.GlobeControl(), 'top-right');
+			instance.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+			// Some network failures stall before MapLibre emits an error. Do not
+			// leave visitors behind an indefinite spinner when the external style
+			// endpoint is unavailable.
+			loadTimeout = setTimeout(() => {
+				if (!instance.isStyleLoaded()) status = 'failed';
+			}, 15_000);
+
+			instance.on('error', (event) => {
+				if (!instance.isStyleLoaded()) {
+					status = 'failed';
+					if (loadTimeout) clearTimeout(loadTimeout);
+				}
+				console.error('MapLibre:', event.error?.message ?? event);
+			});
+			instance.on('load', () => {
+				if (loadTimeout) clearTimeout(loadTimeout);
+				status = 'ready';
+				installMapContent({
+					map: instance,
+					maplibregl,
+					activeFilter: store.filters,
+					onSelect: (item) => void goto(store.entryHref(item, { view: 'map' })),
+					palette: readPalette(),
+					reducedMotion,
+					isDestroyed: () => destroyed
+				});
+				updateMapSource();
+			});
+		} catch {
+			if (!destroyed) status = 'failed';
+		}
+	}
+	onMount(() => {
+		void initialize();
 	});
 
 	onDestroy(() => {
@@ -156,12 +179,11 @@
 	>
 		{#if status === 'failed'}
 			<p class="map-status-text">
-				The map could not be loaded. Use <strong>Browse</strong> in the header to see the collection as
-				a list.
+				The map could not be loaded. You can still <a href={resolve('/collection')}
+					>browse the gallery</a
+				>.
 			</p>
-			<button class="map-retry" type="button" onclick={() => window.location.reload()}
-				>Retry map</button
-			>
+			<button class="map-retry" type="button" onclick={() => void initialize()}>Retry map</button>
 		{:else}
 			<span class="map-spinner" aria-hidden="true"></span>
 			<p class="map-status-text">Loading the map&hellip;</p>

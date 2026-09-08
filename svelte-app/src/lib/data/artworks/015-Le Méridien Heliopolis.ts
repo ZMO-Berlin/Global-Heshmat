@@ -3,6 +3,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 15,
+	slug: "le-meridien-heliopolis",
 	name: 'Le Méridien Heliopolis',
 	lat: 30.09139775730438,
 	lng: 31.336523967643924,

@@ -5,6 +5,7 @@ import type { Residence } from '../types';
 
 const residence: Residence = {
 	id: 1,
+	slug: "leverkusen",
 	name: 'Leverkusen',
 	lat: 51.040072208357735,
 	lng: 7.05763186406692,

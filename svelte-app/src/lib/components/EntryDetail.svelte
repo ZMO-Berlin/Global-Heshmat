@@ -1,13 +1,15 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { ImageOff, X } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
+	import { entryImages, entryKey, entryTitle } from '$lib/utils/collection';
 	import Gallery from './Gallery.svelte';
 	import VideoPlayer from './VideoPlayer.svelte';
 	import { aboutContent as about } from '$lib/data/about';
 	import { getMapStore } from '$lib/stores/map.svelte';
 	import { youTubeId } from '$lib/utils/video';
 
+	let { galleryView = false }: { galleryView?: boolean } = $props();
 	const store = getMapStore();
 
 	// The sidebar shows either an artwork or a place of residence (never both —
@@ -22,12 +24,7 @@
 		isSearch ? 'tag-search' : artwork?.movement ? 'tag-moved' : 'tag-located'
 	);
 	const tagText = $derived(isSearch ? 'To be found' : artwork?.movement ? 'Relocated' : 'Located');
-	const images = $derived.by(() => {
-		if (!item) return [];
-		if (item.images && item.images.length > 0) return item.images;
-		if (item.image) return [{ src: item.image, caption: item.imageCaption || '' }];
-		return [];
-	});
+	const images = $derived(item ? entryImages(item) : []);
 
 	// Focus the panel heading when an item opens. Both routes into the sidebar
 	// unmount whatever the user was on — a search result unmounts the input
@@ -38,47 +35,58 @@
 	// Deferred to the next frame precisely because of that reset: focusing
 	// synchronously in the effect happens first and gets overwritten.
 	let headingEl: HTMLElement | undefined = $state();
-	let lastId: number | null = null;
+	let lastId: string | null = null;
 
 	$effect(() => {
 		if (!item) {
 			lastId = null;
 			return;
 		}
-		if (item.id === lastId) return;
-		lastId = item.id;
+		if (entryKey(item) === lastId) return;
+		lastId = entryKey(item);
 		// No cleanup that cancels this frame: the effect re-runs when the store
 		// settles, and cancelling on re-run would kill the pending focus before
 		// it ever fired.
-		requestAnimationFrame(() => headingEl?.focus());
+		requestAnimationFrame(() => {
+			if (!store.photo) headingEl?.focus();
+		});
 	});
 
 	function close() {
 		// Artworks and residences both own a route, so navigating home clears
 		// the URL and the sidebar (the home page resets the selection on mount).
-		goto(resolve('/'));
+		void goto(store.closeHref, { noScroll: true });
 	}
 </script>
 
 <aside
 	class="sidebar"
+	class:gallery-view={galleryView}
 	class:open={item !== null}
 	aria-label={item ? `Details: ${item.name}` : 'Details'}
 	inert={item === null}
 >
 	{#if item}
 		<div class="sidebar-header">
-			<h2 dir="auto" tabindex="-1" bind:this={headingEl}>{item.name}</h2>
-			<button class="btn-close" onclick={close} aria-label="Close">
+			<h2 dir="auto" tabindex="-1" bind:this={headingEl}>{entryTitle(item)}</h2>
+			<a
+				class="btn-close"
+				href={store.closeHref}
+				onclick={(event) => {
+					event.preventDefault();
+					close();
+				}}
+				aria-label="Back to collection"
+			>
 				<X size={20} strokeWidth={2.25} />
-			</button>
+			</a>
 		</div>
 		<div class="sidebar-body">
 			{#if images.length > 0}
 				<!-- Keyed so switching items rebuilds the gallery from image 0
 				     instead of reusing the instance (whose index could point
 				     past the end of a shorter image list). -->
-				{#key item.id}
+				{#key entryKey(item)}
 					<Gallery {images} name={item.name} />
 				{/key}
 			{:else}
@@ -90,7 +98,25 @@
 				</div>
 			{/if}
 
-			<div class="sidebar-content">
+			<div class="sidebar-content" id="details">
+				{#if item.displayTitle}<p class="full-title" dir="auto">{item.name}</p>{/if}
+				<a
+					class="detail-map-link"
+					href={store.entryHref(item, { view: galleryView ? 'map' : 'gallery' })}
+					>{galleryView ? 'View on map' : 'View album'}</a
+				>
+				{#if item.locationPrecision}<p class="location-note">
+						Location precision: {item.locationPrecision.replace('-', ' ')}
+					</p>{/if}
+				{#if item.sources?.length}<h3>Sources</h3>
+					<ul>
+						{#each item.sources as source (source.url ?? source.label)}<li>
+								{#if source.url}<a href={source.url} target="_blank" rel="noopener noreferrer"
+										>{source.label}</a
+									>{:else}{source.label}{/if}{#if source.checkedOn}
+									· Checked {source.checkedOn}{/if}
+							</li>{/each}
+					</ul>{/if}
 				{#if artwork}
 					<div class="sidebar-meta">
 						<span class="tag {tagClass}">{tagText}</span>
@@ -138,8 +164,15 @@
 
 					{#if isSearch}
 						<div class="sidebar-contact">
+							<p>
+								The current location is unconfirmed. The map indicates the place recorded in this
+								entry.
+							</p>
 							Do you know where this artwork is? Please contact
-							<a href="mailto:{about.contactEmail}">{about.contactEmail}</a>
+							<a
+								href={`mailto:${about.contactEmail}?subject=${encodeURIComponent(`Global Heshmat — information about ${artwork.name} (artwork ${artwork.id})`)}`}
+								>{about.contactEmail}</a
+							>
 						</div>
 					{/if}
 				{:else if residence}
@@ -159,6 +192,54 @@
 </aside>
 
 <style>
+	.full-title,
+	.location-note {
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-3);
+	}
+	.detail-map-link {
+		display: inline-flex;
+		min-height: 44px;
+		align-items: center;
+		color: var(--color-primary-text);
+		text-underline-offset: 3px;
+		margin-bottom: var(--space-3);
+	}
+	.sidebar.gallery-view {
+		--gallery-content-inset: 0px;
+		width: 100%;
+		box-shadow: none;
+		background: var(--color-surface-warm);
+	}
+	.gallery-view .sidebar-header {
+		max-width: 1320px;
+		width: 100%;
+		margin: auto;
+	}
+	.gallery-view .sidebar-body {
+		display: grid;
+		grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+		align-items: start;
+		gap: var(--space-7);
+		width: 100%;
+		max-width: 1320px;
+		margin: auto;
+		padding: var(--space-5) var(--space-7) var(--space-8);
+	}
+	.gallery-view .sidebar-content {
+		padding: 0;
+	}
+	@media (max-width: 768px) {
+		.gallery-view .sidebar-body {
+			display: block;
+			padding: var(--space-4);
+		}
+		.gallery-view .sidebar-content {
+			padding: var(--space-6) 0;
+		}
+	}
+
 	/* Detail panel for the selected artwork or place of residence.
 	   Rules reaching into .sidebar-desc are :global() because that block holds
 	   {@html} from the data files, which Svelte's scoping class never touches. */
@@ -166,6 +247,7 @@
 	   Sidebar
 	   ═══════════════════════════════════════════ */
 	.sidebar {
+		--gallery-content-inset: var(--space-7);
 		position: fixed;
 		top: calc(var(--header-height) + var(--filter-height));
 		right: 0;

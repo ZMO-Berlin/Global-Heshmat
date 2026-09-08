@@ -2,6 +2,7 @@ import type { Artwork } from '../types';
 
 const artwork: Artwork = {
 	id: 9,
+	slug: "open-air-museum-and-gallery-kafraoui-park",
 	name: 'Open Air Museum and Gallery - Kafraoui Park',
 	lat: 30.27488678770549,
 	lng: 31.752457534376788,

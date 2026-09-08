@@ -1,175 +1,189 @@
 <script lang="ts">
-	import { ImageOff } from '@lucide/svelte';
-	import { cardSrcSet, thumbUrl } from '$lib/utils/image';
-	import { hideOnError } from '$lib/utils/hide-on-error';
+	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
+	import { ImageOff, Images, MapPin } from '@lucide/svelte';
+	import type { Entry } from '$lib/utils/collection';
+	import {
+		entryTitle,
+		entryKey,
+		entryKind,
+		entryImages,
+		coverImage,
+		mediaId
+	} from '$lib/utils/collection';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import MediaImage from './MediaImage.svelte';
+	import { imageDimensions } from '$lib/utils/image';
 	import MarkerGlyph from './MarkerGlyph.svelte';
-
-	type MarkerKind = 'located' | 'search' | 'residence';
-
-	let {
-		href,
-		name,
-		city,
-		country,
-		image,
-		markerKind,
-		badge,
-		detail,
-		priority = false
-	}: {
-		href: string;
-		name: string;
-		city: string;
-		country: string;
-		image?: string;
-		markerKind: MarkerKind;
-		badge?: string;
-		detail?: string;
-		priority?: boolean;
-	} = $props();
+	let { item, priority = false }: { item: Entry; priority?: boolean } = $props();
+	const store = getBrowseStore();
+	const images = $derived(entryImages(item));
+	const cover = $derived(coverImage(item));
+	const coverWidth = $derived(
+		cover
+			? Math.ceil((280 * imageDimensions(cover.src).width) / imageDimensions(cover.src).height)
+			: 360
+	);
+	const href = $derived(store.entryHref(item, { view: 'gallery' }));
+	function remember() {
+		store.returnKey = entryKey(item);
+	}
 </script>
 
-<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- route parent passes an already-resolved SvelteKit URL -->
-<a class="card" {href}>
-	<div class="card-figure">
-		{#if image}
-			<img
-				src={thumbUrl(image)}
-				srcset={cardSrcSet(image)}
-				sizes="(max-width: 600px) 46vw, (max-width: 1100px) 30vw, 260px"
+<article class="card">
+	<a
+		class="card-figure"
+		{href}
+		onclick={remember}
+		aria-label="Open album: {item.name}, {images.length} photographs"
+		data-entry-key={entryKey(item)}
+	>
+		{#if cover}<MediaImage
+				src={cover.src}
 				alt=""
-				loading={priority ? 'eager' : 'lazy'}
-				fetchpriority={priority ? 'high' : 'auto'}
-				decoding="async"
-				use:hideOnError
+				sizes={`(max-width: 600px) min(90vw, ${coverWidth}px), (max-width: 1000px) min(45vw, ${coverWidth}px), min(290px, ${coverWidth}px)`}
+				{priority}
 			/>
-		{:else}
-			<div class="card-placeholder">
-				<ImageOff size={28} strokeWidth={1.6} aria-hidden="true" />
-				<span>Image coming soon</span>
-			</div>
-		{/if}
-	</div>
+		{:else}<span class="placeholder"
+				><ImageOff size={28} aria-hidden="true" />No photograph available</span
+			>{/if}
+		{#if images.length > 0}<span class="photo-count"
+				><Images size={15} aria-hidden="true" />{images.length}
+				{images.length === 1 ? 'photo' : 'photos'}</span
+			>{/if}
+	</a>
+	{#if images.length > 1}
+		<div class="card-previews" aria-label="Album preview">
+			{#each images.filter((image) => image !== cover).slice(0, 3) as image, i (mediaId(image))}
+				<a
+					href={store.entryHref(item, { view: 'gallery', photo: mediaId(image) })}
+					onclick={remember}
+					aria-label="Open photograph: {image.caption || `${item.name}, ${i + 2}`}"
+					><MediaImage src={image.src} alt="" sizes="100px" /></a
+				>
+			{/each}
+		</div>
+	{/if}
 	<div class="card-body">
-		<h3 dir="auto">{name}</h3>
+		<h3 dir="auto">
+			<a {href} onclick={remember}>{entryTitle(item)}</a>
+		</h3>
 		<p class="card-meta" dir="auto">
-			<MarkerGlyph kind={markerKind} size={10} />
-			{city}, {country}
+			<MarkerGlyph
+				kind={entryKind(item) === 'residence'
+					? 'residence'
+					: 'status' in item && item.status === 'search'
+						? 'search'
+						: 'located'}
+				size={12}
+			/>{item.city}, {item.country}
 		</p>
-		{#if detail}<p class="card-detail">{detail}</p>{/if}
-		{#if badge}<p class="card-badge">{badge}</p>{/if}
+		{#if 'years' in item}<p class="card-meta">{item.years}</p>{/if}
+		{#if 'status' in item && item.status === 'search'}<p class="card-badge">
+				To be found · location unconfirmed
+			</p>{/if}
+		<a class="map-link" href={store.entryHref(item, { view: 'map' })} onclick={remember}
+			><MapPin size={14} aria-hidden="true" />View on map</a
+		>
 	</div>
-</a>
+</article>
 
 <style>
 	.card {
 		display: flex;
 		flex-direction: column;
-		height: 100%;
 		min-width: 0;
+		height: 100%;
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		overflow: hidden;
-		text-decoration: none;
-		color: inherit;
-		box-shadow: var(--shadow-sm);
-		position: relative;
-		transition:
-			transform var(--duration-slow) var(--ease-out),
-			box-shadow var(--duration-slow) var(--ease-out),
-			border-color var(--duration-slow) var(--ease-out);
-	}
-	.card:hover {
-		transform: translateY(-3px);
-		box-shadow:
-			0 10px 24px -4px rgb(var(--color-header-bg-rgb) / 0.1),
-			0 4px 8px -2px rgb(var(--color-header-bg-rgb) / 0.05);
-		border-color: rgb(var(--color-accent-rgb) / 0.6);
 	}
 	.card-figure {
-		aspect-ratio: 4 / 3;
-		background: var(--color-surface-image);
-		overflow: hidden;
 		position: relative;
-	}
-	.card-figure img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
 		display: block;
-		transition:
-			transform var(--duration-slower) var(--ease-out),
-			filter var(--duration-slower) var(--ease-out);
+		height: 280px;
+		background: var(--color-surface-image);
+		text-decoration: none;
 	}
-	.card:hover .card-figure img {
-		transform: scale(1.03);
-		filter: brightness(1.02);
+	.photo-count {
+		position: absolute;
+		bottom: var(--space-2);
+		right: var(--space-2);
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		background: var(--color-header-bg);
+		color: var(--color-on-dark);
+		padding: var(--space-1-5) var(--space-2);
+		border-radius: var(--radius-sm);
+		font-size: var(--text-xs);
 	}
-	.card-placeholder {
-		width: 100%;
+	.placeholder {
 		height: 100%;
 		display: flex;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-2);
-		color: var(--color-text-placeholder);
-		font-family: var(--font-display);
-		font-style: italic;
-		font-size: var(--text-sm);
-		text-align: center;
-		padding: var(--space-3);
-	}
-	.card-body {
-		padding: var(--space-3-5) var(--space-4) var(--space-4);
-		display: flex;
 		flex-direction: column;
-		gap: var(--space-1-5);
+		gap: var(--space-3);
+		color: var(--color-text-secondary);
+	}
+	.card-previews {
+		display: flex;
+		gap: 4px;
+		height: 66px;
+		padding: 4px;
+		background: var(--color-surface-image);
+	}
+	.card-previews a {
 		flex: 1;
 		min-width: 0;
+		overflow: hidden;
 	}
-	.card-body h3 {
+	.card-body {
+		padding: var(--space-4);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		flex: 1;
+	}
+	h3 {
 		font-family: var(--font-display);
-		font-size: var(--text-lg);
-		font-weight: var(--weight-semibold);
+		font-size: var(--text-2xl);
 		line-height: var(--leading-snug);
-		color: var(--color-ink);
 		overflow-wrap: anywhere;
-		transition: color var(--duration-base) var(--ease-out);
 	}
-	.card:hover .card-body h3 {
-		color: var(--color-accent-text);
+	h3 a {
+		color: var(--color-ink);
+		text-decoration: none;
+	}
+	h3 a:hover {
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 	.card-meta {
 		display: flex;
 		align-items: center;
 		gap: var(--space-2);
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		overflow-wrap: anywhere;
-	}
-	.card-detail {
-		font-size: var(--text-xs);
-		font-style: italic;
-		color: var(--color-text-muted);
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
 	}
 	.card-badge {
-		align-self: flex-start;
-		margin-top: auto;
-		padding: 2px var(--space-2);
-		border-radius: var(--radius-sm);
-		background: var(--color-search-light);
-		color: var(--color-search-text);
 		font-size: var(--text-xs);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-wider);
-		text-transform: uppercase;
+		color: var(--color-search-text);
 	}
-	@media (prefers-reduced-motion: reduce) {
-		.card:hover,
-		.card:hover .card-figure img {
-			transform: none;
+	.map-link {
+		display: flex;
+		align-items: center;
+		gap: var(--space-1);
+		min-height: 44px;
+		margin-top: auto;
+		color: var(--color-primary-text);
+		font-size: var(--text-sm);
+		text-underline-offset: 3px;
+	}
+	@media (max-width: 600px) {
+		.card-figure {
+			height: 280px;
 		}
 	}
 </style>

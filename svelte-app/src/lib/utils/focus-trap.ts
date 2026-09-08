@@ -15,7 +15,11 @@ export function trapFocus(node: HTMLElement) {
 
 	// Initial focus: the first focusable child (dialogs here always have at
 	// least a close button), or the container itself as a fallback.
-	const first = node.querySelector<HTMLElement>(FOCUSABLE);
+	const available = () =>
+		Array.from(node.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
+			(el) => el.getClientRects().length > 0 && !el.closest('[inert]')
+		);
+	const first = available()[0];
 	if (first) {
 		first.focus();
 	} else {
@@ -25,7 +29,7 @@ export function trapFocus(node: HTMLElement) {
 
 	function onKeydown(e: KeyboardEvent) {
 		if (e.key !== 'Tab') return;
-		const focusable = Array.from(node.querySelectorAll<HTMLElement>(FOCUSABLE));
+		const focusable = available();
 		if (focusable.length === 0) return;
 		const firstEl = focusable[0];
 		const lastEl = focusable[focusable.length - 1];
@@ -45,7 +49,7 @@ export function trapFocus(node: HTMLElement) {
 	return {
 		destroy() {
 			node.removeEventListener('keydown', onKeydown);
-			previous?.focus();
+			if (previous?.isConnected) previous.focus({ preventScroll: true });
 		}
 	};
 }

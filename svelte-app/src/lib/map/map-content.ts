@@ -1,5 +1,4 @@
-import { goto } from '$app/navigation';
-import { resolve } from '$app/paths';
+import type { Entry } from '$lib/utils/collection';
 import type * as Maplibre from 'maplibre-gl';
 import { artworks } from '$lib/data/artworks';
 import { residences } from '$lib/data/residences';
@@ -9,7 +8,12 @@ import {
 	buildRelocationGeoJSON,
 	buildResidenceGeoJSON
 } from '$lib/utils/geojson';
-import { filterArtworks, filterResidences, type MapFilter } from '$lib/utils/map-filter';
+import {
+	filterArtworks,
+	filterResidences,
+	type CollectionFilters,
+	type MapFilter
+} from '$lib/utils/map-filter';
 import { MARKER_IMAGE_IDS, registerMarkerIcons } from '$lib/utils/marker-icons';
 
 export interface MapPalette {
@@ -27,13 +31,15 @@ export function installMapContent({
 	map,
 	maplibregl,
 	activeFilter,
+	onSelect,
 	palette,
 	reducedMotion,
 	isDestroyed
 }: {
 	map: Maplibre.Map;
 	maplibregl: typeof Maplibre;
-	activeFilter: MapFilter;
+	activeFilter: MapFilter | CollectionFilters;
+	onSelect: (item: Entry) => void;
 	palette: MapPalette;
 	reducedMotion: () => boolean;
 	isDestroyed: () => boolean;
@@ -96,13 +102,16 @@ export function installMapContent({
 		map.on('click', id, (event) => {
 			const artworkId = event.features?.[0]?.properties?.id;
 			const artwork = artworks.find((item) => item.id === artworkId);
-			if (artwork) void goto(resolve('/artworks/[slug]', { slug: artwork.slug }));
+			if (artwork) onSelect(artwork);
 		});
 		map.on('mouseenter', id, () => (map.getCanvas().style.cursor = 'pointer'));
 		map.on('mouseleave', id, () => (map.getCanvas().style.cursor = ''));
 	}
 
-	map.addSource('relocations', { type: 'geojson', data: buildRelocationGeoJSON(artworks) });
+	map.addSource('relocations', {
+		type: 'geojson',
+		data: buildRelocationGeoJSON(filterArtworks(artworks, activeFilter))
+	});
 	map.addLayer({
 		id: 'relocation-lines-glow',
 		type: 'line',
@@ -126,7 +135,10 @@ export function installMapContent({
 		}
 	});
 
-	map.addSource('ghosts', { type: 'geojson', data: buildGhostGeoJSON(artworks) });
+	map.addSource('ghosts', {
+		type: 'geojson',
+		data: buildGhostGeoJSON(filterArtworks(artworks, activeFilter))
+	});
 	map.addLayer({
 		id: 'ghost-markers',
 		type: 'symbol',
@@ -159,7 +171,12 @@ export function installMapContent({
 		if (!features.length) return;
 		const clusterId = Number(features[0].properties?.cluster_id);
 		const source = map.getSource('artworks') as Maplibre.GeoJSONSource;
-		const zoom = await source.getClusterExpansionZoom(clusterId);
+		let zoom: number;
+		try {
+			zoom = await source.getClusterExpansionZoom(clusterId);
+		} catch {
+			return;
+		}
 		if (isDestroyed()) return;
 		const options = {
 			center: (features[0].geometry as { type: 'Point'; coordinates: number[] }).coordinates as [
@@ -200,7 +217,7 @@ export function installMapContent({
 	map.on('click', 'residence-markers', (event) => {
 		const residenceId = event.features?.[0]?.properties?.id;
 		const residence = residences.find((item) => item.id === residenceId);
-		if (residence) void goto(resolve('/residences/[slug]', { slug: residence.slug }));
+		if (residence) onSelect(residence);
 	});
 	map.on('mouseenter', 'residence-markers', () => (map.getCanvas().style.cursor = 'pointer'));
 	map.on('mouseleave', 'residence-markers', () => (map.getCanvas().style.cursor = ''));

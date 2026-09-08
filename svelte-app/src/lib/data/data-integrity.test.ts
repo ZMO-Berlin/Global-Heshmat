@@ -105,9 +105,9 @@ describe('URL-safe filenames', () => {
 	 * disappeared from the site with nothing failing.
 	 */
 	it('every served derivative filename is already NFC', () => {
-		const decomposed = [...webDerivatives, ...thumbDerivatives, ...fullDerivatives].filter(
-			(f) => f !== f.normalize('NFC')
-		);
+		const decomposed = ['thumb', 'preview', 'web', 'full']
+			.flatMap((dir) => readdirSync(STATIC_DIR + 'images/' + dir))
+			.filter((f) => f !== f.normalize('NFC'));
 		expect(decomposed).toEqual([]);
 	});
 

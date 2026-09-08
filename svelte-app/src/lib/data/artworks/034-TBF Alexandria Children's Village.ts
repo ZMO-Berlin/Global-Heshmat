@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 34,
+	slug: "the-gift-of-motherhood-alexandria",
 	name: 'The Gift of Motherhood - Alexandria',
 	lat: 31.13310377896997,
 	lng: 29.901724058853905,

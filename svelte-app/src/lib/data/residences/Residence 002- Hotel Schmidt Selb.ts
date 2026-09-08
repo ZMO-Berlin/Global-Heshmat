@@ -5,6 +5,7 @@ import type { Residence } from '../types';
 
 const residence: Residence = {
 	id: 2,
+	slug: "hotel-schmidt-selb",
 	name: 'Hotel Schmidt Selb',
 	lat: 50.17065270578028,
 	lng: 12.127331675399757,

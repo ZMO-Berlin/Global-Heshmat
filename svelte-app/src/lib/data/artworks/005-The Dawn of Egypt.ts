@@ -4,6 +4,8 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 5,
+	slug: "the-dawn-of-egypt",
+	coverImage: "Intilaqat_Misr_Ahmed_Kamel.jpg",
 	name: 'The Dawn of Egypt',
 	lat: 30.29508569400449,
 	lng: 31.781317367195644,

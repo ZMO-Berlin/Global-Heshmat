@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 25,
+	slug: "house-of-dr-karl-kraus",
 	name: 'House of Dr. Karl Kraus',
 	lat: 48.95524960536004,
 	lng: 10.125614986537776,

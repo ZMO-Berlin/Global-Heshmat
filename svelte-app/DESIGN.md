@@ -152,3 +152,7 @@ Typography establishes clear editorial hierarchy through two complementary typef
 - **Don't** add arbitrary saturated colors outside the defined 5 semantic hue families.
 - **Don't** make the header or footer chrome visually heavier with dark dropped drop-shadows.
 - **Don't** introduce dark mode; the warm gallery aesthetic is a deliberate project constant.
+
+## Collection refinement — September 2026
+
+Preserve the archival paper, ink navy, Cormorant Garamond and Outfit identity. Complete photographs use contain-fit stages; group documents by notice, retain counts and visible contact sheets. Country, status, entry type and text search combine across views. Detail albums use a broad two-column reading surface on desktop and a single flow on mobile. The missing-works dossier pairs documentary images with the existing account and a restrained contribution section. Unconfirmed location text is visible beside recorded places.

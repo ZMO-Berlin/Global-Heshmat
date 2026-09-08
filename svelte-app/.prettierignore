@@ -17,3 +17,7 @@ test-results
 # ignored symmetrically (artworks AND residences).
 src/lib/data/artworks/[0-9]*.ts
 src/lib/data/residences/Residence*.ts
+
+.npm-cache/
+.lighthouse/
+.image-build-cache.json

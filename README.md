@@ -35,12 +35,12 @@ Global-Heshmat/
     │   ├── lib/
     │   │   ├── components/          # Svelte components
     │   │   │   ├── MapView.svelte         # MapLibre map, markers, clusters, relocation lines
-    │   │   │   ├── Sidebar.svelte         # Artwork detail panel
-    │   │   │   ├── Gallery.svelte         # Image carousel with thumbnails
+    │   │   │   ├── EntryDetail.svelte         # Artwork detail panel
+    │   │   │   ├── Gallery.svelte         # Complete-image album with contact sheet
     │   │   │   ├── Lightbox.svelte        # Full-screen image viewer
     │   │   │   ├── FilterBar.svelte       # Country/status filters + search
     │   │   │   ├── CollectionPanel.svelte # Browsable text index of the collection
-    │   │   │   ├── ViewSwitcher.svelte    # Map / Grid / List switch
+    │   │   │   ├── ViewSwitcher.svelte    # Map / Gallery / List switch
     │   │   │   ├── MarkerGlyph.svelte     # SVG twin of the map's marker shapes
     │   │   │   ├── Header.svelte          # Top navigation bar
     │   │   │   ├── Legend.svelte          # Map legend (collapsible)
@@ -100,7 +100,7 @@ Global-Heshmat/
     │       ├── web/                       # Generated <=1200px WebP (sidebar gallery)
     │       └── full/                      # Generated <=2000px WebP (lightbox, hi-DPI)
     ├── scripts/
-    │   ├── generate_image_derivatives.mjs # Build thumb/ + web/ + full/ from originals
+    │   ├── generate_image_derivatives.mjs # Build thumb/ + preview/ + web/ + full/ from originals
     │   └── verify-build.mjs               # Post-build SEO / sitemap / image checks
     ├── package.json
     ├── svelte.config.js
@@ -114,7 +114,7 @@ Global-Heshmat/
 | --------------------- | ---------------------------------------------------------------------------------- |
 | `/`                   | Map view with no artwork preselected                                               |
 | `/artworks/<slug>/`   | Same map, sidebar pre-opened on the artwork; one prerendered HTML file per artwork |
-| `/collection/`        | Photo grid of every artwork and place of residence, honouring the active filter    |
+| `/collection/`        | Albums, grouped photographs and list, with combinable filters                      |
 | `/residences/<slug>/` | Same, for the places where Heshmat lived or worked                                 |
 | `/sitemap.xml`        | Auto-generated sitemap listing the home page and every artwork and residence URL   |
 | `/robots.txt`         | Allows all crawlers; points to the sitemap                                         |
@@ -131,9 +131,9 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Three marker types** — located (teal), to-be-found (orange), ghost markers for relocated artworks (dashed outline)
 - **Relocation visualisation** — dashed lines connecting original and current locations
 - **Places of residence** — a separate, unclustered marker layer for where Heshmat lived and worked
-- **Country & status filters** — chips auto-generated from the data, sorted alphabetically with per-country counts
+- **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs
 - **Three ways to read the collection** — the map, a photo grid at `/collection/`, and a side list, switchable from any of them. The grid matters because 26 of the 39 works are in Egypt and most of those in Cairo districts, so at world zoom the map shows the collection as a single dot
-- **Browsable collection index** — a grouped, filter-aware text list of every entry, opened from the header or the skip link. It is also the site's internal link graph: every prerendered page carries real links to all 43 entries
+- **Browsable collection index** — a grouped, filter-aware text list of every entry, opened with Browse on the map. It is also the site's internal link graph: every prerendered page carries real links to all 43 entries
 - **Shape-coded markers** — located (disc), to be found (ring), place of residence (diamond) and former location (dashed ring). Shape rather than hue carries the distinction: under tritanopia the located and residence colours measure ΔE 12.4, indistinguishable at marker size. `MARKER_SPECS` is the single source, so the map canvas, the legend and the list cannot drift apart
 - **Real-time search** — searches across names, cities, countries, and addresses
 - **Sidebar detail view** — images, description, status tags, address, external links
@@ -145,8 +145,8 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Auto-generated sitemap** — `sitemap.xml` enumerates every artwork URL at build time
 - **Responsive design** — works on mobile and desktop
 - **Installable PWA** — app shell precached for offline use, images cached on demand; updates apply silently, with no install or reload prompts
-- **Responsive images** — three WebP sizes served via `srcset`, so a phone never downloads the 2000px master
-- **Accessibility** — skip link, `<main>` landmark, focus moved into panels as they open and restored on close, `aria-pressed` on filter chips, and a palette locked to WCAG AA contrast by unit test
+- **Responsive images** — four WebP sizes (400 / 800 / 1200 / 2000 px bounding boxes) served with accurate width descriptors
+- **Accessibility** — skip link, `<main>` landmark, focus moved into panels as they open and restored on close, labelled native filter controls, and a palette locked to WCAG AA contrast by unit test
 - **Keyboard navigation** — Escape to close panels, arrow keys in lightbox
 
 ## Development
@@ -174,7 +174,7 @@ Use Node.js 22.13+ or Node.js 24. Node 20 is end-of-life and is no longer suppor
 | `npm test`                | Run Vitest unit tests once                                                                                                                   |
 | `npm run test:watch`      | Run Vitest in watch mode                                                                                                                     |
 | `npm run test:e2e`        | Run Playwright browser and axe accessibility tests against the production build                                                              |
-| `npm run test:lighthouse` | Check collection-route Lighthouse scores and JavaScript/map-loading budgets                                                                  |
+| `npm run test:lighthouse` | Check desktop/mobile collection, album and dossier Lighthouse scores and JavaScript/map-loading budgets                                      |
 | `npm run audit:prod`      | Fail on high-severity advisories in production dependencies                                                                                  |
 | `npm run verify:build`    | Assert the `build/` artifact has the expected SEO + sitemap content, and that every referenced artwork image has a generated WebP derivative |
 | `npm run validate`        | Run lint, typecheck, unit tests, build assertions, Playwright/axe, and Lighthouse budgets                                                    |
@@ -186,7 +186,7 @@ Four layers, all run in CI:
 - **Vitest unit tests** live next to the source as `*.test.ts`. They cover the pure layer — `slugify`, `escapeXml`, the `artworkPath` / `absoluteUrl` helpers, the slug-collision checks in `buildIndex`, the map filter predicates and GeoJSON builders, the image-URL and `srcset` helpers, and YouTube id parsing. `contrast.test.ts` additionally reads the colour values straight out of `tokens.css` and asserts every text pairing clears WCAG AA, so a palette edit that regresses contrast fails the build. These are pure-function tests; no DOM, no SvelteKit runtime needed.
 - **Build-output assertions** in [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs) crack open every prerendered artwork and residence page and check the actual HTML files for the things unit tests can't see — exactly one `<title>` per page, canonical URLs pointing at `https://heshmat.zmo.de`, the JSON-LD `@type` matching the route, the Google Search Console verification meta tag landing on every page, no `localhost` leaks, sitemap listing every artwork directory, every referenced artwork image having a generated WebP derivative, and so on.
 - **Playwright + axe** exercise the real production UI: filter/URL synchronisation, keyboard search, panel and modal focus, mobile overflow and touch targets, route-level accessibility, and the guarantee that a direct collection-grid visit does not load MapLibre or CARTO.
-- **Lighthouse budgets** run against the collection route, enforcing performance, accessibility, best-practices and SEO score floors plus a 350 KiB JavaScript-transfer ceiling.
+- **Lighthouse budgets** run three cold measurements each for the desktop/mobile collection, a mobile album and the mobile missing-works dossier. Median floors: performance 90 desktop / 85 simulated slow-4G mobile, accessibility 100, best practices 95, SEO 100; LCP ≤ 2.5 s desktop / 4 s simulated mobile, CLS ≤ 0.1, JavaScript ≤ 350 KiB. Map downloads on these pages fail the check. CI retains HTML/JSON reports and browser failure traces for 14 days. Chromium and WebKit run in CI.
 
 ## Adding a new artwork
 
@@ -230,7 +230,7 @@ cd svelte-app
 npm run images
 ```
 
-The script watches `originals/` for new uploads and generates the matching WebP thumbnails, web-size, and full-size variants into `static/images/{thumb,web,full}/` without you having to touch the generated output files manually.
+The script watches `originals/` for new uploads and generates the matching WebP thumbnails, web-size, and full-size variants into `static/images/{thumb,preview,web,full}/` without you having to touch the generated output files manually.
 
 After adding or replacing any image in `originals/`, regenerate the derivatives and commit them:
 
@@ -341,11 +341,11 @@ The verification meta tag for Google Search Console lives in [`svelte-app/src/ap
 This repository is deliberately licensed in three parts, because it contains three
 different kinds of material:
 
-| Material                                                          | Licence                                                                     |
-| ----------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Source code** — everything under `svelte-app/src`, `scripts/`    | [MIT](LICENSE)                                                              |
-| **Editorial content** — artwork and residence records, about texts | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)                   |
-| **Photographs and video** — `originals/`, `static/images`, `static/videos` | **All rights reserved.** Not covered by either licence.             |
+| Material                                                                   | Licence                                                   |
+| -------------------------------------------------------------------------- | --------------------------------------------------------- |
+| **Source code** — everything under `svelte-app/src`, `scripts/`            | [MIT](LICENSE)                                            |
+| **Editorial content** — artwork and residence records, about texts         | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
+| **Photographs and video** — `originals/`, `static/images`, `static/videos` | **All rights reserved.** Not covered by either licence.   |
 
 The photographs were generously provided by the family of Hassan Heshmat, the Hassan
 Heshmat Museum, and individual photographers. They remain the property of their
@@ -373,3 +373,15 @@ For code changes, run the full gate before opening a pull request:
 ```bash
 cd svelte-app && npm run validate
 ```
+
+## Collection and documentary metadata
+
+The gallery offers **Entries**, **Photos** (grouped by notice), and **List**. Every card exposes its photograph count and album previews. Albums retain complete image proportions, a contact sheet and a keyboard-operated full-screen viewer. A photo URL uses a filename-derived identifier (or an explicit media `id`), so rearranging an album does not change its shared links. Returning to the collection restores the open list's scroll and originating focus.
+
+The **Works still to be found** dossier at `/missing/` brings together the 13 unlocated entries, existing documentation, recorded locations and a prefilled email contribution. Recorded coordinates are explicitly distinguished from a confirmed current location. No speculative locations or sources have been added.
+
+Optional notice metadata in `src/lib/data/types.ts`: `displayTitle`, `siteName`, `district`, `aliases`, `coverImage`, `entryKind`, `locationPrecision`, `sources` (label, URL, checkedOn), and `creationPlace`. Media can include `id`, `alt`, `credit`, `date`, and `documentType`. Populate these only from documented evidence; existing source descriptions remain authoritative. Explicit slugs are permanent URLs and must not change with a title correction.
+
+`npm run images` fingerprints source bytes plus encoder settings, serializes watch rebuilds, checks filename collisions and writes derivatives through temporary files. It refreshes the committed `src/lib/data/image-manifest.json`, whose decoded dimensions produce accurate responsive image descriptors. To inventory existing derivatives without rebuilding them use `npm run images:manifest`; `npm run verify:images` detects stale metadata or incomplete variants.
+
+Direct entry URLs render their descriptions and album in static HTML. Gallery navigation does not initialize MapLibre. The service worker caches previously visited entry documents and provides an explicit offline fallback for an unvisited entry; photos and map areas are available offline only once cached.

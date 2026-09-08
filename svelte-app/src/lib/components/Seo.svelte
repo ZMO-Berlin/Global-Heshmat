@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IndexedArtwork, IndexedResidence } from '$lib/data/types';
-	import { webUrl } from '$lib/utils/image';
+	import { webUrl, leadImage } from '$lib/utils/image';
 	import {
 		SITE_URL,
 		SITE_NAME,
@@ -37,7 +37,11 @@
 		path
 	}: Props = $props();
 
-	const OG_IMAGE = `${SITE_URL}/og-image.png`;
+	const OG_IMAGE = $derived(
+		(artwork && leadImage(artwork)) || (residence && leadImage(residence))
+			? absoluteUrl(webUrl(leadImage(artwork ?? residence!)!))
+			: `${SITE_URL}/og-image.png`
+	);
 
 	const stripHtml = (s: string) => s.replace(/<[^>]*>/g, '');
 	const truncate = (s: string, n: number) =>
@@ -47,8 +51,8 @@
 	// legacy single `image`, mirroring the gallery's own resolution order. The
 	// structured-data URL points at the web-size WebP derivative, not the
 	// multi-megabyte original.
-	const artworkImage = $derived(artwork?.images?.[0]?.src ?? artwork?.image);
-	const residenceImage = $derived(residence?.images?.[0]?.src ?? residence?.image);
+	const artworkImage = $derived(artwork ? leadImage(artwork) : undefined);
+	const residenceImage = $derived(residence ? leadImage(residence) : undefined);
 
 	const title = $derived(
 		titleOverride
@@ -95,21 +99,9 @@
 					description: truncate(stripHtml(artwork.desc), 300),
 					image: artworkImage ? absoluteUrl(webUrl(artworkImage)) : undefined,
 					url: canonicalUrl,
-					locationCreated: {
-						'@type': 'Place',
-						name: `${artwork.city}, ${artwork.country}`,
-						address: {
-							'@type': 'PostalAddress',
-							streetAddress: artwork.address,
-							addressLocality: artwork.city,
-							addressCountry: artwork.country
-						},
-						geo: {
-							'@type': 'GeoCoordinates',
-							latitude: artwork.lat,
-							longitude: artwork.lng
-						}
-					},
+					locationCreated: artwork.creationPlace
+						? { '@type': 'Place', name: artwork.creationPlace.name }
+						: undefined,
 					creator: {
 						'@type': 'Person',
 						name: ARTIST.name,

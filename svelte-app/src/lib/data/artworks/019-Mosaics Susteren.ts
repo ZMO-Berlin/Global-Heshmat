@@ -4,6 +4,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 
 	id: 19,
+	slug: "mosaics-in-private-swimming-pool",
 	name: 'Mosaics in Private Swimming Pool',
 	lat: 51.06308747632427,
 	lng: 5.850300651696305,

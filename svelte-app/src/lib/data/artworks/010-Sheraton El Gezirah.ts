@@ -5,6 +5,8 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 10,
+	slug: "sheraton-el-gezirah-today-sofitel-cairo-nile-el-gezirah",
+	displayTitle: "Sheraton - El Gezirah",
 	name: 'Sheraton - El Gezirah (Today: "Sofitel Cairo Nile El Gezirah")',
 	lat: 30.038952282971476,
 	lng: 31.224627907161697,

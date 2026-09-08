@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 17,
+	slug: "st-therese-armenian-catholic-church",
 	name: 'St. Therese Armenian Catholic Church',
 	lat: 30.0923858225649,
 	lng: 31.33476689059556,
