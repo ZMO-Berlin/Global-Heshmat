@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 33,
+	slug: "military-academy-for-postgraduate-and-strategic-studies",
 	name: 'Military Academy for Postgraduate and Strategic Studies',
 	lat: 30.045245998548616,
 	lng: 31.21558208454318,

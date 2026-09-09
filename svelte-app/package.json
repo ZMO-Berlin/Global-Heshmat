@@ -42,8 +42,10 @@
 		"test:e2e": "playwright test",
 		"test:lighthouse": "node scripts/lighthouse-budget.mjs",
 		"audit:prod": "npm audit --omit=dev --audit-level=high",
-		"verify:build": "node scripts/verify-build.mjs",
-		"validate": "npm run lint && npm run check && npm run test && npm run build && npm run verify:build && npm run test:e2e && npm run test:lighthouse"
+		"verify:build": "npm run verify:images && node scripts/verify-build.mjs",
+		"validate": "npm run lint && npm run check && npm run test && npm run build && npm run verify:build && npm run test:e2e && npm run test:lighthouse",
+		"images:manifest": "node scripts/image-manifest.mjs",
+		"verify:images": "node scripts/image-manifest.mjs --check"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.13.0",
@@ -59,7 +61,6 @@
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.23.0",
 		"globals": "^17.11.0",
-		"chrome-launcher": "^1.2.1",
 		"lighthouse": "^13.4.1",
 		"prettier": "^3.9.6",
 		"prettier-plugin-svelte": "^4.1.1",

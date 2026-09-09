@@ -63,7 +63,7 @@ jobs:
   build:
     name: Build (${{ matrix.node-version }})
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -88,9 +88,9 @@ jobs:
       - name: Verify build artifact
         run: npm run verify:build
 
-      - name: Install Chromium
+      - name: Install browser engines
         if: matrix.node-version == 24
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Browser and accessibility tests
         if: matrix.node-version == 24
@@ -99,6 +99,25 @@ jobs:
       - name: Lighthouse budgets
         if: matrix.node-version == 24
         run: npm run test:lighthouse
+
+      - name: Preserve Lighthouse reports
+        if: always() && matrix.node-version == 24
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: lighthouse-reports
+          path: svelte-app/.lighthouse/
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Preserve browser failure traces
+        if: failure() && matrix.node-version == 24
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: browser-test-results
+          path: svelte-app/test-results/
+          retention-days: 14
+          if-no-files-found: ignore
 
       - name: Configure Pages
         if: matrix.node-version == 24 && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

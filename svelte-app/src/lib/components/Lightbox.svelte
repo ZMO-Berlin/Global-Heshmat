@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
-	import { fullUrl, srcSet, thumbUrl } from '$lib/utils/image';
-	import { hideOnError, hideParentOnError } from '$lib/utils/hide-on-error';
+	import { thumbUrl } from '$lib/utils/image';
+	import MediaImage from './MediaImage.svelte';
+	import { imageAlt } from '$lib/utils/collection';
+	import { hideParentOnError } from '$lib/utils/hide-on-error';
 	import { trapFocus } from '$lib/utils/focus-trap';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -10,8 +12,15 @@
 		images,
 		name,
 		current = $bindable(0),
-		onclose
-	}: { images: ArtworkImage[]; name: string; current: number; onclose: () => void } = $props();
+		onclose,
+		onchange
+	}: {
+		images: ArtworkImage[];
+		name: string;
+		current: number;
+		onclose: () => void;
+		onchange?: (index: number) => void;
+	} = $props();
 
 	const multi = $derived(images.length > 1);
 
@@ -19,9 +28,11 @@
 
 	function next() {
 		current = (current + 1) % images.length;
+		onchange?.(current);
 	}
 	function prev() {
 		current = (current - 1 + images.length) % images.length;
+		onchange?.(current);
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
@@ -45,6 +56,7 @@
 	});
 
 	onDestroy(() => {
+		if (typeof document === 'undefined') return;
 		document.removeEventListener('keydown', handleKeydown);
 		document.body.style.overflow = '';
 		// Clean up the teleported element
@@ -81,15 +93,15 @@
 	<div class="lightbox-content">
 		<!-- The lightbox stage is 85vw, so a wide or high-DPI screen gets the
 		     2000px candidate while a phone stays on the 1200px one. -->
-		<img
-			class="lightbox-img"
-			src={fullUrl(images[current].src)}
-			srcset={srcSet(images[current].src)}
-			sizes="85vw"
-			alt={images[current].caption || name}
-			decoding="async"
-			use:hideOnError
-		/>
+		<div class="lightbox-img">
+			<MediaImage
+				src={images[current].src}
+				alt={imageAlt(images[current], name)}
+				size="full"
+				sizes="85vw"
+				priority
+			/>
+		</div>
 		{#if images[current].caption}
 			<div class="lightbox-caption">{images[current].caption}</div>
 		{/if}
@@ -111,7 +123,10 @@
 					class:active={i === current}
 					aria-label="Show image {i + 1} of {images.length}"
 					aria-current={i === current}
-					onclick={() => (current = i)}
+					onclick={() => {
+						current = i;
+						onchange?.(i);
+					}}
 				>
 					<img
 						src={thumbUrl(img.src)}
@@ -194,6 +209,8 @@
 	}
 
 	.lightbox-img {
+		width: 85vw;
+		height: 65vh;
 		max-width: 85vw;
 		max-height: calc(100dvh - 150px);
 		object-fit: contain;

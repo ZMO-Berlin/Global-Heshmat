@@ -99,8 +99,10 @@ export default defineConfig({
 				// cached on demand via runtimeCaching below.
 				globPatterns: [
 					'client/**/*.{js,css,webmanifest}',
+					'client/offline/index.html',
 					'prerendered/pages/index.html',
-					'prerendered/pages/collection/index.html'
+					'prerendered/pages/collection/index.html',
+					'prerendered/pages/missing/index.html'
 				],
 				globIgnores: [
 					'**/images/**',
@@ -108,6 +110,7 @@ export default defineConfig({
 					// worker out of the install-time app shell and cache them on demand.
 					'**/maplibre-*.js',
 					'**/maplibre.*.css',
+					'**/immutable/workers/**',
 					'**/rtl-text-plugin.js'
 				],
 				// Vite 8 preserves the logical MapLibre name only in its manifest,
@@ -115,9 +118,23 @@ export default defineConfig({
 				// that optional 970 KiB renderer out of the install-time app shell
 				// while retaining the SvelteKit integration's required URL transform.
 				maximumFileSizeToCacheInBytes: 500 * 1024,
-				// Offline fallback for any not-yet-visited route.
-				navigateFallback: '/',
+				// Entry navigations use NetworkFirst with their own fallback below.
+				navigateFallback: null,
 				runtimeCaching: [
+					{
+						urlPattern: ({ request, url, sameOrigin }) =>
+							sameOrigin &&
+							request.mode === 'navigate' &&
+							(url.pathname.startsWith('/artworks/') || url.pathname.startsWith('/residences/')),
+						handler: 'NetworkFirst',
+						options: {
+							precacheFallback: { fallbackURL: '/offline/' },
+							cacheName: 'entry-pages-v1',
+							networkTimeoutSeconds: 4,
+							expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 30 },
+							cacheableResponse: { statuses: [200] }
+						}
+					},
 					{
 						urlPattern: ({ url, sameOrigin }) =>
 							sameOrigin &&

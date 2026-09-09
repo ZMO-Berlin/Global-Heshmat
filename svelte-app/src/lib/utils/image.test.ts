@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cardSrcSet, IMAGE_WIDTHS, fullUrl, leadImage, srcSet, thumbUrl, webUrl } from './image';
+import { cardSrcSet, imageDimensions, fullUrl, leadImage, srcSet, thumbUrl, webUrl } from './image';
 
 describe('image URL helpers', () => {
 	it('maps an original to its web derivative, swapping the extension', () => {
@@ -49,9 +49,9 @@ describe('image URL helpers', () => {
 		expect(fullUrl('Agiba_1.jpg')).toBe('/images/full/Agiba_1.webp');
 	});
 
-	it('builds a srcset pairing the web and full derivatives with width descriptors', () => {
+	it('deduplicates widths when the original is smaller than both targets', () => {
 		expect(srcSet('Agiba_1.jpg')).toBe(
-			'/images/web/Agiba_1.webp 1200w, /images/full/Agiba_1.webp 2000w'
+			`/images/preview/Agiba_1.webp ${imageDimensions('Agiba_1.jpg', 'preview').width}w, /images/web/Agiba_1.webp ${imageDimensions('Agiba_1.jpg').width}w`
 		);
 	});
 
@@ -67,16 +67,15 @@ describe('image URL helpers', () => {
 		}
 	});
 
-	it('keeps the srcset descriptors in step with the declared widths', () => {
-		// Guards against the widths drifting from what the generator writes.
-		const set = srcSet('x.jpg');
-		expect(set).toContain(`${IMAGE_WIDTHS.web}w`);
-		expect(set).toContain(`${IMAGE_WIDTHS.full}w`);
+	it('declares the actual width of a portrait instead of its bounding box', () => {
+		expect(imageDimensions('AC_IX.jpg').width).toBe(900);
+		expect(srcSet('AC_IX.jpg')).toContain('900w');
+		expect(() => srcSet('unknown.jpg')).toThrow('Missing media metadata');
 	});
 
-	it('offers a 400px candidate for collection cards', () => {
+	it('offers a thumbnail and intermediate candidates for collection cards', () => {
 		expect(cardSrcSet('Agiba_1.jpg')).toBe(
-			'/images/thumb/Agiba_1.webp 400w, /images/web/Agiba_1.webp 1200w'
+			`/images/thumb/Agiba_1.webp ${imageDimensions('Agiba_1.jpg', 'thumb').width}w, /images/preview/Agiba_1.webp ${imageDimensions('Agiba_1.jpg', 'preview').width}w, /images/web/Agiba_1.webp ${imageDimensions('Agiba_1.jpg').width}w`
 		);
 	});
 

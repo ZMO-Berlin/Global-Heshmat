@@ -1,78 +1,38 @@
-/**
- * Map a stored artwork image filename to its generated WebP derivatives.
- *
- * Originals are archived in `originals/` (outside `static/`, so they never
- * ship in the deployed site). `scripts/generate_image_derivatives.mjs` writes
- * three downscaled WebP copies per image, keeping the original's stem and
- * swapping the extension for `.webp`:
- *
- *   thumb/   400px — thumbnail strips
- *   web/    1200px — the sidebar gallery, and the small srcset candidate
- *   full/   2000px — the lightbox on large and high-DPI displays
- *
- * Because the mapping strips the extension, a data/disk mismatch such as
- * `"photo.jpg"` vs `photo.jpeg` resolves to the same `photo.webp` either way.
- * The data-integrity test (`src/lib/data/data-integrity.test.ts`) and
- * `npm run verify:build` both fail when a referenced image has no derivative,
- * so the app can rely on these URLs resolving.
- */
-
-/** Intrinsic widths of the derivatives, for `srcset` descriptors. */
-export const IMAGE_WIDTHS = { thumb: 400, web: 1200, full: 2000 } as const;
-
-/**
- * Strip the extension and percent-encode the result.
- *
- * Encoding is not optional here. 50 of the 139 filenames in this archive
- * contain spaces, and a space inside a `srcset` URL terminates the URL — the
- * rest is read as the width descriptor, so the candidate is invalid and the
- * browser silently drops it. Others carry umlauts or a backtick. Encoding the
- * segment makes the URL valid in `src`, `srcset` and the sitemap alike.
- *
- * NFC normalisation matters just as much. Ten of these filenames were written
- * on macOS, which stores "ä" decomposed (a + U+0308). Percent-encoding that
- * decomposed form yields %CC%88, and a static host that resolves paths in NFC
- * answers 404 — so those images silently vanished while every check passed,
- * because the integrity test normalises both sides before comparing.
- */
-function encodedStem(file: string): string {
-	return encodeURIComponent(file.normalize('NFC').replace(/\.[^./\\]+$/, ''));
+import manifest from '$lib/data/image-manifest.json';
+import { entryImages } from './collection';
+type Variant = 'thumb' | 'preview' | 'web' | 'full';
+type Dimensions = { width: number; height: number; bytes: number };
+const images: Record<string, Record<Variant, Dimensions>> = manifest;
+const stem = (src: string) => src.normalize('NFC').replace(/\.[^./\\]+$/, '');
+const url = (src: string, variant: Variant) =>
+	// Interior commas are valid in srcset URLs. Keep them literal so SvelteKit's
+	// decodeURI-based prerender crawler can match the static filename.
+	`/images/${variant}/${encodeURIComponent(stem(src)).replace(/%2C/g, ',')}.webp`;
+export const thumbUrl = (src: string) => url(src, 'thumb');
+export const webUrl = (src: string) => url(src, 'web');
+export const fullUrl = (src: string) => url(src, 'full');
+export function imageDimensions(src: string, variant: Variant = 'web'): Dimensions {
+	const dimensions = images[stem(src)]?.[variant];
+	if (!dimensions) throw new Error(`Missing media metadata: ${src} (${variant})`);
+	return dimensions;
 }
-
-/** URL for the small WebP thumbnail (gallery / lightbox thumb strips). */
-export function thumbUrl(src: string): string {
-	return `/images/thumb/${encodedStem(src)}.webp`;
+function candidates(src: string, variants: Variant[]): string {
+	const widths = new Map<number, string>();
+	for (const variant of variants) {
+		const { width } = imageDimensions(src, variant);
+		if (!widths.has(width)) widths.set(width, url(src, variant));
+	}
+	return [...widths].map(([width, source]) => `${source} ${width}w`).join(', ');
 }
-
-/** URL for the 1200px WebP derivative (sidebar gallery). */
-export function webUrl(src: string): string {
-	return `/images/web/${encodedStem(src)}.webp`;
-}
-
-/** URL for the 2000px WebP derivative (lightbox on large / high-DPI screens). */
-export function fullUrl(src: string): string {
-	return `/images/full/${encodedStem(src)}.webp`;
-}
-
-/**
- * A `srcset` offering both the 1200px and 2000px derivatives, so the browser
- * fetches the larger master only where it actually helps (a wide viewport or a
- * high-DPI screen). Pair with a `sizes` attribute describing the slot the
- * image occupies — without one the browser assumes 100vw and over-fetches.
- */
-export function srcSet(src: string): string {
-	return `${webUrl(src)} ${IMAGE_WIDTHS.web}w, ${fullUrl(src)} ${IMAGE_WIDTHS.full}w`;
-}
-
-/** Responsive candidates for collection cards, whose slots never need the 2000px master. */
-export function cardSrcSet(src: string): string {
-	return `${thumbUrl(src)} ${IMAGE_WIDTHS.thumb}w, ${webUrl(src)} ${IMAGE_WIDTHS.web}w`;
-}
-
-/** Lead photo for cards and metadata, preferring the modern multi-image field. */
+export const srcSet = (src: string) => candidates(src, ['preview', 'web', 'full']);
+export const cardSrcSet = (src: string) => candidates(src, ['thumb', 'preview', 'web']);
 export function leadImage(item: {
-	images?: readonly { src: string }[];
+	images?: { src: string }[];
 	image?: string;
+	coverImage?: string;
 }): string | undefined {
-	return item.images?.[0]?.src ?? item.image;
+	return (
+		entryImages(item).find((image) => image.src === item.coverImage)?.src ??
+		entryImages(item)[0]?.src
+	);
 }

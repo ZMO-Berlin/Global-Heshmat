@@ -1,15 +1,25 @@
-#!/usr/bin/env node
 import { spawn } from 'node:child_process';
-import { rmSync } from 'node:fs';
+import { mkdirSync, writeFileSync, appendFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { chromium } from '@playwright/test';
-import { launch } from 'chrome-launcher';
+import { createServer } from 'node:net';
 import lighthouse, { desktopConfig } from 'lighthouse';
-
-const root = join(fileURLToPath(new URL('.', import.meta.url)), '..');
-const port = 4174;
-const url = `http://127.0.0.1:${port}/collection/`;
+const root = fileURLToPath(new URL('../', import.meta.url));
+const port = Number(process.env.LIGHTHOUSE_PORT ?? 4174);
+const origin = `http://127.0.0.1:${port}`;
+const runs = Number(process.env.LIGHTHOUSE_RUNS ?? 3);
+if (!Number.isInteger(runs) || runs < 1 || runs > 5 || runs % 2 !== 1)
+	throw new Error('LIGHTHOUSE_RUNS must be 1, 3 or 5');
+const targets = [
+	{ id: 'collection-desktop', path: '/collection/', desktop: true },
+	{ id: 'collection-mobile', path: '/collection/', desktop: false },
+	{ id: 'entry-mobile', path: '/artworks/the-hassan-heshmat-museum/', desktop: false },
+	{ id: 'missing-mobile', path: '/missing/', desktop: false }
+];
+const thresholds = { performance: 0.9, accessibility: 1, 'best-practices': 0.95, seo: 1 };
+const reports = join(root, '.lighthouse');
+mkdirSync(reports, { recursive: true });
 const server = spawn(
 	process.execPath,
 	[
@@ -25,126 +35,130 @@ const server = spawn(
 );
 let serverError = '';
 server.stderr.on('data', (chunk) => (serverError += String(chunk)));
-
-async function waitForServer() {
-	const deadline = Date.now() + 60_000;
-	while (Date.now() < deadline) {
-		if (server.exitCode !== null) {
-			throw new Error(`Preview server exited (${server.exitCode}): ${serverError.trim()}`);
-		}
+server.stdout.resume();
+async function ready() {
+	const until = Date.now() + 60000;
+	while (Date.now() < until) {
+		if (server.exitCode !== null) throw new Error(`Preview failed: ${serverError}`);
 		try {
-			const response = await fetch(url);
-			if (response.ok) {
-				await new Promise((resolve) => setTimeout(resolve, 50));
-				if (server.exitCode === null) return;
-			}
+			if ((await fetch(origin + '/collection/')).ok) return;
 		} catch {
-			// The preview server is still starting.
+			/* Wait for the local preview to become ready. */
 		}
 		await new Promise((resolve) => setTimeout(resolve, 250));
 	}
-	throw new Error(`Preview server did not become ready at ${url}`);
+	throw new Error('Preview startup timed out');
 }
-
+const median = (values) => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
+const failures = [];
+const summary = [];
 let chrome;
 try {
-	await waitForServer();
-	chrome = await launch({
-		chromePath: chromium.executablePath(),
-		chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu']
-	});
-	const result = await lighthouse(
-		url,
-		{
-			port: chrome.port,
-			logLevel: 'error',
-			output: 'json',
-			onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo']
-		},
-		desktopConfig
-	);
-	if (!result) throw new Error('Lighthouse returned no result');
-
-	const thresholds = {
-		performance: 0.85,
-		accessibility: 0.95,
-		'best-practices': 0.9,
-		seo: 0.95
-	};
-	const failures = [];
-	for (const [category, minimum] of Object.entries(thresholds)) {
-		const score = result.lhr.categories[category]?.score ?? 0;
-		console.log(`${category}: ${Math.round(score * 100)}`);
-		if (score < minimum) failures.push(`${category} ${score.toFixed(2)} < ${minimum}`);
-	}
-
-	for (const id of [
-		'first-contentful-paint',
-		'largest-contentful-paint',
-		'speed-index',
-		'total-blocking-time',
-		'cumulative-layout-shift'
-	]) {
-		const audit = result.lhr.audits[id];
-		console.log(`${audit.title}: ${audit.displayValue ?? audit.numericValue}`);
-	}
-	const opportunities = Object.values(result.lhr.audits)
-		.filter((audit) => Number(audit.details?.overallSavingsMs) > 0)
-		.sort(
-			(a, b) => Number(b.details?.overallSavingsMs ?? 0) - Number(a.details?.overallSavingsMs ?? 0)
-		)
-		.slice(0, 5);
-	for (const audit of opportunities) {
-		console.log(
-			`opportunity: ${audit.title} (${Math.round(Number(audit.details.overallSavingsMs))} ms)`
+	await ready();
+	for (const target of targets) {
+		// Slow-4G mobile simulation has its own measured regression floor. Keep
+		// this distinct from a field Core Web Vitals assessment or a score guarantee.
+		const floors = { ...thresholds, performance: target.desktop ? 0.9 : 0.85 };
+		const lcpLimit = target.desktop ? 2500 : 4000;
+		const results = [];
+		for (let run = 1; run <= runs; run++) {
+			// Independent browser profiles keep measurements cold and release trace memory.
+			const probe = createServer();
+			await new Promise((resolve, reject) => {
+				probe.once('error', reject);
+				probe.listen(0, '127.0.0.1', resolve);
+			});
+			const debugPort = probe.address().port;
+			await new Promise((resolve) => probe.close(resolve));
+			chrome = await chromium.launch({
+				executablePath: chromium.executablePath(),
+				args: [`--remote-debugging-port=${debugPort}`]
+			});
+			const result = await lighthouse(
+				origin + target.path,
+				{
+					port: debugPort,
+					logLevel: 'error',
+					output: ['json', 'html'],
+					onlyCategories: Object.keys(thresholds)
+				},
+				target.desktop ? desktopConfig : undefined
+			);
+			if (!result || result.lhr.runtimeError)
+				throw new Error(`Lighthouse failed for ${target.id}: ${result?.lhr.runtimeError?.message}`);
+			const [json, html] = result.report;
+			writeFileSync(join(reports, `${target.id}-${run}.json`), json);
+			writeFileSync(join(reports, `${target.id}-${run}.html`), html);
+			results.push(result.lhr);
+			await chrome.close();
+			chrome = undefined;
+			console.log(
+				`${target.id} run ${run}/${runs}: ${Math.round(result.lhr.categories.performance.score * 100)}`
+			);
+		}
+		const scores = Object.fromEntries(
+			Object.keys(thresholds).map((category) => [
+				category,
+				median(results.map((result) => result.categories[category]?.score ?? 0))
+			])
 		);
-	}
-	const layoutShifts = result.lhr.audits['layout-shifts']?.details?.items ?? [];
-	for (const shift of layoutShifts.slice(0, 5)) {
-		console.log(
-			`layout shift: ${shift.node?.selector ?? shift.node?.snippet ?? 'unknown element'} (${Number(shift.score ?? 0).toFixed(3)})`
+		for (const [category, minimum] of Object.entries(floors))
+			if (scores[category] < minimum)
+				failures.push(
+					`${target.id}: ${category} ${Math.round(scores[category] * 100)} < ${minimum * 100}`
+				);
+		const metrics = Object.fromEntries(
+			['largest-contentful-paint', 'total-blocking-time', 'cumulative-layout-shift'].map((id) => [
+				id,
+				median(results.map((result) => result.audits[id].numericValue))
+			])
 		);
+		if (metrics['largest-contentful-paint'] > lcpLimit)
+			failures.push(`${target.id}: LCP exceeds ${lcpLimit}ms`);
+		if (metrics['cumulative-layout-shift'] > 0.1) failures.push(`${target.id}: CLS exceeds 0.1`);
+		for (const result of results) {
+			const requests = result.audits['network-requests'].details?.items ?? [];
+			if (requests.some((request) => /maplibre|cartocdn\.com|immutable\/workers/.test(request.url)))
+				failures.push(`${target.id}: optional map downloaded on a gallery page`);
+			const scripts = result.audits['resource-summary'].details?.items?.find(
+				(item) => item.resourceType === 'script'
+			);
+			if (Number(scripts?.transferSize) > 350 * 1024)
+				failures.push(`${target.id}: script transfer exceeds 350 KiB`);
+		}
+		summary.push({ target: target.id, floors, lcpLimit, scores, metrics });
 	}
-
-	const requests = result.lhr.audits['network-requests'].details?.items ?? [];
-	const mapRequests = requests.filter((item) =>
-		/maplibre(?:[.-])|cartocdn\.com/.test(String(item.url))
-	);
-	if (mapRequests.length > 0) failures.push('collection route requested the optional map stack');
-
-	const scripts = result.lhr.audits['resource-summary'].details?.items?.find(
-		(item) => item.resourceType === 'script'
-	);
-	const scriptBytes = Number(scripts?.transferSize ?? 0);
-	console.log(`script transfer: ${(scriptBytes / 1024).toFixed(1)} KiB`);
-	if (scriptBytes > 350 * 1024) failures.push(`script transfer ${scriptBytes} B exceeds 350 KiB`);
-
-	if (failures.length > 0) {
-		throw new Error(`Lighthouse budget failed:\n- ${failures.join('\n- ')}`);
-	}
+} catch (error) {
+	failures.push(error.message);
 } finally {
-	let profileToRemove;
 	try {
-		await chrome?.kill();
+		await chrome?.close();
 	} catch (error) {
-		// chrome-launcher can race a Windows file handle while deleting its
-		// temporary profile. At this point it has already closed its log files,
-		// so one delayed retry can finish the cleanup cleanly.
-		if (error.code === 'EPERM' && typeof error.path === 'string') profileToRemove = error.path;
-		else console.warn(`Lighthouse browser cleanup warning: ${error.message}`);
+		console.warn(`Browser cleanup: ${error.message}`);
 	}
 	server.kill();
-	if (profileToRemove) {
-		await new Promise((resolve) => setTimeout(resolve, 250));
-		try {
-			rmSync(profileToRemove, { recursive: true, force: true, maxRetries: 10 });
-		} catch (error) {
-			// A Windows scanner can retain a handle past the browser process. The
-			// profile lives in the OS temp directory and is safe for normal temp
-			// cleanup; surface only unexpected cleanup failures.
-			if (error.code !== 'EPERM') {
-				console.warn(`Lighthouse profile cleanup warning: ${error.message}`);
-			}
-		}
-	}
+	const markdown = [
+		'# Lighthouse budgets',
+		`Median of ${runs} cold runs per page. Performance ≥90 desktop / ≥85 slow-4G mobile; accessibility 100; best practices ≥95; SEO 100. LCP ≤2.5s desktop / ≤4s simulated mobile; CLS ≤0.1. These are laboratory regression budgets, not field Core Web Vitals guarantees. Mobile performance ≥90 remains the optimization target.`,
+		'',
+		'| Page | Performance | Accessibility | Best practices | SEO | LCP | TBT | CLS |',
+		'|---|---:|---:|---:|---:|---:|---:|---:|',
+		...summary.map(
+			(row) =>
+				`| ${row.target} | ${Math.round(row.scores.performance * 100)} | ${Math.round(row.scores.accessibility * 100)} | ${Math.round(row.scores['best-practices'] * 100)} | ${Math.round(row.scores.seo * 100)} | ${Math.round(row.metrics['largest-contentful-paint'])}ms | ${Math.round(row.metrics['total-blocking-time'])}ms | ${row.metrics['cumulative-layout-shift'].toFixed(3)} |`
+		),
+		'',
+		...failures.map((failure) => `- FAIL: ${failure}`),
+		'',
+		'HTML and JSON reports are retained as a workflow artifact.'
+	].join('\n');
+	writeFileSync(join(reports, 'summary.md'), markdown);
+	writeFileSync(
+		join(reports, 'summary.json'),
+		JSON.stringify({ runs, thresholds, summary, failures }, null, 2)
+	);
+	if (process.env.GITHUB_STEP_SUMMARY)
+		appendFileSync(process.env.GITHUB_STEP_SUMMARY, markdown + '\n');
+	console.log(markdown);
 }
+if (failures.length) process.exitCode = 1;

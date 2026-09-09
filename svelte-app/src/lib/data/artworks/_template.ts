@@ -42,11 +42,16 @@
  *  imageCaption  Credit / caption for the single image above.
  *                Example: "Photo: John Doe, 2024"
  *
+ *  Optional documentary fields: displayTitle, aliases, coverImage (filename),
+ *  siteName, district, entryKind, locationPrecision, sources and creationPlace.
+ *  Only add verified information. Keep an explicit slug stable after publication.
+ *  Media may also specify id, alt, credit, date and documentType.
+ *
  *  images        Array of multiple images (use this instead of image/imageCaption
  *                when there are several photos). Each entry has:
  *                  - src:      filename in originals/       (REQUIRED)
  *                  - caption:  description or credit          (optional)
- *                >>> Each image file listed in src must exist in the originalss/ folder.
+ *                >>> Each image file listed in src must exist in the originals/ folder.
  *                >>> Use descriptive file names (e.g. "024-mermaid-front-view.jpg"),
  *                    NOT generic names like "photo1.jpg".
  *

@@ -1,44 +1,47 @@
 <script lang="ts">
-	import { Search } from '@lucide/svelte';
+	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
+	import { Search } from '@lucide/svelte';
 	import { artworks } from '$lib/data/artworks';
-	import type { IndexedArtwork } from '$lib/data/types';
-	import { searchArtworks } from '$lib/utils/artwork-search';
-
-	let searchInput = $state('');
+	import { residences } from '$lib/data/residences';
+	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
+	import { entryKey, entryTitle, type Entry } from '$lib/utils/collection';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	const store = getBrowseStore();
+	const searchId = $props.id();
 	let searchOpen = $state(false);
 	let activeIndex = $state(-1);
-	const searchId = $props.id();
-	const listboxId = `${searchId}-results`;
-	const matches = $derived(searchArtworks(artworks, searchInput));
-	const resultsOpen = $derived(searchOpen && searchInput.trim().length >= 2);
-
-	function selectResult(artwork: IndexedArtwork) {
-		searchInput = '';
+	const all = $derived([
+		...filterArtworks(artworks, store.filters),
+		...filterResidences(residences, store.filters)
+	]);
+	const matches = $derived(all.slice(0, 8));
+	const open = $derived(searchOpen && store.filters.query.trim().length >= 2);
+	function select(item: Entry) {
 		searchOpen = false;
 		activeIndex = -1;
-		void goto(resolve('/artworks/[slug]', { slug: artwork.slug }));
+		store.returnKey = entryKey(item);
+		void goto(store.entryHref(item));
 	}
-
-	function handleSearchKeydown(event: KeyboardEvent) {
-		if (!resultsOpen) return;
+	function keys(event: KeyboardEvent) {
+		if (!open) return;
 		if (event.key === 'Escape') {
 			event.stopPropagation();
 			searchOpen = false;
 			activeIndex = -1;
-			return;
-		}
-		if (matches.length === 0) return;
-		if (event.key === 'ArrowDown') {
+		} else if (event.key === 'ArrowDown' && matches.length) {
 			event.preventDefault();
 			activeIndex = (activeIndex + 1) % matches.length;
-		} else if (event.key === 'ArrowUp') {
+		} else if (event.key === 'ArrowUp' && matches.length) {
 			event.preventDefault();
-			activeIndex = (activeIndex - 1 + matches.length) % matches.length;
-		} else if (event.key === 'Enter' && activeIndex >= 0 && activeIndex < matches.length) {
+			activeIndex = activeIndex <= 0 ? matches.length - 1 : activeIndex - 1;
+		} else if (event.key === 'Enter') {
 			event.preventDefault();
-			selectResult(matches[activeIndex]);
+			if (activeIndex >= 0 && matches[activeIndex]) select(matches[activeIndex]);
+			else {
+				searchOpen = false;
+				void goto(store.collectionHref());
+			}
 		}
 	}
 </script>
@@ -48,56 +51,47 @@
 		if (!(event.target as HTMLElement)?.closest('.search-wrapper')) searchOpen = false;
 	}}
 />
-
 <div class="search-wrapper">
-	<Search class="search-icon" size={14} strokeWidth={2.5} aria-hidden="true" />
+	<Search size={17} class="search-icon" aria-hidden="true" />
 	<input
+		disabled={!store.ready}
 		type="search"
-		class="search-input"
-		placeholder="Search artworks…"
-		aria-label="Search artworks"
+		placeholder="Search the collection…"
+		aria-label="Search the collection"
 		role="combobox"
-		aria-expanded={resultsOpen}
-		aria-controls={listboxId}
+		aria-expanded={open}
+		aria-controls={open ? searchId : undefined}
 		aria-autocomplete="list"
-		aria-activedescendant={activeIndex >= 0 ? `${listboxId}-${activeIndex}` : undefined}
-		bind:value={searchInput}
-		oninput={() => {
-			searchOpen = searchInput.trim().length >= 2;
+		aria-activedescendant={open && activeIndex >= 0 && matches[activeIndex]
+			? `${searchId}-${activeIndex}`
+			: undefined}
+		value={store.filters.query}
+		oninput={(event) => {
+			store.setFilters({ query: event.currentTarget.value });
+			searchOpen = true;
 			activeIndex = -1;
 		}}
-		onfocus={() => {
-			if (searchInput.trim().length >= 2) searchOpen = true;
-		}}
-		onkeydown={handleSearchKeydown}
+		onfocus={() => (searchOpen = true)}
+		onkeydown={keys}
 	/>
-
-	{#if resultsOpen}
-		<div class="search-results" id={listboxId} role="listbox" aria-label="Search results">
-			{#if matches.length === 0}
-				<div class="search-empty" role="status">No artworks found</div>
-			{:else}
-				{#each matches as artwork, index (artwork.id)}
-					<button
-						type="button"
-						class="search-item"
-						class:keyboard-active={index === activeIndex}
-						id="{listboxId}-{index}"
+	{#if open}
+		<div class="search-popup">
+			<div id={searchId} role="listbox" aria-label="Search results">
+				{#each matches as item, index (entryKey(item))}<button
 						role="option"
+						id="{searchId}-{index}"
 						aria-selected={index === activeIndex}
-						onclick={() => selectResult(artwork)}
-					>
-						<span class="search-item-name">
-							<span
-								class="search-item-status"
-								class:search-status-missing={artwork.status === 'search'}
-							></span>
-							{artwork.name}
-						</span>
-						<span class="search-item-loc">{artwork.city}, {artwork.country}</span>
-					</button>
-				{/each}
-			{/if}
+						class:active={index === activeIndex}
+						onclick={() => select(item)}
+						><span dir="auto">{entryTitle(item)}</span><small dir="auto"
+							>{item.city}, {item.country}</small
+						></button
+					>{/each}
+			</div>
+			{#if !all.length}<p role="status">No entries found. Try clearing another filter.</p>{:else}<a
+					href={store.collectionHref()}
+					onclick={() => (searchOpen = false)}>View all {all.length} results</a
+				>{/if}
 		</div>
 	{/if}
 </div>
@@ -105,121 +99,74 @@
 <style>
 	.search-wrapper {
 		position: relative;
-		margin-inline-start: auto;
+		width: clamp(210px, 30vw, 380px);
 		flex-shrink: 0;
 	}
-	.search-input {
-		width: 230px;
-		min-height: 36px;
-		padding: var(--space-1-5) var(--space-3-5) var(--space-1-5) 34px;
+	input {
+		width: 100%;
+		min-height: 44px;
+		padding: var(--space-2) var(--space-3) var(--space-2) 36px;
 		border: 1px solid var(--color-border);
-		border-radius: var(--radius-pill);
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		color: var(--color-text);
-		outline: none;
+		border-radius: var(--radius-sm);
+		font: inherit;
+		font-size: 16px;
 		background: var(--color-surface);
-		transition:
-			border-color var(--duration-slow) var(--ease-out),
-			box-shadow var(--duration-slow) var(--ease-out);
+		color: var(--color-text);
 	}
-	.search-input::placeholder {
+	input::placeholder {
 		color: var(--color-text-muted);
 	}
-	.search-input:focus {
-		border-color: var(--color-primary);
-		box-shadow: 0 0 0 3px rgb(var(--color-primary-rgb) / 0.1);
-	}
-	.search-input:focus-visible {
-		outline: none;
-	}
-	:global(.search-icon) {
+	.search-wrapper :global(.search-icon) {
 		position: absolute;
 		left: 12px;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 14px;
-		height: 14px;
-		opacity: 0.35;
+		top: 14px;
+		color: var(--color-text-secondary);
+		pointer-events: none;
 	}
-	.search-results {
+	.search-popup {
 		position: absolute;
-		top: calc(100% + var(--space-1-5));
+		top: 100%;
+		left: 0;
 		right: 0;
-		width: 340px;
+		max-height: 60vh;
+		overflow: auto;
 		background: var(--color-surface);
-		border-radius: var(--radius-md);
-		box-shadow: var(--shadow-lg);
-		max-height: 380px;
-		overflow-y: auto;
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-md);
 		z-index: var(--z-search-results);
-		border: 1px solid var(--color-border-light);
 	}
-	.search-item {
+	button {
 		display: block;
 		width: 100%;
 		min-height: 44px;
-		text-align: left;
+		padding: var(--space-3);
+		border: 0;
+		border-bottom: 1px solid var(--color-border);
+		background: var(--color-surface);
+		color: var(--color-text);
+		text-align: start;
 		font: inherit;
-		background: none;
-		border: none;
-		padding: var(--space-3) var(--space-4);
 		cursor: pointer;
-		border-bottom: 1px solid var(--color-border-light);
-		transition: background-color var(--duration-fast) var(--ease-out);
 	}
-	.search-item:hover,
-	.search-item.keyboard-active {
+	button:hover,
+	button.active {
 		background: var(--color-surface-warm);
 	}
-	.search-item:last-child {
-		border-bottom: none;
-	}
-	.search-item-name {
+	small {
 		display: block;
-		font-size: var(--text-base);
-		font-weight: var(--weight-semibold);
-		color: var(--color-ink);
+		color: var(--color-text-secondary);
+		margin-top: var(--space-1);
 	}
-	.search-item-loc {
+	.search-popup a,
+	.search-popup p {
 		display: block;
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		margin-top: 3px;
-	}
-	.search-item-status {
-		display: inline-block;
-		width: 7px;
-		height: 7px;
-		border-radius: 50%;
-		margin-inline-end: 7px;
-		vertical-align: middle;
-		background: var(--color-primary);
-	}
-	.search-status-missing {
-		background: var(--color-search);
-	}
-	.search-empty {
-		padding: var(--space-4-5);
-		text-align: center;
-		font-size: var(--text-base);
-		color: var(--color-text-muted);
-		font-style: italic;
+		padding: var(--space-3);
+		color: var(--color-primary-text);
+		font-size: var(--text-sm);
 	}
 	@media (max-width: 768px) {
-		.search-input {
-			width: clamp(120px, 28vw, 140px);
-			height: 44px;
-			min-height: 44px;
-			font-size: var(--text-md);
-			padding-left: 30px;
-			padding-right: var(--space-2-5);
-		}
-		:global(.search-icon) {
-			left: 10px;
-		}
-		.search-results {
-			width: min(280px, calc(100vw - var(--space-7)));
+		.search-wrapper {
+			width: 100%;
 		}
 	}
 </style>

@@ -1,7 +1,8 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { MapPin, Search as SearchIcon, X } from '@lucide/svelte';
 	import { page } from '$app/state';
-	import { resolve } from '$app/paths';
+
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
 	import { getMapStore } from '$lib/stores/map.svelte';
@@ -18,7 +19,7 @@
 	 * This gives keyboard and screen-reader visitors somewhere to browse, and
 	 * gives sighted visitors a list view of a map that is mostly empty ocean.
 	 *
-	 * It is also the site's only internal linking. The panel's markup is always
+	 * It also contributes internal linking. The panel's markup is always
 	 * rendered (hidden with a transform, not `{#if}`), so every prerendered page
 	 * ships real <a href> links to all 39 artworks and 4 residences. Before this,
 	 * the home page's entire link graph was four ZMO credits in the footer, and
@@ -29,8 +30,8 @@
 
 	const store = getMapStore();
 
-	const visibleArtworks = $derived(filterArtworks(artworks, store.activeFilter));
-	const visibleResidences = $derived(filterResidences(residences, store.activeFilter));
+	const visibleArtworks = $derived(filterArtworks(artworks, store.filters));
+	const visibleResidences = $derived(filterResidences(residences, store.filters));
 
 	/** Artworks grouped by country, both levels alphabetical. */
 	const grouped = $derived.by(() =>
@@ -117,7 +118,7 @@
 			<h3 class="collection-group">{group.country}</h3>
 			<ul class="collection-list">
 				{#each group.items as artwork (artwork.id)}
-					{@const href = resolve('/artworks/[slug]', { slug: artwork.slug })}
+					{@const href = store.entryHref(artwork, { view: 'map' })}
 					<li>
 						<a
 							{href}
@@ -146,7 +147,7 @@
 			<h3 class="collection-group">Places of residence</h3>
 			<ul class="collection-list">
 				{#each visibleResidences as residence (residence.id)}
-					{@const href = resolve('/residences/[slug]', { slug: residence.slug })}
+					{@const href = store.entryHref(residence, { view: 'map' })}
 					<li>
 						<a
 							{href}

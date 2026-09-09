@@ -7,7 +7,7 @@ export default defineConfig({
 	fullyParallel: true,
 	forbidOnly: Boolean(process.env.CI),
 	retries: process.env.CI ? 1 : 0,
-	workers: process.env.CI ? 1 : undefined,
+	workers: process.env.CI ? 1 : 2,
 	reporter: process.env.CI ? [['github'], ['line']] : 'list',
 	use: {
 		baseURL: `http://127.0.0.1:${port}`,
@@ -15,6 +15,7 @@ export default defineConfig({
 		screenshot: 'only-on-failure'
 	},
 	projects: [
+		...(process.env.CI ? [{ name: 'webkit', use: { ...devices['Desktop Safari'] } }] : []),
 		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] }

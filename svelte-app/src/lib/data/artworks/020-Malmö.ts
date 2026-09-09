@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 
 	id: 20,
+	slug: "female-peasants-with-breadbasket",
 	name: 'Female Peasants with Breadbasket',
 	lat: 55.57798387653755,
 	lng: 12.976785541466441,

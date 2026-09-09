@@ -1,47 +1,14 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { Map as MapIcon, LayoutGrid, List } from '@lucide/svelte';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { page } from '$app/state';
-	import { resolve } from '$app/paths';
-	import { getMapStore } from '$lib/stores/map.svelte';
-
-	/**
-	 * Switches between the three ways of reading the collection: the map, the
-	 * photo grid, and the side list.
-	 *
-	 * Map and grid are real routes, so they are links — shareable, crawlable and
-	 * middle-clickable. The list is a panel over whichever route you are on, so
-	 * it is a button. `current` marks whichever one you are looking at.
-	 *
-	 * `onreset` upgrades the map segment from "navigate home" to the header's
-	 * full World View reset (clear filter, clear selection, recentre). Passing it
-	 * is what lets this replace a separate reset control.
-	 */
 	let {
 		compact = false,
-		variant = 'default',
-		onreset
-	}: {
-		compact?: boolean;
-		variant?: 'default' | 'header';
-		onreset?: () => void;
-	} = $props();
-
-	const store = getMapStore();
-
-	const onGrid = $derived(page.url.pathname.replace(/\/$/, '').endsWith('/collection'));
-	// The map is "current" whenever you are not on the grid and the list is shut.
-	const onMap = $derived(!onGrid && !store.browseOpen);
-
-	function selectMap(event: MouseEvent) {
-		store.browseOpen = false;
-		if (!onreset) return;
-		// Keep middle-click and ctrl/cmd-click behaving like the plain link they
-		// are; only a normal activation should run the reset in place.
-		if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0)
-			return;
-		event.preventDefault();
-		onreset();
-	}
+		variant = 'default'
+	}: { compact?: boolean; variant?: 'default' | 'header' } = $props();
+	const store = getBrowseStore();
+	const galleryActive = $derived(store.view === 'gallery' && page.route.id !== '/missing');
 </script>
 
 <div
@@ -53,39 +20,28 @@
 >
 	<a
 		class="switch"
-		class:active={onMap}
-		href={resolve('/')}
-		aria-label={onreset ? 'World view' : 'Map view'}
-		aria-current={onMap ? 'page' : undefined}
-		onclick={selectMap}
+		class:active={store.view === 'map'}
+		href={store.collectionHref('entries', 'map')}
+		aria-label="Map view"
+		aria-current={store.view === 'map' ? 'page' : undefined}
+		><MapIcon size={15} aria-hidden="true" /><span>Map</span></a
 	>
-		<MapIcon size={14} strokeWidth={2.25} aria-hidden="true" />
-		<span>Map</span>
-	</a>
 	<a
 		class="switch"
-		class:active={onGrid}
-		href={resolve('/collection')}
-		aria-label="Grid view"
-		aria-current={onGrid ? 'page' : undefined}
-		onclick={() => (store.browseOpen = false)}
+		class:active={galleryActive && store.mode !== 'list'}
+		href={store.collectionHref(store.mode === 'list' ? 'entries' : store.mode)}
+		aria-label="Gallery view"
+		aria-current={galleryActive && store.mode !== 'list' ? 'page' : undefined}
+		><LayoutGrid size={15} aria-hidden="true" /><span>Gallery</span></a
 	>
-		<LayoutGrid size={14} strokeWidth={2.25} aria-hidden="true" />
-		<span>Grid</span>
-	</a>
-	<!-- A disclosure, not a page: it reveals the collection panel over whatever
-	     route you are on, so it carries expanded/controls rather than current. -->
-	<button
+	<a
 		class="switch"
-		class:active={store.browseOpen}
+		class:active={galleryActive && store.mode === 'list'}
+		href={store.collectionHref('list')}
 		aria-label="List view"
-		aria-expanded={store.browseOpen}
-		aria-controls="collection"
-		onclick={() => (store.browseOpen = !store.browseOpen)}
+		aria-current={galleryActive && store.mode === 'list' ? 'page' : undefined}
+		><List size={15} aria-hidden="true" /><span>List</span></a
 	>
-		<List size={14} strokeWidth={2.25} aria-hidden="true" />
-		<span>List</span>
-	</button>
 </div>
 
 <style>

@@ -85,8 +85,8 @@
 
 	/* ───── Sizing ───── */
 	--header-height: 68px;
-	--filter-height: 48px;
-	--footer-height: 64px;
+	--filter-height: 60px;
+	--footer-height: 48px;
 	--sidebar-width: 460px;
 	--prose-width: 62ch; /* readable measure for long-form text */
 
@@ -222,6 +222,6 @@
 
 @media (max-width: 768px) {
 	:root {
-		--filter-height: 52px;
+		--filter-height: 108px;
 	}
 }

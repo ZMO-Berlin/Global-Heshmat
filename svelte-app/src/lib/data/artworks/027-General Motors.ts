@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 27,
+	slug: "general-motors-egypt",
 	name: 'General Motors Egypt',
 	lat: 29.947414376191606,
 	lng: 30.892092073235098,

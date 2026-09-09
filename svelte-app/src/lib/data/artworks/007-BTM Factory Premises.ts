@@ -3,6 +3,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 7,
+	slug: "btm-factory-premises",
 	name: 'BTM Factory Premises',
 	lat: 30.296465289117982,
 	lng: 31.779992446378852,

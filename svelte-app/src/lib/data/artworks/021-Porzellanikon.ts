@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id:21,
+	slug: "porzellanikon",
 	name: 'Porzellanikon',
 	lat: 50.18935168306578,
 	lng: 12.116953142580531,

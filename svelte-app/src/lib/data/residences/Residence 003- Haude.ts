@@ -5,6 +5,7 @@ import type { Residence } from '../types';
 
 const residence: Residence = {
 	id: 3,
+	slug: "haus-der-familie-haude",
 	name: 'Haus der Familie Haude',
 	lat: 50.15855575931875,
 	lng: 12.14599910244687,
@@ -20,7 +21,7 @@ const residence: Residence = {
 		{ src: 'Collected Karin Haude.jpg', caption: 'Karin Haude`s collected artworks by Hassan Heshamt'},
 		{ src: 'Pendant for Karin Haude.jpg', caption: 'Pendant for Karin Haude'},
 		{ src: 'for Karin_from H Heshmat.jpg', caption: 'Pendant for Karin Haude, by Hassan Heshmat'},
-		{ src: 'Familienalbum mit Handschrift Heinz Haude.jpg', caption: 'Family album with handwriting of Heinz Haude (Courtesy of Karin Haude)'},
+		{ src: 'Familienalbum mit Handschrift Fritz Haude.jpg', caption: 'Family album with handwriting of Heinz Haude (Courtesy of Karin Haude)'},
 		{ src: 'Karin Haude 1957 with knit dress by Zeinab.jpg', caption: 'Karin Haude with dress knit dress by Zeinab, 1957 (Courtesy of Karin Haude)'},
 		{ src: 'The Heshmat couple with baby Karin Haude in Selb, christmas 1957.jpg', caption: 'The Heshmat couple with baby Karin Haude in Selb, Christmas 1957' }, 
 		{ src: 'Selb_Haus_III.jpeg', caption: 'Selb House III' }

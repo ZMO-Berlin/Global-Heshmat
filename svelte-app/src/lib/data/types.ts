@@ -6,8 +6,25 @@ export interface ArtworkLink {
 }
 
 export interface ArtworkImage {
+	id?: string;
 	src: string;
 	caption?: string;
+	alt?: string;
+	credit?: string;
+	date?: string;
+	documentType?: 'photograph' | 'archival-document' | 'drawing';
+}
+
+export interface DocumentaryMetadata {
+	displayTitle?: string;
+	siteName?: string;
+	district?: string;
+	aliases?: string[];
+	coverImage?: string;
+	entryKind?: 'work' | 'ensemble' | 'institution' | 'residence';
+	locationPrecision?: 'exact' | 'approximate' | 'city' | 'last-known';
+	sources?: { label: string; url?: string; checkedOn?: string }[];
+	creationPlace?: { name: string; lat?: number; lng?: number };
 }
 
 export interface ArtworkMovement {
@@ -17,7 +34,7 @@ export interface ArtworkMovement {
 	year: number;
 }
 
-export interface Artwork {
+export interface Artwork extends DocumentaryMetadata {
 	id: number;
 	name: string;
 	lat: number;
@@ -59,7 +76,7 @@ export type IndexedArtwork = Indexed<Artwork>;
  * Cairo, Selb, …), as distinct from where his artworks stand. Surfaced under
  * the "Places of residence" map category and plotted as its own marker layer.
  */
-export interface Residence {
+export interface Residence extends DocumentaryMetadata {
 	id: number;
 	name: string;
 	lat: number;

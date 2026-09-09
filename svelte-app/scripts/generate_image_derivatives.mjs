@@ -3,20 +3,24 @@
  * Generate the WebP derivatives the site actually serves.
  *
  * Source of truth is `originals/` (outside `static/`, so the multi-megabyte
- * masters never ship). For each image this writes three sizes into
+ * masters never ship). For each image this writes four sizes into
  * `static/images/`, all keeping the original's stem with a `.webp` extension:
  *
  *   thumb/   400px — thumbnail strips in the gallery and lightbox
+ *   preview/ 800px — mobile album and collection intermediate candidate
  *   web/    1200px — the sidebar gallery, and the small srcset candidate
  *   full/   2000px — the lightbox on large and high-DPI displays
  *
- * Derivatives are only rebuilt when older than their source, so re-running
- * after adding a few photos is cheap.
+ * Content and encoder fingerprints avoid rebuilding unchanged sources.
+ * Outputs are replaced only after a successful encode.
  *
  * Run with: npm run images
  */
 import sharp from 'sharp';
-import { readdir, stat, open } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { VARIANTS, imageStem as stem, assertUniqueStems } from './image-variants.mjs';
+import { generateImageManifest } from './image-manifest.mjs';
+import { readdir, readFile, writeFile, open, rename, rm } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync, mkdirSync, watch as fsWatch } from 'node:fs';
@@ -34,11 +38,6 @@ if (!existsSync(ORIGINALS_DIR)) mkdirSync(ORIGINALS_DIR, { recursive: true });
  * `src/lib/data/data-integrity.test.ts`, which asserts every referenced image
  * has all three derivatives on disk.
  */
-const VARIANTS = [
-	{ dir: 'thumb', size: 400, quality: 75 },
-	{ dir: 'web', size: 1200, quality: 80 },
-	{ dir: 'full', size: 2000, quality: 80 }
-];
 
 for (const { dir } of VARIANTS) {
 	const path = join(IMAGES_DIR, dir);
@@ -49,7 +48,6 @@ for (const { dir } of VARIANTS) {
 // umlauts, and a decomposed filename percent-encodes to a URL that static
 // hosts resolving in NFC answer 404 for. The served names are normalised even
 // though the masters in originals/ keep whatever form they arrived with.
-const stem = (file) => file.normalize('NFC').replace(/\.[^./\\]+$/, '');
 
 const LFS_MAGIC = 'version https://git-lfs.github.com/spec/v1';
 
@@ -79,12 +77,10 @@ async function isLfsPointer(path) {
 /** Largest variant — the fallback source when a master won't decode. */
 const LARGEST = VARIANTS.reduce((a, b) => (b.size > a.size ? b : a));
 
-/** True when `derivative` exists and is newer than `source`. */
-async function isUpToDate(source, derivative) {
-	if (!existsSync(derivative)) return false;
-	const [src, out] = await Promise.all([stat(source), stat(derivative)]);
-	return out.mtime > src.mtime;
-}
+/** Encoder changes invalidate the content cache as well. */
+const CACHE_FILE = join(ROOT, '.image-build-cache.json');
+const signature = JSON.stringify({ VARIANTS, sharp: sharp.versions, pipeline: 2 });
+const fingerprint = (buffer) => createHash('sha256').update(signature).update(buffer).digest('hex');
 
 /**
  * `failOn: 'none'` keeps sharp from treating recoverable decoder warnings as
@@ -97,10 +93,16 @@ function decode(path) {
 }
 
 async function render(source, outPath, size, quality) {
-	await decode(source)
-		.resize(size, size, { fit: 'inside', withoutEnlargement: true })
-		.webp({ quality, effort: 6 })
-		.toFile(outPath);
+	const temporary = `${outPath}.${process.pid}.tmp`;
+	try {
+		await decode(source)
+			.resize(size, size, { fit: 'inside', withoutEnlargement: true })
+			.webp({ quality, effort: 6 })
+			.toFile(temporary);
+		await rename(temporary, outPath);
+	} finally {
+		await rm(temporary, { force: true });
+	}
 }
 
 function debounce(fn, delayMs) {
@@ -114,6 +116,8 @@ function debounce(fn, delayMs) {
 async function generateDerivatives() {
 	const files = await readdir(ORIGINALS_DIR);
 	const imageFiles = files.filter((f) => /\.(jpe?g|png|tiff?|webp|heic|heif)$/i.test(f));
+	assertUniqueStems(imageFiles);
+	const cache = JSON.parse(await readFile(CACHE_FILE, 'utf8').catch(() => '{}'));
 
 	console.log(`Found ${imageFiles.length} images in originals/`);
 	let written = 0;
@@ -130,9 +134,11 @@ async function generateDerivatives() {
 			continue;
 		}
 
+		const hash = fingerprint(await readFile(inputPath));
+		const failedBefore = failed;
 		for (const { dir, size, quality } of VARIANTS) {
 			const outPath = join(IMAGES_DIR, dir, `${baseStem}.webp`);
-			if (await isUpToDate(inputPath, outPath)) {
+			if (cache[baseStem] === hash && existsSync(outPath)) {
 				skipped++;
 				continue;
 			}
@@ -160,7 +166,10 @@ async function generateDerivatives() {
 				failed++;
 			}
 		}
+		if (failed === failedBefore) cache[baseStem] = hash;
 	}
+	await writeFile(CACHE_FILE, JSON.stringify(cache, null, 2));
+	await generateImageManifest();
 
 	if (pointers.length > 0) {
 		console.error(
@@ -177,8 +186,25 @@ async function generateDerivatives() {
 }
 
 async function watchForChanges() {
+	let running = false;
+	let pending = false;
+	async function drain() {
+		if (running) {
+			pending = true;
+			return;
+		}
+		running = true;
+		try {
+			do {
+				pending = false;
+				await generateDerivatives();
+			} while (pending);
+		} finally {
+			running = false;
+		}
+	}
 	const runSoon = debounce(() => {
-		generateDerivatives().catch((err) => {
+		drain().catch((err) => {
 			console.error('Error:', err.message);
 			process.exit(1);
 		});

@@ -6,6 +6,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	// ── Required fields ──────────────────────────────────
 	id:1,
+	slug: "fatima-ismail-s-palace-museum",
 	name: 'Fatima Ismail’s Palace Museum',
 	lat: 30.046696328983828,
 	lng: 31.209329960099446,

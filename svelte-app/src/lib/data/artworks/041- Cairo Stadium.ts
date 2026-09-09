@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 41,
+	slug: "cairo-international-stadium",
 	name: 'Cairo International Stadium',
 	lat: 30.06935734504182,
 	lng: 31.312341920766567,

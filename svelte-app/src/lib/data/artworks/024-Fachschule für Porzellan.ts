@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 24,
+	slug: "staatliche-hohere-fachschule-fur-porzellan",
 	name: 'Staatliche Höhere Fachschule für Porzellan',
 	lat: 50.16866462589257,
 	lng: 12.119730454414812,

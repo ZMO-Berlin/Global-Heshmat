@@ -41,6 +41,7 @@ if (!existsSync(BUILD_DIR)) {
 	process.exit(2);
 }
 
+check('missing works dossier prerendered', existsSync(join(BUILD_DIR, 'missing/index.html')));
 // ── Site-wide assets ────────────────────────────────────────────────
 check('CNAME present', existsSync(join(BUILD_DIR, 'CNAME')));
 check(
@@ -91,6 +92,23 @@ if (existsSync(serviceWorkerPath)) {
 		!/(?:^|[{,])url:["'](?:client|prerendered)\//.test(serviceWorker),
 		'intermediate SvelteKit build paths must be rewritten before deployment'
 	);
+}
+
+for (const kind of ['artworks', 'residences']) {
+	const folder = join(BUILD_DIR, kind);
+	for (const slug of readdirSync(folder)) {
+		const file = join(folder, slug, 'index.html');
+		if (!existsSync(file)) continue;
+		const html = readFileSync(file, 'utf8');
+		check(
+			kind + '/' + slug + ' contains its server-rendered detail body',
+			html.includes('sidebar-body') && html.includes('sidebar-content')
+		);
+		check(
+			kind + '/' + slug + ' does not invent creation location',
+			!html.includes('"locationCreated"')
+		);
+	}
 }
 
 // ── Home page SEO ───────────────────────────────────────────────────
@@ -160,7 +178,7 @@ if (existsSync(join(BUILD_DIR, COLLECTION))) {
 	const badSrcset = (html.match(/srcset="[^"]*"/g) || []).filter((attr) =>
 		attr
 			.slice(8, -1)
-			.split(',')
+			.split(/,\s+/)
 			.some((candidate) => candidate.trim().split(/\s+/).length !== 2)
 	);
 	check(
@@ -285,7 +303,7 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 //
 // Each artwork/residence data file references images by their ORIGINAL
 // filename (e.g. "Foo Bar.jpeg"). At runtime the app (src/lib/utils/image.ts)
-// loads the generated derivatives at /images/{thumb,web,full}/<stem>.webp,
+// loads the generated derivatives at /images/{thumb,preview,web,full}/<stem>.webp,
 // swapping the extension for .webp. This guards the filename-drift class of
 // bug: a reference whose stem has no matching derivative — a typo, wrong case,
 // space-vs-underscore, NFC/NFD Unicode mismatch, or simply forgetting to run
@@ -293,7 +311,7 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 const DATA_ROOT = join(__dirname, '..', 'src', 'lib', 'data');
 const DATA_DIRS = [join(DATA_ROOT, 'artworks'), join(DATA_ROOT, 'residences')];
 // Keep in sync with VARIANTS in scripts/generate_image_derivatives.mjs.
-const VARIANT_DIRS = ['thumb', 'web', 'full'];
+const VARIANT_DIRS = ['thumb', 'preview', 'web', 'full'];
 const variantPath = (name) => join(BUILD_DIR, 'images', name);
 
 // Referenced filenames whose SOURCE image is not on disk yet (a colleague

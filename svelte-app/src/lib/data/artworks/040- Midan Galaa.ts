@@ -2,6 +2,7 @@ import type { Artwork } from '../types';
 
 const artwork: Artwork = {
 	id: 40,
+	slug: "midan-galaa",
 	name: 'Midan Galaa',
 	lat: 30.095811499506347,
 	lng: 31.342745241206778,

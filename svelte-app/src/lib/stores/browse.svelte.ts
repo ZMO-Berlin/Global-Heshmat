@@ -1,0 +1,150 @@
+/* eslint-disable svelte/no-navigation-without-resolve -- All route builders use resolve(); shallow updates preserve the current resolved pathname. */
+import { getContext, setContext, onMount } from 'svelte';
+import { SvelteURLSearchParams } from 'svelte/reactivity';
+import { browser } from '$app/environment';
+import { page } from '$app/state';
+import { pushState, replaceState } from '$app/navigation';
+import { resolve } from '$app/paths';
+import type { IndexedArtwork, IndexedResidence } from '$lib/data/types';
+import { entryKind, type Entry, type Selection } from '$lib/utils/collection';
+import {
+	readFilters,
+	writeFilters,
+	galleryMode,
+	DEFAULT_FILTERS,
+	type GalleryMode
+} from '$lib/utils/url-facets';
+import type { CollectionFilters } from '$lib/utils/map-filter';
+const CONTEXT = Symbol('collection-browser');
+export function createBrowseStore() {
+	let ready = $state(false);
+	onMount(() => {
+		ready = true;
+	});
+	let browseOpen = $state(false);
+	let returnKey = $state<string | null>(null);
+	// SvelteKit shallow routing updates page.state, deliberately not page.url.
+	// Store the query in that history entry so Back/Forward remain reactive.
+	const params = () =>
+		new SvelteURLSearchParams(browser ? (page.state.browseSearch ?? page.url.search) : '');
+	const selection = (): Selection | null =>
+		page.data.artwork
+			? { kind: 'artwork', item: page.data.artwork }
+			: page.data.residence
+				? { kind: 'residence', item: page.data.residence }
+				: null;
+	function patch(patch: Record<string, string | null>, push = false) {
+		const next = new SvelteURLSearchParams(params());
+		for (const [key, value] of Object.entries(patch)) {
+			if (value === null) next.delete(key);
+			else next.set(key, value);
+		}
+		const target = page.url.pathname + (next.size ? `?${next}` : '') + page.url.hash;
+		const state = { ...page.state, browseSearch: next.toString() };
+		if (push) pushState(target, state);
+		else replaceState(target, state);
+	}
+	const store = {
+		get ready() {
+			return ready;
+		},
+		get selection() {
+			return selection();
+		},
+		get selectedArtwork() {
+			return page.data.artwork ?? null;
+		},
+		get selectedResidence() {
+			return page.data.residence ?? null;
+		},
+		get filters() {
+			return {
+				...readFilters(params()),
+				...(page.route.id === '/missing' ? { status: 'search' as const } : {})
+			};
+		},
+		setFilters(value: Partial<CollectionFilters>) {
+			const next = writeFilters(params(), { ...readFilters(params()), ...value });
+			replaceState(page.url.pathname + (next.size ? `?${next}` : ''), {
+				...page.state,
+				browseSearch: next.toString()
+			});
+		},
+		resetFilters() {
+			this.setFilters({ ...DEFAULT_FILTERS });
+		},
+		get mode() {
+			return galleryMode(params());
+		},
+		setMode(mode: GalleryMode) {
+			patch({ mode: mode === 'entries' ? null : mode });
+		},
+		get view(): 'map' | 'gallery' {
+			return page.route.id === '/' || (selection() && params().get('view') === 'map')
+				? 'map'
+				: 'gallery';
+		},
+		get photo() {
+			return params().get('photo');
+		},
+		setPhoto(id: string | null, push = false) {
+			patch({ photo: id }, push);
+		},
+		get aboutOpen() {
+			return params().has('about');
+		},
+		set aboutOpen(open: boolean) {
+			patch({ about: open ? '1' : null }, open);
+		},
+		get browseOpen() {
+			return browseOpen;
+		},
+		set browseOpen(open: boolean) {
+			browseOpen = open;
+		},
+		get returnKey() {
+			return returnKey;
+		},
+		set returnKey(key: string | null) {
+			returnKey = key;
+		},
+		entryHref(
+			item: Entry,
+			options: { view?: 'map' | 'gallery'; photo?: string; origin?: 'missing' } = {}
+		) {
+			const data = item as IndexedArtwork | IndexedResidence;
+			const path =
+				entryKind(item) === 'artwork'
+					? resolve('/artworks/[slug]', { slug: data.slug })
+					: resolve('/residences/[slug]', { slug: data.slug });
+			const next = writeFilters(new SvelteURLSearchParams(), this.filters);
+			next.set('view', options.view ?? this.view);
+			if (this.mode !== 'entries') next.set('mode', this.mode);
+			if (options.photo) next.set('photo', options.photo);
+			if (
+				options.origin === 'missing' ||
+				page.route.id === '/missing' ||
+				params().get('origin') === 'missing'
+			)
+				next.set('origin', 'missing');
+			return path + (next.size ? `?${next}` : '');
+		},
+		collectionHref(mode: GalleryMode = galleryMode(params()), view: 'map' | 'gallery' = 'gallery') {
+			const next = writeFilters(new SvelteURLSearchParams(), this.filters);
+			if (mode !== 'entries' && view !== 'map') next.set('mode', mode);
+			return resolve(view === 'map' ? '/' : '/collection') + (next.size ? `?${next}` : '');
+		},
+		get closeHref() {
+			if (params().get('origin') === 'missing') {
+				const next = writeFilters(new SvelteURLSearchParams(), { ...this.filters, status: 'all' });
+				return resolve('/missing') + (next.size ? `?${next}` : '');
+			}
+			return this.collectionHref(this.mode, this.view);
+		}
+	};
+	setContext(CONTEXT, store);
+	return store;
+}
+export function getBrowseStore(): ReturnType<typeof createBrowseStore> {
+	return getContext(CONTEXT);
+}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getMapStore } from '$lib/stores/map.svelte';
+	import { resolve } from '$app/paths';
 	import ViewSwitcher from './ViewSwitcher.svelte';
 
 	let { onreset }: { onreset: () => void } = $props();
@@ -8,27 +9,49 @@
 
 <header class="header">
 	<h1>
-		<!-- Non-breaking space: Svelte collapses ordinary whitespace around the
+		<button
+			disabled={!store.ready}
+			class="wordmark-reset"
+			onclick={onreset}
+			aria-label="Reset world view"
+		>
+			<!-- Non-breaking space: Svelte collapses ordinary whitespace around the
 		     span boundary, which would render "GlobalHeshmat". Keeping it inside
 		     the hidden span also removes it along with the word on narrow
 		     viewports. -->
-		<span><span class="wordmark-global">Global&nbsp;</span>Heshmat</span>
-		<span class="header-subtitle">&mdash; Following Hassan Heshmat around the world</span>
+			<span><span class="wordmark-global">Global&nbsp;</span>Heshmat</span>
+			<span class="header-subtitle">&mdash; Following Hassan Heshmat around the world</span>
+		</button>
 	</h1>
 	<div class="header-right">
-		<!-- Map / Grid / List. This leads the row because the list is the
-		     keyboard and screen-reader route into the works. The map segment
-		     doubles as the old World View control via `onreset`. -->
-		<ViewSwitcher variant="header" {onreset} />
-		<button class="header-btn" onclick={() => (store.aboutOpen = true)}>About</button>
-		<button class="header-btn header-btn-cta" onclick={() => (store.missingOpen = true)}>
+		<!-- Shared views retain the visitor's active filters. -->
+		<ViewSwitcher variant="header" />
+		<button disabled={!store.ready} class="header-btn" onclick={() => (store.aboutOpen = true)}
+			>About</button
+		>
+		<a class="header-btn header-btn-cta" href={resolve('/missing')}>
 			<span class="cta-full">Help us find missing works</span>
 			<span class="cta-short">Missing works</span>
-		</button>
+		</a>
 	</div>
 </header>
 
 <style>
+	.wordmark-reset {
+		font: inherit;
+		color: var(--color-accent);
+		background: none;
+		border: 0;
+		cursor: pointer;
+		text-align: start;
+		min-height: 44px;
+	}
+	.header-btn-cta {
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+	}
+
 	.header-subtitle {
 		font-family: var(--font-display);
 		font-style: italic;
@@ -81,7 +104,7 @@
 		line-height: var(--leading-tight);
 	}
 
-	.header h1 > span:first-child {
+	.header h1 .wordmark-reset > span:first-child {
 		color: var(--color-accent);
 		font-weight: var(--weight-semibold);
 		font-style: italic;

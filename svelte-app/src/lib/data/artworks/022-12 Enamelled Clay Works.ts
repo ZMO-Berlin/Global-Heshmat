@@ -5,6 +5,7 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 22,
+	slug: "muzeum-narodowe-w-warszawie",
 	name: 'Muzeum Narodowe w Warszawie',
 	lat: 52.232261634330044,
 	lng: 21.02422385453864,

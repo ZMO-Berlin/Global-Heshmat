@@ -25,7 +25,7 @@ Unlike static catalog raisonnés or generic museum inventory tables, Global Hesh
 
 - Used in academic research and lecture halls on desktop viewports, as well as on mobile devices in the field while visiting sculpture sites in Cairo, Alexandria, Selb, and elsewhere.
 - Functions as an installable Progressive Web App (PWA) hosted statically on GitHub Pages (heshmat.zmo.de).
-- Key surfaces: Interactive Map View (/), Browsable Collection Grid (/collection), Artwork Detail Sidebar (/artworks/[slug]), and contextual modals.
+- Key surfaces: Interactive Map View (/), Collection albums/photos/list (/collection), server-rendered artwork and residence albums, the missing-works dossier (/missing), and contextual modals.
 
 ## Capabilities and Constraints
 
@@ -33,7 +33,7 @@ Unlike static catalog raisonnés or generic museum inventory tables, Global Hesh
 - MapLibre GL JS with CartoDB Voyager tiles, lazy-loaded for fast initial paint and offline resilience.
 - Strict WCAG AA contrast floor verified automatically by test suites (contrast.test.ts).
 - Native support for bilingual Arabic-European labels with dir=auto.
-- High-resolution local WebP derivatives (thumb, web, full) generated from archived photography.
+- High-resolution local WebP derivatives (thumb, preview, web, full) generated from archived photography.
 
 ## Brand Commitments
 
@@ -45,7 +45,7 @@ Unlike static catalog raisonnés or generic museum inventory tables, Global Hesh
 
 - Verified database of artworks and historical residences in src/lib/data/.
 - Archival photographic documentation and historical correspondence.
-- Precise geocoding and historical relocation trajectories.
+- Recorded geocoding and historical relocation trajectories; unlocated works retain explicitly unconfirmed current locations.
 
 ## Product Principles
 

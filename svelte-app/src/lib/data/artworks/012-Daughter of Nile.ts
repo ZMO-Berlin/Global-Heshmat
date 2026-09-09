@@ -5,6 +5,8 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 12,
+	slug: "daughter-of-nile-jollyville-movenpick-hotel-today-steigenberger-pyramids-cairo",
+	displayTitle: "Daughter of Nile - Jollyville Mövenpick Hotel",
 	name: 'Daughter of Nile - Jollyville Mövenpick Hotel (Today: "Steigenberger Pyramids Cairo")',
 	lat: 29.99362369213126,
 	lng: 31.12495251321609,
