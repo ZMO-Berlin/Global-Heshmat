@@ -37,6 +37,7 @@
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"images": "node scripts/generate_image_derivatives.mjs",
+		"images:watch": "node scripts/generate_image_derivatives.mjs --watch",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:e2e": "playwright test",

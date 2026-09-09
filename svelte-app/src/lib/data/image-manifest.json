@@ -3,12 +3,12 @@
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 18784
+			"bytes": 19610
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 64552
+			"bytes": 64740
 		},
 		"web": {
 			"width": 1200,
@@ -18,19 +18,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 480224
+			"bytes": 432664
 		}
 	},
 	"AC_II": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 18172
+			"bytes": 18722
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 65512
+			"bytes": 66478
 		},
 		"web": {
 			"width": 1200,
@@ -40,19 +40,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 606908
+			"bytes": 554756
 		}
 	},
 	"AC_III": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 24438
+			"bytes": 25340
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 89066
+			"bytes": 91140
 		},
 		"web": {
 			"width": 1200,
@@ -62,19 +62,19 @@
 		"full": {
 			"width": 1600,
 			"height": 1200,
-			"bytes": 358682
+			"bytes": 339124
 		}
 	},
 	"AC_IV": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 19918
+			"bytes": 20468
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 77956
+			"bytes": 77734
 		},
 		"web": {
 			"width": 1200,
@@ -84,19 +84,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 632056
+			"bytes": 577860
 		}
 	},
 	"AC_IX": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 21530
+			"bytes": 22144
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 93260
+			"bytes": 92614
 		},
 		"web": {
 			"width": 900,
@@ -106,19 +106,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 733200
+			"bytes": 667404
 		}
 	},
 	"AC_V": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 25998
+			"bytes": 27036
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 100102
+			"bytes": 102258
 		},
 		"web": {
 			"width": 1200,
@@ -128,19 +128,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 745978
+			"bytes": 681562
 		}
 	},
 	"AC_VI": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 20522
+			"bytes": 21208
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 87882
+			"bytes": 86558
 		},
 		"web": {
 			"width": 900,
@@ -150,19 +150,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 672102
+			"bytes": 622450
 		}
 	},
 	"AC_VII": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 22434
+			"bytes": 23486
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 88778
+			"bytes": 88734
 		},
 		"web": {
 			"width": 1200,
@@ -172,19 +172,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 618134
+			"bytes": 576836
 		}
 	},
 	"AC_VIII": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 32978
+			"bytes": 34180
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 121206
+			"bytes": 124036
 		},
 		"web": {
 			"width": 1200,
@@ -194,19 +194,19 @@
 		"full": {
 			"width": 1600,
 			"height": 1200,
-			"bytes": 456248
+			"bytes": 431664
 		}
 	},
 	"Agiba Kalligraphie_family archive_Sonia": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 15834
+			"bytes": 16548
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 56288
+			"bytes": 57536
 		},
 		"web": {
 			"width": 900,
@@ -216,19 +216,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 395240
+			"bytes": 359762
 		}
 	},
 	"Agiba_1": {
 		"thumb": {
 			"width": 273,
 			"height": 400,
-			"bytes": 10706
+			"bytes": 11292
 		},
 		"preview": {
 			"width": 547,
 			"height": 800,
-			"bytes": 27734
+			"bytes": 33722
 		},
 		"web": {
 			"width": 589,
@@ -238,19 +238,19 @@
 		"full": {
 			"width": 589,
 			"height": 862,
-			"bytes": 65990
+			"bytes": 58438
 		}
 	},
 	"Agiba_2": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 15002
+			"bytes": 15592
 		},
 		"preview": {
 			"width": 534,
 			"height": 800,
-			"bytes": 42810
+			"bytes": 53250
 		},
 		"web": {
 			"width": 571,
@@ -260,19 +260,19 @@
 		"full": {
 			"width": 571,
 			"height": 856,
-			"bytes": 95588
+			"bytes": 86836
 		}
 	},
 	"Agricultural museum_1": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 16966
+			"bytes": 17484
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 56886
+			"bytes": 58804
 		},
 		"web": {
 			"width": 900,
@@ -282,19 +282,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1600,
-			"bytes": 234310
+			"bytes": 213608
 		}
 	},
 	"Agricultural museum_2": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 9778
+			"bytes": 10108
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 28902
+			"bytes": 30008
 		},
 		"web": {
 			"width": 900,
@@ -304,19 +304,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1600,
-			"bytes": 125094
+			"bytes": 113250
 		}
 	},
 	"Agricultural museum_3": {
 		"thumb": {
 			"width": 400,
 			"height": 222,
-			"bytes": 7750
+			"bytes": 8060
 		},
 		"preview": {
 			"width": 800,
-			"height": 444,
-			"bytes": 29330
+			"height": 445,
+			"bytes": 30878
 		},
 		"web": {
 			"width": 1200,
@@ -326,19 +326,19 @@
 		"full": {
 			"width": 1600,
 			"height": 889,
-			"bytes": 150986
+			"bytes": 137098
 		}
 	},
 	"Agricultural_Museum_4": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 17730
+			"bytes": 18256
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 59876
+			"bytes": 62460
 		},
 		"web": {
 			"width": 1200,
@@ -348,19 +348,19 @@
 		"full": {
 			"width": 1600,
 			"height": 1200,
-			"bytes": 253512
+			"bytes": 232242
 		}
 	},
 	"Agricultural_Museum_5": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 11928
+			"bytes": 12710
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 45910
+			"bytes": 46594
 		},
 		"web": {
 			"width": 900,
@@ -370,19 +370,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1600,
-			"bytes": 209720
+			"bytes": 194134
 		}
 	},
 	"Agricultural_Museum_6": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 13448
+			"bytes": 14126
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 51336
+			"bytes": 51516
 		},
 		"web": {
 			"width": 900,
@@ -392,19 +392,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1600,
-			"bytes": 243482
+			"bytes": 223820
 		}
 	},
 	"Agricultural_Museum_7": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 13342
+			"bytes": 13822
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 48170
+			"bytes": 50144
 		},
 		"web": {
 			"width": 900,
@@ -414,19 +414,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1600,
-			"bytes": 249442
+			"bytes": 229876
 		}
 	},
 	"Armenian_Monument_with_people_Kopie": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 16096
+			"bytes": 16538
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 44650
+			"bytes": 46964
 		},
 		"web": {
 			"width": 1200,
@@ -436,19 +436,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 252782
+			"bytes": 225700
 		}
 	},
 	"Ausstellung_Heshmat_mit_Motherhood": {
 		"thumb": {
 			"width": 400,
 			"height": 270,
-			"bytes": 9708
+			"bytes": 10038
 		},
 		"preview": {
 			"width": 800,
 			"height": 541,
-			"bytes": 26154
+			"bytes": 30270
 		},
 		"web": {
 			"width": 1120,
@@ -458,14 +458,14 @@
 		"full": {
 			"width": 1120,
 			"height": 757,
-			"bytes": 77244
+			"bytes": 70844
 		}
 	},
 	"BTM Figur Eröffnung 1993_palmenwedel Kopie_Family archive": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 17102
+			"bytes": 17414
 		},
 		"preview": {
 			"width": 600,
@@ -487,12 +487,12 @@
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 11790
+			"bytes": 12234
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 34550
+			"bytes": 36866
 		},
 		"web": {
 			"width": 800,
@@ -502,19 +502,19 @@
 		"full": {
 			"width": 1333,
 			"height": 2000,
-			"bytes": 249930
+			"bytes": 223624
 		}
 	},
 	"BTM Statue_männl. Seite_ganz Kopie_A_Kamel": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 6308
+			"bytes": 6642
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 19038
+			"bytes": 20508
 		},
 		"web": {
 			"width": 800,
@@ -524,19 +524,19 @@
 		"full": {
 			"width": 1333,
 			"height": 2000,
-			"bytes": 142440
+			"bytes": 125350
 		}
 	},
 	"BTM Statue_weibl. Seite_Frauenmode Kopie_A_Kamel": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 11300
+			"bytes": 11792
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 43746
+			"bytes": 47914
 		},
 		"web": {
 			"width": 800,
@@ -546,19 +546,19 @@
 		"full": {
 			"width": 1333,
 			"height": 2000,
-			"bytes": 479852
+			"bytes": 426598
 		}
 	},
 	"BTM Statue_weibl. Seite_Torso Kopie_A_Kamel": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 12066
+			"bytes": 12622
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 37824
+			"bytes": 40276
 		},
 		"web": {
 			"width": 800,
@@ -568,19 +568,19 @@
 		"full": {
 			"width": 1333,
 			"height": 2000,
-			"bytes": 286044
+			"bytes": 259980
 		}
 	},
 	"BTM Statue_weibl. Seite_ganz Kopie_A_Kamel": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 6976
+			"bytes": 7188
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 21448
+			"bytes": 23004
 		},
 		"web": {
 			"width": 800,
@@ -590,19 +590,19 @@
 		"full": {
 			"width": 1333,
 			"height": 2000,
-			"bytes": 165234
+			"bytes": 150750
 		}
 	},
 	"Balcony 1st floor Museum": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 23536
+			"bytes": 24244
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 82386
+			"bytes": 84282
 		},
 		"web": {
 			"width": 1200,
@@ -612,19 +612,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 420654
+			"bytes": 388408
 		}
 	},
 	"Balcony H. Heshmat in Ain Shams_Courtesy S. Hafez": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 5266
+			"bytes": 5562
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 13602
+			"bytes": 14518
 		},
 		"web": {
 			"width": 1200,
@@ -634,19 +634,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 99038
+			"bytes": 86664
 		}
 	},
 	"Bäuerin_Kafraoui Park c_E_Gothe": {
 		"thumb": {
 			"width": 372,
 			"height": 400,
-			"bytes": 31358
+			"bytes": 32346
 		},
 		"preview": {
 			"width": 746,
 			"height": 800,
-			"bytes": 126536
+			"bytes": 134208
 		},
 		"web": {
 			"width": 1119,
@@ -656,19 +656,19 @@
 		"full": {
 			"width": 1865,
 			"height": 2000,
-			"bytes": 749170
+			"bytes": 688308
 		}
 	},
 	"Cairo_Stadium_cut": {
 		"thumb": {
 			"width": 400,
 			"height": 371,
-			"bytes": 21494
+			"bytes": 22500
 		},
 		"preview": {
 			"width": 631,
 			"height": 586,
-			"bytes": 52070
+			"bytes": 48466
 		},
 		"web": {
 			"width": 631,
@@ -678,7 +678,7 @@
 		"full": {
 			"width": 631,
 			"height": 586,
-			"bytes": 67472
+			"bytes": 62112
 		}
 	},
 	"Collected Karin Haude": {
@@ -690,7 +690,7 @@
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 56746
+			"bytes": 55734
 		},
 		"web": {
 			"width": 900,
@@ -707,12 +707,12 @@
 		"thumb": {
 			"width": 400,
 			"height": 267,
-			"bytes": 15600
+			"bytes": 16250
 		},
 		"preview": {
 			"width": 800,
 			"height": 533,
-			"bytes": 46530
+			"bytes": 54016
 		},
 		"web": {
 			"width": 1200,
@@ -722,19 +722,19 @@
 		"full": {
 			"width": 1200,
 			"height": 800,
-			"bytes": 162244
+			"bytes": 145166
 		}
 	},
 	"Der Nil_Frauenfigur": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 15440
+			"bytes": 16348
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 50104
+			"bytes": 55628
 		},
 		"web": {
 			"width": 800,
@@ -744,19 +744,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 350826
+			"bytes": 320756
 		}
 	},
 	"Der stolze Bauer_Freiluftmuseum_10th of Ramadan": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 18030
+			"bytes": 18498
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 58574
+			"bytes": 63608
 		},
 		"web": {
 			"width": 800,
@@ -766,19 +766,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 362864
+			"bytes": 334534
 		}
 	},
 	"Die Gabe der Mutterschaft_BTM Fabrik_Ahmed Kamel": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 12752
+			"bytes": 13422
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 35682
+			"bytes": 39560
 		},
 		"web": {
 			"width": 800,
@@ -788,19 +788,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 227394
+			"bytes": 202964
 		}
 	},
 	"Egypt_Air_HH_Museum": {
 		"thumb": {
 			"width": 285,
 			"height": 400,
-			"bytes": 13900
+			"bytes": 14618
 		},
 		"preview": {
 			"width": 454,
 			"height": 637,
-			"bytes": 32248
+			"bytes": 31082
 		},
 		"web": {
 			"width": 454,
@@ -810,19 +810,19 @@
 		"full": {
 			"width": 454,
 			"height": 637,
-			"bytes": 46066
+			"bytes": 41674
 		}
 	},
 	"Egypt_Air_Paris_HH_Museum": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 16942
+			"bytes": 17752
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 60514
+			"bytes": 61302
 		},
 		"web": {
 			"width": 900,
@@ -832,19 +832,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 468338
+			"bytes": 422038
 		}
 	},
 	"Ein_Ägypter_erlebte_das_Porzellan": {
 		"thumb": {
 			"width": 273,
 			"height": 400,
-			"bytes": 20638
+			"bytes": 21408
 		},
 		"preview": {
 			"width": 547,
 			"height": 800,
-			"bytes": 75100
+			"bytes": 76014
 		},
 		"web": {
 			"width": 820,
@@ -854,19 +854,19 @@
 		"full": {
 			"width": 1367,
 			"height": 2000,
-			"bytes": 663506
+			"bytes": 599362
 		}
 	},
 	"Eingang_2_Horusse": {
 		"thumb": {
 			"width": 400,
 			"height": 225,
-			"bytes": 9486
+			"bytes": 9862
 		},
 		"preview": {
 			"width": 800,
 			"height": 450,
-			"bytes": 25794
+			"bytes": 30754
 		},
 		"web": {
 			"width": 1032,
@@ -876,19 +876,19 @@
 		"full": {
 			"width": 1032,
 			"height": 581,
-			"bytes": 70506
+			"bytes": 64792
 		}
 	},
 	"Ellwangen_private_house": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 11872
+			"bytes": 12594
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 56288
+			"bytes": 69796
 		},
 		"web": {
 			"width": 900,
@@ -898,19 +898,19 @@
 		"full": {
 			"width": 960,
 			"height": 1280,
-			"bytes": 248820
+			"bytes": 225642
 		}
 	},
 	"Entrance Metro Station Ain Shams_E_Gothe": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 14204
+			"bytes": 14782
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 46604
+			"bytes": 50968
 		},
 		"web": {
 			"width": 1200,
@@ -920,19 +920,19 @@
 		"full": {
 			"width": 2000,
 			"height": 2000,
-			"bytes": 351830
+			"bytes": 310626
 		}
 	},
 	"Entrance Museum": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 12430
+			"bytes": 13072
 		},
 		"preview": {
-			"width": 600,
+			"width": 599,
 			"height": 800,
-			"bytes": 53736
+			"bytes": 53614
 		},
 		"web": {
 			"width": 900,
@@ -942,19 +942,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 499798
+			"bytes": 456714
 		}
 	},
 	"Entrance_Horus_Meridien": {
 		"thumb": {
 			"width": 225,
 			"height": 400,
-			"bytes": 8356
+			"bytes": 8700
 		},
 		"preview": {
 			"width": 450,
 			"height": 800,
-			"bytes": 25258
+			"bytes": 31782
 		},
 		"web": {
 			"width": 581,
@@ -964,7 +964,7 @@
 		"full": {
 			"width": 581,
 			"height": 1032,
-			"bytes": 77550
+			"bytes": 71806
 		}
 	},
 	"Familienalbum mit Handschrift Fritz Haude": {
@@ -976,7 +976,7 @@
 		"preview": {
 			"width": 800,
 			"height": 439,
-			"bytes": 53708
+			"bytes": 54950
 		},
 		"web": {
 			"width": 1200,
@@ -993,12 +993,12 @@
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 6000
+			"bytes": 6202
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 16786
+			"bytes": 18508
 		},
 		"web": {
 			"width": 800,
@@ -1008,19 +1008,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 93586
+			"bytes": 84894
 		}
 	},
 	"Fries Officers Club E_Gothe": {
 		"thumb": {
 			"width": 400,
 			"height": 72,
-			"bytes": 5586
+			"bytes": 5774
 		},
 		"preview": {
 			"width": 800,
 			"height": 144,
-			"bytes": 21064
+			"bytes": 21490
 		},
 		"web": {
 			"width": 1200,
@@ -1030,19 +1030,19 @@
 		"full": {
 			"width": 2000,
 			"height": 361,
-			"bytes": 112702
+			"bytes": 105136
 		}
 	},
 	"Gastgeschenk Heshmat 3": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 2942
+			"bytes": 3056
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 7314
+			"bytes": 7504
 		},
 		"web": {
 			"width": 1080,
@@ -1052,19 +1052,19 @@
 		"full": {
 			"width": 1080,
 			"height": 1080,
-			"bytes": 15794
+			"bytes": 14646
 		}
 	},
 	"Gastgeschenk Heshmat 4": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 1984
+			"bytes": 2042
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 4992
+			"bytes": 5132
 		},
 		"web": {
 			"width": 1080,
@@ -1074,19 +1074,19 @@
 		"full": {
 			"width": 1080,
 			"height": 1080,
-			"bytes": 11882
+			"bytes": 10544
 		}
 	},
 	"Gastgeschenk Heshmat 5": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 3670
+			"bytes": 3818
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 9250
+			"bytes": 10020
 		},
 		"web": {
 			"width": 1080,
@@ -1096,19 +1096,19 @@
 		"full": {
 			"width": 1080,
 			"height": 1080,
-			"bytes": 24926
+			"bytes": 21698
 		}
 	},
 	"Gastgeschenk Heshmat": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 2568
+			"bytes": 2650
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 6264
+			"bytes": 6468
 		},
 		"web": {
 			"width": 1080,
@@ -1118,41 +1118,41 @@
 		"full": {
 			"width": 1080,
 			"height": 1080,
-			"bytes": 13864
+			"bytes": 12770
 		}
 	},
 	"Gänse_Schwimmbad": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 31256
+			"bytes": 29630
 		},
 		"preview": {
 			"width": 640,
 			"height": 480,
-			"bytes": 78154
+			"bytes": 74868
 		},
 		"web": {
 			"width": 640,
 			"height": 480,
-			"bytes": 95654
+			"bytes": 93308
 		},
 		"full": {
 			"width": 640,
 			"height": 480,
-			"bytes": 98804
+			"bytes": 93308
 		}
 	},
 	"Hasan_Heshmat_House Entrance": {
 		"thumb": {
 			"width": 305,
 			"height": 400,
-			"bytes": 27178
+			"bytes": 28040
 		},
 		"preview": {
 			"width": 611,
 			"height": 800,
-			"bytes": 85916
+			"bytes": 93892
 		},
 		"web": {
 			"width": 916,
@@ -1162,19 +1162,19 @@
 		"full": {
 			"width": 1353,
 			"height": 1772,
-			"bytes": 654744
+			"bytes": 609378
 		}
 	},
 	"Hasan_Heshmat_Wandbild_Zamalek_RAND": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 17254
+			"bytes": 17754
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 52072
+			"bytes": 57952
 		},
 		"web": {
 			"width": 1200,
@@ -1184,19 +1184,19 @@
 		"full": {
 			"width": 1772,
 			"height": 1329,
-			"bytes": 213378
+			"bytes": 197942
 		}
 	},
 	"Hasselt_Bau_mit_künstler": {
 		"thumb": {
 			"width": 400,
 			"height": 299,
-			"bytes": 21842
+			"bytes": 22568
 		},
 		"preview": {
 			"width": 800,
 			"height": 599,
-			"bytes": 56360
+			"bytes": 63822
 		},
 		"web": {
 			"width": 1152,
@@ -1206,19 +1206,19 @@
 		"full": {
 			"width": 1152,
 			"height": 862,
-			"bytes": 145450
+			"bytes": 134928
 		}
 	},
 	"Hasselt_Einweihung_": {
 		"thumb": {
 			"width": 400,
 			"height": 291,
-			"bytes": 11934
+			"bytes": 12278
 		},
 		"preview": {
 			"width": 800,
 			"height": 582,
-			"bytes": 25850
+			"bytes": 29200
 		},
 		"web": {
 			"width": 1114,
@@ -1228,19 +1228,19 @@
 		"full": {
 			"width": 1114,
 			"height": 810,
-			"bytes": 63390
+			"bytes": 56934
 		}
 	},
 	"Hasselt_Einweihung_2": {
 		"thumb": {
 			"width": 400,
 			"height": 299,
-			"bytes": 19016
+			"bytes": 19900
 		},
 		"preview": {
 			"width": 800,
 			"height": 598,
-			"bytes": 50110
+			"bytes": 58932
 		},
 		"web": {
 			"width": 1146,
@@ -1250,19 +1250,19 @@
 		"full": {
 			"width": 1146,
 			"height": 856,
-			"bytes": 143620
+			"bytes": 133204
 		}
 	},
 	"Hasselt_Memorial": {
 		"thumb": {
 			"width": 400,
 			"height": 289,
-			"bytes": 16436
+			"bytes": 17166
 		},
 		"preview": {
 			"width": 800,
 			"height": 579,
-			"bytes": 50168
+			"bytes": 59474
 		},
 		"web": {
 			"width": 1150,
@@ -1272,19 +1272,19 @@
 		"full": {
 			"width": 1150,
 			"height": 832,
-			"bytes": 163740
+			"bytes": 150748
 		}
 	},
 	"Hasselt_Rückseite_Foto_The_monument_made_this_ year_for_a_church_in_Belgium_1970": {
 		"thumb": {
 			"width": 297,
 			"height": 400,
-			"bytes": 3858
+			"bytes": 4016
 		},
 		"preview": {
 			"width": 594,
 			"height": 800,
-			"bytes": 9024
+			"bytes": 10506
 		},
 		"web": {
 			"width": 636,
@@ -1294,19 +1294,19 @@
 		"full": {
 			"width": 636,
 			"height": 856,
-			"bytes": 17506
+			"bytes": 15734
 		}
 	},
 	"Hasselt_historical_photo_1970": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 16242
+			"bytes": 16792
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 55388
+			"bytes": 57050
 		},
 		"web": {
 			"width": 1200,
@@ -1316,19 +1316,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 403758
+			"bytes": 364592
 		}
 	},
 	"Heshmat 1942 Ezbet al Nakhl": {
 		"thumb": {
 			"width": 400,
 			"height": 287,
-			"bytes": 24466
+			"bytes": 25438
 		},
 		"preview": {
 			"width": 800,
 			"height": 575,
-			"bytes": 71264
+			"bytes": 82010
 		},
 		"web": {
 			"width": 1200,
@@ -1338,19 +1338,19 @@
 		"full": {
 			"width": 1612,
 			"height": 1159,
-			"bytes": 346390
+			"bytes": 319148
 		}
 	},
 	"Heshmat Gallery Red Shelf and Wall": {
 		"thumb": {
 			"width": 304,
 			"height": 204,
-			"bytes": 9790
+			"bytes": 10064
 		},
 		"preview": {
 			"width": 304,
 			"height": 204,
-			"bytes": 10160
+			"bytes": 9790
 		},
 		"web": {
 			"width": 304,
@@ -1360,19 +1360,19 @@
 		"full": {
 			"width": 304,
 			"height": 204,
-			"bytes": 13064
+			"bytes": 12064
 		}
 	},
 	"Heshmat Gallery Red Shelf": {
 		"thumb": {
 			"width": 308,
 			"height": 208,
-			"bytes": 9418
+			"bytes": 9624
 		},
 		"preview": {
 			"width": 308,
 			"height": 208,
-			"bytes": 9044
+			"bytes": 9418
 		},
 		"web": {
 			"width": 308,
@@ -1382,19 +1382,19 @@
 		"full": {
 			"width": 308,
 			"height": 208,
-			"bytes": 12426
+			"bytes": 11614
 		}
 	},
 	"Heshmat Gallery Room": {
 		"thumb": {
 			"width": 300,
 			"height": 204,
-			"bytes": 9286
+			"bytes": 9514
 		},
 		"preview": {
 			"width": 300,
 			"height": 204,
-			"bytes": 9492
+			"bytes": 9286
 		},
 		"web": {
 			"width": 300,
@@ -1404,19 +1404,19 @@
 		"full": {
 			"width": 300,
 			"height": 204,
-			"bytes": 12428
+			"bytes": 11454
 		}
 	},
 	"Heshmat Gallery Wall": {
 		"thumb": {
 			"width": 312,
 			"height": 215,
-			"bytes": 9038
+			"bytes": 9476
 		},
 		"preview": {
 			"width": 312,
 			"height": 215,
-			"bytes": 9618
+			"bytes": 9038
 		},
 		"web": {
 			"width": 312,
@@ -1426,19 +1426,19 @@
 		"full": {
 			"width": 312,
 			"height": 215,
-			"bytes": 12154
+			"bytes": 11410
 		}
 	},
 	"Heshmat_GM": {
 		"thumb": {
 			"width": 400,
 			"height": 284,
-			"bytes": 17630
+			"bytes": 18072
 		},
 		"preview": {
 			"width": 690,
 			"height": 490,
-			"bytes": 51024
+			"bytes": 44554
 		},
 		"web": {
 			"width": 690,
@@ -1448,19 +1448,19 @@
 		"full": {
 			"width": 690,
 			"height": 490,
-			"bytes": 65494
+			"bytes": 60328
 		}
 	},
 	"Heshmat_Inauguration_BTM": {
 		"thumb": {
 			"width": 277,
 			"height": 400,
-			"bytes": 22412
+			"bytes": 23206
 		},
 		"preview": {
 			"width": 554,
 			"height": 800,
-			"bytes": 86810
+			"bytes": 94538
 		},
 		"web": {
 			"width": 832,
@@ -1470,19 +1470,19 @@
 		"full": {
 			"width": 1228,
 			"height": 1772,
-			"bytes": 667568
+			"bytes": 624044
 		}
 	},
 	"Heshmat_mit_Horus": {
 		"thumb": {
 			"width": 268,
 			"height": 400,
-			"bytes": 8692
+			"bytes": 8984
 		},
 		"preview": {
 			"width": 516,
 			"height": 771,
-			"bytes": 23182
+			"bytes": 23536
 		},
 		"web": {
 			"width": 516,
@@ -1492,19 +1492,19 @@
 		"full": {
 			"width": 516,
 			"height": 771,
-			"bytes": 37038
+			"bytes": 32918
 		}
 	},
 	"Heshmats Museum_Nader Alaa": {
 		"thumb": {
 			"width": 400,
 			"height": 271,
-			"bytes": 12712
+			"bytes": 13156
 		},
 		"preview": {
 			"width": 800,
 			"height": 542,
-			"bytes": 31248
+			"bytes": 33772
 		},
 		"web": {
 			"width": 1200,
@@ -1514,19 +1514,19 @@
 		"full": {
 			"width": 1739,
 			"height": 1178,
-			"bytes": 281464
+			"bytes": 240620
 		}
 	},
 	"Horus_Meridien": {
 		"thumb": {
 			"width": 225,
 			"height": 400,
-			"bytes": 12822
+			"bytes": 13230
 		},
 		"preview": {
 			"width": 450,
 			"height": 800,
-			"bytes": 39724
+			"bytes": 48612
 		},
 		"web": {
 			"width": 581,
@@ -1536,19 +1536,19 @@
 		"full": {
 			"width": 581,
 			"height": 1032,
-			"bytes": 109444
+			"bytes": 102270
 		}
 	},
 	"Horus_Sculpture Garden Museum": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 17120
+			"bytes": 17694
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 72578
+			"bytes": 70510
 		},
 		"web": {
 			"width": 900,
@@ -1558,19 +1558,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 751284
+			"bytes": 694934
 		}
 	},
 	"Horus_mit weibl. Gesicht_Freiluftmuseum_c Ahmed Kamel": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 18970
+			"bytes": 19714
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 60370
+			"bytes": 68322
 		},
 		"web": {
 			"width": 800,
@@ -1580,7 +1580,7 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 367876
+			"bytes": 336396
 		}
 	},
 	"Hotel Schmidt Selb": {
@@ -1592,7 +1592,7 @@
 		"preview": {
 			"width": 640,
 			"height": 480,
-			"bytes": 30920
+			"bytes": 30490
 		},
 		"web": {
 			"width": 640,
@@ -1609,12 +1609,12 @@
 		"thumb": {
 			"width": 400,
 			"height": 286,
-			"bytes": 9402
+			"bytes": 9594
 		},
 		"preview": {
 			"width": 800,
 			"height": 573,
-			"bytes": 22862
+			"bytes": 25546
 		},
 		"web": {
 			"width": 1200,
@@ -1624,19 +1624,19 @@
 		"full": {
 			"width": 1772,
 			"height": 1269,
-			"bytes": 112444
+			"bytes": 100630
 		}
 	},
 	"Hurghada_Mosaics_farbig_2": {
 		"thumb": {
 			"width": 400,
 			"height": 280,
-			"bytes": 24948
+			"bytes": 26180
 		},
 		"preview": {
 			"width": 800,
 			"height": 561,
-			"bytes": 85934
+			"bytes": 99238
 		},
 		"web": {
 			"width": 1200,
@@ -1646,19 +1646,19 @@
 		"full": {
 			"width": 1772,
 			"height": 1242,
-			"bytes": 467496
+			"bytes": 434096
 		}
 	},
 	"IMG_6729": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 9778
+			"bytes": 10292
 		},
 		"preview": {
 			"width": 640,
 			"height": 480,
-			"bytes": 22768
+			"bytes": 24012
 		},
 		"web": {
 			"width": 640,
@@ -1668,19 +1668,19 @@
 		"full": {
 			"width": 640,
 			"height": 480,
-			"bytes": 36264
+			"bytes": 32254
 		}
 	},
 	"Image_Samar_Heshmat": {
 		"thumb": {
 			"width": 400,
 			"height": 121,
-			"bytes": 6844
+			"bytes": 7096
 		},
 		"preview": {
 			"width": 800,
 			"height": 242,
-			"bytes": 22450
+			"bytes": 22832
 		},
 		"web": {
 			"width": 1200,
@@ -1690,19 +1690,19 @@
 		"full": {
 			"width": 1600,
 			"height": 484,
-			"bytes": 90584
+			"bytes": 82770
 		}
 	},
 	"Image_Samar_Heshmat_": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 19410
+			"bytes": 19964
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 64530
+			"bytes": 68350
 		},
 		"web": {
 			"width": 1200,
@@ -1712,19 +1712,19 @@
 		"full": {
 			"width": 1600,
 			"height": 1200,
-			"bytes": 262508
+			"bytes": 240290
 		}
 	},
 	"Intilaqat Masr Kopie_c Ephraim Gothe": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 8330
+			"bytes": 8636
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 28354
+			"bytes": 28124
 		},
 		"web": {
 			"width": 900,
@@ -1734,19 +1734,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 221348
+			"bytes": 206146
 		}
 	},
 	"Intilaqat_Misr_Abbau": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 12506
+			"bytes": 13100
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 31738
+			"bytes": 39238
 		},
 		"web": {
 			"width": 646,
@@ -1756,19 +1756,19 @@
 		"full": {
 			"width": 646,
 			"height": 861,
-			"bytes": 67602
+			"bytes": 61084
 		}
 	},
 	"Intilaqat_Misr_Ahmed_Kamel": {
 		"thumb": {
 			"width": 253,
 			"height": 400,
-			"bytes": 4430
+			"bytes": 4652
 		},
 		"preview": {
 			"width": 505,
 			"height": 800,
-			"bytes": 10050
+			"bytes": 11936
 		},
 		"web": {
 			"width": 544,
@@ -1778,7 +1778,7 @@
 		"full": {
 			"width": 544,
 			"height": 861,
-			"bytes": 19880
+			"bytes": 17970
 		}
 	},
 	"Karin Haude 1957 with knit dress by Zeinab": {
@@ -1790,7 +1790,7 @@
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 50696
+			"bytes": 52690
 		},
 		"web": {
 			"width": 1200,
@@ -1807,12 +1807,12 @@
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 16460
+			"bytes": 17162
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 45968
+			"bytes": 48652
 		},
 		"web": {
 			"width": 1200,
@@ -1822,19 +1822,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 286696
+			"bytes": 260474
 		}
 	},
 	"Kitchen private house H. Heshmat_Courtesy S. Hafez": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 13142
+			"bytes": 13612
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 37174
+			"bytes": 39338
 		},
 		"web": {
 			"width": 900,
@@ -1844,19 +1844,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 244642
+			"bytes": 222350
 		}
 	},
 	"Kitchen tiles_Courtesy S. Hafez": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 14484
+			"bytes": 14828
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 38862
+			"bytes": 41618
 		},
 		"web": {
 			"width": 1200,
@@ -1866,19 +1866,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 243114
+			"bytes": 217556
 		}
 	},
 	"Kitchen tiles_H Heshmat_Courtesy S. Hafez": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 16174
+			"bytes": 16858
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 44770
+			"bytes": 47470
 		},
 		"web": {
 			"width": 1200,
@@ -1888,19 +1888,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 286016
+			"bytes": 258952
 		}
 	},
 	"KleineFigur_Schwimmbad": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 14358
+			"bytes": 15066
 		},
 		"preview": {
 			"width": 480,
 			"height": 640,
-			"bytes": 40908
+			"bytes": 34182
 		},
 		"web": {
 			"width": 480,
@@ -1910,19 +1910,19 @@
 		"full": {
 			"width": 480,
 			"height": 640,
-			"bytes": 52178
+			"bytes": 45934
 		}
 	},
 	"Küssende_Schwimmbad": {
 		"thumb": {
 			"width": 400,
 			"height": 299,
-			"bytes": 13582
+			"bytes": 14306
 		},
 		"preview": {
 			"width": 800,
 			"height": 599,
-			"bytes": 39150
+			"bytes": 46372
 		},
 		"web": {
 			"width": 1144,
@@ -1932,19 +1932,19 @@
 		"full": {
 			"width": 1144,
 			"height": 856,
-			"bytes": 128890
+			"bytes": 118222
 		}
 	},
 	"Küssende_Schwimmbad_II": {
 		"thumb": {
 			"width": 400,
 			"height": 299,
-			"bytes": 11270
+			"bytes": 11820
 		},
 		"preview": {
 			"width": 800,
 			"height": 598,
-			"bytes": 30268
+			"bytes": 36260
 		},
 		"web": {
 			"width": 1150,
@@ -1954,19 +1954,19 @@
 		"full": {
 			"width": 1150,
 			"height": 859,
-			"bytes": 104984
+			"bytes": 95888
 		}
 	},
 	"Leverkusen_I": {
 		"thumb": {
 			"width": 400,
 			"height": 272,
-			"bytes": 9670
+			"bytes": 10026
 		},
 		"preview": {
 			"width": 800,
 			"height": 544,
-			"bytes": 23558
+			"bytes": 25680
 		},
 		"web": {
 			"width": 1200,
@@ -1976,19 +1976,19 @@
 		"full": {
 			"width": 1498,
 			"height": 1018,
-			"bytes": 136418
+			"bytes": 115902
 		}
 	},
 	"Leverkusen_II": {
 		"thumb": {
 			"width": 400,
 			"height": 288,
-			"bytes": 12920
+			"bytes": 13500
 		},
 		"preview": {
 			"width": 800,
 			"height": 577,
-			"bytes": 32432
+			"bytes": 35312
 		},
 		"web": {
 			"width": 1200,
@@ -1998,19 +1998,19 @@
 		"full": {
 			"width": 1920,
 			"height": 1385,
-			"bytes": 184660
+			"bytes": 163828
 		}
 	},
 	"Leverkusen_III": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 13376
+			"bytes": 13730
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 28812
+			"bytes": 30138
 		},
 		"web": {
 			"width": 1200,
@@ -2020,19 +2020,19 @@
 		"full": {
 			"width": 1920,
 			"height": 1440,
-			"bytes": 117052
+			"bytes": 107904
 		}
 	},
 	"Magda_mit_Horus": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 17980
+			"bytes": 18674
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 53664
+			"bytes": 64600
 		},
 		"web": {
 			"width": 756,
@@ -2042,19 +2042,19 @@
 		"full": {
 			"width": 756,
 			"height": 1008,
-			"bytes": 134602
+			"bytes": 126122
 		}
 	},
 	"Magda_with": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 14530
+			"bytes": 15118
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 41340
+			"bytes": 49794
 		},
 		"web": {
 			"width": 756,
@@ -2064,19 +2064,19 @@
 		"full": {
 			"width": 756,
 			"height": 1008,
-			"bytes": 105568
+			"bytes": 98400
 		}
 	},
 	"Mahnmal_Hasselt_Kopie": {
 		"thumb": {
 			"width": 400,
 			"height": 282,
-			"bytes": 11976
+			"bytes": 12384
 		},
 		"preview": {
 			"width": 800,
 			"height": 563,
-			"bytes": 58560
+			"bytes": 51964
 		},
 		"web": {
 			"width": 800,
@@ -2086,19 +2086,19 @@
 		"full": {
 			"width": 800,
 			"height": 563,
-			"bytes": 79050
+			"bytes": 70294
 		}
 	},
 	"Midan_Galaa_2026_1": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 10644
+			"bytes": 10986
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 32844
+			"bytes": 33680
 		},
 		"web": {
 			"width": 1200,
@@ -2108,19 +2108,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 233850
+			"bytes": 214546
 		}
 	},
 	"Midan_Galaa_2026_2": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 13978
+			"bytes": 14332
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 46794
+			"bytes": 47020
 		},
 		"web": {
 			"width": 1200,
@@ -2130,19 +2130,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 370326
+			"bytes": 340090
 		}
 	},
 	"Midan_Galaa_2026_3": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 17426
+			"bytes": 18006
 		},
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 52240
+			"bytes": 53744
 		},
 		"web": {
 			"width": 1200,
@@ -2152,19 +2152,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1500,
-			"bytes": 320814
+			"bytes": 292206
 		}
 	},
 	"Midan_Galaa_historic": {
 		"thumb": {
 			"width": 225,
 			"height": 400,
-			"bytes": 6138
+			"bytes": 6438
 		},
 		"preview": {
 			"width": 449,
 			"height": 800,
-			"bytes": 16942
+			"bytes": 20600
 		},
 		"web": {
 			"width": 539,
@@ -2174,19 +2174,19 @@
 		"full": {
 			"width": 539,
 			"height": 960,
-			"bytes": 35858
+			"bytes": 33452
 		}
 	},
 	"Mosaik Officers Club Zamalek_darüber Fathy": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 17468
+			"bytes": 17916
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 60564
+			"bytes": 63456
 		},
 		"web": {
 			"width": 1200,
@@ -2196,19 +2196,19 @@
 		"full": {
 			"width": 2000,
 			"height": 2000,
-			"bytes": 434618
+			"bytes": 396430
 		}
 	},
 	"Museum_of_Egyptian_Modern_Art": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 10938
+			"bytes": 11424
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 37132
+			"bytes": 38904
 		},
 		"web": {
 			"width": 900,
@@ -2218,19 +2218,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 306258
+			"bytes": 277848
 		}
 	},
 	"Musée_de_l`Homme": {
 		"thumb": {
 			"width": 400,
 			"height": 267,
-			"bytes": 12684
+			"bytes": 12878
 		},
 		"preview": {
 			"width": 678,
 			"height": 452,
-			"bytes": 28892
+			"bytes": 28490
 		},
 		"web": {
 			"width": 678,
@@ -2240,19 +2240,19 @@
 		"full": {
 			"width": 678,
 			"height": 452,
-			"bytes": 37754
+			"bytes": 35524
 		}
 	},
 	"Mykerinos Triade_E_Gothe": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 15354
+			"bytes": 16030
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 51294
+			"bytes": 55792
 		},
 		"web": {
 			"width": 1200,
@@ -2262,19 +2262,19 @@
 		"full": {
 			"width": 2000,
 			"height": 2000,
-			"bytes": 294774
+			"bytes": 264990
 		}
 	},
 	"OFRA_Okt_74": {
 		"thumb": {
 			"width": 400,
 			"height": 268,
-			"bytes": 11870
+			"bytes": 12322
 		},
 		"preview": {
 			"width": 800,
 			"height": 536,
-			"bytes": 26134
+			"bytes": 27844
 		},
 		"web": {
 			"width": 1200,
@@ -2284,19 +2284,19 @@
 		"full": {
 			"width": 1759,
 			"height": 1178,
-			"bytes": 104862
+			"bytes": 94992
 		}
 	},
 	"Obelisk_I": {
 		"thumb": {
 			"width": 266,
 			"height": 400,
-			"bytes": 8228
+			"bytes": 8776
 		},
 		"preview": {
 			"width": 532,
 			"height": 800,
-			"bytes": 24092
+			"bytes": 30968
 		},
 		"web": {
 			"width": 571,
@@ -2306,19 +2306,41 @@
 		"full": {
 			"width": 571,
 			"height": 859,
-			"bytes": 63012
+			"bytes": 55436
+		}
+	},
+	"Oriental Weavers Factory": {
+		"thumb": {
+			"width": 264,
+			"height": 400,
+			"bytes": 7408
+		},
+		"preview": {
+			"width": 529,
+			"height": 800,
+			"bytes": 19908
+		},
+		"web": {
+			"width": 793,
+			"height": 1200,
+			"bytes": 40316
+		},
+		"full": {
+			"width": 1057,
+			"height": 1600,
+			"bytes": 57344
 		}
 	},
 	"Oriental Weavers": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 19142
+			"bytes": 19838
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 48312
+			"bytes": 56180
 		},
 		"web": {
 			"width": 720,
@@ -2328,41 +2350,41 @@
 		"full": {
 			"width": 720,
 			"height": 960,
-			"bytes": 94486
+			"bytes": 89316
 		}
 	},
 	"Paar_Schwimmbad": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 39930
+			"bytes": 38852
 		},
 		"preview": {
-			"width": 640,
-			"height": 480,
-			"bytes": 92992
+			"width": 480,
+			"height": 640,
+			"bytes": 93580
 		},
 		"web": {
 			"width": 480,
 			"height": 640,
-			"bytes": 112740
+			"bytes": 111290
 		},
 		"full": {
-			"width": 640,
-			"height": 480,
-			"bytes": 117464
+			"width": 480,
+			"height": 640,
+			"bytes": 111290
 		}
 	},
 	"Paar_Schwimmbad_2": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 33340
+			"bytes": 34612
 		},
 		"preview": {
 			"width": 640,
 			"height": 480,
-			"bytes": 93986
+			"bytes": 93368
 		},
 		"web": {
 			"width": 640,
@@ -2372,29 +2394,29 @@
 		"full": {
 			"width": 640,
 			"height": 480,
-			"bytes": 116182
+			"bytes": 110778
 		}
 	},
 	"Paar_Schwimmbad_3": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 34096
+			"bytes": 33034
 		},
 		"preview": {
 			"width": 640,
 			"height": 480,
-			"bytes": 89278
+			"bytes": 87952
 		},
 		"web": {
 			"width": 640,
 			"height": 480,
-			"bytes": 105290
+			"bytes": 104282
 		},
 		"full": {
 			"width": 640,
 			"height": 480,
-			"bytes": 111188
+			"bytes": 104282
 		}
 	},
 	"Pendant for Karin Haude": {
@@ -2406,7 +2428,7 @@
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 75034
+			"bytes": 78872
 		},
 		"web": {
 			"width": 900,
@@ -2423,12 +2445,12 @@
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 9370
+			"bytes": 9712
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 27634
+			"bytes": 29590
 		},
 		"web": {
 			"width": 800,
@@ -2438,19 +2460,19 @@
 		"full": {
 			"width": 1333,
 			"height": 2000,
-			"bytes": 274780
+			"bytes": 242358
 		}
 	},
 	"Plakat_Ausstellung_Susteren_1968_Niederlande": {
 		"thumb": {
 			"width": 395,
 			"height": 400,
-			"bytes": 13738
+			"bytes": 14408
 		},
 		"preview": {
 			"width": 789,
 			"height": 800,
-			"bytes": 32574
+			"bytes": 34166
 		},
 		"web": {
 			"width": 1184,
@@ -2460,19 +2482,19 @@
 		"full": {
 			"width": 1973,
 			"height": 2000,
-			"bytes": 351346
+			"bytes": 299122
 		}
 	},
 	"Porzellanikon_II": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 1908
+			"bytes": 1970
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 4840
+			"bytes": 5100
 		},
 		"web": {
 			"width": 900,
@@ -2482,19 +2504,19 @@
 		"full": {
 			"width": 960,
 			"height": 1280,
-			"bytes": 15764
+			"bytes": 14370
 		}
 	},
 	"Rosenthal_K5123": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 1718
+			"bytes": 1800
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 4220
+			"bytes": 4260
 		},
 		"web": {
 			"width": 900,
@@ -2504,19 +2526,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 21096
+			"bytes": 19516
 		}
 	},
 	"Rückseite_Schwimmbad": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 3534
+			"bytes": 3596
 		},
 		"preview": {
 			"width": 800,
 			"height": 599,
-			"bytes": 7752
+			"bytes": 8486
 		},
 		"web": {
 			"width": 1149,
@@ -2526,19 +2548,19 @@
 		"full": {
 			"width": 1149,
 			"height": 861,
-			"bytes": 22244
+			"bytes": 19666
 		}
 	},
 	"Schachtel": {
 		"thumb": {
 			"width": 400,
 			"height": 400,
-			"bytes": 3350
+			"bytes": 3568
 		},
 		"preview": {
 			"width": 800,
 			"height": 800,
-			"bytes": 9476
+			"bytes": 10838
 		},
 		"web": {
 			"width": 1080,
@@ -2548,19 +2570,19 @@
 		"full": {
 			"width": 1080,
 			"height": 1080,
-			"bytes": 38236
+			"bytes": 33420
 		}
 	},
 	"Schlacht von Hattin_Ahmed Kamel": {
 		"thumb": {
 			"width": 400,
 			"height": 267,
-			"bytes": 18292
+			"bytes": 19026
 		},
 		"preview": {
 			"width": 800,
 			"height": 533,
-			"bytes": 65508
+			"bytes": 75792
 		},
 		"web": {
 			"width": 1200,
@@ -2570,19 +2592,19 @@
 		"full": {
 			"width": 1200,
 			"height": 800,
-			"bytes": 242506
+			"bytes": 222826
 		}
 	},
 	"Schmidt_Selb_I": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 6880
+			"bytes": 7092
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 18130
+			"bytes": 20282
 		},
 		"web": {
 			"width": 900,
@@ -2592,19 +2614,19 @@
 		"full": {
 			"width": 960,
 			"height": 1280,
-			"bytes": 66106
+			"bytes": 58936
 		}
 	},
 	"Schmidt_Selb_II": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 13150
+			"bytes": 13688
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 29754
+			"bytes": 32384
 		},
 		"web": {
 			"width": 900,
@@ -2614,19 +2636,19 @@
 		"full": {
 			"width": 960,
 			"height": 1280,
-			"bytes": 75830
+			"bytes": 70166
 		}
 	},
 	"Schule_2026": {
 		"thumb": {
 			"width": 400,
 			"height": 225,
-			"bytes": 18130
+			"bytes": 18916
 		},
 		"preview": {
 			"width": 800,
 			"height": 450,
-			"bytes": 67944
+			"bytes": 67222
 		},
 		"web": {
 			"width": 1200,
@@ -2636,19 +2658,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1125,
-			"bytes": 523732
+			"bytes": 488508
 		}
 	},
 	"Schulgebäude_bis_1971": {
 		"thumb": {
 			"width": 400,
 			"height": 288,
-			"bytes": 14502
+			"bytes": 15010
 		},
 		"preview": {
 			"width": 800,
 			"height": 577,
-			"bytes": 39412
+			"bytes": 42574
 		},
 		"web": {
 			"width": 1200,
@@ -2658,19 +2680,19 @@
 		"full": {
 			"width": 2000,
 			"height": 1442,
-			"bytes": 184050
+			"bytes": 170182
 		}
 	},
 	"Schwimmbad_3": {
 		"thumb": {
 			"width": 400,
 			"height": 299,
-			"bytes": 16130
+			"bytes": 16570
 		},
 		"preview": {
 			"width": 800,
 			"height": 599,
-			"bytes": 42856
+			"bytes": 49884
 		},
 		"web": {
 			"width": 1144,
@@ -2680,19 +2702,19 @@
 		"full": {
 			"width": 1144,
 			"height": 856,
-			"bytes": 133468
+			"bytes": 123644
 		}
 	},
 	"Schwimmbad_4": {
 		"thumb": {
 			"width": 299,
 			"height": 400,
-			"bytes": 20126
+			"bytes": 20806
 		},
 		"preview": {
 			"width": 599,
 			"height": 800,
-			"bytes": 55898
+			"bytes": 69208
 		},
 		"web": {
 			"width": 645,
@@ -2702,19 +2724,19 @@
 		"full": {
 			"width": 645,
 			"height": 862,
-			"bytes": 116098
+			"bytes": 104902
 		}
 	},
 	"Selb_Haus_II": {
 		"thumb": {
 			"width": 400,
 			"height": 184,
-			"bytes": 14660
+			"bytes": 15042
 		},
 		"preview": {
 			"width": 800,
-			"height": 370,
-			"bytes": 49822
+			"height": 369,
+			"bytes": 52938
 		},
 		"web": {
 			"width": 1200,
@@ -2724,19 +2746,19 @@
 		"full": {
 			"width": 2000,
 			"height": 924,
-			"bytes": 308620
+			"bytes": 285634
 		}
 	},
 	"Selb_Haus_III": {
 		"thumb": {
 			"width": 184,
 			"height": 400,
-			"bytes": 15642
+			"bytes": 16046
 		},
 		"preview": {
-			"width": 370,
+			"width": 369,
 			"height": 800,
-			"bytes": 43414
+			"bytes": 46712
 		},
 		"web": {
 			"width": 554,
@@ -2746,19 +2768,19 @@
 		"full": {
 			"width": 924,
 			"height": 2000,
-			"bytes": 227476
+			"bytes": 207896
 		}
 	},
 	"Symbol_des_Regierungsbezirks_Matrouh_Kafraoui": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 18242
+			"bytes": 18948
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 56342
+			"bytes": 62666
 		},
 		"web": {
 			"width": 800,
@@ -2768,19 +2790,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 360862
+			"bytes": 330976
 		}
 	},
 	"Tanzende_Gruppe_III": {
 		"thumb": {
 			"width": 400,
 			"height": 295,
-			"bytes": 15968
+			"bytes": 16620
 		},
 		"preview": {
 			"width": 800,
 			"height": 589,
-			"bytes": 49116
+			"bytes": 58656
 		},
 		"web": {
 			"width": 1153,
@@ -2790,19 +2812,19 @@
 		"full": {
 			"width": 1153,
 			"height": 849,
-			"bytes": 166760
+			"bytes": 154238
 		}
 	},
 	"Tanzende_Schwimmbad_2": {
 		"thumb": {
 			"width": 400,
 			"height": 300,
-			"bytes": 26936
+			"bytes": 27994
 		},
 		"preview": {
 			"width": 640,
 			"height": 480,
-			"bytes": 76044
+			"bytes": 72844
 		},
 		"web": {
 			"width": 640,
@@ -2812,7 +2834,7 @@
 		"full": {
 			"width": 640,
 			"height": 480,
-			"bytes": 96156
+			"bytes": 90360
 		}
 	},
 	"Technikerbau_Plan": {
@@ -2824,7 +2846,7 @@
 		"preview": {
 			"width": 800,
 			"height": 566,
-			"bytes": 12184
+			"bytes": 12806
 		},
 		"web": {
 			"width": 1200,
@@ -2834,7 +2856,7 @@
 		"full": {
 			"width": 2000,
 			"height": 1414,
-			"bytes": 93490
+			"bytes": 79866
 		}
 	},
 	"The Gemischtwarenladen, Ahornweg 6": {
@@ -2846,7 +2868,7 @@
 		"preview": {
 			"width": 800,
 			"height": 577,
-			"bytes": 38884
+			"bytes": 41712
 		},
 		"web": {
 			"width": 1200,
@@ -2868,7 +2890,7 @@
 		"preview": {
 			"width": 800,
 			"height": 683,
-			"bytes": 44694
+			"bytes": 48556
 		},
 		"web": {
 			"width": 1200,
@@ -2889,8 +2911,8 @@
 		},
 		"preview": {
 			"width": 800,
-			"height": 565,
-			"bytes": 49520
+			"height": 564,
+			"bytes": 51362
 		},
 		"web": {
 			"width": 1200,
@@ -2907,12 +2929,12 @@
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 30170
+			"bytes": 31372
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 138272
+			"bytes": 133894
 		},
 		"web": {
 			"width": 900,
@@ -2922,7 +2944,7 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 1177472
+			"bytes": 1103210
 		}
 	},
 	"The room in Selb, Ahornweg 6": {
@@ -2934,7 +2956,7 @@
 		"preview": {
 			"width": 800,
 			"height": 600,
-			"bytes": 58088
+			"bytes": 58528
 		},
 		"web": {
 			"width": 1200,
@@ -2951,12 +2973,12 @@
 		"thumb": {
 			"width": 309,
 			"height": 400,
-			"bytes": 7070
+			"bytes": 7464
 		},
 		"preview": {
 			"width": 618,
 			"height": 800,
-			"bytes": 20708
+			"bytes": 23640
 		},
 		"web": {
 			"width": 927,
@@ -2966,19 +2988,19 @@
 		"full": {
 			"width": 1545,
 			"height": 2000,
-			"bytes": 266908
+			"bytes": 233666
 		}
 	},
 	"Tiles kitchen priv. house H. Heshmat_Courtesy S. Hafez": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 9418
+			"bytes": 9788
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 24948
+			"bytes": 26706
 		},
 		"web": {
 			"width": 900,
@@ -2988,19 +3010,19 @@
 		"full": {
 			"width": 1500,
 			"height": 2000,
-			"bytes": 166452
+			"bytes": 148022
 		}
 	},
 	"Tochter des Nils_beschmiert_Jollyville": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 23544
+			"bytes": 21794
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 82108
+			"bytes": 90640
 		},
 		"web": {
 			"width": 800,
@@ -3010,19 +3032,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 566182
+			"bytes": 541628
 		}
 	},
 	"Två_kvinnor_av_Hassan_Heshmat_Malmö": {
 		"thumb": {
 			"width": 294,
 			"height": 400,
-			"bytes": 16832
+			"bytes": 17446
 		},
 		"preview": {
 			"width": 589,
 			"height": 800,
-			"bytes": 51218
+			"bytes": 55678
 		},
 		"web": {
 			"width": 883,
@@ -3032,19 +3054,19 @@
 		"full": {
 			"width": 1472,
 			"height": 2000,
-			"bytes": 336852
+			"bytes": 302880
 		}
 	},
 	"Wärmetechnisches_Labor": {
 		"thumb": {
 			"width": 400,
 			"height": 299,
-			"bytes": 15844
+			"bytes": 16416
 		},
 		"preview": {
 			"width": 800,
 			"height": 597,
-			"bytes": 70314
+			"bytes": 90126
 		},
 		"web": {
 			"width": 1200,
@@ -3054,19 +3076,19 @@
 		"full": {
 			"width": 1878,
 			"height": 1402,
-			"bytes": 498224
+			"bytes": 468748
 		}
 	},
 	"Zwei_Bäuerinnen_Kafraoui_Park_Ahmed_Kamel": {
 		"thumb": {
 			"width": 267,
 			"height": 400,
-			"bytes": 14978
+			"bytes": 15682
 		},
 		"preview": {
 			"width": 533,
 			"height": 800,
-			"bytes": 53174
+			"bytes": 59694
 		},
 		"web": {
 			"width": 800,
@@ -3076,19 +3098,19 @@
 		"full": {
 			"width": 1200,
 			"height": 1800,
-			"bytes": 362304
+			"bytes": 326642
 		}
 	},
 	"atfih": {
 		"thumb": {
 			"width": 400,
 			"height": 225,
-			"bytes": 5850
+			"bytes": 6002
 		},
 		"preview": {
 			"width": 800,
 			"height": 450,
-			"bytes": 20022
+			"bytes": 16852
 		},
 		"web": {
 			"width": 1200,
@@ -3098,7 +3120,7 @@
 		"full": {
 			"width": 1600,
 			"height": 900,
-			"bytes": 166878
+			"bytes": 153970
 		}
 	},
 	"for Karin_from H Heshmat": {
@@ -3110,7 +3132,7 @@
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 40738
+			"bytes": 41852
 		},
 		"web": {
 			"width": 900,
@@ -3127,12 +3149,12 @@
 		"thumb": {
 			"width": 264,
 			"height": 400,
-			"bytes": 3840
+			"bytes": 3994
 		},
 		"preview": {
 			"width": 529,
 			"height": 800,
-			"bytes": 9702
+			"bytes": 12476
 		},
 		"web": {
 			"width": 556,
@@ -3142,19 +3164,19 @@
 		"full": {
 			"width": 556,
 			"height": 841,
-			"bytes": 25636
+			"bytes": 20974
 		}
 	},
 	"mermaid_rsg_II": {
 		"thumb": {
-			"width": 269,
-			"height": 400,
-			"bytes": 6182
+			"width": 400,
+			"height": 269,
+			"bytes": 6632
 		},
 		"preview": {
-			"width": 538,
-			"height": 800,
-			"bytes": 14020
+			"width": 800,
+			"height": 538,
+			"bytes": 16776
 		},
 		"web": {
 			"width": 831,
@@ -3162,21 +3184,21 @@
 			"bytes": 23940
 		},
 		"full": {
-			"width": 559,
-			"height": 831,
-			"bytes": 27794
+			"width": 831,
+			"height": 559,
+			"bytes": 23940
 		}
 	},
 	"mermaid_rsg_III": {
 		"thumb": {
 			"width": 300,
 			"height": 400,
-			"bytes": 7444
+			"bytes": 7670
 		},
 		"preview": {
 			"width": 600,
 			"height": 800,
-			"bytes": 18966
+			"bytes": 22120
 		},
 		"web": {
 			"width": 720,
@@ -3186,19 +3208,19 @@
 		"full": {
 			"width": 720,
 			"height": 960,
-			"bytes": 40880
+			"bytes": 38274
 		}
 	},
 	"panorama_II": {
 		"thumb": {
 			"width": 276,
 			"height": 400,
-			"bytes": 11538
+			"bytes": 12086
 		},
 		"preview": {
 			"width": 552,
 			"height": 800,
-			"bytes": 27782
+			"bytes": 34492
 		},
 		"web": {
 			"width": 586,
@@ -3208,19 +3230,19 @@
 		"full": {
 			"width": 586,
 			"height": 849,
-			"bytes": 60228
+			"bytes": 53988
 		}
 	},
 	"sheraton_heliopolis": {
 		"thumb": {
 			"width": 268,
 			"height": 400,
-			"bytes": 9710
+			"bytes": 10262
 		},
 		"preview": {
 			"width": 529,
 			"height": 790,
-			"bytes": 29492
+			"bytes": 27758
 		},
 		"web": {
 			"width": 529,
@@ -3230,41 +3252,41 @@
 		"full": {
 			"width": 529,
 			"height": 790,
-			"bytes": 43136
+			"bytes": 38934
 		}
 	},
 	"ticket museum of egyptian modern art": {
 		"thumb": {
 			"width": 400,
 			"height": 221,
-			"bytes": 15456
+			"bytes": 16166
 		},
 		"preview": {
 			"width": 800,
 			"height": 442,
-			"bytes": 40422
+			"bytes": 45040
 		},
 		"web": {
 			"width": 1200,
 			"height": 662,
-			"bytes": 89046
+			"bytes": 100734
 		},
 		"full": {
 			"width": 1754,
 			"height": 968,
-			"bytes": 150196
+			"bytes": 170490
 		}
 	},
 	"transport_BTM_Statue from workshop in Ain Shams": {
 		"thumb": {
 			"width": 272,
 			"height": 400,
-			"bytes": 24074
+			"bytes": 24888
 		},
 		"preview": {
 			"width": 544,
 			"height": 800,
-			"bytes": 76502
+			"bytes": 83842
 		},
 		"web": {
 			"width": 817,
@@ -3274,7 +3296,7 @@
 		"full": {
 			"width": 1206,
 			"height": 1772,
-			"bytes": 551572
+			"bytes": 508124
 		}
 	}
 }
