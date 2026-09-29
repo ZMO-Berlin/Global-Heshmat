@@ -24,7 +24,7 @@ const residence: Residence = {
 		{ src: 'Familienalbum mit Handschrift Fritz Haude.jpg', caption: 'Family album with handwriting of Fritz Haude (Courtesy of Karin Haude)'},
 		{ src: 'Karin Haude 1957 with knit dress by Zeinab.jpg', caption: 'Karin Haude with dress knit dress by Zeinab, 1957 (Courtesy of Karin Haude)'},
 		{ src: 'The Heshmat couple with baby Karin Haude in Selb, christmas 1957.jpg', caption: 'The Heshmat couple with baby Karin Haude in Selb, Christmas 1957' }, 
-		{ src: 'Selb_Haus_III.jpeg', caption: 'Selb House III' }
+		{ src: 'Selb_Haus_III.jpeg', caption: 'The Haude Family Home in Selb, Bavaria, 2026' }
 	]
 };
 
