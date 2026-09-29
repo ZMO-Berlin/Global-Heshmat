@@ -3123,6 +3123,72 @@
 			"bytes": 153970
 		}
 	},
+	"budapest 1": {
+		"thumb": {
+			"width": 300,
+			"height": 400,
+			"bytes": 7978
+		},
+		"preview": {
+			"width": 600,
+			"height": 800,
+			"bytes": 18536
+		},
+		"web": {
+			"width": 900,
+			"height": 1200,
+			"bytes": 39360
+		},
+		"full": {
+			"width": 1500,
+			"height": 2000,
+			"bytes": 78318
+		}
+	},
+	"budapest 2": {
+		"thumb": {
+			"width": 225,
+			"height": 400,
+			"bytes": 3958
+		},
+		"preview": {
+			"width": 450,
+			"height": 800,
+			"bytes": 9524
+		},
+		"web": {
+			"width": 675,
+			"height": 1200,
+			"bytes": 24084
+		},
+		"full": {
+			"width": 1125,
+			"height": 2000,
+			"bytes": 76448
+		}
+	},
+	"budapest 3": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 11920
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 35244
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 93096
+		},
+		"full": {
+			"width": 1920,
+			"height": 1440,
+			"bytes": 198762
+		}
+	},
 	"for Karin_from H Heshmat": {
 		"thumb": {
 			"width": 300,
