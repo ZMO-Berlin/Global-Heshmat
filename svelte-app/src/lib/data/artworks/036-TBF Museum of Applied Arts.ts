@@ -14,9 +14,14 @@ const artwork: Artwork = {
 	status: 'search',
 	address: 'Üllői út 33-37, 1092 Budapest',
 	desc: 'The Iparművészeti Múzeum (Museum of Applied Arts) in Budapest once housed works by Hassan Heshmat. Currently, there is no information available and the works whereabouts are unknown.',
-	
-	
-	
+	images: [
+		{
+			src: 'budapest 1.jpg',
+			caption: 'Hassan Heshmat and his wife Zeinab Hegasy at the vernissage of his exhibition at the Museum of Applied Arts in Budapest, Hungary, 1958.'
+		},
+		{ src: 'budapest 3.jpg' },
+		{ src: 'budapest 2.jpg' }
+	]
 };
 
 export default artwork;
