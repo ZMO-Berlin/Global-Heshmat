@@ -6,7 +6,7 @@ const artwork: Artwork = {
 	
 	id: 2,
 	slug: "museum-of-modern-egyptian-art",
-	name: 'Museum of Modern Egyptian Art',
+	name: 'Museum of Egyptian Modern Art',
 	lat: 30.0436289222398,
 	lng: 31.224813224857503,
 	country: 'Egypt',
