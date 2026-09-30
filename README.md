@@ -193,7 +193,7 @@ Four layers, all run in CI:
 1. Copy `src/lib/data/artworks/_template.ts`.
 2. Rename it (e.g., `035-new-artwork.ts`).
 3. Fill in the fields (see the template for documentation).
-4. Drop any images into `originals/`, then generate their WebP derivatives (see [Images](#images)).
+4. Drop any images into `originals/`; `npm run dev` watches this folder and generates WebP derivatives automatically (see [Images](#images)).
 5. Done — `index.ts` auto-imports all artwork files via `import.meta.glob`, the next build emits a new `/artworks/<slug>/` page and adds it to `sitemap.xml`.
 
 The slug is auto-derived from `name`. To pin a stable URL when renaming, set `slug: 'my-stable-slug'` explicitly. A build error is thrown if two artworks would resolve to the same slug.
@@ -216,21 +216,21 @@ The gallery and lightbox both ship a `srcset` spanning the last two, with a `siz
 
 ### Uploading new images
 
-For any new JPG/PNG upload, place the original master in `svelte-app/originals/` and let the generator convert it automatically.
+When `npm run dev` is running, place the original master in `svelte-app/originals/`; the dev server starts the image watcher automatically and converts new or changed images.
 
 ```bash
 cd svelte-app
-npm run images:watch
+npm run dev
 ```
 
-Or, for a one-off conversion after a new file is added:
+For a one-off conversion without starting the dev server:
 
 ```bash
 cd svelte-app
 npm run images
 ```
 
-The script watches `originals/` for new uploads and generates the matching WebP thumbnails, web-size, and full-size variants into `static/images/{thumb,preview,web,full}/` without you having to touch the generated output files manually.
+The watcher generates matching WebP thumbnails, web-size, and full-size variants into `static/images/{thumb,preview,web,full}/`. To keep derivatives available for deployment, commit the generated files as well as the original.
 
 After adding or replacing any image in `originals/`, regenerate the derivatives and commit them:
 

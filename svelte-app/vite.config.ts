@@ -2,6 +2,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vite';
+import { spawn } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -20,6 +21,21 @@ export default defineConfig({
 					fileName: 'rtl-text-plugin.js',
 					source: readFileSync(rtlTextPluginPath)
 				});
+			}
+		},
+		{
+			name: 'watch-image-originals',
+			apply: 'serve',
+			configureServer(server) {
+				if (process.env.VITEST) return;
+
+				const generatorPath = fileURLToPath(
+					new URL('./scripts/generate_image_derivatives.mjs', import.meta.url)
+				);
+				const watcher = spawn(process.execPath, [generatorPath, '--watch'], { stdio: 'inherit' });
+				const stopWatcher = () => watcher.kill();
+				server.watcher.once('close', stopWatcher);
+				process.once('exit', stopWatcher);
 			}
 		},
 		sveltekit(),

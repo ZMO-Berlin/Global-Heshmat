@@ -2771,6 +2771,28 @@
 			"bytes": 207896
 		}
 	},
+	"Sheraton Aida": {
+		"thumb": {
+			"width": 400,
+			"height": 291,
+			"bytes": 17112
+		},
+		"preview": {
+			"width": 800,
+			"height": 582,
+			"bytes": 41990
+		},
+		"web": {
+			"width": 1069,
+			"height": 778,
+			"bytes": 84222
+		},
+		"full": {
+			"width": 1069,
+			"height": 778,
+			"bytes": 84222
+		}
+	},
 	"Symbol_des_Regierungsbezirks_Matrouh_Kafraoui": {
 		"thumb": {
 			"width": 267,
