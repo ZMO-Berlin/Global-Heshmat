@@ -23,7 +23,7 @@ const residence: Residence = {
 		{ src: 'for Karin_from H Heshmat.jpg', caption: 'Pendant for Karin Haude, by Hassan Heshmat'},
 		{ src: 'Familienalbum mit Handschrift Fritz Haude.jpg', caption: 'Family album with handwriting of Fritz Haude (Courtesy of Karin Haude)'},
 		{ src: 'Karin Haude 1957 with knit dress by Zeinab.jpg', caption: 'Babygirl Karin in a dress knit by Zeinab Hegazy with her grandmother Frieda Haude. Selb, Christmas 1957 (Courtesy of Karin Haude)'},
-		{ src: 'The Heshmat couple with baby Karin Haude in Selb, christmas 1957.jpg', caption: 'The Heshmat couple with baby Karin Haude in Selb, Christmas 1957' }, 
+		{ src: 'The Heshmat couple with baby Karin Haude in Selb, christmas 1957.jpg', caption: 'Zeinab Hegasy with Karin, the Haude family’s child, and Hassan Heshmat presenting the baby’s grandfather, Georg Harms, with one of his Fellaha figurines (a peasant woman with a basket). Selb, Christmas 1957.' }, 
 		{ src: 'Selb_Haus_III.jpeg', caption: 'The Haude Family Home in Selb, Bavaria, 2026' }
 	]
 };
