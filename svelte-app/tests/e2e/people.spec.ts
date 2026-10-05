@@ -169,7 +169,7 @@ test('profiles are readable with JavaScript disabled', async ({ browser }) => {
 	const page = await context.newPage();
 	await page.goto('/people/gertrude-fritz-steppat/');
 	await expect(
-		page.getByRole('heading', { name: 'Gertrude Steppat / Prof. Fritz Steppat', exact: true })
+		page.getByRole('heading', { name: 'Gertraud Steppat / Prof. Fritz Steppat', exact: true })
 	).toBeVisible();
 	await expect(page.locator('.biography')).toContainText('Bei der Eröffnung');
 	await expect(page.locator('.notes')).toContainText('Ambassador Dr. Kramer');

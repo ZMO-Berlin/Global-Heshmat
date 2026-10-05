@@ -17,6 +17,15 @@
 <section class="research-page" aria-labelledby="people-heading">
 	<div class="research-inner people-inner">
 		<h2 id="people-heading">People</h2>
+		<p class="people-intro">
+			In the course of her research on Hassan Heshmat, Sonja Hegasy identified the following group
+			of individuals. Many are connected to one another and collectively represent important social
+			and institutional constituencies. The illustration has already revealed an interesting cluster
+			that had previously gone unnoticed, namely Heshmat’s contacts to the Armenian community in
+			Cairo. It also brings into clearer focus the role played by political sponsors, curators, and
+			private collectors as well as the connections to Germany, the Netherlands and Belgium. Hegasy
+			has met and interviewed several of the individuals listed below.
+		</p>
 		<div class="people-toolbar">
 			<p role="status">{matches.length} {matches.length === 1 ? 'profile' : 'profiles'}</p>
 			<label
@@ -41,6 +50,10 @@
 </section>
 
 <style>
+	.people-intro {
+		max-width: 75ch;
+		margin-bottom: var(--space-6);
+	}
 	.people-toolbar {
 		display: flex;
 		flex-wrap: wrap;
