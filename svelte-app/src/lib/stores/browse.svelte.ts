@@ -16,7 +16,9 @@ import {
 	readFilters,
 	writeFilters,
 	galleryMode,
+	peopleSort,
 	DEFAULT_FILTERS,
+	type PeopleSort,
 	type GalleryMode
 } from '$lib/utils/url-facets';
 import type { CollectionFilters } from '$lib/utils/map-filter';
@@ -118,6 +120,12 @@ export function createBrowseStore() {
 		get peopleView() {
 			return page.route.id?.startsWith('/people') ?? false;
 		},
+		get peopleSort() {
+			return peopleSort(params());
+		},
+		setPeopleSort(sort: PeopleSort) {
+			patch({ sort: sort === 'original' ? null : sort }, true);
+		},
 		peopleHref(patch: Partial<CollectionFilters> = {}) {
 			const next = writeFilters(new SvelteURLSearchParams(), {
 				...filters,
@@ -126,6 +134,7 @@ export function createBrowseStore() {
 				type: 'all',
 				...patch
 			});
+			if (this.peopleSort !== 'original') next.set('sort', this.peopleSort);
 			return resolve('/people') + (next.size ? `?${next}` : '');
 		},
 		personHref(person: Person) {
@@ -135,6 +144,7 @@ export function createBrowseStore() {
 				status: 'all',
 				type: 'all'
 			});
+			if (this.peopleSort !== 'original') next.set('sort', this.peopleSort);
 			return resolve('/people/[slug]', { slug: person.slug }) + (next.size ? `?${next}` : '');
 		},
 		searchHref() {
