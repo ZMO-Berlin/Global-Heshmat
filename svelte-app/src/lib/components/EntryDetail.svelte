@@ -5,6 +5,7 @@
 	import { entryImages, entryKey, entryTitle } from '$lib/utils/collection';
 	import EntryTools from './EntryTools.svelte';
 	import EvidencePanel from './EvidencePanel.svelte';
+	import { people } from '$lib/data/people';
 	import Gallery from './Gallery.svelte';
 	import VideoPlayer from './VideoPlayer.svelte';
 	import { aboutContent as about } from '$lib/data/about';
@@ -20,6 +21,9 @@
 	const artwork = $derived(store.selectedArtwork);
 	const residence = $derived(store.selectedResidence);
 	const item = $derived(artwork ?? residence);
+	const relatedPeople = $derived(
+		item ? people.filter((person) => person.relatedEntries.includes(entryKey(item))) : []
+	);
 
 	const isSearch = $derived(artwork?.status === 'search');
 	const tagClass = $derived(
@@ -182,6 +186,14 @@
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -- content is from our own data files, not user input -->
 					<div class="sidebar-desc" dir="auto">{@html residence.desc}</div>
 				{/if}
+				{#if relatedPeople.length}<section class="related-people">
+						<h3>People</h3>
+						<ul>
+							{#each relatedPeople as person (person.slug)}<li>
+									<a href={store.personHref(person)}>{person.name}</a>
+								</li>{/each}
+						</ul>
+					</section>{/if}
 				<EvidencePanel {item} />
 				{#key entryKey(item)}<EntryTools {item} />{/key}
 			</div>
@@ -190,6 +202,25 @@
 </aside>
 
 <style>
+	.related-people {
+		border-top: 1px solid var(--color-border);
+		margin-top: var(--space-5);
+		padding-top: var(--space-4);
+	}
+	.related-people h3 {
+		font: var(--weight-semibold) var(--text-2xl) var(--font-display);
+	}
+	.related-people ul {
+		list-style: none;
+		padding: 0;
+	}
+	.related-people a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		color: var(--color-primary-text);
+		text-underline-offset: 3px;
+	}
 	.full-title {
 		font-size: var(--text-sm);
 		color: var(--color-text-secondary);

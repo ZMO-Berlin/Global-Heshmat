@@ -15,6 +15,7 @@ import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { VARIANTS, imageStem } from './image-variants.mjs';
+import { parse } from 'parse5';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const BUILD_DIR = join(__dirname, '..', 'build');
@@ -85,6 +86,45 @@ function verifyClientAssets(directory = BUILD_DIR) {
 }
 verifyClientAssets();
 check('missing works dossier prerendered', existsSync(join(BUILD_DIR, 'missing/index.html')));
+const peopleData = JSON.parse(readFileSync(join(__dirname, '../src/lib/data/people.json'), 'utf8'));
+check('People index prerendered', existsSync(join(BUILD_DIR, 'people/index.html')));
+function findClass(node, name) {
+	if (node.attrs?.some((attr) => attr.name === 'class' && attr.value.split(' ').includes(name)))
+		return node;
+	for (const child of node.childNodes ?? []) {
+		const found = findClass(child, name);
+		if (found) return found;
+	}
+}
+function nodeText(node) {
+	return node?.nodeName === '#text' ? node.value : (node?.childNodes ?? []).map(nodeText).join('');
+}
+for (const person of peopleData.people) {
+	const path = `people/${person.slug}/index.html`;
+	check(`${path} prerendered`, existsSync(join(BUILD_DIR, path)));
+	if (!existsSync(join(BUILD_DIR, path))) continue;
+	const html = read(path);
+	const biography = nodeText(findClass(parse(html), 'biography'));
+	const sourceText = [
+		...person.paragraphs,
+		...person.notes,
+		...peopleData.contexts
+			.filter((context) => context.people.includes(person.slug))
+			.flatMap((context) => context.paragraphs)
+	];
+	check(
+		`${person.slug} preserves all source passages in readable HTML`,
+		sourceText.every((text) => biography.includes(text))
+	);
+	check(
+		`${person.slug} has its own canonical URL`,
+		html.includes(`rel="canonical" href="${SITE_URL}/people/${person.slug}/"`)
+	);
+	check(
+		`${person.slug} listed in sitemap`,
+		read('sitemap.xml').includes(`<loc>${SITE_URL}/people/${person.slug}/</loc>`)
+	);
+}
 // ── Site-wide assets ────────────────────────────────────────────────
 check('CNAME present', existsSync(join(BUILD_DIR, 'CNAME')));
 check(

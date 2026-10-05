@@ -148,6 +148,7 @@ export default defineConfig({
 					'client/offline/index.html',
 					'prerendered/pages/index.html',
 					'prerendered/pages/collection/index.html',
+					'prerendered/pages/people/index.html',
 					'prerendered/pages/missing/index.html',
 					'prerendered/pages/fieldbook/index.html',
 					'prerendered/pages/trails/index.html'

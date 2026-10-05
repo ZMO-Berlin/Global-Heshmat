@@ -8,7 +8,9 @@
 		variant = 'default'
 	}: { compact?: boolean; variant?: 'default' | 'header' } = $props();
 	const store = getBrowseStore();
-	const galleryActive = $derived(store.view === 'gallery' && page.route.id !== '/missing');
+	const galleryActive = $derived(
+		store.view === 'gallery' && page.route.id !== '/missing' && !store.peopleView
+	);
 </script>
 
 <div
@@ -39,8 +41,16 @@
 		class:active={galleryActive && store.mode === 'list'}
 		href={store.collectionHref('list')}
 		aria-label="List view"
+		data-view="list"
 		aria-current={galleryActive && store.mode === 'list' ? 'page' : undefined}
 		><List size={15} aria-hidden="true" /><span>List</span></a
+	>
+	<a
+		class="switch people-switch"
+		class:active={store.peopleView}
+		href={store.peopleHref()}
+		aria-label="People"
+		aria-current={store.peopleView ? 'page' : undefined}>People</a
 	>
 </div>
 
@@ -148,10 +158,13 @@
 		}
 	}
 	@media (max-width: 768px) {
-		/* .header-btn grows to 44px on phones; keep the group's outer box
-		   identical so all three controls share a top and bottom edge. */
+		.on-header [data-view='list'] {
+			display: none;
+		}
+		/* Six pixels of border/padding surround a full 44px link hit area.
+		   Match the sibling header buttons' 50px outer height. */
 		.on-header {
-			height: 44px;
+			height: 50px;
 		}
 		.on-header .switch {
 			min-width: 44px;

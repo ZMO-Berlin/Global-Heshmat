@@ -24,12 +24,16 @@
 	import { createBrowseStore } from '$lib/stores/browse.svelte';
 	let { children }: { children: Snippet } = $props();
 	const store = createBrowseStore();
+	$effect(() => {
+		if (store.ready && !store.peopleView && store.filters.type === 'person')
+			void goto(store.peopleHref(), { replaceState: true });
+	});
 	createFieldbook();
 	// SvelteKit card clicks do not fetch an HTML document. Save it explicitly,
 	// including a first visit that happens before the service worker activates.
 	afterNavigate(({ to }) => {
 		const path = to?.url.pathname;
-		if (!path || !/^\/(artworks|residences)\//.test(path) || !('serviceWorker' in navigator))
+		if (!path || !/^\/(artworks|residences|people)\//.test(path) || !('serviceWorker' in navigator))
 			return;
 		void navigator.serviceWorker.ready
 			.then(async () => {

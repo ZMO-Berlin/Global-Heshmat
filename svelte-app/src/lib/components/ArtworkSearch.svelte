@@ -4,6 +4,8 @@
 	import { Search } from '@lucide/svelte';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
+	import { people, type Person } from '$lib/data/people';
+	import { filterPeople } from '$lib/utils/people';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 	import { entryKey, entryTitle, type Entry } from '$lib/utils/collection';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
@@ -13,19 +15,27 @@
 	let activeIndex = $state(-1);
 	const all = $derived([
 		...filterArtworks(artworks, store.filters),
-		...filterResidences(residences, store.filters)
+		...filterResidences(residences, store.filters),
+		...filterPeople(people, store.filters)
 	]);
 	const matches = $derived(all.slice(0, 8));
 	const open = $derived(searchOpen && store.filters.query.trim().length >= 2);
-	function select(item: Entry) {
+	function resultKey(item: Entry | Person) {
+		return 'paragraphs' in item ? `person:${item.slug}` : entryKey(item);
+	}
+	function select(item: Entry | Person) {
 		searchOpen = false;
 		activeIndex = -1;
-		store.returnKey = entryKey(item);
-		void goto(store.entryHref(item));
+		if ('paragraphs' in item) void goto(store.personHref(item));
+		else {
+			store.returnKey = entryKey(item);
+			void goto(store.entryHref(item));
+		}
 	}
 	function keys(event: KeyboardEvent) {
 		if (!open) return;
 		if (event.key === 'Escape') {
+			event.preventDefault();
 			event.stopPropagation();
 			searchOpen = false;
 			activeIndex = -1;
@@ -40,7 +50,7 @@
 			if (activeIndex >= 0 && matches[activeIndex]) select(matches[activeIndex]);
 			else {
 				searchOpen = false;
-				void goto(store.collectionHref());
+				void goto(store.searchHref());
 			}
 		}
 	}
@@ -56,7 +66,7 @@
 	<input
 		disabled={!store.ready}
 		type="search"
-		placeholder="Search the collection…"
+		placeholder={store.peopleView ? 'Search people…' : 'Search works, places, people…'}
 		aria-label="Search the collection"
 		role="combobox"
 		aria-expanded={open}
@@ -77,19 +87,19 @@
 	{#if open}
 		<div class="search-popup">
 			<div id={searchId} role="listbox" aria-label="Search results">
-				{#each matches as item, index (entryKey(item))}<button
+				{#each matches as item, index (resultKey(item))}<button
 						role="option"
 						id="{searchId}-{index}"
 						aria-selected={index === activeIndex}
 						class:active={index === activeIndex}
 						onclick={() => select(item)}
-						><span dir="auto">{entryTitle(item)}</span><small dir="auto"
-							>{item.city}, {item.country}</small
+						><span dir="auto">{'paragraphs' in item ? item.name : entryTitle(item)}</span><small
+							dir="auto">{'paragraphs' in item ? 'People' : `${item.city}, ${item.country}`}</small
 						></button
 					>{/each}
 			</div>
 			{#if !all.length}<p role="status">No entries found. Try clearing another filter.</p>{:else}<a
-					href={store.collectionHref()}
+					href={store.searchHref()}
 					onclick={() => (searchOpen = false)}>View all {all.length} results</a
 				>{/if}
 		</div>

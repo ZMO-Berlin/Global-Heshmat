@@ -4,7 +4,7 @@ export function canonicalEntryPath(
 	origin = 'https://heshmat.zmo.de'
 ): string | null {
 	const url = new URL(value, origin);
-	if (url.origin !== origin || !/^\/(artworks|residences)\/[^/]+\/?$/.test(url.pathname))
+	if (url.origin !== origin || !/^\/(artworks|residences|people)\/[^/]+\/?$/.test(url.pathname))
 		return null;
 	return url.pathname.replace(/\/?$/, '/');
 }

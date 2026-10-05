@@ -20,6 +20,7 @@ import {
 	type GalleryMode
 } from '$lib/utils/url-facets';
 import type { CollectionFilters } from '$lib/utils/map-filter';
+import type { Person } from '$lib/data/people';
 const CONTEXT = Symbol('collection-browser');
 export function createBrowseStore() {
 	let ready = $state(false);
@@ -46,7 +47,10 @@ export function createBrowseStore() {
 	const filterKey = $derived(
 		JSON.stringify({
 			...readFilters(params()),
-			...(page.route.id === '/missing' ? { status: 'search' as const } : {})
+			...(page.route.id === '/missing' ? { status: 'search' as const } : {}),
+			...(page.route.id?.startsWith('/people')
+				? { type: 'person' as const, country: '', status: 'all' as const }
+				: {})
 		})
 	);
 	const filters: CollectionFilters = $derived(JSON.parse(filterKey));
@@ -109,7 +113,34 @@ export function createBrowseStore() {
 			});
 		},
 		resetFilters() {
-			this.setFilters({ ...DEFAULT_FILTERS });
+			this.setFilters({ ...DEFAULT_FILTERS, group: '', place: '' });
+		},
+		get peopleView() {
+			return page.route.id?.startsWith('/people') ?? false;
+		},
+		peopleHref(patch: Partial<CollectionFilters> = {}) {
+			const next = writeFilters(new SvelteURLSearchParams(), {
+				...filters,
+				country: '',
+				status: 'all',
+				type: 'all',
+				...patch
+			});
+			return resolve('/people') + (next.size ? `?${next}` : '');
+		},
+		personHref(person: Person) {
+			const next = writeFilters(new SvelteURLSearchParams(), {
+				...filters,
+				country: '',
+				status: 'all',
+				type: 'all'
+			});
+			return resolve('/people/[slug]', { slug: person.slug }) + (next.size ? `?${next}` : '');
+		},
+		searchHref() {
+			return this.peopleView || filters.type === 'person'
+				? this.peopleHref()
+				: this.collectionHref();
 		},
 		get mode() {
 			return galleryMode(params());
@@ -158,6 +189,9 @@ export function createBrowseStore() {
 					? resolve('/artworks/[slug]', { slug: data.slug })
 					: resolve('/residences/[slug]', { slug: data.slug });
 			const next = new SvelteURLSearchParams(filterParams);
+			if (this.peopleView || filters.type === 'person') {
+				for (const key of ['type', 'group', 'place', 'q']) next.delete(key);
+			}
 			next.set('view', options.view ?? this.view);
 			if (this.mode !== 'entries') next.set('mode', this.mode);
 			if (options.photo) next.set('photo', options.photo);
@@ -175,6 +209,9 @@ export function createBrowseStore() {
 		},
 		collectionHref(mode: GalleryMode = galleryMode(params()), view: 'map' | 'gallery' = 'gallery') {
 			const next = new SvelteURLSearchParams(filterParams);
+			if (this.peopleView || filters.type === 'person') {
+				for (const key of ['type', 'group', 'place']) next.delete(key);
+			}
 			if (mode !== 'entries' && view !== 'map') next.set('mode', mode);
 			return resolve(view === 'map' ? '/' : '/collection') + (next.size ? `?${next}` : '');
 		},

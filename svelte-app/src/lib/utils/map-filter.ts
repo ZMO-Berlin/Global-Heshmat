@@ -7,8 +7,10 @@ export type MapFilter = string;
 export interface CollectionFilters {
 	country: string;
 	status: 'all' | 'located' | 'search';
-	type: 'all' | 'artwork' | 'residence';
+	type: 'all' | 'artwork' | 'residence' | 'person';
 	query: string;
+	group?: string;
+	place?: string;
 }
 export const DEFAULT_FILTERS: CollectionFilters = {
 	country: '',
@@ -65,7 +67,7 @@ export function filterArtworks<T extends Artwork>(
 	const f = normalizeFilters(filter);
 	return items.filter(
 		(item) =>
-			f.type !== 'residence' &&
+			(f.type === 'all' || f.type === 'artwork') &&
 			(!f.country || item.country === f.country) &&
 			(f.status === 'all' || item.status === f.status) &&
 			matchesQuery(item, f.query)
@@ -78,7 +80,7 @@ export function filterResidences<T extends Residence>(
 	const f = normalizeFilters(filter);
 	return items.filter(
 		(item) =>
-			f.type !== 'artwork' &&
+			(f.type === 'all' || f.type === 'residence') &&
 			f.status === 'all' &&
 			(!f.country || item.country === f.country) &&
 			matchesQuery(item, f.query)

@@ -1,0 +1,484 @@
+{
+	"source": {
+		"file": "Akteurs_draft.docx",
+		"sha256": "81df5b1335582bf243afd14ebbe203d9d90a14de8a1708c5d87bca26fe88aab2"
+	},
+	"groups": [
+		{
+			"id": "teachers",
+			"name": "Teachers and Political Sponsors",
+			"sourceParagraph": 7
+		},
+		{
+			"id": "armenian-community",
+			"name": "Heshmat and the Armenian-Egyptian (art) community in Cairo",
+			"sourceParagraph": 13
+		},
+		{
+			"id": "cairo-crossroads",
+			"name": "Cairo International Crossroads",
+			"sourceParagraph": 19
+		},
+		{
+			"id": "researchers",
+			"name": "Researchers/Authors",
+			"sourceParagraph": 26
+		},
+		{
+			"id": "collectors",
+			"name": "Collectors and Benefactors",
+			"sourceParagraph": 29
+		},
+		{
+			"id": "selb",
+			"name": "The Selb Connection",
+			"sourceParagraph": 36
+		},
+		{
+			"id": "peers",
+			"name": "Contemporaries and Peers",
+			"sourceParagraph": 41
+		},
+		{
+			"id": "art-historians",
+			"name": "Art Historians and Gallerists",
+			"sourceParagraph": 59
+		}
+	],
+	"contexts": [
+		{
+			"id": "portraits",
+			"people": ["sabry-ragheb", "hussein-bicar", "georges-bahgory"],
+			"sourceParagraphs": [46],
+			"paragraphs": [
+				"All three artists portrayed Hassan Heshmat in their own very typical style. Ragheb and Bicar were known as masters of portrait-painting, while Bahgory was also famous for his caricatures."
+			]
+		},
+		{
+			"id": "warsaw",
+			"people": ["mounir-kanaan", "mamdouh-ammar", "youssef-francis"],
+			"sourceParagraphs": [49, 54],
+			"paragraphs": [
+				"In 1955 Heshmat was invited with a delegation of 10 artists to represent Egypt at the 5th World Festival of Youth and Students in Warsaw. We know that with him were Mounir Kanaan, Mamdouh Ammar and Youssef Francis:",
+				"All four - Heshmat, Kanaan, Ammar and Francis - were part of a generation coming to fruition in extremely turbulent times. They were entering Egyptian artistic life around 1938–55, when the question wasn't simply “How do we make modern art?” or “How can we make independent art?” but how can art be simultaneously modern and recognizably Egyptian and thus original? Everyone found their own answer to this question, which would become a core topic for the development of modern Egyptian art."
+			]
+		}
+	],
+	"people": [
+		{
+			"slug": "saeed-sadr",
+			"name": "Saeed Sadr",
+			"groups": ["teachers"],
+			"places": ["Cairo", "Tulkarem", "London", "Fustat"],
+			"sourceParagraphs": [8],
+			"paragraphs": [
+				"Saeed Sadr (1909-1986) was a plastic artist, born in the Gabaliyya district of Cairo to a family from the Palestinian city of Tulkarem. In 1928, he received a diploma in “Decoration and Woodcarving” from the Egyptian Institute of Arts and Decoration”. Then he joined the Camberwell Institute of Art in London, where he graduated in 1931 with a diploma \"Professors of Painting\". Al-Sadr was a significant figure in the development of ceramics and applied arts education in modern Egypt. In 1940, he founded the Museum of Applied Arts at the Faculty of Applied Arts in Cairo and established its Department of Ceramics, contributing to the consolidation of ceramics as a field of study and practice. In 1960, the Egyptian Ministry of Culture commissioned him to establish a Ceramic Center in Fustat, further extending his influence beyond the university and into the wider cultural sphere. Al-Sadr served as Dean of the Faculty of Applied Arts from 1967 to 1969, a position that further reflected his prominent role in the development of applied arts education in Egypt."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "tharwat-okasha",
+			"name": "Tharwat Okasha",
+			"groups": ["teachers"],
+			"places": ["Egypt", "Ain Shams"],
+			"sourceParagraphs": [9],
+			"paragraphs": [
+				"Tharwat Okasha (1921–2012) served as Egypt’s Minister of Culture from 1958 to 1962 and again from 1966 to 1970. He supported Heshmat in securing an estate in Ain Shams, which provided him with a place to live and work until his death. In 1959, Heshmat received a scholarship so he could become independent from his day job as a teacher. Heshmat was tasked by Okasha with designing a work of art to serve as a state gift from the Egyptian government, which Okasha gave out 82 times."
+			],
+			"relatedEntries": ["artwork:3"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "emad-abu-ghazi",
+			"name": "Emad Abu Ghazi",
+			"groups": ["teachers"],
+			"places": ["Cairo", "Ain Shams"],
+			"sourceParagraphs": [10],
+			"paragraphs": [
+				"Emad Abu Ghazi (b. 1955) is a historian and professor emeritus of archival studies at Cairo University. Abu Ghazi comes from a family of artists on both his father's and mother's sides. After the uprising against the Mubarak regime in 2011, he briefly served as Egypt’s Minister of Culture, though resigned in November 2011 in protest against the government’s handling of violent clashes on Mohamed Mahmoud Street. He had encountered Hassan Heshmat much earlier: In 2000, he was responsible for awarding him the certificate of the ‘State Prize of Merit’, Egypt’s highest honour, which he presented to him at his private residence in Ain Shams, since Heshmat was already severely weakened by his illness. Later, in his capacity of Minister of Culture, he presented the accompanying gold medal designed by Gamal as-Sigini (1917–1977) to Heshmat’s family. As-Sigini was one of the leading Egyptian sculptors and medalist of the 20th century and a central figure in the development of modern Egyptian sculpture. Art historian Nadine Nour el-Din points to an early encounter of which she also presents a photo: “In one of his earliest group exhibitions, he [Heshmat, SH] showed alongside seminal figures such as Gamal as-Sagini, Hedi Gazor and Saad Kamel. Described as the liberator of modern Egyptian art, Ayyad was widely recognized as the founding father of the Egyptian popular expressionist movement. Ayyad was one of the most innovative painters of his generation and one of the most respected in the Arab world. The subjects of Ayyad's works often drew from ancient Egyptian references in Egyptian popular culture, depicting scenes of rural life. […]"
+			],
+			"relatedEntries": ["artwork:3"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "shant-chant-avetisyan",
+			"name": "Shant (Chant) Avetisyan",
+			"groups": ["armenian-community", "peers"],
+			"places": ["Cairo", "Montreal", "Paris", "Egypt", "Europe", "China"],
+			"sourceParagraphs": [14, 48],
+			"paragraphs": [
+				"Shant (Chant) Avetisyan, Egyptian-Armenian artist (1951 – 2018). From 1970 to 1978, he studied in Montreal and Paris. He then returned to Cairo. In the 1970s, for example, he designed costumes for the Armenian folk dance group Sardarapat. Avetisyan bought artworks from Heshmat. „In Egypt I am Armenian, in Europe I am Egyptian, but in China these definitions mean nothing.“ (Source: https://oxbridgepartners.com/hratch/index.php/publications/articles/88-looking-to-the-east-chant-avedissian?utm_source=chatgpt.com )"
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "george-mikaelian",
+			"name": "George Mikaelian",
+			"groups": ["armenian-community"],
+			"places": ["Cairo"],
+			"sourceParagraphs": [15],
+			"paragraphs": [
+				"George Mikaelian (1914–1986) was a bookseller and art patron in Cairo who supported young Egyptian artists, including Heshmat and Avetisyan."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "ronald-pritchard",
+			"name": "Ronald Pritchard",
+			"groups": ["cairo-crossroads"],
+			"places": [
+				"Luxembourg",
+				"Calais",
+				"Egypt",
+				"Heliopolis",
+				"Italy",
+				"Rome",
+				"Rimini",
+				"Cairo",
+				"Maadi",
+				"United Kingdom",
+				"Libya",
+				"Sudan",
+				"France",
+				"England",
+				"Europe"
+			],
+			"sourceParagraphs": [20, 21],
+			"paragraphs": [
+				"Ronald Pritchard, Luxembourg, the son of a Welsh horticultural engineer Ronald Pritchard MBE (1925–2011). His mother, Germaine Pritchard, née Barbaut (1928–2023), was French, from Les Baraques (62231), near Calais. The father worked for the Commonwealth War Graves Commission (CWGC) and his family's first period in Egypt was from approximately 1966 to 1974. I September 2026 Ronald Pritchard writes to me: “We initially lived in Heliopolis, on the corner of Orouba Street, close to the Baron Empain Palace. During the war we were evacuated from Egypt as refugees to Italy, initially to Rome and then Rimini. When we returned to Cairo, we lived for a time in Al-Zahraa City, in a house which we were told was known as the \"General's House.\" From there we moved to 13 Street 213 in Maadi, on the corner by Cairo American College. During my parents' second period in Egypt, from approximately 1977/79, they lived at the CWGC head office in Heliopolis, next to the cemetery, in Sharia Nabil el Wakkad. By then I was at boarding school in the United Kingdom.” Pritchard junior conveys that his father's position with the CWGC gave him an unusually wide network of official and personal contacts. His work and connections extended beyond Egypt to Libya and Sudan, and brought him into contact with the United Nations, diplomatic services, foreign embassies and military attachés, as well as senior Egyptian military and government circles: “As a child I remember occasions involving President Nasser and senior Egyptian military and civil officials. During my parents' second period in Egypt, President Anwar Sadat and Jehan Sadat invited my parents to the first Cairo showing of Death on the Nile. My father was also among the official guests present when President Sadat was assassinated. My mother developed her own extensive network in Cairo. She was involved in local charitable activities, either with Sœur Emmanuelle and/or through French-speaking expatriate women involved in charitable work. One example of the circles in which my parents moved is that they were given a French Pointer which had originally been presented to the Sadats. Apparently the Sadats did not know what to do with the dog, and my mother subsequently took it. There are two other coincidences which struck me after reading more about Hassan Heshmat and his work. During our first period in Egypt, my parents' closest friends included a French woman married to the then Ambassador of the Congo, who later became a political refugee in France. I was interested in this because of Heshmat's connections and works outside Egypt. The second is more personal. When I eventually went to boarding school in England, it was St Augustine's College, which was run by Benedictine monks. That caught my attention when reading about Heshmat's religious and monumental work in Europe.”"
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "gertrude-fritz-steppat",
+			"name": "Gertrude Steppat / Prof. Fritz Steppat",
+			"groups": ["cairo-crossroads"],
+			"places": ["Cairo", "Selb", "Deutschland", "Berlin"],
+			"sourceParagraphs": [22],
+			"paragraphs": [
+				"Gertrude Steppat und Prof. Fritz Steppat lived in Cairo from 1955 till 1959. Fritz Steppat had been tasked with organizing the German language instruction in Cairo and establishing the Goethe-Institut there. He and his wife Gertrude stayed in Cairo. Ulrike Freitag writes: “In cooperation with the German Embassy, he supported the Egyptian Ministry of Education first as a teacher and later as an inspector for German language instruction in Egyptian schools. His wife, Gertraud, was also hired as a German teacher. In doing so, President Nasser, who had come to power in 1954, pursued the goal of greater independence from Great Britain.” In her diary, Gertraude Steppat very briefly mentions a visit to the opening of an exhibition by Hassan Heshmat with her husband Fritz in 1959: “Bei der Eröffnung der Ausstellung von Porzellanfiguren, die der junge Ägypter Hassan Heshmat in Selb in Deutschland gemacht hat, mußte Fritz die deutsche Ansprache von Dr. Kramer arabisch vorlesen. Übersetzt hatte sie der Übersetzer der Botschaft, aber zum Vortragen wollte Herr Dr. Kramer Fritz haben, da er so viel netter spräche! Die Figuren sind meist aus dem Fellachenleben, wirkungsvoll in Form und Farbe. Zur Umrahmung der Feier spielte ein 12-jähriger österreichischer Junge eine Beethovensonate. Er ließ sich durch das Abschalten des Lichtes durch die Elektrizitätswerke nicht stören; gottlob kam nach einiger Zeit das Licht wieder, wie sollten wir sonst die Ausstellung besichtigen. Wir hatten dazu nicht lange Zeit, da wir zusammen mit Dr. Schafiq und Herrn Koebe Herrn Neunhoeffer im Krankenhaus besuchten.“ (Eintrag vom 11. - 17. Januar 1959). In 1993, Prof. Fritz Steppat became the founding director of Zentrum Moderner Orient (ZMO) in Berlin, which hosts this project."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": [
+				"Unfortunately, the speech by Ambassador Dr. Kramer is not available in the archive of the German embassy in Cairo"
+			]
+		},
+		{
+			"slug": "abe-jan-koldijk",
+			"name": "Dr. Abe Jan Koldijk",
+			"groups": ["cairo-crossroads"],
+			"places": ["Cairo", "Susteren", "Netherlands", "Brügge"],
+			"sourceParagraphs": [23],
+			"paragraphs": [
+				"Dr. Abe Jan Koldijk, former medical doctor who lived in Cairo with his wife Therese Meigen in the early 1960ies and organized an exhibition in his hometown Susteren in 1968 upon his return to the Netherlands. He brought together a large private collection of artworks and commissioned the design of his swimming pool in Susteren to Heshmat. Until the ZMO exhibition in 2025, it was unknown where the mosaics—of which photographs were circulating within the Heshmat family—had been installed. Once, the address was known through Maaike Muyssen (today Brügge), granddaughter of Koldijk and Meigen, Hegasy wrote a letter addressed “To the inhabitants of Marktstraat 12” in Susteren. Hanneke Dahlmans-Laugs responded, that the mosaics were not taken down, and that they had in fact wanted to restore them. She also expressed, that they had been thinking of showing them to the public. The Dahlmans-Laugs family had bought the house in 2015 following the death of Dr. Koldijk."
+			],
+			"relatedEntries": ["artwork:19"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "eugen-auer",
+			"name": "Eugen Auer",
+			"groups": ["cairo-crossroads"],
+			"places": ["Heliopolis", "Memmelsdorf", "Bamberg"],
+			"sourceParagraphs": [24],
+			"paragraphs": [
+				"Eugen Auer, General Manager of the Heliopolis Sheraton from 1985-87, organized the Rotary meetings at the hotel and thus got to know Hassan Heshmat. The two couples also met privately, and Heshmat gave him a white bust of Nefertiti as a present. Auer lives today in Memmelsdorf close to Bamberg."
+			],
+			"relatedEntries": ["artwork:11"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "anatolij-bogdanov",
+			"name": "Anatolij A. Bogdanov",
+			"groups": ["researchers"],
+			"places": ["Leningrad"],
+			"sourceParagraphs": [27],
+			"paragraphs": [
+				"Anatolij A. Bogdanov, author, interviews Heshmat in his home for his book ‘Among the artists of the Land of the Nile’, Leningrad 1964."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "farid-khamis",
+			"name": "Farid Khamis",
+			"groups": ["collectors"],
+			"places": ["10th of Ramadan city"],
+			"sourceParagraphs": [30],
+			"paragraphs": [
+				"Farid Khamis, CEO of Oriental Weavers. He bought statues that were several meters tall and erected them on the factory’s ground in 10th of Ramadan city."
+			],
+			"relatedEntries": ["artwork:8"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "louis-bishara",
+			"name": "Louis Bishara",
+			"groups": ["collectors"],
+			"places": ["10th of Ramadan city"],
+			"sourceParagraphs": [31],
+			"paragraphs": [
+				"Louis Bishara, CEO of the Egyptian fashion brand B.T.M. He also erected several statues on the premises of his factory 10th of Ramadan city and initiated an open-air museum with 12 sculptures and a small gallery house in Kafraoui Park. The open-air museum had been forgotten, but were found in 2025 as part of this research. Few statues were defaced with graffiti, but most looked unchanged due to the sturdy material Heshmat used. Hegasy could not access the little Gallery though, which carried an unusual mural about the Hittites."
+			],
+			"relatedEntries": ["artwork:6", "artwork:7", "artwork:9"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "marie-bishara",
+			"name": "Marie L. Bishara",
+			"groups": ["collectors"],
+			"places": ["Ain Shams", "Cairo", "10th of Ramadan city", "el-Nozha"],
+			"sourceParagraphs": [32],
+			"paragraphs": [
+				"Marie L. Bishara, daughter of Louis Bishara, Marie L. Bishara is continuing her father's philanthropic work. His private collection is with her today. She persuaded her father to do an internship with Hassan Heshmat in Ain Shams in the 1980ies, and decided to study art at university in Cairo. In 2023 Heshmat’s eight-metre-high sculpture Inṭilāqat Miṣr (The Awakening of Egypt) was inaugurated in 10th of Ramadan city. The statue, which tens of thousands of people passed by every day, had to make way a few years ago for the construction of a bridge. Popularly known as Gala’a Masr, as it stood by the bridge of the same name in el-Nozha, and in reference to the Anglo-Egyptian Agreement of 1954 on the evacuation of British forces. Marie L. Bishara had it removed and completely restored. It now stands at a roundabout in 10th of Ramadan City not far from her company."
+			],
+			"relatedEntries": ["artwork:5", "artwork:40"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "jeffrey-adams-samir-moussa",
+			"name": "Jeffrey Adams / Samir Moussa",
+			"groups": ["collectors"],
+			"places": ["Napa", "California", "London"],
+			"sourceParagraphs": [33],
+			"paragraphs": [
+				"In September 2026, Jeffrey Adams, Napa, California, got in touch with me on behalf of 86-year-old Samir Moussa. Moussa was introduced to Heshmat in the mid-1960s and loved his art. He visited and bought from him directly until moving to London in 1968."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "frieda-adolf-haude",
+			"name": "Frieda und Adolf Haude",
+			"groups": ["selb"],
+			"places": ["Selb"],
+			"sourceParagraphs": [37],
+			"paragraphs": [
+				"Frieda und Adolf Haude, landlords of Hassan Heshmat and his wife Zeinab in Ahornweg 6 during the 1957–58 academic year, while he was studying at the Technical School of Porcelain. Anneliese (b. 24.12.1934) and Heinz Haude with their daughter Karin Haude, who got in touch with ZMO when she found her photo in the audio-visual exhibition H_Heshmat_ digital. In August 2026, I had the chance to interview Anneliese and Karin."
+			],
+			"relatedEntries": ["residence:3"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "leo-poepperl",
+			"name": "Dr. Leo Pöpperl",
+			"groups": ["selb"],
+			"places": ["Selb"],
+			"sourceParagraphs": [38],
+			"paragraphs": [
+				"Dr. Leo Pöpperl, chemist at Netzsch company whom Heshmat visited in 1971. They lived in Ahornweg as well and were thus neighbours of the Haude family."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "gamal-as-sigini",
+			"name": "Gamal as-Sigini",
+			"groups": ["peers"],
+			"places": [],
+			"sourceParagraphs": [42],
+			"paragraphs": ["Gamal as-Sigini (see above)"],
+			"relatedEntries": [],
+			"seeAlso": ["emad-abu-ghazi"],
+			"notes": []
+		},
+		{
+			"slug": "sabry-ragheb",
+			"name": "Sabry Ragheb",
+			"groups": ["peers"],
+			"places": ["Heliopolis", "Nasr City"],
+			"sourceParagraphs": [43],
+			"paragraphs": [
+				"Sabry Ragheb (1920-2000), painter who graduated from the Faculty of Fine Arts 1952. Ragheb was also supported by the Ministry of Culture with a scholarship to fully concentrate on his art. was appointed Director of the Visual Arts Activities at the Heliopolis Housing Company in 1966. In this capacity, he inter alia oversaw the artistic embellishment of Maryland Gardens, introducing sculptures garden, and in 1970 he established an art museum there. Ragheb was appointed Art Counsellor and tasked with the artistic decoration of the Cairo Sports Stadium in Nasr City, where we also found a work of art by Heshmat."
+			],
+			"relatedEntries": ["artwork:41"],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "hussein-bicar",
+			"name": "Hussein Bicar",
+			"groups": ["peers"],
+			"places": ["Cairo"],
+			"sourceParagraphs": [44],
+			"paragraphs": [
+				"Hussein Bicar (1913–2002) graduated in 1933 from the Faculty of Fine Arts in Cairo. In 1944, at the time of the establishment of Akhbar El-Youm, Bicar joined the newspaper as an illustrator and subsequently became one of its leading artists. He rose to much fame as a painter and portraitist."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "georges-bahgory",
+			"name": "Georges Bahgory",
+			"groups": ["peers"],
+			"places": ["Paris", "Zamalek"],
+			"sourceParagraphs": [45],
+			"paragraphs": [
+				"Georges Bahgory (b. 1932) is an Egyptian-French painter and sculptor. Bahgory, who today lives in Paris, studied painting at the Faculty of Fine Arts in Zamalek with Hussein Bicar. He worked for Sabah Al Khair and Rose El Youssef from the mid 1950ies to mid 1970ies as a political cartoonist."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "fathy-mahmud",
+			"name": "Fathy Mahmud",
+			"groups": ["peers"],
+			"places": ["France"],
+			"sourceParagraphs": [47],
+			"paragraphs": [
+				"Fathy Mahmud (1918–1982) was an Egyptian sculptor and ceramicist following in the footsteps of Mahmoud Mokhtar. He completed his studies in sculpture at the Faculty of Applied Arts in 1938 and later moved to France, where he continued to work in sculpture and ceramics. Mahmoud founded his own ceramics and earthenware factory in the 1940s. His most famous work is probably the Talaat Harb Monument installed in 1954. Mahmud played a significant role in the development of public sculpture and industrial ceramics in modern Egypt, combining monumental art with applied design and mass production. He can be regarded as Heshmat’s main contender. Both artists use the motto ‘Art for the millions’ to explain their approach. This idea much later gave rise to his Egyptian German Porcelain Company, though Mahmoud did not live to see its opening."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "mounir-kanaan",
+			"name": "Mounir Kanaan",
+			"groups": ["peers"],
+			"places": ["Warsaw"],
+			"sourceParagraphs": [50],
+			"paragraphs": [
+				"As Mahmud Mokhtar Mounir Kanaan (1919–1999) had no formal art-school degree. He began working as a teenager in commercial sign-making and later for the press. From 1945 he was at Dar Al-Hilal and subsequently at Akhbar Al-Youm. His importance grew considerably after his travel to Warsaw. In the mid-1950s he moved decisively toward abstraction and assemblage."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "mamdouh-ammar",
+			"name": "Mamdouh Ammar",
+			"groups": ["peers"],
+			"places": ["Cairo", "Luxor", "Beijing", "Paris", "Rome"],
+			"sourceParagraphs": [51],
+			"paragraphs": [
+				"Mamdouh Ammar (1928–2012) graduated from the Faculty of Fine Arts in Cairo in 1952 and studied for over ten years in Luxor, Beijing, Paris and Rome. His motives repeatedly focused on ordinary Egyptian people, rural life and popular culture. He became a very dedicated teacher for the next generations of Egyptian artists."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "youssef-francis",
+			"name": "Youssef Francis",
+			"groups": ["peers"],
+			"places": ["Paris"],
+			"sourceParagraphs": [52],
+			"paragraphs": [
+				"Youssef Francis (1934–2001) was the youngest of the four. He graduated from the Faculty of Fine Arts in 1957 and studied cinema subsequently. Initially, he worked as an illustrator at Rose al-Youssef, and became an important art critic at Al-Ahram newspaper. In 1987, he was appointed director of the Egyptian Cultural Centre in Paris, a significant diplomatic- cultural post. He wrote screenplays, directed and became an important art and film critic."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "kamal-es-sarrag",
+			"name": "Kamal es-Sarrag",
+			"groups": ["peers"],
+			"places": ["Cairo"],
+			"sourceParagraphs": [55],
+			"paragraphs": [
+				"Kamal es-Sarrag (1934-2012) was a painter and professor at the Faculty of Fine Arts in Cairo, and as of 1986 Dean of the Faculty President of Helwan University. He is particularly known for his abstract treatment of the Arabic letter س (sin), which became a defining element of his work from the late 1960s onward. es-Sarrag was married to Heshmat’s daughter Sohair Heshmat (1947-2021). As her brother Alaa Heshmat (b. 1955), Sohair worked with ceramics, sometimes reproducing her father’s works, sometimes developing her own style. Two other daughters from his first marriage with Zeinab Hegasy, Sonia (b. 1949) and Magda (b. 1953) did not venture into the art scene. His son Bassam (1965-1990) from his second marriage with Madiha el-Gaky (1930-2019) died at the age of 25."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": [
+				"For a first inquiry into her work, see Nour el Din’s lecture ‘The People’s Sculptor: The Porcelain Legacy of Hassan Heshmat’, at the closing reception of the exhibition in Berlin."
+			]
+		},
+		{
+			"slug": "farida-fahmy",
+			"name": "Farida Fahmy",
+			"groups": ["peers"],
+			"places": [],
+			"sourceParagraphs": [56],
+			"paragraphs": [
+				"Farida Fahmy (b. 1940), actress, dancer and co-founder (along with Mahmoud Reda) of the Reda Dance Troupe, a group that adapted Egyptian folk dances to modern dance."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "fatenn-kanafani",
+			"name": "Fatenn Kanafani",
+			"groups": ["art-historians"],
+			"places": ["Cairo", "Egypt"],
+			"sourceParagraphs": [60],
+			"paragraphs": [
+				"Fatenn Kanafani, Art historian and director of ArtTalks gallery in Cairo, Egypt."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "katharina-raab",
+			"name": "Katharina M. Raab",
+			"groups": ["art-historians"],
+			"places": ["Berlin"],
+			"sourceParagraphs": [61],
+			"paragraphs": [
+				"Katharina M. Raab (Berlin) curated the exhibition together with Sonja Hegasy in cooperation with the Diwan – Das Arabische Kulturhaus in Berlin in Juli 2025."
+			],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "nadine-nour-eddine",
+			"name": "Nadine Nour Eddine",
+			"groups": ["art-historians"],
+			"places": ["London"],
+			"sourceParagraphs": [62],
+			"paragraphs": ["Nadine Nour Eddine (London), see above."],
+			"relatedEntries": [],
+			"seeAlso": ["emad-abu-ghazi"],
+			"notes": []
+		},
+		{
+			"slug": "yousr-fareed",
+			"name": "Yousr Fareed",
+			"groups": ["art-historians"],
+			"places": ["Manama", "Bahrain"],
+			"sourceParagraphs": [63],
+			"paragraphs": ["Yousr Fareed, co-worker at al Dukkan Gallery, Manama, Bahrain."],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		},
+		{
+			"slug": "samia-yateem",
+			"name": "Samia Yateem",
+			"groups": ["art-historians"],
+			"places": ["Manama", "Bahrain"],
+			"sourceParagraphs": [64],
+			"paragraphs": ["Samia Yateem, owner of al Dukkan Gallery, Manama, Bahrain."],
+			"relatedEntries": [],
+			"seeAlso": [],
+			"notes": []
+		}
+	]
+}

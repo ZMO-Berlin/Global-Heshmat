@@ -1,5 +1,6 @@
 import { artworks } from '$lib/data/artworks';
 import { residences } from '$lib/data/residences';
+import { people } from '$lib/data/people';
 import { SITE_URL, artworkPath, residencePath } from '$lib/config';
 import { escapeXml } from '$lib/utils/xml';
 
@@ -17,6 +18,12 @@ export function GET(): Response {
 	const entries: SitemapEntry[] = [
 		{ loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
 		{ loc: `${SITE_URL}/collection/`, changefreq: 'weekly', priority: '0.9' },
+		{ loc: `${SITE_URL}/people/`, changefreq: 'monthly', priority: '0.8' },
+		...people.map((person) => ({
+			loc: `${SITE_URL}/people/${person.slug}/`,
+			changefreq: 'monthly' as const,
+			priority: '0.7'
+		})),
 		{ loc: `${SITE_URL}/trails/`, changefreq: 'monthly', priority: '0.7' },
 		{ loc: `${SITE_URL}/missing/`, changefreq: 'monthly', priority: '0.8' },
 		...artworks.map((a) => ({

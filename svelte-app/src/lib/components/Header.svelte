@@ -26,17 +26,30 @@
 	<div class="header-right">
 		<!-- Shared views retain the visitor's active filters. -->
 		<ViewSwitcher variant="header" />
-		<button disabled={!store.ready} class="header-btn" onclick={() => (store.aboutOpen = true)}
-			>About</button
+		<button
+			disabled={!store.ready}
+			class="header-btn about-button"
+			onclick={() => (store.aboutOpen = true)}>About</button
 		>
 		<a class="header-btn header-btn-cta" href={resolve('/missing')}>
 			<span class="cta-full">Help us find missing works</span>
-			<span class="cta-short">Missing works</span>
+			<span class="cta-short">Missing<span class="works-label"> works</span></span>
 		</a>
 	</div>
 </header>
 
 <style>
+	/* About stays visible in the fixed footer on phones, leaving room for People. */
+	@media (max-width: 480px) {
+		.about-button {
+			display: none;
+		}
+	}
+	@media (max-width: 360px) {
+		.works-label {
+			display: none;
+		}
+	}
 	.wordmark-reset {
 		font: inherit;
 		color: var(--color-accent);
@@ -187,7 +200,7 @@
 
 		.header-btn {
 			min-width: 44px;
-			height: 44px;
+			height: 50px;
 			padding: 6px var(--space-2-5);
 			font-size: var(--text-xs);
 			letter-spacing: normal;

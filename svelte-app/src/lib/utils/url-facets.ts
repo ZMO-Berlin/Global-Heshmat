@@ -8,8 +8,13 @@ export function readFilters(params: URLSearchParams): CollectionFilters {
 		country: params.get('country') ?? legacy.country,
 		status:
 			status === 'search' || status === 'located' || status === 'all' ? status : legacy.status,
-		type: type === 'artwork' || type === 'residence' || type === 'all' ? type : legacy.type,
-		query: (params.get('q') ?? '').slice(0, 300)
+		type:
+			type === 'artwork' || type === 'residence' || type === 'person' || type === 'all'
+				? type
+				: legacy.type,
+		query: (params.get('q') ?? '').slice(0, 300),
+		...(params.get('group') ? { group: params.get('group')!.slice(0, 100) } : {}),
+		...(params.get('place') ? { place: params.get('place')!.slice(0, 100) } : {})
 	};
 }
 export function writeFilters(params: URLSearchParams, filters: CollectionFilters): URLSearchParams {
@@ -19,7 +24,9 @@ export function writeFilters(params: URLSearchParams, filters: CollectionFilters
 		country: filters.country,
 		status: filters.status === 'all' ? '' : filters.status,
 		type: filters.type === 'all' ? '' : filters.type,
-		q: filters.query
+		q: filters.query,
+		group: filters.group,
+		place: filters.place
 	})) {
 		if (value) result.set(key, value);
 		else result.delete(key);

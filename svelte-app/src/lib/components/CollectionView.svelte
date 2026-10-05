@@ -2,6 +2,9 @@
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
+	import { people } from '$lib/data/people';
+	import { filterPeople } from '$lib/utils/people';
+	import PeopleList from './PeopleList.svelte';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 	import { entryKey, entryTitle, entryImages, mediaId, imageAlt } from '$lib/utils/collection';
@@ -16,6 +19,11 @@
 		...filterResidences(residences, store.filters)
 	]);
 	const photoCount = $derived(items.reduce((count, item) => count + entryImages(item).length, 0));
+	const peopleMatches = $derived(
+		!store.peopleView && (store.filters.query.trim() || store.filters.type === 'person')
+			? filterPeople(people, store.filters)
+			: []
+	);
 </script>
 
 <div class="collection-page" data-testid="collection-scroll">
@@ -33,26 +41,33 @@
 				<p class="page-count" role="status">
 					{items.length}
 					{items.length === 1 ? 'entry' : 'entries'} · {photoCount} photographs
+					{#if peopleMatches.length}
+						· {peopleMatches.length} {peopleMatches.length === 1 ? 'profile' : 'profiles'}{/if}
 				</p>
 			</div>
-			{#if store.mode !== 'list'}<div
-					class="gallery-modes"
-					role="group"
-					aria-label="Gallery display"
+			<div class="gallery-modes" role="group" aria-label="Gallery display">
+				<button
+					disabled={!store.ready}
+					aria-pressed={store.mode === 'entries'}
+					onclick={() => store.setMode('entries')}>Entries</button
+				><button
+					disabled={!store.ready}
+					aria-pressed={store.mode === 'photos'}
+					onclick={() => store.setMode('photos')}>Photos</button
 				>
-					<button
-						disabled={!store.ready}
-						aria-pressed={store.mode === 'entries'}
-						onclick={() => store.setMode('entries')}>Entries</button
-					><button
-						disabled={!store.ready}
-						aria-pressed={store.mode === 'photos'}
-						onclick={() => store.setMode('photos')}>Photos</button
-					>
-				</div>{/if}
+				<button
+					disabled={!store.ready}
+					aria-pressed={store.mode === 'list'}
+					onclick={() => store.setMode('list')}>List</button
+				>
+			</div>
 		</header>
 		<CollectionTools {items} />
-		{#if !items.length}<div class="empty">
+		{#if peopleMatches.length}<section class="people-results" aria-label="People results">
+				<h3>People</h3>
+				<PeopleList items={peopleMatches} />
+			</section>{/if}
+		{#if !items.length && !peopleMatches.length}<div class="empty">
 				<h3>No entries match these filters</h3>
 				<p>Try another country, status or search term.</p>
 				<button disabled={!store.ready} onclick={() => store.resetFilters()}>Clear filters</button>
@@ -121,6 +136,9 @@
 </div>
 
 <style>
+	.people-results {
+		margin-block: var(--space-5) var(--space-7);
+	}
 	.card-icons {
 		position: absolute;
 		width: 0;

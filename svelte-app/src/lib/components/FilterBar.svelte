@@ -1,9 +1,31 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve -- The browse store and resolve() below build internal routes. */
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { peopleGroups, peoplePlaces } from '$lib/data/people';
+	import type { CollectionFilters } from '$lib/utils/map-filter';
 	import { countries } from '$lib/data/countries';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import ArtworkSearch from './ArtworkSearch.svelte';
 	const store = getBrowseStore();
+	function changeType(type: CollectionFilters['type']) {
+		if (type === 'person') void goto(store.peopleHref({ group: '', place: '' }));
+		else {
+			store.setFilters({ type, group: '', place: '' });
+			if (store.peopleView) {
+				const params = new SvelteURLSearchParams();
+				if (type !== 'all') params.set('type', type);
+				if (store.filters.query) params.set('q', store.filters.query);
+				void goto(resolve('/collection') + (params.size ? `?${params}` : ''));
+			}
+		}
+	}
+	function peopleFacet(patch: Partial<CollectionFilters>) {
+		if (page.route.id === '/people') store.setFilters(patch);
+		else void goto(store.peopleHref(patch));
+	}
 </script>
 
 <div class="filters" role="search" aria-label="Filter the collection">
@@ -15,38 +37,63 @@
 				onclick={() => (store.browseOpen = !store.browseOpen)}
 				aria-expanded={store.browseOpen}>Browse</button
 			>{/if}
-		<label
-			><span class="sr-only">Country</span><select
-				aria-label="Country"
-				disabled={!store.ready}
-				value={store.filters.country}
-				onchange={(event) => store.setFilters({ country: event.currentTarget.value })}
-				><option value="">All countries</option>{#each countries as country (country.name)}<option
-						value={country.name}>{country.name}</option
-					>{/each}</select
-			></label
-		>
-		<label
-			><span class="sr-only">Status</span><select
-				aria-label="Status"
-				disabled={!store.ready || page.route.id === '/missing'}
-				value={store.filters.status}
-				onchange={(event) =>
-					store.setFilters({ status: event.currentTarget.value as 'all' | 'located' | 'search' })}
-				><option value="all">All statuses</option><option value="located">Located</option><option
-					value="search">To be found</option
-				></select
-			></label
-		>
+		{#if store.peopleView}
+			<label
+				><span class="sr-only">Group</span><select
+					aria-label="Group"
+					disabled={!store.ready}
+					value={store.filters.group ?? ''}
+					onchange={(event) => peopleFacet({ group: event.currentTarget.value })}
+				>
+					<option value="">All groups</option>
+					{#each peopleGroups as group (group.id)}<option value={group.id}>{group.name}</option
+						>{/each}
+				</select></label
+			>
+			<label
+				><span class="sr-only">Place mentioned</span><select
+					aria-label="Place mentioned"
+					disabled={!store.ready}
+					value={store.filters.place ?? ''}
+					onchange={(event) => peopleFacet({ place: event.currentTarget.value })}
+				>
+					<option value="">All places mentioned</option>
+					{#each peoplePlaces as place (place)}<option value={place}>{place}</option>{/each}
+				</select></label
+			>
+		{:else}
+			<label
+				><span class="sr-only">Country</span><select
+					aria-label="Country"
+					disabled={!store.ready}
+					value={store.filters.country}
+					onchange={(event) => store.setFilters({ country: event.currentTarget.value })}
+					><option value="">All countries</option>{#each countries as country (country.name)}<option
+							value={country.name}>{country.name}</option
+						>{/each}</select
+				></label
+			>
+			<label
+				><span class="sr-only">Status</span><select
+					aria-label="Status"
+					disabled={!store.ready || page.route.id === '/missing'}
+					value={store.filters.status}
+					onchange={(event) =>
+						store.setFilters({ status: event.currentTarget.value as 'all' | 'located' | 'search' })}
+					><option value="all">All statuses</option><option value="located">Located</option><option
+						value="search">To be found</option
+					></select
+				></label
+			>
+		{/if}
 		<label
 			><span class="sr-only">Entry type</span><select
 				aria-label="Entry type"
 				disabled={!store.ready}
 				value={store.filters.type}
-				onchange={(event) =>
-					store.setFilters({ type: event.currentTarget.value as 'all' | 'artwork' | 'residence' })}
+				onchange={(event) => changeType(event.currentTarget.value as CollectionFilters['type'])}
 				><option value="all">All entries</option><option value="artwork">Artworks / sites</option
-				><option value="residence">Residences</option></select
+				><option value="residence">Residences</option><option value="person">People</option></select
 			></label
 		>
 		<button

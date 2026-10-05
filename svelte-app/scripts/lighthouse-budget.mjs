@@ -16,6 +16,7 @@ if (!Number.isInteger(runs) || runs < 1 || runs > 5 || runs % 2 !== 1)
 const targets = [
 	{ id: 'collection-desktop', path: '/collection/', desktop: true },
 	{ id: 'collection-mobile', path: '/collection/', desktop: false },
+	{ id: 'people-mobile', path: '/people/', desktop: false },
 	{ id: 'entry-mobile', path: '/artworks/the-hassan-heshmat-museum/', desktop: false },
 	{ id: 'missing-mobile', path: '/missing/', desktop: false }
 ];
