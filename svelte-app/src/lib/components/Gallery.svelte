@@ -2,16 +2,22 @@
 	import { Maximize2, ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { mediaId, imageAlt } from '$lib/utils/collection';
+	import { mediaId, imageAlt, matchesMediaId } from '$lib/utils/collection';
 	import MediaImage from './MediaImage.svelte';
+	import MediaCaption from './MediaCaption.svelte';
+	import ImageComparison from './ImageComparison.svelte';
 	import Lightbox from './Lightbox.svelte';
-	let { images, name }: { images: ArtworkImage[]; name: string } = $props();
+	let {
+		images,
+		name,
+		sizes = '(max-width: 768px) 100vw, 60vw'
+	}: { images: ArtworkImage[]; name: string; sizes?: string } = $props();
 	const store = getBrowseStore();
 	let current = $state(0);
 	const selected = $derived(images[current] ?? images[0]);
-	const lightboxOpen = $derived(images.some((image) => mediaId(image) === store.photo));
+	const lightboxOpen = $derived(images.some((image) => matchesMediaId(image, store.photo)));
 	$effect(() => {
-		const index = images.findIndex((image) => mediaId(image) === store.photo);
+		const index = images.findIndex((image) => matchesMediaId(image, store.photo));
 		if (index >= 0) current = index;
 		else if (current >= images.length) current = 0;
 	});
@@ -27,24 +33,20 @@
 				disabled={!store.ready}
 				class="gallery-open"
 				type="button"
-				onclick={() => store.setPhoto(mediaId(selected), true)}
+				onclick={(event) => {
+					// WebKit does not focus buttons on pointer clicks. Give the dialog
+					// a consistent return target for both mouse and keyboard activation.
+					event.currentTarget.focus({ preventScroll: true });
+					store.setPhoto(mediaId(selected), true);
+				}}
 				aria-label="View image full screen"
 			>
-				<MediaImage
-					src={selected.src}
-					alt={imageAlt(selected, name)}
-					size="web"
-					sizes="(max-width: 768px) 100vw, 60vw"
-					priority
-				/>
+				<MediaImage src={selected.src} alt={imageAlt(selected, name)} size="web" {sizes} priority />
 				<span class="expand"><Maximize2 size={18} aria-hidden="true" /> Full screen</span>
 			</button>
 		</div>
 		<div class="gallery-caption" aria-live="polite">
-			<p>
-				{selected.caption || name}{#if selected.credit}<span class="credit">{selected.credit}</span
-					>{/if}{#if selected.date}<span class="credit">{selected.date}</span>{/if}
-			</p>
+			<MediaCaption image={selected} fallback={name} />
 			<div class="gallery-controls">
 				{#if images.length > 1}<button
 						disabled={!store.ready}
@@ -76,6 +78,7 @@
 				{/each}
 			</div>
 		{/if}
+		{#if images.length > 1}<ImageComparison {images} {name} />{/if}
 	</section>
 	{#if lightboxOpen}<Lightbox
 			{images}
@@ -125,13 +128,6 @@
 		padding: var(--space-3) var(--gallery-content-inset, 0px);
 		color: var(--color-text-secondary);
 		font-size: var(--text-sm);
-	}
-	.gallery-caption p {
-		line-height: var(--leading-relaxed);
-	}
-	.credit {
-		display: block;
-		color: var(--color-text-muted);
 	}
 	.gallery-controls {
 		display: flex;

@@ -14,5 +14,6 @@ npm install
 npm run dev
 ```
 
-`npm run validate` runs the full pre-commit gate: format check, lint, type check, unit tests,
-production build, and the post-build assertions.
+`npm run validate` runs the full gate: lint and formatting, types, unit and tooling tests,
+production build assertions, browser/accessibility tests, offline upgrades, and Lighthouse budgets.
+Install the Playwright browsers first as described in the repository README.

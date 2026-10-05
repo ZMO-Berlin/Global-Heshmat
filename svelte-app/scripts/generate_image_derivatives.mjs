@@ -28,21 +28,7 @@ import { existsSync, mkdirSync, watch as fsWatch } from 'node:fs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const ORIGINALS_DIR = join(ROOT, 'originals');
-const IMAGES_DIR = join(ROOT, 'static', 'images');
 const WATCH_MODE = process.argv.includes('--watch');
-
-if (!existsSync(ORIGINALS_DIR)) mkdirSync(ORIGINALS_DIR, { recursive: true });
-
-/**
- * Keep in sync with `src/lib/utils/image.ts`, which builds the URLs, and with
- * `src/lib/data/data-integrity.test.ts`, which asserts every referenced image
- * has all three derivatives on disk.
- */
-
-for (const { dir } of VARIANTS) {
-	const path = join(IMAGES_DIR, dir);
-	if (!existsSync(path)) mkdirSync(path, { recursive: true });
-}
 
 // NFC on the way out: several masters were added from macOS with decomposed
 // umlauts, and a decomposed filename percent-encodes to a URL that static
@@ -78,9 +64,9 @@ async function isLfsPointer(path) {
 const LARGEST = VARIANTS.reduce((a, b) => (b.size > a.size ? b : a));
 
 /** Encoder changes invalidate the content cache as well. */
-const CACHE_FILE = join(ROOT, '.image-build-cache.json');
 const signature = JSON.stringify({ VARIANTS, sharp: sharp.versions, pipeline: 2 });
-const fingerprint = (buffer) => createHash('sha256').update(signature).update(buffer).digest('hex');
+const fingerprint = (buffer, encoderSignature) =>
+	createHash('sha256').update(encoderSignature).update(buffer).digest('hex');
 
 /**
  * `failOn: 'none'` keeps sharp from treating recoverable decoder warnings as
@@ -92,7 +78,7 @@ function decode(path) {
 	return sharp(path, { failOn: 'none' }).rotate(); // rotate() honours EXIF orientation
 }
 
-async function render(source, outPath, size, quality) {
+export async function render(source, outPath, size, quality) {
 	const temporary = `${outPath}.${process.pid}.tmp`;
 	try {
 		await decode(source)
@@ -113,13 +99,23 @@ function debounce(fn, delayMs) {
 	};
 }
 
-async function generateDerivatives() {
+export async function generateDerivatives({
+	root = ROOT,
+	renderImage = render,
+	encoderSignature = signature,
+	logger = console
+} = {}) {
+	const ORIGINALS_DIR = join(root, 'originals');
+	const IMAGES_DIR = join(root, 'static/images');
+	const CACHE_FILE = join(root, '.image-build-cache.json');
+	mkdirSync(ORIGINALS_DIR, { recursive: true });
+	for (const { dir } of VARIANTS) mkdirSync(join(IMAGES_DIR, dir), { recursive: true });
 	const files = await readdir(ORIGINALS_DIR);
 	const imageFiles = files.filter((f) => /\.(jpe?g|png|tiff?|webp|heic|heif)$/i.test(f));
 	assertUniqueStems(imageFiles);
 	const cache = JSON.parse(await readFile(CACHE_FILE, 'utf8').catch(() => '{}'));
 
-	console.log(`Found ${imageFiles.length} images in originals/`);
+	logger.log(`Found ${imageFiles.length} images in originals/`);
 	let written = 0;
 	let skipped = 0;
 	let failed = 0;
@@ -134,7 +130,9 @@ async function generateDerivatives() {
 			continue;
 		}
 
-		const hash = fingerprint(await readFile(inputPath));
+		// Reuse the bytes already needed for hashing; avoid reopening a large master for every variant.
+		const input = await readFile(inputPath);
+		const hash = fingerprint(input, encoderSignature);
 		const failedBefore = failed;
 		for (const { dir, size, quality } of VARIANTS) {
 			const outPath = join(IMAGES_DIR, dir, `${baseStem}.webp`);
@@ -142,9 +140,9 @@ async function generateDerivatives() {
 				skipped++;
 				continue;
 			}
-			console.log(`  → ${dir}: ${file}`);
+			logger.log(`  → ${dir}: ${file}`);
 			try {
-				await render(inputPath, outPath, size, quality);
+				await renderImage(input, outPath, size, quality);
 				written++;
 			} catch (err) {
 				// A handful of masters in this archive don't decode at all — an
@@ -154,25 +152,31 @@ async function generateDerivatives() {
 				const fallback = join(IMAGES_DIR, LARGEST.dir, `${baseStem}.webp`);
 				if (dir !== LARGEST.dir && existsSync(fallback)) {
 					try {
-						await render(fallback, outPath, size, quality);
-						console.log(`    (rebuilt from ${LARGEST.dir}/ — master would not decode)`);
+						await renderImage(await readFile(fallback), outPath, size, quality);
+						logger.log(`    (rebuilt from ${LARGEST.dir}/ — master would not decode)`);
 						written++;
 						continue;
 					} catch {
 						// fall through to the error report below
 					}
 				}
-				console.error(`  ✗ ${dir}: ${file} — ${err.message}`);
+				logger.error(`  ✗ ${dir}: ${file} — ${err.message}`);
 				failed++;
 			}
 		}
 		if (failed === failedBefore) cache[baseStem] = hash;
 	}
-	await writeFile(CACHE_FILE, JSON.stringify(cache, null, 2));
-	await generateImageManifest();
+	const temporaryCache = `${CACHE_FILE}.${process.pid}.tmp`;
+	try {
+		await writeFile(temporaryCache, JSON.stringify(cache, null, 2));
+		await rename(temporaryCache, CACHE_FILE);
+	} finally {
+		await rm(temporaryCache, { force: true });
+	}
+	await generateImageManifest(false, { root, logger });
 
 	if (pointers.length > 0) {
-		console.error(
+		logger.error(
 			`\n${pointers.length} file(s) in originals/ are Git LFS pointers, not images.\n` +
 				`Run \`git lfs pull\` to download them, then re-run \`npm run images\`.\n` +
 				`  e.g. ${pointers.slice(0, 3).join(', ')}`
@@ -180,9 +184,9 @@ async function generateDerivatives() {
 		failed += pointers.length;
 	}
 
-	console.log(`\n${written} written, ${skipped} already up to date, ${failed} failed`);
+	logger.log(`\n${written} written, ${skipped} already up to date, ${failed} failed`);
 	// Exit non-zero on any failure so a CI or manual invocation notices.
-	if (failed > 0) process.exitCode = 1;
+	return { written, skipped, failed, pointers };
 }
 
 async function watchForChanges() {
@@ -197,7 +201,7 @@ async function watchForChanges() {
 		try {
 			do {
 				pending = false;
-				await generateDerivatives();
+				process.exitCode = (await generateDerivatives()).failed ? 1 : 0;
 			} while (pending);
 		} finally {
 			running = false;
@@ -225,15 +229,16 @@ async function watchForChanges() {
 
 async function main() {
 	if (WATCH_MODE) {
-		await generateDerivatives();
+		process.exitCode = (await generateDerivatives()).failed ? 1 : 0;
 		await watchForChanges();
 		return;
 	}
 
-	await generateDerivatives();
+	process.exitCode = (await generateDerivatives()).failed ? 1 : 0;
 }
 
-main().catch((err) => {
-	console.error('Error:', err.message);
-	process.exit(1);
-});
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1])
+	main().catch((err) => {
+		console.error('Error:', err.message);
+		process.exit(1);
+	});

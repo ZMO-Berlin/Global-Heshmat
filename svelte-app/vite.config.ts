@@ -2,19 +2,50 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import { defineConfig } from 'vite';
-import { spawn } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { execFileSync, spawn } from 'node:child_process';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const rtlTextPluginPath = fileURLToPath(
 	new URL('./node_modules/@mapbox/mapbox-gl-rtl-text/dist/mapbox-gl-rtl-text.js', import.meta.url)
 );
 
+// A content-derived build ID also changes for uncommitted local builds. Saved
+// documents must never outlive the JavaScript version that can hydrate them.
+const hash = createHash('sha256');
+function hashDirectory(dir: string) {
+	for (const entry of readdirSync(dir, { withFileTypes: true }).sort((a, b) =>
+		a.name.localeCompare(b.name)
+	)) {
+		const path = join(dir, entry.name);
+		if (entry.isDirectory()) hashDirectory(path);
+		else {
+			hash.update(path);
+			hash.update(readFileSync(path));
+		}
+	}
+}
+hashDirectory('src');
+for (const file of ['package-lock.json', 'vite.config.ts', 'svelte.config.js'])
+	hash.update(readFileSync(file));
+const revision =
+	process.env.GITHUB_SHA ?? execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+hash.update(revision);
+const buildId = hash.digest('hex').slice(0, 16);
+
 export default defineConfig({
+	define: { __BUILD_ID__: JSON.stringify(buildId), __REVISION__: JSON.stringify(revision) },
 	plugins: [
 		{
 			name: 'emit-local-rtl-text-plugin',
-			apply: 'build',
+			configureServer(server) {
+				server.middlewares.use('/rtl-text-plugin.js', (_request, response) => {
+					response.setHeader('Content-Type', 'text/javascript; charset=utf-8');
+					response.end(readFileSync(rtlTextPluginPath));
+				});
+			},
 			generateBundle() {
 				this.emitFile({
 					type: 'asset',
@@ -27,7 +58,14 @@ export default defineConfig({
 			name: 'watch-image-originals',
 			apply: 'serve',
 			configureServer(server) {
-				if (process.env.VITEST) return;
+				// Validation and fixtures also create Vite servers; only an interactive
+				// development server should regenerate the committed image assets.
+				if (
+					process.env.VITEST ||
+					server.config.mode === 'test' ||
+					server.config.server.middlewareMode
+				)
+					return;
 
 				const generatorPath = fileURLToPath(
 					new URL('./scripts/generate_image_derivatives.mjs', import.meta.url)
@@ -46,6 +84,8 @@ export default defineConfig({
 		// installable through the browser's own passive affordance (the address
 		// bar / menu "Install" entry) without ever nagging the visitor.
 		SvelteKitPWA({
+			strategies: 'injectManifest',
+			filename: 'sw.js',
 			// adapter-static emits relative application asset URLs, but PWA files
 			// live at the deployed origin root. Pin both integration bases so a
 			// deep route registers /sw.js instead of /collection/sw.js.
@@ -56,13 +96,7 @@ export default defineConfig({
 			// instead of treating it as a configuration error.
 			showMaximumFileSizeToCacheInBytesWarning: true,
 			registerType: 'autoUpdate',
-			// Must mirror `export const trailingSlash = 'always'` in
-			// src/routes/+layout.ts. The plugin defaults to 'never', which
-			// precaches prerendered pages as `/artworks/foo` while the browser
-			// navigates to `/artworks/foo/`. That misses the precache, falls
-			// through to `navigateFallback` below, and serves the ROOT page —
-			// whose relative `./_app/…` URLs then 404 under /artworks/foo/,
-			// leaving every deep-linked page unstyled and mapless.
+			// Keep canonical cache paths aligned with the app's trailing-slash policy.
 			kit: {
 				// Required alongside the top-level PWA base: this controls how the
 				// SvelteKit integration rewrites its intermediate client/ and
@@ -106,19 +140,17 @@ export default defineConfig({
 					}
 				]
 			},
-			workbox: {
-				// Precache the app shell ONLY — JS/CSS, the two primary entry pages,
-				// and the manifest. Detail pages remain network-first instead of all
-				// 43 being downloaded during installation. The 400+ artwork images under
-				// /images/** are intentionally excluded (precaching them would mean
-				// downloading hundreds of MB on first visit); they are instead
-				// cached on demand via runtimeCaching below.
+			injectManifest: {
+				// Precache the shell and first-party fonts. Record documents and media
+				// are saved on demand by src/service-worker.ts and the offline client.
 				globPatterns: [
-					'client/**/*.{js,css,webmanifest}',
+					'client/**/*.{js,css,webmanifest,woff2}',
 					'client/offline/index.html',
 					'prerendered/pages/index.html',
 					'prerendered/pages/collection/index.html',
-					'prerendered/pages/missing/index.html'
+					'prerendered/pages/missing/index.html',
+					'prerendered/pages/fieldbook/index.html',
+					'prerendered/pages/trails/index.html'
 				],
 				globIgnores: [
 					'**/images/**',
@@ -133,69 +165,7 @@ export default defineConfig({
 				// not in the emitted filename. Workbox's measured-size limit keeps
 				// that optional 970 KiB renderer out of the install-time app shell
 				// while retaining the SvelteKit integration's required URL transform.
-				maximumFileSizeToCacheInBytes: 500 * 1024,
-				// Entry navigations use NetworkFirst with their own fallback below.
-				navigateFallback: null,
-				runtimeCaching: [
-					{
-						urlPattern: ({ request, url, sameOrigin }) =>
-							sameOrigin &&
-							request.mode === 'navigate' &&
-							(url.pathname.startsWith('/artworks/') || url.pathname.startsWith('/residences/')),
-						handler: 'NetworkFirst',
-						options: {
-							precacheFallback: { fallbackURL: '/offline/' },
-							cacheName: 'entry-pages-v1',
-							networkTimeoutSeconds: 4,
-							expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 30 },
-							cacheableResponse: { statuses: [200] }
-						}
-					},
-					{
-						urlPattern: ({ url, sameOrigin }) =>
-							sameOrigin &&
-							((url.pathname.includes('/_app/immutable/chunks/') && url.pathname.endsWith('.js')) ||
-								// MapLibre v6 emits its ESM worker as a separate asset outside
-								// chunks/. Without this it is re-fetched on every visit.
-								(url.pathname.includes('/_app/immutable/workers/') &&
-									url.pathname.endsWith('.js')) ||
-								(url.pathname.includes('/maplibre.') && url.pathname.endsWith('.css')) ||
-								url.pathname.endsWith('/rtl-text-plugin.js')),
-						handler: 'CacheFirst',
-						options: {
-							cacheName: 'map-renderer-v1',
-							expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 * 24 * 365 },
-							cacheableResponse: { statuses: [0, 200] }
-						}
-					},
-					{
-						// Artwork images — respond with the cached image immediately
-						// but revalidate in the background so clients get fresher
-						// derivatives without forcing a full reload.
-						urlPattern: ({ url, sameOrigin }) => sameOrigin && url.pathname.startsWith('/images/'),
-						handler: 'StaleWhileRevalidate',
-						options: {
-							// Bump the cache name to force a fresh cache when the
-							// service worker updates — this avoids serving stale
-							// image files with identical URLs.
-							cacheName: 'artwork-images-v2',
-							expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 30 },
-							cacheableResponse: { statuses: [0, 200] }
-						}
-					},
-					{
-						// Cache previously viewed map regions and style assets. A cold
-						// offline visit still degrades to the collection list.
-						urlPattern: ({ url }) =>
-							url.hostname === 'cartocdn.com' || url.hostname.endsWith('.cartocdn.com'),
-						handler: 'CacheFirst',
-						options: {
-							cacheName: 'carto-map-assets-v1',
-							expiration: { maxEntries: 400, maxAgeSeconds: 60 * 60 * 24 * 30 },
-							cacheableResponse: { statuses: [0, 200] }
-						}
-					}
-				]
+				maximumFileSizeToCacheInBytes: 500 * 1024
 			}
 		})
 	],

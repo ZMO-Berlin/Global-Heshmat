@@ -1,6 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
-	import { ImageOff, Images, MapPin } from '@lucide/svelte';
+	import { ImageOff } from '@lucide/svelte';
 	import type { Entry } from '$lib/utils/collection';
 	import {
 		entryTitle,
@@ -47,7 +47,9 @@
 				><ImageOff size={28} aria-hidden="true" />No photograph available</span
 			>{/if}
 		{#if images.length > 0}<span class="photo-count"
-				><Images size={15} aria-hidden="true" />{images.length}
+				><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+					><use href="#collection-images" /></svg
+				>{images.length}
 				{images.length === 1 ? 'photo' : 'photos'}</span
 			>{/if}
 	</a>
@@ -82,7 +84,9 @@
 				To be found · location unconfirmed
 			</p>{/if}
 		<a class="map-link" href={store.entryHref(item, { view: 'map' })} onclick={remember}
-			><MapPin size={14} aria-hidden="true" />View on map</a
+			><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+				><use href="#collection-map-pin" /></svg
+			>View on map</a
 		>
 	</div>
 </article>

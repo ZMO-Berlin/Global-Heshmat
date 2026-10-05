@@ -5,7 +5,7 @@
 
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
-	import { getMapStore } from '$lib/stores/map.svelte';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { artworkPath, residencePath } from '$lib/config';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 	import MarkerGlyph from './MarkerGlyph.svelte';
@@ -28,7 +28,7 @@
 	 * Entries follow the active filter, so the list and the map always agree.
 	 */
 
-	const store = getMapStore();
+	const store = getBrowseStore();
 
 	const visibleArtworks = $derived(filterArtworks(artworks, store.filters));
 	const visibleResidences = $derived(filterResidences(residences, store.filters));

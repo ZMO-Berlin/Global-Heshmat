@@ -138,3 +138,71 @@ body {
 		--filter-height: 108px;
 	}
 }
+
+/* Research pages share the collection's fixed-shell scrolling contract. */
+.research-page {
+	position: fixed;
+	inset: calc(var(--header-height) + var(--filter-height)) 0 var(--footer-height);
+	overflow: auto;
+	background: var(--color-surface-warm);
+}
+.research-inner {
+	max-width: 1100px;
+	margin: auto;
+	padding: var(--space-7);
+}
+.research-inner h2 {
+	font: var(--weight-semibold) var(--text-4xl) var(--font-display);
+	margin-block: var(--space-4);
+}
+.research-inner h3 {
+	font: var(--weight-semibold) var(--text-2xl) var(--font-display);
+}
+.research-inner p {
+	margin-block: var(--space-3);
+	line-height: var(--leading-relaxed);
+	color: var(--color-text-secondary);
+}
+.research-inner a {
+	color: var(--color-primary-text);
+	text-underline-offset: 3px;
+}
+.research-inner button {
+	min-height: 44px;
+	padding: var(--space-2) var(--space-3);
+	font: inherit;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-sm);
+	background: var(--color-surface);
+	color: var(--color-primary-text);
+	cursor: pointer;
+}
+.research-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+}
+.fieldbook-list {
+	list-style: none;
+	margin-top: var(--space-5);
+}
+.fieldbook-list li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-3);
+	padding-block: var(--space-3);
+	border-top: 1px solid var(--color-border);
+}
+.trail {
+	margin-top: var(--space-6);
+	padding-top: var(--space-4);
+	border-top: 1px solid var(--color-border);
+}
+.trail ol {
+	padding-inline-start: var(--space-6);
+	margin-block: var(--space-3);
+}
+.trail li {
+	padding-block: var(--space-2);
+}

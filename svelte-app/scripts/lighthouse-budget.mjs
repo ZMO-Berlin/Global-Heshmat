@@ -1,3 +1,4 @@
+import { readMapAssets } from './map-assets.mjs';
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, appendFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -5,6 +6,7 @@ import { join } from 'node:path';
 import { chromium } from '@playwright/test';
 import { createServer } from 'node:net';
 import lighthouse, { desktopConfig } from 'lighthouse';
+const mapAssets = readMapAssets();
 const root = fileURLToPath(new URL('../', import.meta.url));
 const port = Number(process.env.LIGHTHOUSE_PORT ?? 4174);
 const origin = `http://127.0.0.1:${port}`;
@@ -71,8 +73,14 @@ try {
 			const debugPort = probe.address().port;
 			await new Promise((resolve) => probe.close(resolve));
 			chrome = await chromium.launch({
-				executablePath: chromium.executablePath(),
-				args: [`--remote-debugging-port=${debugPort}`]
+				executablePath:
+					process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? chromium.executablePath(),
+				args: [
+					...(process.env.PLAYWRIGHT_CHROMIUM_ARGS
+						? JSON.parse(process.env.PLAYWRIGHT_CHROMIUM_ARGS)
+						: []),
+					`--remote-debugging-port=${debugPort}`
+				]
 			});
 			const result = await lighthouse(
 				origin + target.path,
@@ -117,8 +125,16 @@ try {
 			failures.push(`${target.id}: LCP exceeds ${lcpLimit}ms`);
 		if (metrics['cumulative-layout-shift'] > 0.1) failures.push(`${target.id}: CLS exceeds 0.1`);
 		for (const result of results) {
+			if (result.audits['errors-in-console']?.score !== 1)
+				failures.push(`${target.id}: browser console errors must be resolved`);
 			const requests = result.audits['network-requests'].details?.items ?? [];
-			if (requests.some((request) => /maplibre|cartocdn\.com|immutable\/workers/.test(request.url)))
+			if (
+				requests.some(
+					(request) =>
+						mapAssets.has(new URL(request.url).pathname) ||
+						/cartocdn\.com|immutable\/workers/.test(request.url)
+				)
+			)
 				failures.push(`${target.id}: optional map downloaded on a gallery page`);
 			const scripts = result.audits['resource-summary'].details?.items?.find(
 				(item) => item.resourceType === 'script'

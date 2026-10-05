@@ -17,6 +17,7 @@ export function GET(): Response {
 	const entries: SitemapEntry[] = [
 		{ loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
 		{ loc: `${SITE_URL}/collection/`, changefreq: 'weekly', priority: '0.9' },
+		{ loc: `${SITE_URL}/trails/`, changefreq: 'monthly', priority: '0.7' },
 		{ loc: `${SITE_URL}/missing/`, changefreq: 'monthly', priority: '0.8' },
 		...artworks.map((a) => ({
 			loc: `${SITE_URL}${artworkPath(a.slug)}`,

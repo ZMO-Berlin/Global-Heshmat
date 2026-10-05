@@ -5,24 +5,39 @@
 	import '@fontsource-variable/cormorant-garamond/wght-italic.css';
 	import '@fontsource-variable/outfit/wght.css';
 	import cormorantLatin from '@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-normal.woff2?url';
+	import cormorantItalicLatin from '@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-italic.woff2?url';
 	import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 	import { onMount, type Snippet } from 'svelte';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
+	import { goto, afterNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import logo from '$lib/assets/logo-zmo.png';
 	import Header from '$lib/components/Header.svelte';
 	import FilterBar from '$lib/components/FilterBar.svelte';
-	import EntryDetail from '$lib/components/EntryDetail.svelte';
 	import CollectionView from '$lib/components/CollectionView.svelte';
 	import MissingDossier from '$lib/components/MissingDossier.svelte';
 	import CollectionPanel from '$lib/components/CollectionPanel.svelte';
 	import Legend from '$lib/components/Legend.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import AboutModal from '$lib/components/AboutModal.svelte';
+	import { createFieldbook } from '$lib/stores/fieldbook.svelte';
 	import { createBrowseStore } from '$lib/stores/browse.svelte';
 	let { children }: { children: Snippet } = $props();
 	const store = createBrowseStore();
+	createFieldbook();
+	// SvelteKit card clicks do not fetch an HTML document. Save it explicitly,
+	// including a first visit that happens before the service worker activates.
+	afterNavigate(({ to }) => {
+		const path = to?.url.pathname;
+		if (!path || !/^\/(artworks|residences)\//.test(path) || !('serviceWorker' in navigator))
+			return;
+		void navigator.serviceWorker.ready
+			.then(async () => {
+				const { cacheEntryDocument } = await import('$lib/offline/client');
+				await cacheEntryDocument(path);
+			})
+			.catch(() => {});
+	});
 	type MapConstructor = (typeof import('$lib/components/MapView.svelte'))['default'];
 	let MapComponent = $state<MapConstructor>();
 	let mapView: import('$lib/components/MapView.svelte').default | undefined = $state();
@@ -92,9 +107,19 @@
 </script>
 
 <svelte:head
-	><link rel="icon" href={logo} type="image/png" /><link
+	><meta name="collection-build" content={__BUILD_ID__} /><link
+		rel="icon"
+		href={logo}
+		type="image/png"
+	/><link
 		rel="preload"
 		href={cormorantLatin}
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/><link
+		rel="preload"
+		href={cormorantItalicLatin}
 		as="font"
 		type="font/woff2"
 		crossorigin="anonymous"
@@ -133,7 +158,6 @@
 			>
 		</div>{/if}
 	{#if isMap}<CollectionPanel />{/if}
-	<EntryDetail galleryView={!isMap} />
 </main>
 {#if isMap}<Legend />{/if}
 <Footer />

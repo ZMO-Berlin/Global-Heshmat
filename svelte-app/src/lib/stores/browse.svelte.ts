@@ -5,8 +5,13 @@ import { browser } from '$app/environment';
 import { page } from '$app/state';
 import { pushState, replaceState } from '$app/navigation';
 import { resolve } from '$app/paths';
-import type { IndexedArtwork, IndexedResidence } from '$lib/data/types';
-import { entryKind, type Entry, type Selection } from '$lib/utils/collection';
+import {
+	entryKind,
+	entryImages,
+	matchesMediaId,
+	type Entry,
+	type Selection
+} from '$lib/utils/collection';
 import {
 	readFilters,
 	writeFilters,
@@ -21,18 +26,31 @@ export function createBrowseStore() {
 	onMount(() => {
 		ready = true;
 	});
+	const modalSession = browser ? crypto.randomUUID() : '';
+	let closingModal = false;
 	let browseOpen = $state(false);
 	let returnKey = $state<string | null>(null);
 	// SvelteKit shallow routing updates page.state, deliberately not page.url.
 	// Store the query in that history entry so Back/Forward remain reactive.
-	const params = () =>
-		new SvelteURLSearchParams(browser ? (page.state.browseSearch ?? page.url.search) : '');
+	// Parse each history entry once, rather than again for every card link/getter.
+	const currentParams = $derived(
+		new SvelteURLSearchParams(browser ? (page.state.browseSearch ?? page.url.search) : '')
+	);
+	const params = () => currentParams;
 	const selection = (): Selection | null =>
 		page.data.artwork
 			? { kind: 'artwork', item: page.data.artwork }
 			: page.data.residence
 				? { kind: 'residence', item: page.data.residence }
 				: null;
+	const filterKey = $derived(
+		JSON.stringify({
+			...readFilters(params()),
+			...(page.route.id === '/missing' ? { status: 'search' as const } : {})
+		})
+	);
+	const filters: CollectionFilters = $derived(JSON.parse(filterKey));
+	const filterParams = $derived(writeFilters(new SvelteURLSearchParams(), filters));
 	function patch(patch: Record<string, string | null>, push = false) {
 		const next = new SvelteURLSearchParams(params());
 		for (const [key, value] of Object.entries(patch)) {
@@ -43,6 +61,29 @@ export function createBrowseStore() {
 		const state = { ...page.state, browseSearch: next.toString() };
 		if (push) pushState(target, state);
 		else replaceState(target, state);
+	}
+	function modal(key: 'photo' | 'about', value: string | null, push = false) {
+		if (value === null) {
+			const marker = page.state.browseModal;
+			if (marker?.key === key && marker.session === modalSession) {
+				if (!closingModal) {
+					closingModal = true;
+					window.addEventListener(
+						'popstate',
+						() => {
+							closingModal = false;
+						},
+						{ once: true }
+					);
+					history.back();
+				}
+				return;
+			}
+		}
+		if (push && value !== null && !params().has(key)) {
+			patch({ [key]: value }, true);
+			replaceState('', { ...page.state, browseModal: { key, session: modalSession } });
+		} else patch({ [key]: value });
 	}
 	const store = {
 		get ready() {
@@ -58,14 +99,11 @@ export function createBrowseStore() {
 			return page.data.residence ?? null;
 		},
 		get filters() {
-			return {
-				...readFilters(params()),
-				...(page.route.id === '/missing' ? { status: 'search' as const } : {})
-			};
+			return filters;
 		},
 		setFilters(value: Partial<CollectionFilters>) {
 			const next = writeFilters(params(), { ...readFilters(params()), ...value });
-			replaceState(page.url.pathname + (next.size ? `?${next}` : ''), {
+			replaceState(page.url.pathname + (next.size ? `?${next}` : '') + page.url.hash, {
 				...page.state,
 				browseSearch: next.toString()
 			});
@@ -85,16 +123,18 @@ export function createBrowseStore() {
 				: 'gallery';
 		},
 		get photo() {
-			return params().get('photo');
+			const id = params().get('photo');
+			const item = selection()?.item;
+			return item && entryImages(item).some((image) => matchesMediaId(image, id)) ? id : null;
 		},
 		setPhoto(id: string | null, push = false) {
-			patch({ photo: id }, push);
+			modal('photo', id, push);
 		},
 		get aboutOpen() {
 			return params().has('about');
 		},
 		set aboutOpen(open: boolean) {
-			patch({ about: open ? '1' : null }, open);
+			modal('about', open ? '1' : null, open);
 		},
 		get browseOpen() {
 			return browseOpen;
@@ -112,29 +152,43 @@ export function createBrowseStore() {
 			item: Entry,
 			options: { view?: 'map' | 'gallery'; photo?: string; origin?: 'missing' } = {}
 		) {
-			const data = item as IndexedArtwork | IndexedResidence;
+			const data = item;
 			const path =
 				entryKind(item) === 'artwork'
 					? resolve('/artworks/[slug]', { slug: data.slug })
 					: resolve('/residences/[slug]', { slug: data.slug });
-			const next = writeFilters(new SvelteURLSearchParams(), this.filters);
+			const next = new SvelteURLSearchParams(filterParams);
 			next.set('view', options.view ?? this.view);
 			if (this.mode !== 'entries') next.set('mode', this.mode);
 			if (options.photo) next.set('photo', options.photo);
-			if (
-				options.origin === 'missing' ||
-				page.route.id === '/missing' ||
-				params().get('origin') === 'missing'
-			)
-				next.set('origin', 'missing');
+			const origin =
+				options.origin ??
+				(page.route.id === '/missing'
+					? 'missing'
+					: page.route.id === '/fieldbook'
+						? 'fieldbook'
+						: page.route.id === '/trails'
+							? 'trails'
+							: params().get('origin'));
+			if (origin && ['missing', 'fieldbook', 'trails'].includes(origin)) next.set('origin', origin);
 			return path + (next.size ? `?${next}` : '');
 		},
 		collectionHref(mode: GalleryMode = galleryMode(params()), view: 'map' | 'gallery' = 'gallery') {
-			const next = writeFilters(new SvelteURLSearchParams(), this.filters);
+			const next = new SvelteURLSearchParams(filterParams);
 			if (mode !== 'entries' && view !== 'map') next.set('mode', mode);
 			return resolve(view === 'map' ? '/' : '/collection') + (next.size ? `?${next}` : '');
 		},
+		get closeLabel() {
+			const origin = params().get('origin');
+			return origin === 'fieldbook'
+				? 'Back to fieldbook'
+				: origin === 'trails'
+					? 'Back to trails'
+					: 'Back to collection';
+		},
 		get closeHref() {
+			if (params().get('origin') === 'fieldbook') return resolve('/fieldbook');
+			if (params().get('origin') === 'trails') return resolve('/trails');
 			if (params().get('origin') === 'missing') {
 				const next = writeFilters(new SvelteURLSearchParams(), { ...this.filters, status: 'all' });
 				return resolve('/missing') + (next.size ? `?${next}` : '');

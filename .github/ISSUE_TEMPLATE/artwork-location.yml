@@ -11,8 +11,21 @@ body:
 
         If you would rather write privately, email **sonja.hegasy@zmo.de** instead.
 
-        Please note: the project documents works **in public space**. It does not
-        list works held in private homes, or past exhibitions in galleries and museums.
+        The project focuses on works in public space, with selected records of private
+        sites and historical exhibitions where these document Heshmat's work.
+        A listed location does not establish public access. Reports are reviewed by editors.
+        This issue is public; use email for contact details or evidence you want to share privately.
+  - type: input
+    id: record-reference
+    attributes:
+      label: Existing record URL or ID
+      description: Include the permanent entry URL or artwork/residence ID when available.
+  - type: input
+    id: observed-on
+    attributes:
+      label: When was this observed?
+      description: Date or approximate period; distinguish a current sighting from historical documentation.
+      placeholder: YYYY-MM-DD, circa YYYY, or unknown
   - type: input
     id: artwork
     attributes:
@@ -51,9 +64,14 @@ body:
     id: contact
     attributes:
       label: May we contact you?
-      description: Optional. An email address if you are happy for us to follow up with questions.
+      description: Optional. Say whether we may follow up through this issue; email the project privately to share contact details.
     validations:
       required: false
+  - type: input
+    id: image-credit
+    attributes:
+      label: Image credit and reuse terms
+      description: Photographer or rights-holder name and any restrictions. Submission does not transfer ownership.
   - type: checkboxes
     id: rights
     attributes:

@@ -25,10 +25,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
           cache: npm
@@ -43,8 +43,20 @@ jobs:
       - name: Typecheck
         run: npm run check
 
-      - name: Unit tests
+      - name: Unit and image-pipeline tests
         run: npm test
+
+      - name: Editorial validation report
+        run: npm run report:editorial
+
+      - name: Preserve editorial research backlog
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: editorial-report
+          path: svelte-app/editorial-report.json
+          retention-days: 30
+          if-no-files-found: warn
 
   dependency-review:
     name: Dependency review
@@ -53,10 +65,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Review dependency changes
-        uses: actions/dependency-review-action@v5.0.0
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
         with:
           fail-on-severity: high
 
@@ -70,10 +82,10 @@ jobs:
         node-version: [22, 24]
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -96,13 +108,17 @@ jobs:
         if: matrix.node-version == 24
         run: npm run test:e2e
 
+      - name: Offline upgrade across two builds
+        if: matrix.node-version == 24
+        run: npm run test:upgrade
+
       - name: Lighthouse budgets
         if: matrix.node-version == 24
         run: npm run test:lighthouse
 
       - name: Preserve Lighthouse reports
         if: always() && matrix.node-version == 24
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: lighthouse-reports
           path: svelte-app/.lighthouse/
@@ -112,7 +128,7 @@ jobs:
 
       - name: Preserve browser failure traces
         if: failure() && matrix.node-version == 24
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: browser-test-results
           path: svelte-app/test-results/
@@ -121,11 +137,11 @@ jobs:
 
       - name: Configure Pages
         if: matrix.node-version == 24 && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: actions/configure-pages@v6
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
 
       - name: Upload Pages artifact
         if: matrix.node-version == 24 && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: svelte-app/build
 
@@ -147,4 +163,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

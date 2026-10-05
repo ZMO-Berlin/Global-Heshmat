@@ -12,22 +12,24 @@
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
 	import { installMapContent, type MapPalette } from '$lib/map/map-content';
-	import { getMapStore } from '$lib/stores/map.svelte';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import {
 		buildArtworkGeoJSON,
 		buildResidenceGeoJSON,
 		buildGhostGeoJSON,
 		buildRelocationGeoJSON
 	} from '$lib/utils/geojson';
+	import { locationZoom } from '$lib/utils/evidence';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 
 	let { showStatus = true }: { showStatus?: boolean } = $props();
-	const store = getMapStore();
+	const store = getBrowseStore();
 
 	let maplibregl: typeof Maplibre;
 	let mapContainer: HTMLDivElement;
 	let map = $state<Maplibre.Map>();
 	let destroyed = false;
+	let lastFilterKey: string | undefined;
 	let loadTimeout: ReturnType<typeof setTimeout> | undefined;
 	let status = $state<'loading' | 'ready' | 'failed'>('loading');
 
@@ -50,7 +52,10 @@
 	}
 
 	function updateMapSource() {
-		if (!map || !map.getSource('artworks')) return;
+		if (!showStatus || !map || !map.getSource('artworks')) return;
+		const key = JSON.stringify(store.filters);
+		if (key === lastFilterKey) return;
+		lastFilterKey = key;
 		const filtered = filterArtworks(artworks, store.filters);
 		const visibleResidences = filterResidences(residences, store.filters);
 		(map.getSource('artworks') as Maplibre.GeoJSONSource).setData(buildArtworkGeoJSON(filtered));
@@ -81,21 +86,22 @@
 	}
 
 	$effect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-		store.filters;
-		updateMapSource();
+		void store.filters;
+		void showStatus;
+		untrack(updateMapSource);
 	});
 	$effect(() => {
 		const artwork = store.selectedArtwork;
-		if (artwork) moveTo([artwork.lng, artwork.lat], 14);
+		if (artwork && showStatus) moveTo([artwork.lng, artwork.lat], locationZoom(artwork));
 	});
 	$effect(() => {
 		const residence = store.selectedResidence;
-		if (residence) moveTo([residence.lng, residence.lat], 14);
+		if (residence && showStatus) moveTo([residence.lng, residence.lat], locationZoom(residence));
 	});
 
 	async function initialize() {
 		status = 'loading';
+		lastFilterKey = undefined;
 		if (loadTimeout) clearTimeout(loadTimeout);
 		map?.remove();
 		map = undefined;

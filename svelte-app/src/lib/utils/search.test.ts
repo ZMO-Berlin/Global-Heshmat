@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import type { IndexedArtwork } from '$lib/data/types';
-import { normalizeSearchText, searchArtworks } from './artwork-search';
+import { normalizeSearchText } from './search';
+import { filterArtworks, DEFAULT_FILTERS } from './map-filter';
+const searchArtworks = (items: IndexedArtwork[], query: string) =>
+	filterArtworks(items, { ...DEFAULT_FILTERS, query });
 
 function artwork(id: number, name: string, city = 'Cairo', country = 'Egypt'): IndexedArtwork {
 	return {
@@ -22,10 +25,6 @@ describe('artwork search', () => {
 		expect(normalizeSearchText('  Musée ÜBER  ')).toBe('musee uber');
 	});
 
-	it('requires at least two characters', () => {
-		expect(searchArtworks([artwork(1, 'Nile family')], 'n')).toEqual([]);
-	});
-
 	it('matches every query word across searchable fields', () => {
 		const items = [artwork(1, 'Nile family'), artwork(2, 'Dancers', 'Selb', 'Germany')];
 		expect(searchArtworks(items, 'family cairo').map((item) => item.id)).toEqual([1]);
@@ -36,9 +35,16 @@ describe('artwork search', () => {
 		expect(searchArtworks(items, 'musee').map((item) => item.id)).toEqual([1]);
 	});
 
-	it('caps the number of results', () => {
-		const items = Array.from({ length: 12 }, (_, index) => artwork(index, `Cairo work ${index}`));
-		expect(searchArtworks(items, 'cairo')).toHaveLength(8);
-		expect(searchArtworks(items, 'cairo', 3)).toHaveLength(3);
+	it('folds Arabic marks, tatweel and alef variants', () => {
+		const item = { ...artwork(1, 'Museum'), aliases: ['آثار حَسَن حشمت'] };
+		expect(searchArtworks([item], 'اثار حسن حـشمت')).toEqual([item]);
+	});
+	it('searches captions and source labels as well as aliases', () => {
+		const item = {
+			...artwork(1, 'Archive'),
+			images: [{ src: 'a.jpg', caption: 'Installation in 1982' }],
+			sources: [{ label: 'Museum catalogue' }]
+		};
+		expect(searchArtworks([item], '1982 catalogue')).toEqual([item]);
 	});
 });

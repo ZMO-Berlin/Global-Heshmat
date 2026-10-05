@@ -6,8 +6,10 @@
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 	import { entryKey, entryTitle, entryImages, mediaId, imageAlt } from '$lib/utils/collection';
 	import { imageDimensions } from '$lib/utils/image';
+	import CollectionTools from './CollectionTools.svelte';
 	import CollectionCard from './CollectionCard.svelte';
 	import MediaImage from './MediaImage.svelte';
+	import { Images, MapPin } from '@lucide/svelte';
 	const store = getBrowseStore();
 	const items = $derived([
 		...filterArtworks(artworks, store.filters),
@@ -17,6 +19,13 @@
 </script>
 
 <div class="collection-page" data-testid="collection-scroll">
+	<!-- Hydrate the shared Lucide artwork once for all cards. -->
+	<svg class="card-icons" aria-hidden="true" focusable="false">
+		<defs>
+			<symbol id="collection-images" viewBox="0 0 24 24"><Images /></symbol>
+			<symbol id="collection-map-pin" viewBox="0 0 24 24"><MapPin /></symbol>
+		</defs>
+	</svg>
 	<div class="collection-inner">
 		<header class="collection-head">
 			<div>
@@ -42,6 +51,7 @@
 					>
 				</div>{/if}
 		</header>
+		<CollectionTools {items} />
 		{#if !items.length}<div class="empty">
 				<h3>No entries match these filters</h3>
 				<p>Try another country, status or search term.</p>
@@ -111,6 +121,12 @@
 </div>
 
 <style>
+	.card-icons {
+		position: absolute;
+		width: 0;
+		height: 0;
+		overflow: hidden;
+	}
 	.collection-page {
 		position: fixed;
 		inset: calc(var(--header-height) + var(--filter-height)) 0 var(--footer-height);
@@ -172,6 +188,10 @@
 	}
 	.entry-grid li {
 		min-width: 0;
+		/* Keep every album searchable and focusable while skipping off-screen layout.
+		   Once rendered, auto remembers the real height for return navigation. */
+		content-visibility: auto;
+		contain-intrinsic-block-size: auto 500px;
 	}
 	.entry-list {
 		list-style: none;

@@ -12,10 +12,30 @@ export interface ArtworkImage {
 	alt?: string;
 	credit?: string;
 	date?: string;
+	rights?: string;
+	rightsHolder?: string;
+	sourceUrl?: string;
 	documentType?: 'photograph' | 'archival-document' | 'drawing';
 }
 
+export interface SourceReference {
+	label: string;
+	url?: string;
+	checkedOn?: string;
+}
+export interface DocumentaryEvent {
+	id: string;
+	type: 'commission' | 'installation' | 'relocation' | 'exhibition' | 'residence' | 'observation';
+	title: string;
+	date: string;
+	endDate?: string;
+	qualifier?: 'exact' | 'approximate' | 'before' | 'after';
+	description?: string;
+	sources: SourceReference[];
+}
 export interface DocumentaryMetadata {
+	updatedOn?: string;
+	events?: DocumentaryEvent[];
 	displayTitle?: string;
 	siteName?: string;
 	district?: string;
@@ -23,7 +43,7 @@ export interface DocumentaryMetadata {
 	coverImage?: string;
 	entryKind?: 'work' | 'ensemble' | 'institution' | 'residence';
 	locationPrecision?: 'exact' | 'approximate' | 'city' | 'last-known';
-	sources?: { label: string; url?: string; checkedOn?: string }[];
+	sources?: SourceReference[];
 	creationPlace?: { name: string; lat?: number; lng?: number };
 }
 

@@ -19,13 +19,33 @@ export function trapFocus(node: HTMLElement) {
 		Array.from(node.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
 			(el) => el.getClientRects().length > 0 && !el.closest('[inert]')
 		);
-	const first = available()[0];
-	if (first) {
-		first.focus();
-	} else {
-		node.setAttribute('tabindex', '-1');
-		node.focus();
-	}
+	const backgrounds = new Map<HTMLElement, boolean>();
+	let destroyed = false;
+	queueMicrotask(() => {
+		if (destroyed) return;
+		let branch: HTMLElement = node;
+		for (let parent = branch.parentElement; parent; parent = branch.parentElement) {
+			for (const sibling of parent.children) {
+				if (
+					sibling instanceof HTMLElement &&
+					sibling !== branch &&
+					!['SCRIPT', 'STYLE', 'LINK'].includes(sibling.tagName)
+				) {
+					backgrounds.set(sibling, sibling.inert);
+					sibling.inert = true;
+				}
+			}
+			branch = parent;
+			if (parent === document.body) break;
+		}
+		const first = available()[0];
+		if (first) {
+			first.focus();
+		} else {
+			node.setAttribute('tabindex', '-1');
+			node.focus();
+		}
+	});
 
 	function onKeydown(e: KeyboardEvent) {
 		if (e.key !== 'Tab') return;
@@ -48,6 +68,8 @@ export function trapFocus(node: HTMLElement) {
 
 	return {
 		destroy() {
+			destroyed = true;
+			for (const [element, wasInert] of backgrounds) element.inert = wasInert;
 			node.removeEventListener('keydown', onKeydown);
 			if (previous?.isConnected) previous.focus({ preventScroll: true });
 		}

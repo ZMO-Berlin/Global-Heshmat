@@ -14,6 +14,8 @@ const config = {
 		}
 	},
 	kit: {
+		// Inline small route styles while keeping the larger shared stylesheet cacheable.
+		inlineStyleThreshold: 16384,
 		// Static output: prerenders the single route to plain HTML/JS so the
 		// site can be hosted on any static host (GitHub Pages, Netlify,
 		// Cloudflare Pages, S3, etc.). See https://svelte.dev/docs/kit/adapter-static.

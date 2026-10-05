@@ -14,7 +14,9 @@ export default ts.config(
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				...globals.node
+				...globals.node,
+				__BUILD_ID__: 'readonly',
+				__REVISION__: 'readonly'
 			}
 		}
 	},
@@ -34,6 +36,8 @@ export default ts.config(
 			'node_modules/',
 			'.npm-cache/',
 			'.lighthouse/',
+			'test-results/',
+			'playwright-report/',
 			'.impeccable/'
 		]
 	}

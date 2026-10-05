@@ -1,9 +1,10 @@
+import { imageStem } from '$lib/media/variants.js';
 import manifest from '$lib/data/image-manifest.json';
-import { entryImages } from './collection';
+import { coverImage } from './collection';
 type Variant = 'thumb' | 'preview' | 'web' | 'full';
 type Dimensions = { width: number; height: number; bytes: number };
 const images: Record<string, Record<Variant, Dimensions>> = manifest;
-const stem = (src: string) => src.normalize('NFC').replace(/\.[^./\\]+$/, '');
+const stem = imageStem;
 const url = (src: string, variant: Variant) =>
 	// Interior commas are valid in srcset URLs. Keep them literal so SvelteKit's
 	// decodeURI-based prerender crawler can match the static filename.
@@ -26,13 +27,6 @@ function candidates(src: string, variants: Variant[]): string {
 }
 export const srcSet = (src: string) => candidates(src, ['preview', 'web', 'full']);
 export const cardSrcSet = (src: string) => candidates(src, ['thumb', 'preview', 'web']);
-export function leadImage(item: {
-	images?: { src: string }[];
-	image?: string;
-	coverImage?: string;
-}): string | undefined {
-	return (
-		entryImages(item).find((image) => image.src === item.coverImage)?.src ??
-		entryImages(item)[0]?.src
-	);
+export function leadImage(item: Parameters<typeof coverImage>[0]): string | undefined {
+	return coverImage(item)?.src;
 }

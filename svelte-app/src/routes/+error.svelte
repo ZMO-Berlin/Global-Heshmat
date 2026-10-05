@@ -2,7 +2,6 @@
 	import { Compass } from '@lucide/svelte';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { getMapStore } from '$lib/stores/map.svelte';
 
 	/**
 	 * Rendered in place of the page content when a route errors — in practice
@@ -12,8 +11,6 @@
 	 * Without this the fallback rendered the bare app shell: a visitor at a dead
 	 * URL saw the map with no indication anything had gone wrong.
 	 */
-
-	const store = getMapStore();
 
 	const isNotFound = $derived(page.status === 404);
 	const heading = $derived(isNotFound ? 'That page has moved or never existed' : 'Something broke');
@@ -39,9 +36,7 @@
 		</p>
 		<div class="error-actions">
 			<a class="error-btn error-btn-primary" href={resolve('/')}>Back to the map</a>
-			<button class="error-btn" onclick={() => (store.browseOpen = true)}>
-				Browse the collection
-			</button>
+			<a class="error-btn" href={resolve('/collection')}>Browse the collection</a>
 		</div>
 	</div>
 </div>

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Modal from '$lib/components/Modal.svelte';
-	import { getMapStore } from '$lib/stores/map.svelte';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { aboutContent as about } from '$lib/data/about';
 
-	const store = getMapStore();
+	const store = getBrowseStore();
 </script>
 
 <Modal open={store.aboutOpen} title={about.title} onclose={() => (store.aboutOpen = false)}>

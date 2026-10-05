@@ -3,14 +3,16 @@
 	import { ImageOff, X } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
 	import { entryImages, entryKey, entryTitle } from '$lib/utils/collection';
+	import EntryTools from './EntryTools.svelte';
+	import EvidencePanel from './EvidencePanel.svelte';
 	import Gallery from './Gallery.svelte';
 	import VideoPlayer from './VideoPlayer.svelte';
 	import { aboutContent as about } from '$lib/data/about';
-	import { getMapStore } from '$lib/stores/map.svelte';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { youTubeId } from '$lib/utils/video';
 
 	let { galleryView = false }: { galleryView?: boolean } = $props();
-	const store = getMapStore();
+	const store = getBrowseStore();
 
 	// The sidebar shows either an artwork or a place of residence (never both —
 	// the store enforces that). The header (name) and image gallery are shared;
@@ -76,7 +78,7 @@
 					event.preventDefault();
 					close();
 				}}
-				aria-label="Back to collection"
+				aria-label={store.closeLabel}
 			>
 				<X size={20} strokeWidth={2.25} />
 			</a>
@@ -87,7 +89,13 @@
 				     instead of reusing the instance (whose index could point
 				     past the end of a shorter image list). -->
 				{#key entryKey(item)}
-					<Gallery {images} name={item.name} />
+					<Gallery
+						{images}
+						name={item.name}
+						sizes={galleryView
+							? '(max-width: 768px) 100vw, (max-width: 1320px) 60vw, 792px'
+							: '(max-width: 768px) 100vw, 460px'}
+					/>
 				{/key}
 			{:else}
 				<div class="sidebar-image">
@@ -105,18 +113,6 @@
 					href={store.entryHref(item, { view: galleryView ? 'map' : 'gallery' })}
 					>{galleryView ? 'View on map' : 'View album'}</a
 				>
-				{#if item.locationPrecision}<p class="location-note">
-						Location precision: {item.locationPrecision.replace('-', ' ')}
-					</p>{/if}
-				{#if item.sources?.length}<h3>Sources</h3>
-					<ul>
-						{#each item.sources as source (source.url ?? source.label)}<li>
-								{#if source.url}<a href={source.url} target="_blank" rel="noopener noreferrer"
-										>{source.label}</a
-									>{:else}{source.label}{/if}{#if source.checkedOn}
-									· Checked {source.checkedOn}{/if}
-							</li>{/each}
-					</ul>{/if}
 				{#if artwork}
 					<div class="sidebar-meta">
 						<span class="tag {tagClass}">{tagText}</span>
@@ -186,14 +182,15 @@
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -- content is from our own data files, not user input -->
 					<div class="sidebar-desc" dir="auto">{@html residence.desc}</div>
 				{/if}
+				<EvidencePanel {item} />
+				{#key entryKey(item)}<EntryTools {item} />{/key}
 			</div>
 		</div>
 	{/if}
 </aside>
 
 <style>
-	.full-title,
-	.location-note {
+	.full-title {
 		font-size: var(--text-sm);
 		color: var(--color-text-secondary);
 		margin-bottom: var(--space-3);

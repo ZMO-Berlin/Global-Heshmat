@@ -2,6 +2,7 @@
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
 	import type { ArtworkImage } from '$lib/data/types';
 	import { thumbUrl } from '$lib/utils/image';
+	import MediaCaption from './MediaCaption.svelte';
 	import MediaImage from './MediaImage.svelte';
 	import { imageAlt } from '$lib/utils/collection';
 	import { hideParentOnError } from '$lib/utils/hide-on-error';
@@ -102,9 +103,7 @@
 				priority
 			/>
 		</div>
-		{#if images[current].caption}
-			<div class="lightbox-caption">{images[current].caption}</div>
-		{/if}
+		<div class="lightbox-caption"><MediaCaption image={images[current]} fallback={name} /></div>
 		{#if multi}
 			<div class="lightbox-counter">{current + 1} / {images.length}</div>
 		{/if}

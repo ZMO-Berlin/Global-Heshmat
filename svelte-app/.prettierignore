@@ -21,3 +21,5 @@ src/lib/data/residences/Residence*.ts
 .npm-cache/
 .lighthouse/
 .image-build-cache.json
+
+/editorial-report.json

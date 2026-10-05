@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { getMapStore } from '$lib/stores/map.svelte';
+	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { resolve } from '$app/paths';
 	import ViewSwitcher from './ViewSwitcher.svelte';
 
 	let { onreset }: { onreset: () => void } = $props();
-	const store = getMapStore();
+	const store = getBrowseStore();
 </script>
 
 <header class="header">

@@ -16,7 +16,7 @@ export const aboutContent = {
 
 		'Heshmat held solo exhibitions all over Europe, among other in Paris and Budapest in 1957, in Susteren in 1968, 1970 in Bonn and Radhus, 1978 in Roskilde or 1979 in Ystad. In 2000 Heshmat was awarded the State Appreciation Award, Egypt&rsquo;s highest award.',
 
-		'*This website does not list works held in private homes or past exhibitions in galleries and museums.'
+		'*The collection focuses on artworks in public space. Selected private sites and historical exhibition material are included as documentary context. A recorded location does not establish public access.'
 	],
 
 	publicationUrl: 'https://repositorium.zmo.de/receive/zmo_mods_00002340',

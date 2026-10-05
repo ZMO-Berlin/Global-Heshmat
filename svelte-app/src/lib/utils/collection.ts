@@ -1,7 +1,9 @@
-import type { Artwork, Residence, ArtworkImage } from '$lib/data/types';
+import { imageStem } from '$lib/media/variants.js';
+import type { IndexedArtwork, IndexedResidence, ArtworkImage } from '$lib/data/types';
 
-export type Entry = Artwork | Residence;
-export type Selection = { kind: 'artwork'; item: Artwork } | { kind: 'residence'; item: Residence };
+export type Entry = IndexedArtwork | IndexedResidence;
+export type Selection =
+	{ kind: 'artwork'; item: IndexedArtwork } | { kind: 'residence'; item: IndexedResidence };
 export function entryKind(item: Entry): Selection['kind'] {
 	return 'status' in item ? 'artwork' : 'residence';
 }
@@ -22,13 +24,23 @@ export function entryImages(
 }
 /** Stable across reordering; an explicit id also survives a filename change. */
 export function mediaId(image: ArtworkImage): string {
-	return image.id ?? image.src.normalize('NFC').replace(/\.[^./\\]+$/, '');
+	return image.id ?? legacyMediaId(image);
 }
-export function coverImage(item: Entry): ArtworkImage | undefined {
+/** Keep filename-based shared links working after editors add durable IDs. */
+export function legacyMediaId(image: ArtworkImage): string {
+	return imageStem(image.src);
+}
+export function matchesMediaId(image: ArtworkImage, id: string | null): boolean {
+	return id !== null && (mediaId(image) === id || legacyMediaId(image) === id);
+}
+export function coverImage(
+	item: Pick<Entry, 'images' | 'image' | 'imageCaption' | 'coverImage'>
+): ArtworkImage | undefined {
 	const images = entryImages(item);
 	return (
-		images.find((image) => image.src === item.coverImage || mediaId(image) === item.coverImage) ??
-		images[0]
+		images.find(
+			(image) => image.src === item.coverImage || matchesMediaId(image, item.coverImage ?? null)
+		) ?? images[0]
 	);
 }
 export function imageAlt(image: ArtworkImage, name: string): string {

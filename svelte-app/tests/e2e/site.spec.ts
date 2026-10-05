@@ -1,5 +1,18 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { readFileSync } from 'node:fs';
+const corpus: { country: string; status?: string }[] = JSON.parse(
+	readFileSync(new URL('../../build/collection.json', import.meta.url), 'utf8')
+).records;
+const missingCount = corpus.filter((item) => item.status === 'search').length;
+const germanyCount = corpus.filter((item) => item.country === 'Germany').length;
+const clientManifest: Record<string, { name: string; file: string }> = JSON.parse(
+	readFileSync(
+		new URL('../../.svelte-kit/output/client/.vite/manifest.json', import.meta.url),
+		'utf8'
+	)
+);
+const albumChunk = Object.values(clientManifest).find((asset) => asset.name === 'EntryDetail');
 const museum = '/artworks/the-hassan-heshmat-museum/';
 async function accessible(page: Page) {
 	const result = await new AxeBuilder({ page })
@@ -17,11 +30,15 @@ test('gallery is map-free, exposes albums and is accessible', async ({ page }) =
 	const requests: string[] = [];
 	page.on('request', (req) => requests.push(req.url()));
 	await page.goto('/collection/');
-	await expect(page.locator('.card')).toHaveCount(43);
+	await expect(page.locator('.card')).toHaveCount(corpus.length);
 	await expect(page.locator('.photo-count').filter({ hasText: '17 photos' })).toBeVisible();
 	await expect(page.locator('main .collection-page')).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Entries', exact: true })).toBeEnabled();
 	await expect(page.locator('canvas')).toHaveCount(0);
 	expect(requests.some((url) => /maplibre|cartocdn/.test(url))).toBe(false);
+	// Album controls belong to the entry routes, outside the collection's startup bundle.
+	expect(albumChunk, 'EntryDetail must stay in a separate route chunk').toBeDefined();
+	expect(requests.some((url) => new URL(url).pathname === '/' + albumChunk!.file)).toBe(false);
 	await accessible(page);
 });
 test('filters combine and follow Gallery, List and browser history', async ({ page }) => {
@@ -32,7 +49,7 @@ test('filters combine and follow Gallery, List and browser history', async ({ pa
 	await expect(page).toHaveURL(/country=Egypt.*status=search/);
 	const count = await page.locator('.card').count();
 	expect(count).toBeGreaterThan(0);
-	expect(count).toBeLessThan(13);
+	expect(count).toBeLessThan(missingCount);
 	await expect(page.locator('.card-badge')).toHaveCount(count);
 	await page.getByRole('link', { name: 'List view', exact: true }).click();
 	await expect(page.locator('.entry-list li')).toHaveCount(count);
@@ -55,18 +72,21 @@ test('search includes residences and descriptions and exposes all results', asyn
 });
 test('album returns to the same gallery scroll and focus', async ({ page }) => {
 	await page.goto('/collection/');
+	await expect(page.getByRole('button', { name: 'Entries', exact: true })).toBeEnabled();
 	const link = page.locator('[data-entry-key="artwork:19"]');
-	await link.scrollIntoViewIfNeeded();
-	const before = await page.locator('.collection-page').evaluate((el) => el.scrollTop);
+	// Scroll the rendered container: off-screen card contents have deferred layout.
+	await page.locator('.entry-grid li').filter({ has: link }).scrollIntoViewIfNeeded();
+	await expect(link).toBeInViewport();
+	await link.click({ trial: true });
+	const before = (await link.boundingBox())!.y;
 	await link.click();
 	await expect(page.locator('.gallery-counter')).toHaveText('1 / 13');
 	await expect(page.locator('canvas')).toHaveCount(0);
 	await page.getByRole('link', { name: 'Back to collection' }).click();
 	await expect(link).toBeFocused();
-	expect(await page.locator('.collection-page').evaluate((el) => el.scrollTop)).toBeCloseTo(
-		before,
-		0
-	);
+	// Scroll anchoring can adjust scrollTop as deferred cards acquire real heights;
+	// the album the reader was viewing must remain at the same visible position.
+	expect((await link.boundingBox())!.y).toBeCloseTo(before, 0);
 });
 test('photo links are shareable and lightbox navigation respects the URL', async ({ page }) => {
 	await page.goto(museum + '?view=gallery');
@@ -87,13 +107,13 @@ test('photo links are shareable and lightbox navigation respects the URL', async
 });
 test('Photos mode groups documents and survives detail navigation', async ({ page }) => {
 	await page.goto('/collection/?mode=photos&country=Germany');
-	await expect(page.locator('.photo-group')).toHaveCount(6);
+	await expect(page.locator('.photo-group')).toHaveCount(germanyCount);
 	await page.locator('.photo-grid a').first().click();
 	await expect(page.getByRole('dialog')).toBeVisible();
 	await page.keyboard.press('Escape');
 	await page.getByRole('link', { name: 'Back to collection' }).click();
 	await expect(page).toHaveURL(/mode=photos/);
-	await expect(page.locator('.photo-group')).toHaveCount(6);
+	await expect(page.locator('.photo-group')).toHaveCount(germanyCount);
 });
 test('detail HTML works without JavaScript', async ({ browser }) => {
 	const context = await browser.newContext({ javaScriptEnabled: false });
@@ -115,7 +135,7 @@ test('image errors leave an explicit fallback and a usable viewer', async ({ pag
 });
 test('missing works dossier links documentation and a prefilled contribution', async ({ page }) => {
 	await page.goto('/missing/');
-	await expect(page.locator('.missing-entry')).toHaveCount(13);
+	await expect(page.locator('.missing-entry')).toHaveCount(missingCount);
 	await expect(page.getByRole('heading', { name: 'Works still to be found' })).toBeVisible();
 	const contact = page.getByRole('link', { name: 'Contact the research team' }).first();
 	await expect(contact).toHaveAttribute('href', /mailto:.*subject=.*artwork/);
@@ -174,8 +194,12 @@ test('offline entries use cached documents and uncached entries show an honest f
 	await expect
 		.poll(() =>
 			page.evaluate(async () => {
-				const cache = await caches.open('entry-pages-v1');
-				return (await cache.keys()).length;
+				const names = (await caches.keys()).filter((name) => name.startsWith('entry-pages-'));
+				return (
+					await Promise.all(
+						names.map(async (name) => (await (await caches.open(name)).keys()).length)
+					)
+				).reduce((sum, count) => sum + count, 0);
 			})
 		)
 		.toBeGreaterThan(0);
@@ -187,7 +211,7 @@ test('offline entries use cached documents and uncached entries show an honest f
 		page.getByRole('heading', { name: 'This entry is not available offline yet' })
 	).toBeVisible();
 	await page.getByRole('link', { name: 'Return to the collection' }).click();
-	await expect(page.locator('.card')).toHaveCount(43);
+	await expect(page.locator('.card')).toHaveCount(corpus.length);
 	await context.setOffline(false);
 });
 
@@ -215,6 +239,6 @@ test('a failed basemap leaves working gallery navigation and retry', async ({ pa
 	await expect(page.getByRole('button', { name: 'Retry map' })).toBeVisible({ timeout: 20000 });
 	await page.getByRole('link', { name: 'Gallery view', exact: true }).click();
 	await expect(page).toHaveURL(/country=Germany/);
-	await expect(page.locator('.card')).toHaveCount(6);
+	await expect(page.locator('.card')).toHaveCount(germanyCount);
 	await expect(page.locator('.map-status')).toBeHidden();
 });

@@ -1,5 +1,5 @@
 import type { Artwork, Residence } from '$lib/data/types';
-import { normalizeSearchText } from './artwork-search';
+import { normalizeSearchText } from './search';
 export const FILTER_ALL = 'all';
 export const FILTER_SEARCH = 'search';
 export const FILTER_RESIDENCE = 'residence';
@@ -29,12 +29,34 @@ export function normalizeFilters(filter: MapFilter | CollectionFilters): Collect
 					: {})
 	};
 }
+const searchIndex = new WeakMap<Artwork | Residence, string>();
+function searchableText(item: Artwork | Residence): string {
+	let text = searchIndex.get(item);
+	if (text === undefined) {
+		text = normalizeSearchText(
+			[
+				item.name,
+				item.displayTitle,
+				item.siteName,
+				item.city,
+				item.district,
+				item.country,
+				'address' in item ? item.address : '',
+				item.desc.replace(/<[^>]*>/g, ' '),
+				...(item.aliases ?? []),
+				...(item.images ?? []).flatMap((image) => [image.caption, image.credit]),
+				...(item.sources ?? []).map((source) => source.label)
+			]
+				.filter(Boolean)
+				.join(' ')
+		);
+		searchIndex.set(item, text);
+	}
+	return text;
+}
 export function matchesQuery(item: Artwork | Residence, query: string): boolean {
 	const words = normalizeSearchText(query).split(/\s+/).filter(Boolean);
-	const text = normalizeSearchText(
-		`${item.name} ${item.displayTitle ?? ''} ${item.city} ${item.district ?? ''} ${item.country} ${'address' in item ? item.address : ''} ${item.desc.replace(/<[^>]*>/g, ' ')} ${(item.aliases ?? []).join(' ')}`
-	);
-	return words.every((word) => text.includes(word));
+	return words.length === 0 || words.every((word) => searchableText(item).includes(word));
 }
 export function filterArtworks<T extends Artwork>(
 	items: readonly T[],

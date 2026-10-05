@@ -14,6 +14,7 @@
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { VARIANTS, imageStem } from './image-variants.mjs';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const BUILD_DIR = join(__dirname, '..', 'build');
@@ -41,6 +42,48 @@ if (!existsSync(BUILD_DIR)) {
 	process.exit(2);
 }
 
+const exported = JSON.parse(read('collection.json'));
+const records = new Map(exported.records.map((record) => [new URL(record.url).pathname, record]));
+function jsonLd(html) {
+	return JSON.parse(
+		html.match(/<script type="application\/ld\+json">([^<]*)<\/script>/)?.[1] ?? '{}'
+	);
+}
+function schemaType(record) {
+	return record.entryKind === 'institution' ||
+		record.entryKind === 'residence' ||
+		!('status' in record)
+		? 'Place'
+		: record.entryKind === 'ensemble'
+			? 'Collection'
+			: 'VisualArtwork';
+}
+// Verify every hashed client asset referenced by prerendered HTML. A page can
+// look correct before hydration even when its JavaScript belongs to another build.
+const checkedAssets = new Set();
+function verifyClientAssets(directory = BUILD_DIR) {
+	for (const file of readdirSync(directory, { withFileTypes: true })) {
+		const path = join(directory, file.name);
+		if (file.isDirectory()) {
+			if (!['_app', 'images', 'videos'].includes(file.name)) verifyClientAssets(path);
+			continue;
+		}
+		if (!file.name.endsWith('.html')) continue;
+		const route = path.slice(BUILD_DIR.length).replace(/index\.html$/, '');
+		for (const [, reference] of readFileSync(path, 'utf8').matchAll(/(?:src|href)="([^"]+)"/g)) {
+			if (!reference.includes('_app/immutable/')) continue;
+			const asset = new URL(reference, SITE_URL + route).pathname;
+			if (checkedAssets.has(asset)) continue;
+			checkedAssets.add(asset);
+			check(
+				`client asset ${asset} exists`,
+				existsSync(join(BUILD_DIR, decodeURIComponent(asset))),
+				`referenced by ${route}`
+			);
+		}
+	}
+}
+verifyClientAssets();
 check('missing works dossier prerendered', existsSync(join(BUILD_DIR, 'missing/index.html')));
 // ── Site-wide assets ────────────────────────────────────────────────
 check('CNAME present', existsSync(join(BUILD_DIR, 'CNAME')));
@@ -104,10 +147,27 @@ for (const kind of ['artworks', 'residences']) {
 			kind + '/' + slug + ' contains its server-rendered detail body',
 			html.includes('sidebar-body') && html.includes('sidebar-content')
 		);
-		check(
-			kind + '/' + slug + ' does not invent creation location',
-			!html.includes('"locationCreated"')
-		);
+		const record = records.get(`/${kind}/${slug}/`);
+		const structured = jsonLd(html);
+		check(`${kind}/${slug} exists in public metadata export`, !!record);
+		if (record) {
+			const expected =
+				record.creationPlace && ['VisualArtwork', 'Collection'].includes(schemaType(record))
+					? { '@type': 'Place', name: record.creationPlace.name }
+					: undefined;
+			check(
+				`${kind}/${slug} creation place matches evidence`,
+				JSON.stringify(structured.locationCreated) === JSON.stringify(expected)
+			);
+			check(
+				`${kind}/${slug} entity type matches its record`,
+				structured['@type'] === schemaType(record)
+			);
+			check(
+				`${kind}/${slug} carries the matching offline build version`,
+				html.includes(`name="collection-build" content="${exported.build}"`)
+			);
+		}
 	}
 }
 
@@ -235,10 +295,6 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 			new RegExp(`rel="canonical"\\s+href="${SITE_URL}/artworks/${slug}/"`).test(html)
 		);
 		check(
-			`artwork page /${slug}/ JSON-LD declares @type VisualArtwork`,
-			/<script type="application\/ld\+json">[^<]*"@type":"VisualArtwork"/.test(html)
-		);
-		check(
 			`artwork page /${slug}/ og:type is "article"`,
 			/property="og:type"\s+content="article"/.test(html)
 		);
@@ -311,7 +367,7 @@ if (existsSync(join(BUILD_DIR, 'sitemap.xml'))) {
 const DATA_ROOT = join(__dirname, '..', 'src', 'lib', 'data');
 const DATA_DIRS = [join(DATA_ROOT, 'artworks'), join(DATA_ROOT, 'residences')];
 // Keep in sync with VARIANTS in scripts/generate_image_derivatives.mjs.
-const VARIANT_DIRS = ['thumb', 'preview', 'web', 'full'];
+const VARIANT_DIRS = VARIANTS.map((variant) => variant.dir);
 const variantPath = (name) => join(BUILD_DIR, 'images', name);
 
 // Referenced filenames whose SOURCE image is not on disk yet (a colleague
@@ -323,8 +379,8 @@ const variantPath = (name) => join(BUILD_DIR, 'images', name);
 // and now have derivatives; Schule_Plan.jpg (024) is no longer referenced.
 const KNOWN_MISSING = new Set([]);
 
-// Mirror the stem logic in src/lib/utils/image.ts.
-const stemOf = (file) => file.replace(/\.[^./\\]+$/, '');
+// Shared normalization keeps runtime and build checks aligned.
+const stemOf = imageStem;
 const IMG_EXT = /\.(?:jpe?g|png|webp|tiff?|heic|heif)$/i;
 const REF_RE = /(?:src|image)\s*:\s*["']([^"']+)["']/g;
 

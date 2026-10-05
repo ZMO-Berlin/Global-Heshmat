@@ -30,3 +30,5 @@ vite.config.ts.timestamp-*
 .npm-cache/
 .lighthouse/
 .image-build-cache.json
+
+/editorial-report.json

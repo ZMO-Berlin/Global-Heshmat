@@ -18,7 +18,15 @@ export default defineConfig({
 		...(process.env.CI ? [{ name: 'webkit', use: { ...devices['Desktop Safari'] } }] : []),
 		{
 			name: 'chromium',
-			use: { ...devices['Desktop Chrome'] }
+			use: {
+				...devices['Desktop Chrome'],
+				launchOptions: {
+					executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
+					args: process.env.PLAYWRIGHT_CHROMIUM_ARGS
+						? JSON.parse(process.env.PLAYWRIGHT_CHROMIUM_ARGS)
+						: undefined
+				}
+			}
 		}
 	],
 	webServer: {

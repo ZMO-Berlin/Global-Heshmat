@@ -24,103 +24,41 @@ A project by the [Leibniz-Zentrum Moderner Orient (ZMO)](http://www.zmo.de), Ber
 
 ## Project structure
 
-```
-Global-Heshmat/
-├── .github/
-│   ├── workflows/
-│   │   └── ci.yml                   # Lint, type-check, test, build matrix, Pages deploy
-│   └── dependabot.yml
-└── svelte-app/
-    ├── src/
-    │   ├── lib/
-    │   │   ├── components/          # Svelte components
-    │   │   │   ├── MapView.svelte         # MapLibre map, markers, clusters, relocation lines
-    │   │   │   ├── EntryDetail.svelte         # Artwork detail panel
-    │   │   │   ├── Gallery.svelte         # Complete-image album with contact sheet
-    │   │   │   ├── Lightbox.svelte        # Full-screen image viewer
-    │   │   │   ├── FilterBar.svelte       # Country/status filters + search
-    │   │   │   ├── CollectionPanel.svelte # Browsable text index of the collection
-    │   │   │   ├── ViewSwitcher.svelte    # Map / Gallery / List switch
-    │   │   │   ├── MarkerGlyph.svelte     # SVG twin of the map's marker shapes
-    │   │   │   ├── Header.svelte          # Top navigation bar
-    │   │   │   ├── Legend.svelte          # Map legend (collapsible)
-    │   │   │   ├── Footer.svelte          # Brand mark + project credits
-    │   │   │   ├── Modal.svelte           # Shared modal chrome (backdrop, focus trap)
-    │   │   │   ├── AboutModal.svelte      # Project info & credits overlay
-    │   │   │   ├── MissingWorksModal.svelte # Appeal for help locating works
-    │   │   │   ├── VideoPlayer.svelte     # Self-hosted clip player
-    │   │   │   └── Seo.svelte             # Per-page meta tags & JSON-LD
-    │   │   ├── data/
-    │   │   │   ├── types.ts               # TypeScript interfaces
-    │   │   │   ├── artworks.ts            # Aggregated export + slug index
-    │   │   │   ├── residences.ts          # Same, for places of residence
-    │   │   │   ├── about.ts               # About / Missing-works modal content
-    │   │   │   ├── artworks/              # One file per artwork (auto-loaded)
-    │   │   │   │   ├── _template.ts       # Copy this to add a new artwork
-    │   │   │   │   └── index.ts           # Auto-imports via import.meta.glob
-    │   │   │   └── residences/            # One file per place of residence
-    │   │   ├── stores/
-    │   │   │   ├── map.svelte.ts          # Shared reactive state (Svelte 5 runes)
-    │   │   │   └── url-sync.svelte.ts     # Bidirectional URL <-> state sync
-    │   │   ├── utils/
-    │   │   │   ├── build-index.ts         # Slug derivation + collision checks
-    │   │   │   ├── map-filter.ts          # Filter predicates and country facets
-    │   │   │   ├── geojson.ts             # Pure GeoJSON builders for the map layers
-    │   │   │   ├── marker-icons.ts        # Marker shape specs + canvas icon drawing
-    │   │   │   ├── slug.ts                # URL slug helper
-    │   │   │   ├── image.ts               # Image filenames -> WebP derivatives + srcset
-    │   │   │   ├── video.ts               # Local video URLs + YouTube id parsing
-    │   │   │   ├── contrast.ts            # WCAG contrast maths (used by the tests)
-    │   │   │   ├── focus-trap.ts          # Modal focus-trap action
-    │   │   │   ├── hide-on-error.ts       # Hide an <img> whose source 404s
-    │   │   │   └── xml.ts                 # XML entity escaping for the sitemap
-    │   │   └── config.ts                  # SITE_URL, site metadata, URL helpers
-    │   ├── routes/
-    │   │   ├── +layout.svelte             # Page chrome (Header, FilterBar, MapView, Sidebar, …)
-    │   │   ├── +layout.ts                 # prerender, ssr, trailingSlash settings
-    │   │   ├── +page.svelte               # Home — SEO + back-compat ?artwork= redirect
-    │   │   ├── +error.svelte              # 404 / error screen
-    │   │   ├── collection/+page.svelte    # Photo grid of the whole collection
-    │   │   ├── artworks/[slug]/
-    │   │   │   ├── +page.ts               # entries() for prerender, load() for artwork
-    │   │   │   └── +page.svelte           # Per-artwork SEO + store sync
-    │   │   ├── residences/[slug]/         # Same, for places of residence
-    │   │   └── sitemap.xml/+server.ts     # Prerendered sitemap.xml
-    │   ├── app.css                        # Global reset, focus ring, shared primitives
-    │   ├── tokens.css                     # Design tokens (colour, type, spacing, z-index)
-    │   ├── app.html                       # Includes Google Search Console verification
-    │   └── app.d.ts
-    ├── originals/                         # Archived artwork photos (NOT deployed)
-    ├── static/
-    │   ├── CNAME                          # heshmat.zmo.de — picked up by GitHub Pages
-    │   ├── robots.txt                     # Points crawlers at /sitemap.xml
-    │   ├── videos/                        # Self-hosted clips, served as-is
-    │   └── images/
-    │       ├── thumb/                     # Generated <=400px WebP (thumbnail strips)
-    │       ├── web/                       # Generated <=1200px WebP (sidebar gallery)
-    │       └── full/                      # Generated <=2000px WebP (lightbox, hi-DPI)
-    ├── scripts/
-    │   ├── generate_image_derivatives.mjs # Build thumb/ + preview/ + web/ + full/ from originals
-    │   └── verify-build.mjs               # Post-build SEO / sitemap / image checks
-    ├── package.json
-    ├── svelte.config.js
-    ├── tsconfig.json
-    └── vite.config.ts
-```
+| Path | Purpose |
+| --- | --- |
+| `.github/workflows/` | Quality gates, browser tests, Pages deployment, dependency audit and live smoke check |
+| `svelte-app/src/lib/components/` | Collection views, map, albums, research tools and modal controls |
+| `svelte-app/src/lib/data/` | One TypeScript file per artwork/residence, shared schema and generated image manifest |
+| `svelte-app/src/lib/stores/browse.svelte.ts` | Context-scoped filters, selection, URL state and modal history |
+| `svelte-app/src/lib/stores/fieldbook.svelte.ts` | Device-local research selections |
+| `svelte-app/src/lib/editorial/` | Data validation and research-quality reporting |
+| `svelte-app/src/lib/offline/` | Canonical cache keys, version rules, saved albums and availability checks |
+| `svelte-app/src/lib/media/` | Shared derivative definitions and filename normalization |
+| `svelte-app/src/lib/utils/` | Indexing, search, GeoJSON, citations/exports, structured data and accessibility helpers |
+| `svelte-app/src/routes/` | Static record pages, collection, missing dossier, fieldbook, trails, metadata export and sitemap |
+| `svelte-app/src/service-worker.ts` | Workbox precache and version-aware runtime caching |
+| `svelte-app/originals/` | Preserved masters; never deployed |
+| `svelte-app/static/images/{thumb,preview,web,full}/` | Committed WebP derivatives |
+| `svelte-app/scripts/` | Image generation, validation, build assertions, upgrade and performance checks |
+| `svelte-app/tests/` | Browser/accessibility regressions and temporary image-pipeline fixtures |
 
 ## Routes & URLs
 
 | URL                   | What it serves                                                                     |
 | --------------------- | ---------------------------------------------------------------------------------- |
 | `/`                   | Map view with no artwork preselected                                               |
-| `/artworks/<slug>/`   | Same map, sidebar pre-opened on the artwork; one prerendered HTML file per artwork |
+| `/artworks/<slug>/`   | Prerendered album and record; add `?view=map` for the map sidebar |
 | `/collection/`        | Albums, grouped photographs and list, with combinable filters                      |
 | `/residences/<slug>/` | Same, for the places where Heshmat lived or worked                                 |
+| `/missing/`           | Dedicated dossier of unlocated works |
+| `/fieldbook/`         | Device-local selections, exports and offline album management |
+| `/trails/`            | Place-based reading sequences |
+| `/collection.json`    | Versioned public collection metadata and media-rights statements |
 | `/sitemap.xml`        | Auto-generated sitemap listing the home page and every artwork and residence URL   |
 | `/robots.txt`         | Allows all crawlers; points to the sitemap                                         |
 | anything else         | `404.html` fallback, which renders `+error.svelte`                                 |
 
-Each `/artworks/<slug>/` page is fully prerendered to static HTML at build time with its own `<title>`, `<meta>` description, Open Graph tags, Twitter Card, and JSON-LD `VisualArtwork` schema — so search engines and link-unfurlers (Slack, Twitter, etc.) see real per-artwork metadata, not a generic homepage.
+Each `/artworks/<slug>/` page is fully prerendered to static HTML at build time with its own `<title>`, `<meta>` description, Open Graph tags, Twitter Card, and entity-aware JSON-LD (`VisualArtwork`, `Collection` or `Place`) — so search engines and link-unfurlers (Slack, Twitter, etc.) see real per-artwork metadata, not a generic homepage.
 
 Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on the client.
 
@@ -132,16 +70,16 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Relocation visualisation** — dashed lines connecting original and current locations
 - **Places of residence** — a separate, unclustered marker layer for where Heshmat lived and worked
 - **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs
-- **Three ways to read the collection** — the map, a photo grid at `/collection/`, and a side list, switchable from any of them. The grid matters because 26 of the 39 works are in Egypt and most of those in Cairo districts, so at world zoom the map shows the collection as a single dot
-- **Browsable collection index** — a grouped, filter-aware text list of every entry, opened with Browse on the map. It is also the site's internal link graph: every prerendered page carries real links to all 43 entries
+- **Three ways to read the collection** — the map, a photo grid at `/collection/`, and a side list, switchable from any of them. The grid also exposes works that overlap at world-map scale, especially around Cairo
+- **Browsable collection index** — a grouped, filter-aware text list of every entry, opened with Browse on the map. It is also the site's internal link graph: the collection index carries real links to every entry
 - **Shape-coded markers** — located (disc), to be found (ring), place of residence (diamond) and former location (dashed ring). Shape rather than hue carries the distinction: under tritanopia the located and residence colours measure ΔE 12.4, indistinguishable at marker size. `MARKER_SPECS` is the single source, so the map canvas, the legend and the list cannot drift apart
-- **Real-time search** — searches across names, cities, countries, and addresses
+- **Real-time search** — searches names, aliases, descriptions, places, captions and source labels; folds accents and Arabic vowel marks
 - **Sidebar detail view** — images, description, status tags, address, external links
 - **Multi-image gallery** — thumbnail strip, prev/next navigation, image counter
 - **Full-screen lightbox** — keyboard navigation (arrow keys, Escape)
 - **YouTube video embeds** — inline in the sidebar
 - **Per-artwork URLs** — each artwork has its own prerendered `/artworks/<slug>/` page for deep-linking, sharing, and indexing
-- **SEO & structured data** — per-page `<title>`, canonical URL, Open Graph, Twitter Card, and JSON-LD (Schema.org `VisualArtwork` / `WebSite`)
+- **SEO & structured data** — per-page `<title>`, canonical URL, Open Graph, Twitter Card, and JSON-LD (Schema.org `VisualArtwork` / `Collection` / `Place` / `WebSite`)
 - **Auto-generated sitemap** — `sitemap.xml` enumerates every artwork URL at build time
 - **Responsive design** — works on mobile and desktop
 - **Installable PWA** — app shell precached for offline use, images cached on demand; updates apply silently, with no install or reload prompts
@@ -171,7 +109,7 @@ Use Node.js 22.13+ or Node.js 24. Node 20 is end-of-life and is no longer suppor
 | `npm run lint`            | Prettier check + ESLint                                                                                                                      |
 | `npm run format`          | Format with Prettier                                                                                                                         |
 | `npm run images`          | Regenerate the WebP derivatives in `static/images/` from `originals/`                                                                        |
-| `npm test`                | Run Vitest unit tests once                                                                                                                   |
+| `npm test`                | Run Vitest and isolated image-pipeline fixture tests                                                                                                                   |
 | `npm run test:watch`      | Run Vitest in watch mode                                                                                                                     |
 | `npm run test:e2e`        | Run Playwright browser and axe accessibility tests against the production build                                                              |
 | `npm run test:lighthouse` | Check desktop/mobile collection, album and dossier Lighthouse scores and JavaScript/map-loading budgets                                      |
@@ -204,6 +142,7 @@ Originals (some up to ~18 MB, a few in browser-unfriendly formats like HEIC/TIFF
 
 - `originals/<file>` — the committed original (not deployed).
 - `static/images/thumb/<stem>.webp` — `<=400px`, the thumbnail strips.
+- `static/images/preview/<stem>.webp` — `<=800px`, intermediate mobile candidate.
 - `static/images/web/<stem>.webp` — `<=1200px`, the sidebar gallery and the small `srcset` candidate.
 - `static/images/full/<stem>.webp` — `<=2000px`, the lightbox on large and high-DPI screens.
 
@@ -212,7 +151,7 @@ percent-encoding. This is not cosmetic: a macOS-decomposed "ä" encodes to `%CC%
 hosts resolving paths in NFC answer 404 for — ten images were silently missing from the deployed
 site for exactly this reason. Tests assert that derivatives and data references stay NFC.
 
-The gallery and lightbox both ship a `srcset` spanning the last two, with a `sizes` hint describing the slot, so the browser picks by viewport and pixel density rather than always taking the largest file.
+The gallery and lightbox both ship a `srcset` spanning preview, web and full sizes, with a `sizes` hint describing the slot, so the browser picks by viewport and pixel density rather than always taking the largest file.
 
 ### Uploading new images
 
@@ -240,7 +179,7 @@ npm run images
 git add originals static/images
 ```
 
-The script is incremental (only new or changed files are processed), converts HEIC/TIFF, and bakes in EXIF orientation. A master that emits decoder warnings is still accepted, and one that will not decode at all falls back to re-encoding from the largest derivative already on disk — this archive contains a couple of each. In the data files always reference the **original** filename (e.g. `"My Sculpture.jpeg"`); the app maps it to the `.webp` derivative by swapping the extension, so a `.jpg`/`.jpeg` mismatch still resolves. `npm run verify:build` fails if a referenced image has no derivative — catching typos and forgotten regenerations. Images whose source file isn't available yet are tracked in the `KNOWN_MISSING` allowlist near the top of [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs).
+The script is incremental (only new or changed files are processed), reuses each master buffer for hashing and encoding, converts HEIC/TIFF, and bakes in EXIF orientation. A master that emits decoder warnings is still accepted, and one that will not decode at all falls back to re-encoding from the largest derivative already on disk — this archive contains a couple of each. In the data files always reference the **original** filename (e.g. `"My Sculpture.jpeg"`); the app maps it to the `.webp` derivative by swapping the extension, so a `.jpg`/`.jpeg` mismatch still resolves. `npm run verify:build` fails if a referenced image has no derivative — catching typos and forgotten regenerations. Images whose source file isn't available yet are tracked in the `KNOWN_MISSING` allowlist near the top of [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs).
 
 ### Git LFS
 
@@ -260,12 +199,8 @@ operation, not something to do casually.
 
 Two things to know before leaning on it further:
 
-- **Bandwidth is the binding constraint, not storage.** GitHub's free tier allows 1 GB of LFS
-  storage and 1 GB of transfer per month. At this collection's size a handful of full clones would
-  exhaust the monthly transfer, after which fetches fail until the quota resets or a data pack is
-  bought. Check what ZMO's plan actually includes before migrating the history.
-- **CI deliberately does not fetch LFS content.** Nothing in the build or the test suite reads
-  image bytes — the data-integrity test only compares filenames, and the derivatives under
+- Check ZMO's current storage and bandwidth entitlements before migrating masters. Plan limits and institutional arrangements can change.
+- **CI deliberately does not fetch LFS content.** The build does not read master bytes. Integrity tests decode committed derivatives and pipeline tests generate tiny temporary images. The derivatives under
   `static/images/` are committed as ordinary files. So `actions/checkout` runs without `lfs: true`,
   which keeps CI off the bandwidth quota entirely.
 
@@ -277,7 +212,7 @@ git lfs pull
 npm run images
 ```
 
-Because these masters are never deployed and only their _filenames_ matter to the test suite, the
+Because these masters are never deployed and tests use committed derivatives or temporary fixtures, the
 alternative worth considering is moving them out of git altogether — to institutional storage or a
 Zenodo deposit with a DOI, which suits an archival project better than LFS — leaving a committed
 manifest for the integrity test to read.
@@ -385,3 +320,37 @@ Optional notice metadata in `src/lib/data/types.ts`: `displayTitle`, `siteName`,
 `npm run images` fingerprints source bytes plus encoder settings, serializes watch rebuilds, checks filename collisions and writes derivatives through temporary files. It refreshes the committed `src/lib/data/image-manifest.json`, whose decoded dimensions produce accurate responsive image descriptors. To inventory existing derivatives without rebuilding them use `npm run images:manifest`; `npm run verify:images` detects stale metadata or incomplete variants.
 
 Direct entry URLs render their descriptions and album in static HTML. Gallery navigation does not initialize MapLibre. The service worker caches previously visited entry documents and provides an explicit offline fallback for an unvisited entry; photos and map areas are available offline only once cached.
+
+## Research tools and offline behaviour
+
+Use **Add to fieldbook** on a record, or **Use these entries** above filtered collection results. The fieldbook persists selected record IDs in local storage; it does not transmit them. Download a selected album or a whole selection, inspect the estimated image size, check current availability, and remove saved copies. JSON/CSV exports contain IDs, canonical URLs, version/build identifiers, editorial licensing and separate image rights. Entry citations can be copied or downloaded as BibTeX/RIS. The collection publisher is the corporate author; an absent editorial update date is `n.d.`, not the deployment date.
+
+Ordinary album navigation explicitly caches its canonical HTML after service-worker readiness, including clicks before first activation. UI parameters do not create separate document keys. Reading-size images explicitly saved in the fieldbook are retained separately from the evictable browsing cache; offline requests for larger or intermediate variants fall back to that saved reading copy. Videos, external references and uncached map regions are not included. Browser storage eviction remains possible, so availability checks inspect the actual cached document and media rather than a local-storage flag.
+
+The Workbox worker is authored in `src/service-worker.ts`. HTML caches are tied to a content-derived build ID and retired on activation of a different build. Saved selections survive, but albums need to be downloaded again after an update; old HTML is never served against a new app shell. The shell includes first-party fonts. An unseen uncached record has an explicit offline fallback.
+
+**Place trails** currently offer geographic reading sequences for Selb and 10th of Ramadan City based on existing records. They are not verified walking routes. **Compare two images** preserves dates, captions and credits where documented without asserting chronology.
+
+## Editorial validation and evidence
+
+`npm run validate:data` blocks invalid IDs, slugs, coordinates, unsafe links/HTML, ambiguous media IDs, unresolved covers, invalid dates and inconsistent location claims. Every production build runs it. `npm run report:editorial` writes `editorial-report.json`; CI keeps this report as an artifact. Missing sources, precision, entity kinds, media credits/dates/rights/alt text and stale verification dates are a visible editorial backlog, not invented values or a reason to reject the existing corpus.
+
+Optional fields include `sources: [{ label, url?, checkedOn? }]`, `updatedOn: 'YYYY-MM-DD'`, `locationPrecision`, `entryKind` and `creationPlace`. Only a documented creation place is emitted as `locationCreated`; a mapped current location does not supply it. An institution emits `Place`, without crediting its building to the artist. Undocumented/approximate locations use a broader map zoom. This is framing, not an invented uncertainty radius.
+
+Images support durable `id`, `alt`, `credit`, `date` (year, month or full date), `documentType`, `sourceUrl`, `rightsHolder` and `rights`. Existing filename-based photo links continue to resolve after an ID is assigned. Do not rename published record slugs. Shared cover and caption helpers keep the gallery, comparison, lightbox and SEO consistent.
+
+The optional `events` array supports sourced commissions, installations, relocations, exhibitions, residences and observations. Each event needs a stable ID, title, date, optional end date/qualifier and source references. It is rendered as an event list. Existing relocation prose is preserved; no undocumented dates or historical locations are synthesized.
+
+The contribution issue form captures the record, observation date, location, evidence, credit and permission information. Editors verify reports before changing data. The collection primarily documents public-space work, with selected private sites and historical exhibition material as context; a listed site does not guarantee public access.
+
+Still requiring institutional/editorial decisions: reviewed Arabic interface translations and names, dated evidence for historical chronology, rights-cleared IIIF delivery, original-asset storage/migration and required branch checks. These are not automatically enabled by the code implementation.
+
+Validation commands for these additions:
+
+- `npm test`: pure unit tests, real derivative integrity checks, and temporary pipeline/RTL-server fixtures.
+- `npm run test:e2e`: production navigation, focus/accessibility, deterministic local map, exports and offline download/eviction scenarios.
+- `npm run test:upgrade`: serves two actual builds on one origin and checks that activation retires incompatible documents; the second build runs in an isolated temporary project.
+- `npm run test:lighthouse`: three cold runs per target; checks optional renderer requests against Vite's manifest as well as transfer and page-performance budgets.
+- `npm run test:smoke`: checks the deployed site, intended for the scheduled workflow after release.
+
+The image encoder remains sequential to bound memory on large masters. This change avoids redundant master reads; it does not claim a measured decoding speedup or introduce speculative parallel encoding.

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { IndexedArtwork, IndexedResidence } from '$lib/data/types';
+	import { entryStructuredData } from '$lib/utils/structured-data';
 	import { webUrl, leadImage } from '$lib/utils/image';
 	import {
 		SITE_URL,
@@ -47,13 +48,6 @@
 	const truncate = (s: string, n: number) =>
 		s.length <= n ? s : s.slice(0, n - 1).trimEnd() + '…';
 
-	// First photo of an item — the `images` array takes precedence over the
-	// legacy single `image`, mirroring the gallery's own resolution order. The
-	// structured-data URL points at the web-size WebP derivative, not the
-	// multi-megabyte original.
-	const artworkImage = $derived(artwork ? leadImage(artwork) : undefined);
-	const residenceImage = $derived(residence ? leadImage(residence) : undefined);
-
 	const title = $derived(
 		titleOverride
 			? titleOverride
@@ -91,76 +85,30 @@
 	);
 
 	const jsonLd = $derived(
-		artwork
-			? {
+		(artwork ?? residence)
+			? entryStructuredData((artwork ?? residence)!)
+			: {
 					'@context': 'https://schema.org',
-					'@type': 'VisualArtwork',
-					name: artwork.name,
-					description: truncate(stripHtml(artwork.desc), 300),
-					image: artworkImage ? absoluteUrl(webUrl(artworkImage)) : undefined,
-					url: canonicalUrl,
-					locationCreated: artwork.creationPlace
-						? { '@type': 'Place', name: artwork.creationPlace.name }
-						: undefined,
-					creator: {
+					'@type': 'WebSite',
+					name: SITE_NAME,
+					alternateName: SITE_TAGLINE,
+					description: SITE_DESCRIPTION,
+					url: SITE_URL,
+					inLanguage: 'en',
+					about: {
 						'@type': 'Person',
 						name: ARTIST.name,
 						birthDate: ARTIST.birthDate,
 						deathDate: ARTIST.deathDate,
-						nationality: ARTIST.nationality
+						nationality: ARTIST.nationality,
+						jobTitle: ARTIST.jobTitle
 					},
-					isPartOf: {
-						'@type': 'WebSite',
-						name: SITE_NAME,
-						url: SITE_URL
+					publisher: {
+						'@type': 'Organization',
+						name: PUBLISHER.name,
+						url: PUBLISHER.url
 					}
 				}
-			: residence
-				? {
-						'@context': 'https://schema.org',
-						'@type': 'Place',
-						name: residence.name,
-						description: truncate(stripHtml(residence.desc), 300),
-						image: residenceImage ? absoluteUrl(webUrl(residenceImage)) : undefined,
-						url: canonicalUrl,
-						address: {
-							'@type': 'PostalAddress',
-							addressLocality: residence.city,
-							addressCountry: residence.country
-						},
-						geo: {
-							'@type': 'GeoCoordinates',
-							latitude: residence.lat,
-							longitude: residence.lng
-						},
-						isPartOf: {
-							'@type': 'WebSite',
-							name: SITE_NAME,
-							url: SITE_URL
-						}
-					}
-				: {
-						'@context': 'https://schema.org',
-						'@type': 'WebSite',
-						name: SITE_NAME,
-						alternateName: SITE_TAGLINE,
-						description: SITE_DESCRIPTION,
-						url: SITE_URL,
-						inLanguage: 'en',
-						about: {
-							'@type': 'Person',
-							name: ARTIST.name,
-							birthDate: ARTIST.birthDate,
-							deathDate: ARTIST.deathDate,
-							nationality: ARTIST.nationality,
-							jobTitle: ARTIST.jobTitle
-						},
-						publisher: {
-							'@type': 'Organization',
-							name: PUBLISHER.name,
-							url: PUBLISHER.url
-						}
-					}
 	);
 
 	const ogType = $derived(artwork || residence ? 'article' : 'website');

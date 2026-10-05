@@ -41,6 +41,10 @@ export function buildIndex<T extends Indexable>(raw: T[], noun: string): Indexed
 				`${cap(noun)} id ${item.id} ("${item.name}") resolves to an empty slug. Set an explicit \`slug\` on it.`
 			);
 		}
+		if (!Number.isSafeInteger(item.id) || item.id <= 0)
+			throw new Error(`${noun} ID must be a positive integer: ${item.id}`);
+		if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.slug))
+			throw new Error(`Unsafe ${noun} slug: ${item.slug}`);
 		const slugOwner = seenSlugs.get(item.slug);
 		if (slugOwner !== undefined) {
 			throw new Error(
