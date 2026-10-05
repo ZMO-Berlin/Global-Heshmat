@@ -124,7 +124,7 @@ export function createBrowseStore() {
 			return peopleSort(params());
 		},
 		setPeopleSort(sort: PeopleSort) {
-			patch({ sort: sort === 'original' ? null : sort }, true);
+			patch({ sort: sort === 'name-asc' ? null : sort }, true);
 		},
 		peopleHref(patch: Partial<CollectionFilters> = {}) {
 			const next = writeFilters(new SvelteURLSearchParams(), {
@@ -134,7 +134,7 @@ export function createBrowseStore() {
 				type: 'all',
 				...patch
 			});
-			if (this.peopleSort !== 'original') next.set('sort', this.peopleSort);
+			if (this.peopleSort !== 'name-asc') next.set('sort', this.peopleSort);
 			return resolve('/people') + (next.size ? `?${next}` : '');
 		},
 		personHref(person: Person) {
@@ -144,7 +144,7 @@ export function createBrowseStore() {
 				status: 'all',
 				type: 'all'
 			});
-			if (this.peopleSort !== 'original') next.set('sort', this.peopleSort);
+			if (this.peopleSort !== 'name-asc') next.set('sort', this.peopleSort);
 			return resolve('/people/[slug]', { slug: person.slug }) + (next.size ? `?${next}` : '');
 		},
 		searchHref() {

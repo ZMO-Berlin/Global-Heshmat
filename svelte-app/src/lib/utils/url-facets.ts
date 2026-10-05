@@ -1,9 +1,9 @@
 import { DEFAULT_FILTERS, normalizeFilters, type CollectionFilters } from './map-filter';
 export type GalleryMode = 'entries' | 'photos' | 'list';
-export type PeopleSort = 'original' | 'name-asc' | 'name-desc';
+export type PeopleSort = 'name-asc' | 'name-desc';
 export function peopleSort(params: URLSearchParams): PeopleSort {
 	const sort = params.get('sort');
-	return sort === 'name-asc' || sort === 'name-desc' ? sort : 'original';
+	return sort === 'name-desc' ? sort : 'name-asc';
 }
 export function readFilters(params: URLSearchParams): CollectionFilters {
 	const legacy = normalizeFilters(params.get('filter') ?? 'all');

@@ -7,30 +7,31 @@ test('people sorting combines with filters and survives profile navigation, relo
 	await page.goto('/people/');
 	const names = page.locator('.people-list li > a');
 	const sort = page.getByRole('combobox', { name: 'Sort by', exact: true });
-	await expect(names.first()).toHaveText('Saeed Sadr');
-	await sort.selectOption('name-asc');
+	await expect(sort).toHaveValue('name-asc');
+	await expect(sort.locator('option')).toHaveText(['Name (A–Z)', 'Name (Z–A)']);
 	await expect(names.first()).toHaveText('Dr. Abe Jan Koldijk');
 	await sort.selectOption('name-desc');
 	await expect(names.first()).toHaveText('Youssef Francis');
 	await page.goBack();
 	await expect(sort).toHaveValue('name-asc');
+	await sort.selectOption('name-desc');
 	await page.getByRole('combobox', { name: 'Group', exact: true }).selectOption('collectors');
 	await expect(names).toHaveText([
-		'Farid Khamis',
-		'Jeffrey Adams / Samir Moussa',
+		'Marie L. Bishara',
 		'Louis Bishara',
-		'Marie L. Bishara'
+		'Jeffrey Adams / Samir Moussa',
+		'Farid Khamis'
 	]);
 	await names.last().click();
 	await page.getByRole('link', { name: 'Back to People', exact: true }).click();
-	await expect(sort).toHaveValue('name-asc');
+	await expect(sort).toHaveValue('name-desc');
 	await page.reload();
-	await expect(sort).toHaveValue('name-asc');
+	await expect(sort).toHaveValue('name-desc');
 	await expect(names).toHaveCount(4);
 	await page.getByRole('button', { name: 'Clear all filters' }).click();
-	await expect(sort).toHaveValue('name-asc');
-	await sort.selectOption('original');
-	await expect(names.first()).toHaveText('Saeed Sadr');
+	await expect(sort).toHaveValue('name-desc');
+	await sort.selectOption('name-asc');
+	await expect(names.first()).toHaveText('Dr. Abe Jan Koldijk');
 	await expect(page).not.toHaveURL(/sort=/);
 });
 

@@ -35,7 +35,6 @@
 					value={store.peopleSort}
 					onchange={(event) => store.setPeopleSort(event.currentTarget.value as PeopleSort)}
 				>
-					<option value="original">Original order</option>
 					<option value="name-asc">Name (A–Z)</option>
 					<option value="name-desc">Name (Z–A)</option>
 				</select>

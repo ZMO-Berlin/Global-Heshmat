@@ -7,11 +7,9 @@ const nameCollator = new Intl.Collator('en', { sensitivity: 'base' });
 export function sortPeople(items: readonly Person[], sort: PeopleSort): Person[] {
 	// Sort the displayed names without guessing surnames for shared family profiles.
 	const name = (person: Person) => person.name.replace(/^(?:(?:Dr|Prof)\.\s*)+/u, '');
-	return sort === 'original'
-		? [...items]
-		: [...items].sort(
-				(a, b) => nameCollator.compare(name(a), name(b)) * (sort === 'name-desc' ? -1 : 1)
-			);
+	return [...items].sort(
+		(a, b) => nameCollator.compare(name(a), name(b)) * (sort === 'name-desc' ? -1 : 1)
+	);
 }
 
 const searchIndex = new WeakMap<Person, string>();
