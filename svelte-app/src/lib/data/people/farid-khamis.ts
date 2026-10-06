@@ -7,7 +7,7 @@ const person: PersonRecord = {
 	places: ['10th of Ramadan city'],
 	sourceParagraphs: [30],
 	paragraphs: [
-		'Farid Khamis, CEO of Oriental Weavers. He bought statues that were several meters tall and erected them on the factory’s ground in 10th of Ramadan city.'
+		'Farid Khamis, Founder and CEO of Oriental Weavers. He bought statues that were several meters tall and erected them on the factory’s ground in 10th of Ramadan city.'
 	],
 	relatedEntries: ['artwork:8']
 };
