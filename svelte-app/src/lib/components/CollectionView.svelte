@@ -121,12 +121,13 @@
 					</h3>
 					{#if entryImages(item).length}<div class="photo-grid">
 							{#each entryImages(item) as photo (mediaId(photo))}
-								<figure>
+								{@const size = imageDimensions(photo.src)}
+								<figure style:--ratio={(size.width / size.height).toFixed(4)}>
 									<a
 										href={store.entryHref(item, { view: 'gallery', photo: mediaId(photo) })}
 										onclick={() => (store.returnKey = entryKey(item))}
 										aria-label="Open photograph: {photo.caption || item.name}"
-										style:aspect-ratio={`${imageDimensions(photo.src).width} / ${imageDimensions(photo.src).height}`}
+										style:aspect-ratio={`${size.width} / ${size.height}`}
 										><MediaImage
 											src={photo.src}
 											alt={imageAlt(photo, item.name)}
@@ -261,18 +262,26 @@
 		color: var(--color-text-secondary);
 		margin-top: var(--space-2);
 	}
+	/* Justified rows: each photo's flex share is its aspect ratio, so the photos
+	   in a row share one height and none is cropped. The spacer keeps the last
+	   row at its natural size instead of stretching a lone portrait. */
 	.photo-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+		--row-height: 190px;
+		display: flex;
+		flex-wrap: wrap;
 		gap: var(--space-4);
-		align-items: start;
+		align-items: flex-start;
+	}
+	.photo-grid::after {
+		content: '';
+		flex-grow: 1000;
 	}
 	figure {
 		min-width: 0;
+		flex: var(--ratio) 1 calc(var(--ratio) * var(--row-height));
 	}
 	figure a {
 		display: block;
-		max-height: 340px;
 	}
 	figcaption {
 		font-size: var(--text-sm);
@@ -309,7 +318,7 @@
 			grid-column: 1/-1;
 		}
 		.photo-grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+			--row-height: 120px;
 			gap: var(--space-3);
 		}
 		figcaption {

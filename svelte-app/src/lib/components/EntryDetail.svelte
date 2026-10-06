@@ -428,12 +428,14 @@
 		text-decoration-color: var(--color-primary-text);
 	}
 
+	/* Addresses, Plus Codes and periods are reference data: upright in the UI
+	   face, so street names and postcodes stay legible (the display italic
+	   set them small, with old-style figures). */
 	.sidebar-address {
-		font-family: var(--font-display);
-		font-size: var(--text-md);
-		color: var(--color-text-muted);
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
 		margin-bottom: var(--space-4-5);
-		font-style: italic;
 		line-height: var(--leading-normal);
 	}
 

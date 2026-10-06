@@ -3,7 +3,7 @@ import { people, peopleGroups, peopleContexts } from '$lib/data/people';
 import { artworks } from '$lib/data/artworks';
 import { residences } from '$lib/data/residences';
 import { entryKey } from './collection';
-import { filterPeople } from './people';
+import { filterPeople, groupPeople, sortPeople } from './people';
 import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './map-filter';
 import { readFilters, writeFilters } from './url-facets';
 import { canonicalEntryPath } from '$lib/offline/keys';
@@ -71,5 +71,21 @@ describe('document-based People records', () => {
 				'https://heshmat.zmo.de'
 			)
 		).toBe('/people/louis-bishara/');
+	});
+});
+
+describe('People grouping', () => {
+	it('lists the source groups in document order, a two-group profile under both', () => {
+		const sections = groupPeople(sortPeople(people, 'group'));
+		expect(sections.map((section) => section.group.id)).toEqual(peopleGroups.map((g) => g.id));
+		const shant = sections.filter((section) =>
+			section.members.some((person) => person.slug === 'shant-chant-avetisyan')
+		);
+		expect(shant.map((section) => section.group.id)).toEqual(['armenian-community', 'peers']);
+		expect(sections[0].members[0].slug).toBe('saeed-sadr');
+	});
+	it('drops groups with no matching profile', () => {
+		const selb = people.filter((person) => person.groups.includes('selb'));
+		expect(groupPeople(selb).map((section) => section.group.id)).toEqual(['selb']);
 	});
 });

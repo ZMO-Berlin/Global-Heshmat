@@ -3,11 +3,12 @@
 	import Seo from '$lib/components/Seo.svelte';
 	import PeopleList from '$lib/components/PeopleList.svelte';
 	import { people } from '$lib/data/people';
-	import { filterPeople, sortPeople } from '$lib/utils/people';
+	import { filterPeople, groupPeople, sortPeople } from '$lib/utils/people';
 	import type { PeopleSort } from '$lib/utils/url-facets';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	const store = getBrowseStore();
 	const matches = $derived(sortPeople(filterPeople(people, store.filters), store.peopleSort));
+	const sections = $derived(store.peopleSort === 'group' ? groupPeople(matches) : []);
 </script>
 
 <Seo
@@ -38,10 +39,18 @@
 				>
 					<option value="name-asc">Name (A–Z)</option>
 					<option value="name-desc">Name (Z–A)</option>
+					<option value="group">Group</option>
 				</select>
 			</label>
 		</div>
-		{#if matches.length}<PeopleList items={matches} />{:else}
+		{#if matches.length && store.peopleSort === 'group'}
+			{#each sections as { group, members } (group.id)}
+				<section class="people-group" aria-labelledby="people-group-{group.id}">
+					<h3 id="people-group-{group.id}">{group.name}</h3>
+					<PeopleList items={members} />
+				</section>
+			{/each}
+		{:else if matches.length}<PeopleList items={matches} />{:else}
 			<h3>No people match these filters</h3>
 			<p>Try another name, group or place mentioned.</p>
 			<button disabled={!store.ready} onclick={() => store.resetFilters()}>Clear filters</button>
@@ -50,6 +59,19 @@
 </section>
 
 <style>
+	.people-group + .people-group {
+		margin-top: var(--space-7);
+	}
+	/* Section labels, set apart from the display-serif names they introduce. */
+	.people-group h3 {
+		margin-bottom: var(--space-3);
+		color: var(--color-accent-text);
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-wider);
+		text-transform: uppercase;
+	}
 	.people-intro {
 		max-width: 75ch;
 		margin-bottom: var(--space-6);

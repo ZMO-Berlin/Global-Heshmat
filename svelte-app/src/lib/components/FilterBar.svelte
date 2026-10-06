@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { FunnelX, PanelLeftOpen } from '@lucide/svelte';
 	import { peopleGroups } from '$lib/data/people/_groups';
 	import type { CollectionFilters } from '$lib/utils/map-filter';
 	import { countries } from '$lib/data/countries';
@@ -35,7 +36,10 @@
 				disabled={!store.ready}
 				class="clear"
 				onclick={() => (store.browseOpen = !store.browseOpen)}
-				aria-expanded={store.browseOpen}>Browse</button
+				aria-label="Browse entries"
+				aria-expanded={store.browseOpen}
+				><PanelLeftOpen size={18} aria-hidden="true" /><span class="button-text">Browse</span
+				></button
 			>{/if}
 		{#if store.peopleView}
 			<label
@@ -45,7 +49,7 @@
 					value={store.filters.group ?? ''}
 					onchange={(event) => peopleFacet({ group: event.currentTarget.value })}
 				>
-					<option value="">All groups</option>
+					<option value="">Group</option>
 					{#each peopleGroups as group (group.id)}<option value={group.id}>{group.name}</option
 						>{/each}
 				</select></label
@@ -57,7 +61,7 @@
 					value={store.filters.place ?? ''}
 					onchange={(event) => peopleFacet({ place: event.currentTarget.value })}
 				>
-					<option value="">All places mentioned</option>
+					<option value="">Place</option>
 					{#each page.data.peoplePlaces ?? [] as place (place)}<option value={place}>{place}</option
 						>{/each}
 				</select></label
@@ -69,7 +73,7 @@
 					disabled={!store.ready}
 					value={store.filters.country}
 					onchange={(event) => store.setFilters({ country: event.currentTarget.value })}
-					><option value="">All countries</option>{#each countries as country (country.name)}<option
+					><option value="">Country</option>{#each countries as country (country.name)}<option
 							value={country.name}>{country.name}</option
 						>{/each}</select
 				></label
@@ -81,7 +85,7 @@
 					value={store.filters.status}
 					onchange={(event) =>
 						store.setFilters({ status: event.currentTarget.value as 'all' | 'located' | 'search' })}
-					><option value="all">All statuses</option><option value="located">Located</option><option
+					><option value="all">Status</option><option value="located">Located</option><option
 						value="search">To be found</option
 					></select
 				></label
@@ -93,15 +97,17 @@
 				disabled={!store.ready}
 				value={store.filters.type}
 				onchange={(event) => changeType(event.currentTarget.value as CollectionFilters['type'])}
-				><option value="all">All entries</option><option value="artwork">Artworks / sites</option
-				><option value="residence">Residences</option><option value="person">People</option></select
+				><option value="all">Type</option><option value="artwork">Artworks / sites</option><option
+					value="residence">Residences</option
+				><option value="person">People</option></select
 			></label
 		>
 		<button
 			disabled={!store.ready}
 			class="clear"
 			onclick={() => store.resetFilters()}
-			aria-label="Clear all filters">Clear</button
+			aria-label="Clear all filters"
+			><FunnelX size={18} aria-hidden="true" /><span class="button-text">Clear</span></button
 		>
 	</div>
 </div>
@@ -145,6 +151,11 @@
 		text-overflow: ellipsis;
 	}
 	.clear {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-1-5);
+		min-width: 44px;
 		min-height: 44px;
 		padding: var(--space-2);
 		border: 0;
@@ -168,8 +179,14 @@
 			font-size: var(--text-xs);
 			padding: var(--space-1);
 		}
+		/* The facet names ("Country", "Status", "Type") fit three across a
+		   phone only if Browse and Clear give their words back; the icons keep
+		   their accessible names. */
 		.clear {
-			font-size: var(--text-xs);
+			padding: var(--space-2) var(--space-1);
+		}
+		.button-text {
+			display: none;
 		}
 	}
 </style>

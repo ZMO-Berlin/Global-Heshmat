@@ -24,12 +24,29 @@ export function contextsFor(slug: string): PeopleContext[] {
 }
 
 const nameCollator = new Intl.Collator('en', { sensitivity: 'base' });
+/** Name order; 'group' keeps source-document order (see groupPeople). */
 export function sortPeople(items: readonly Person[], sort: PeopleSort): Person[] {
+	if (sort === 'group') return [...items];
 	// Sort the displayed names without guessing surnames for shared family profiles.
 	const name = (person: Person) => person.name.replace(/^(?:(?:Dr|Prof)\.\s*)+/u, '');
 	return [...items].sort(
 		(a, b) => nameCollator.compare(name(a), name(b)) * (sort === 'name-desc' ? -1 : 1)
 	);
+}
+
+/**
+ * Profiles under their source-document groups, in document order. A profile
+ * listed in two groups appears in both, as in the source (Shant Avetisyan).
+ */
+export function groupPeople(
+	items: readonly Person[]
+): { group: (typeof peopleGroups)[number]; members: Person[] }[] {
+	return peopleGroups
+		.map((group) => ({
+			group,
+			members: items.filter((person) => person.groups.some((id) => id === group.id))
+		}))
+		.filter((section) => section.members.length > 0);
 }
 
 const searchIndex = new WeakMap<Person, string>();

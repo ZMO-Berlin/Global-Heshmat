@@ -8,7 +8,7 @@ test('people sorting combines with filters and survives profile navigation, relo
 	const names = page.locator('.people-list li > a');
 	const sort = page.getByRole('combobox', { name: 'Sort by', exact: true });
 	await expect(sort).toHaveValue('name-asc');
-	await expect(sort.locator('option')).toHaveText(['Name (A–Z)', 'Name (Z–A)']);
+	await expect(sort.locator('option')).toHaveText(['Name (A–Z)', 'Name (Z–A)', 'Group']);
 	await expect(names.first()).toHaveText('Dr. Abe Jan Koldijk');
 	await sort.selectOption('name-desc');
 	await expect(names.first()).toHaveText('Youssef Francis');
@@ -175,4 +175,22 @@ test('profiles are readable with JavaScript disabled', async ({ browser }) => {
 	await expect(page.locator('.biography')).toContainText('Bei der Eröffnung');
 	await expect(page.locator('.notes')).toContainText('Ambassador Dr. Kramer');
 	await context.close();
+});
+
+test('grouping follows the source document and survives a reload', async ({ page }) => {
+	await page.goto('/people/');
+	await page.getByRole('combobox', { name: 'Sort by', exact: true }).selectOption('group');
+	await expect(page).toHaveURL(/sort=group/);
+	const headings = page.locator('.people-group h3');
+	await expect(headings.first()).toHaveText('Teachers and Political Sponsors');
+	await expect(headings).toHaveCount(8);
+	// A profile listed in two source groups appears under both.
+	await expect(
+		page.getByRole('link', { name: 'Shant (Chant) Avetisyan', exact: true })
+	).toHaveCount(2);
+	await expect(page.getByRole('status')).toHaveText('31 profiles');
+	await page.reload();
+	await expect(headings).toHaveCount(8);
+	await page.getByRole('combobox', { name: 'Group', exact: true }).selectOption('selb');
+	await expect(headings).toHaveText(['The Selb Connection']);
 });
