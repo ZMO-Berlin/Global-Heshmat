@@ -11,16 +11,12 @@
 	import type * as Maplibre from 'maplibre-gl';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
-	import { installMapContent, type MapPalette } from '$lib/map/map-content';
+	import { installMapContent, MAP_SOURCES, type MapPalette } from '$lib/map/map-content';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import {
-		buildArtworkGeoJSON,
-		buildResidenceGeoJSON,
-		buildGhostGeoJSON,
-		buildRelocationGeoJSON
-	} from '$lib/utils/geojson';
+	import { buildEntryGeoJSON, buildGhostGeoJSON, buildRelocationGeoJSON } from '$lib/utils/geojson';
 	import { locationZoom } from '$lib/utils/evidence';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
+	import { entryKey, type Entry } from '$lib/utils/collection';
 
 	let { showStatus = true }: { showStatus?: boolean } = $props();
 	const store = getBrowseStore();
@@ -29,7 +25,7 @@
 	let mapContainer: HTMLDivElement;
 	let map = $state<Maplibre.Map>();
 	let destroyed = false;
-	let lastFilterKey: string | undefined;
+	let lastVisibleKey: string | undefined;
 	let loadTimeout: ReturnType<typeof setTimeout> | undefined;
 	let status = $state<'loading' | 'ready' | 'failed'>('loading');
 
@@ -51,30 +47,25 @@
 		};
 	}
 
+	/** The only writer of the map's sources (installMapContent creates them empty). */
 	function updateMapSource() {
-		if (!showStatus || !map || !map.getSource('artworks')) return;
-		const key = JSON.stringify(store.filters);
-		if (key === lastFilterKey) return;
-		lastFilterKey = key;
-		const filtered = filterArtworks(artworks, store.filters);
-		const visibleResidences = filterResidences(residences, store.filters);
-		(map.getSource('artworks') as Maplibre.GeoJSONSource).setData(buildArtworkGeoJSON(filtered));
-		(map.getSource('ghosts') as Maplibre.GeoJSONSource)?.setData(buildGhostGeoJSON(filtered));
-		(map.getSource('relocations') as Maplibre.GeoJSONSource)?.setData(
-			buildRelocationGeoJSON(filtered)
-		);
-		(map.getSource('residences') as Maplibre.GeoJSONSource)?.setData(
-			buildResidenceGeoJSON(visibleResidences)
-		);
+		if (!showStatus || !map || !map.getSource(MAP_SOURCES.entries)) return;
+		const visibleArtworks = filterArtworks(artworks, store.filters);
+		const visible: Entry[] = [...visibleArtworks, ...filterResidences(residences, store.filters)];
+		// Search changes the filters on every keystroke; the sources (and the
+		// camera) only need updating when the set of visible entries changes.
+		const key = visible.map(entryKey).join(' ');
+		if (key === lastVisibleKey) return;
+		lastVisibleKey = key;
+		const source = (id: string) => map!.getSource(id) as Maplibre.GeoJSONSource;
+		source(MAP_SOURCES.entries).setData(buildEntryGeoJSON(visible));
+		source(MAP_SOURCES.ghosts).setData(buildGhostGeoJSON(visibleArtworks));
+		source(MAP_SOURCES.relocations).setData(buildRelocationGeoJSON(visibleArtworks));
 		if (untrack(() => store.selectedArtwork || store.selectedResidence)) return;
 
-		const points: [number, number][] = [
-			...filtered.map((artwork): [number, number] => [artwork.lng, artwork.lat]),
-			...visibleResidences.map((residence): [number, number] => [residence.lng, residence.lat])
-		];
-		if (points.length === 0) return;
+		if (visible.length === 0) return;
 		const bounds = new maplibregl.LngLatBounds();
-		points.forEach((point) => bounds.extend(point));
+		for (const item of visible) bounds.extend([item.lng, item.lat]);
 		map.fitBounds(bounds, { padding: 60, maxZoom: 10, duration: reducedMotion() ? 0 : 500 });
 	}
 
@@ -101,7 +92,7 @@
 
 	async function initialize() {
 		status = 'loading';
-		lastFilterKey = undefined;
+		lastVisibleKey = undefined;
 		if (loadTimeout) clearTimeout(loadTimeout);
 		map?.remove();
 		map = undefined;
@@ -147,7 +138,6 @@
 				installMapContent({
 					map: instance,
 					maplibregl,
-					activeFilter: store.filters,
 					onSelect: (item) => void goto(store.entryHref(item, { view: 'map' })),
 					palette: readPalette(),
 					reducedMotion,

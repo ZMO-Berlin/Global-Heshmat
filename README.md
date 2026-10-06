@@ -70,7 +70,7 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Marker clustering** — groups nearby markers, click to zoom in
 - **Three artwork marker types** — located (teal), to-be-found (orange), ghost markers for relocated artworks (dashed outline)
 - **Relocation visualisation** — dashed lines connecting original and current locations
-- **Places of residence** — a separate, unclustered marker layer for where Heshmat lived and worked
+- **Places of residence** — blue diamond markers for where Heshmat lived and worked; they cluster with nearby artworks, and a cluster that contains one carries a diamond on its rim
 - **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs
 - **Three ways to read the collection** — the map, a photo grid at `/collection/`, and a side list, switchable from any of them. The grid also exposes works that overlap at world-map scale, especially around Cairo
 - **Browsable collection index** — a grouped, filter-aware text list of every entry, opened with Browse on the map. It is also the site's internal link graph: the collection index carries real links to every entry

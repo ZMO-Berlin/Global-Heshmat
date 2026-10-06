@@ -95,7 +95,7 @@ export type IndexedArtwork = Indexed<Artwork, 'artwork'>;
 /**
  * A place where Hassan Heshmat lived or worked (his hometown on the Nile,
  * Cairo, Selb, …), as distinct from where his artworks stand. Surfaced under
- * the "Places of residence" map category and plotted as its own marker layer.
+ * the "Places of residence" map category and drawn as a diamond marker.
  */
 export interface Residence extends DocumentaryMetadata {
 	id: number;

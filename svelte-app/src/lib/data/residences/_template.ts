@@ -18,8 +18,9 @@
  *     is auto-collected via Vite's import.meta.glob — no registration.
  *
  *  ── NOTE ───────────────────────────────────────────────────
- *  Residences are plotted as their own marker layer (a distinct blue, and
- *  never merged into the artwork clusters). They show on the default "all"
+ *  Residences are plotted as blue diamonds. Nearby entries cluster
+ *  together; a cluster containing a residence shows a diamond on its rim
+ *  (so a diamond never hides a cluster count). They show on the default "all"
  *  view and under the "Places of residence" filter; the country and
  *  "to be found" filters are artwork-only, so residences hide there.
  *  Each one also gets its own prerendered page at /residences/<slug>/.

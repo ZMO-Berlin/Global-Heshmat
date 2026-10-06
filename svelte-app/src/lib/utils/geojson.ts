@@ -8,7 +8,8 @@
  * so they stay assignable to MapLibre's own literal-typed interfaces.
  */
 
-import type { Artwork, Residence } from '$lib/data/types';
+import type { Artwork } from '$lib/data/types';
+import { entryStatus, type Entry, type EntryStatus } from './collection';
 
 export interface FeatureCollection<G, P> {
 	type: 'FeatureCollection';
@@ -18,39 +19,38 @@ export interface FeatureCollection<G, P> {
 type Point = { type: 'Point'; coordinates: [number, number] };
 type LineString = { type: 'LineString'; coordinates: [number, number][] };
 
-/** Artwork points — the clustered source driving the located/search layers. */
-export function buildArtworkGeoJSON(
-	items: readonly Artwork[]
-): FeatureCollection<
-	Point,
-	{ id: number; name: string; status: string; country: string; city: string }
-> {
-	return {
-		type: 'FeatureCollection',
-		features: items.map((a) => ({
-			type: 'Feature',
-			geometry: { type: 'Point', coordinates: [a.lng, a.lat] },
-			properties: {
-				id: a.id,
-				name: a.name,
-				status: a.status,
-				country: a.country,
-				city: a.city
-			}
-		}))
-	};
+export interface EntryPointProperties {
+	id: number;
+	kind: Entry['kind'];
+	/** Selects the marker layer: located, to be found, or place of residence. */
+	status: EntryStatus;
+	name: string;
+	country: string;
+	city: string;
 }
 
-/** Residence points — a separate, unclustered source with its own colour. */
-export function buildResidenceGeoJSON(
-	items: readonly Residence[]
-): FeatureCollection<Point, { id: number; name: string; country: string; city: string }> {
+/**
+ * One point per artwork and residence — the single clustered source. Residences
+ * cluster with artworks so a residence diamond can never sit on top of a
+ * cluster and hide its count; a cluster that contains one carries a diamond
+ * badge on its rim instead (see map-content.ts). Ids are unique only per kind.
+ */
+export function buildEntryGeoJSON(
+	items: readonly Entry[]
+): FeatureCollection<Point, EntryPointProperties> {
 	return {
 		type: 'FeatureCollection',
-		features: items.map((r) => ({
+		features: items.map((item) => ({
 			type: 'Feature',
-			geometry: { type: 'Point', coordinates: [r.lng, r.lat] },
-			properties: { id: r.id, name: r.name, country: r.country, city: r.city }
+			geometry: { type: 'Point', coordinates: [item.lng, item.lat] },
+			properties: {
+				id: item.id,
+				kind: item.kind,
+				status: entryStatus(item),
+				name: item.name,
+				country: item.country,
+				city: item.city
+			}
 		}))
 	};
 }

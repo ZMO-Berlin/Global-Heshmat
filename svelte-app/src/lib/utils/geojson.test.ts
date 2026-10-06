@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import {
-	buildArtworkGeoJSON,
-	buildGhostGeoJSON,
-	buildRelocationGeoJSON,
-	buildResidenceGeoJSON
-} from './geojson';
-import type { Artwork, Residence } from '$lib/data/types';
+import { buildEntryGeoJSON, buildGhostGeoJSON, buildRelocationGeoJSON } from './geojson';
+import type { Artwork, IndexedArtwork, IndexedResidence } from '$lib/data/types';
 
 const artwork = (overrides: Partial<Artwork>): Artwork => ({
 	id: 1,
@@ -20,16 +15,35 @@ const artwork = (overrides: Partial<Artwork>): Artwork => ({
 	...overrides
 });
 
-describe('buildArtworkGeoJSON', () => {
+const indexed = (overrides: Partial<Artwork>): IndexedArtwork => ({
+	...artwork(overrides),
+	slug: 'untitled',
+	kind: 'artwork'
+});
+const residence: IndexedResidence = {
+	id: 1,
+	name: 'Selb',
+	lat: 50.1,
+	lng: 12.1,
+	country: 'Germany',
+	city: 'Selb',
+	years: '1957',
+	desc: '',
+	slug: 'selb',
+	kind: 'residence'
+};
+
+describe('buildEntryGeoJSON', () => {
 	it('emits lng/lat order, as GeoJSON requires', () => {
-		const fc = buildArtworkGeoJSON([artwork({ lat: 30.1, lng: 31.2 })]);
+		const fc = buildEntryGeoJSON([indexed({ lat: 30.1, lng: 31.2 })]);
 		expect(fc.features[0].geometry.coordinates).toEqual([31.2, 30.1]);
 	});
 
 	it('carries the properties the map layers filter and look up on', () => {
-		const fc = buildArtworkGeoJSON([artwork({ id: 7, name: 'Horus', status: 'search' })]);
+		const fc = buildEntryGeoJSON([indexed({ id: 7, name: 'Horus', status: 'search' })]);
 		expect(fc.features[0].properties).toEqual({
 			id: 7,
+			kind: 'artwork',
 			name: 'Horus',
 			status: 'search',
 			country: 'Egypt',
@@ -37,29 +51,19 @@ describe('buildArtworkGeoJSON', () => {
 		});
 	});
 
-	it('returns a well-formed empty collection for no input', () => {
-		expect(buildArtworkGeoJSON([])).toEqual({ type: 'FeatureCollection', features: [] });
+	it('puts residences in the same source, marked by kind and status', () => {
+		const fc = buildEntryGeoJSON([indexed({ id: 1 }), residence]);
+		expect(
+			fc.features.map((f) => [f.properties.kind, f.properties.id, f.properties.status])
+		).toEqual([
+			['artwork', 1, 'located'],
+			['residence', 1, 'residence']
+		]);
+		expect(fc.features[1].geometry.coordinates).toEqual([12.1, 50.1]);
 	});
-});
 
-describe('buildResidenceGeoJSON', () => {
-	it('emits one point feature per residence', () => {
-		const places: Residence[] = [
-			{
-				id: 1,
-				name: 'Selb',
-				lat: 50.1,
-				lng: 12.1,
-				country: 'Germany',
-				city: 'Selb',
-				years: '1957',
-				desc: ''
-			}
-		];
-		const fc = buildResidenceGeoJSON(places);
-		expect(fc.features).toHaveLength(1);
-		expect(fc.features[0].geometry.coordinates).toEqual([12.1, 50.1]);
-		expect(fc.features[0].properties.name).toBe('Selb');
+	it('returns a well-formed empty collection for no input', () => {
+		expect(buildEntryGeoJSON([])).toEqual({ type: 'FeatureCollection', features: [] });
 	});
 });
 
