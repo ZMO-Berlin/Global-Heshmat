@@ -97,7 +97,7 @@ test('people keyboard search, cross-references and empty recovery', async ({ pag
 	await search.press('Enter');
 	await expect(page).toHaveURL(/\/people\/nadine-nour-eddine/);
 	await page.getByRole('link', { name: 'Emad Abu Ghazi', exact: true }).click();
-	await expect(page.locator('.biography')).toContainText('Nadine Nour el-Din');
+	await expect(page.locator('.biography')).toContainText('Emad Abu Ghazi (b. 1955)');
 	await page.goto('/people/?group=selb&place=Paris');
 	await expect(page.getByRole('heading', { name: 'No people match these filters' })).toBeVisible();
 	await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
