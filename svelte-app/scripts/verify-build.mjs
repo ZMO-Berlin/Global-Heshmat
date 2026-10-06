@@ -160,7 +160,15 @@ check('og-image.png present', existsSync(join(BUILD_DIR, 'og-image.png')));
 // The optional map renderer is intentionally fetched only when the map view
 // mounts. Guard both pieces of that contract: the self-hosted RTL worker ships,
 // and oversized optional chunks do not silently return to the PWA app shell.
-check('self-hosted RTL text plugin present', existsSync(join(BUILD_DIR, 'rtl-text-plugin.js')));
+const assetsDir = join(BUILD_DIR, '_app', 'immutable', 'assets');
+const rtlPlugin = existsSync(assetsDir)
+	? readdirSync(assetsDir).find((file) => /^mapbox-gl-rtl-text.*\.js$/.test(file))
+	: undefined;
+check(
+	'self-hosted RTL text plugin emitted with a content hash',
+	!!rtlPlugin,
+	'expected _app/immutable/assets/mapbox-gl-rtl-text.<hash>.js'
+);
 const serviceWorkerPath = join(BUILD_DIR, 'sw.js');
 check('service worker present', existsSync(serviceWorkerPath));
 if (existsSync(serviceWorkerPath)) {
@@ -180,7 +188,7 @@ if (existsSync(serviceWorkerPath)) {
 	}
 	check(
 		'self-hosted RTL plugin is not precached',
-		!/(?:^|[{,])url:["'][^"']*rtl-text-plugin\.js["']/.test(serviceWorker)
+		!/(?:^|[{,])url:["'][^"']*mapbox-gl-rtl-text[^"']*\.js["']/.test(serviceWorker)
 	);
 	check(
 		'service worker precache URLs target deployed paths',
@@ -297,6 +305,19 @@ if (existsSync(join(BUILD_DIR, COLLECTION))) {
 		'every srcset on the collection page is well formed',
 		badSrcset.length === 0,
 		badSrcset[0] ? `e.g. ${badSrcset[0].slice(0, 120)}` : ''
+	);
+	// The service worker caches images CacheFirst only by their ?v= content
+	// version; an unversioned URL would bypass the cache entirely.
+	const imageUrls = [...html.matchAll(/(?:src|srcset)="([^"]*)"/g)]
+		.flatMap(([, value]) =>
+			value.split(/,\s+/).map((candidate) => candidate.trim().split(/\s+/)[0])
+		)
+		.filter((url) => url.includes('/images/'));
+	const unversioned = imageUrls.filter((url) => !/\.webp\?v=[0-9a-f]{8}$/.test(url));
+	check(
+		'every collection image URL carries its content version',
+		imageUrls.length > 0 && unversioned.length === 0,
+		unversioned[0] ? `e.g. ${unversioned[0]}` : `${imageUrls.length} image URLs found`
 	);
 	check(
 		'collection page does not preload the optional map stack',

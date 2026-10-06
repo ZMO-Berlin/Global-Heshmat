@@ -3,12 +3,19 @@ import manifest from '$lib/data/image-manifest.json';
 import { coverImage } from './collection';
 type Variant = 'thumb' | 'preview' | 'web' | 'full';
 type Dimensions = { width: number; height: number; bytes: number };
-const images: Record<string, Record<Variant, Dimensions>> = manifest;
+/** Per image: each variant's decoded size, and `v`, a hash of the variants' content. */
+type ManifestEntry = Record<Variant, Dimensions> & { v: string };
+const images: Record<string, ManifestEntry> = manifest;
 const stem = imageStem;
-const url = (src: string, variant: Variant) =>
+function url(src: string, variant: Variant): string {
+	const name = stem(src);
 	// Interior commas are valid in srcset URLs. Keep them literal so SvelteKit's
 	// decodeURI-based prerender crawler can match the static filename.
-	`/images/${variant}/${encodeURIComponent(stem(src)).replace(/%2C/g, ',')}.webp`;
+	const path = `/images/${variant}/${encodeURIComponent(name).replace(/%2C/g, ',')}.webp`;
+	// The content version lets caches keep an image until it actually changes.
+	const version = images[name]?.v;
+	return version ? `${path}?v=${version}` : path;
+}
 export const thumbUrl = (src: string) => url(src, 'thumb');
 export const webUrl = (src: string) => url(src, 'web');
 export const fullUrl = (src: string) => url(src, 'full');

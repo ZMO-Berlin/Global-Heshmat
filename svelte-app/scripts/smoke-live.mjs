@@ -22,7 +22,6 @@ for (const path of ['/collection/', '/artworks/the-hassan-heshmat-museum/', '/tr
 const sitemap = await read('/sitemap.xml', 'xml');
 if (!sitemap.includes(`${origin}/collection/`)) throw new Error('Sitemap missing collection');
 await read('/sw.js', 'javascript');
-await read('/rtl-text-plugin.js', 'javascript');
 const data = JSON.parse(await read('/collection.json', 'json'));
 if (!data.records?.length || !data.build) throw new Error('Collection export is empty');
 const response = await fetch('https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json', {

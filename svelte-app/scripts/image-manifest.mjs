@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { createHash } from 'node:crypto';
 import { readdir, readFile, writeFile, mkdir, rename, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
@@ -10,6 +11,10 @@ export async function generateImageManifest(
 	{ root = defaultRoot, logger = console } = {}
 ) {
 	const manifest = {};
+	// One content version per image, over all its variants: it becomes the
+	// ?v= of every derivative URL, so browsers and the service worker can cache
+	// an image for as long as it is unchanged, across deployments.
+	const versions = {};
 	for (const { dir, size } of VARIANTS) {
 		const folder = join(root, 'static/images', dir);
 		const files = (await readdir(folder)).filter((file) => file.endsWith('.webp')).sort();
@@ -28,11 +33,13 @@ export async function generateImageManifest(
 			const stem = imageStem(file);
 			manifest[stem] ??= {};
 			manifest[stem][dir] = { width, height, bytes: bytes.length };
+			(versions[stem] ??= createHash('sha256')).update(bytes);
 		}
 	}
 	for (const [stem, variants] of Object.entries(manifest)) {
 		if (VARIANTS.some(({ dir }) => !variants[dir]))
 			throw new Error(`Incomplete derivatives: ${stem}`);
+		variants.v = versions[stem].digest('hex').slice(0, 8);
 	}
 	const output = JSON.stringify(manifest, null, '\t') + '\n';
 	const destination = join(root, 'src/lib/data/image-manifest.json');

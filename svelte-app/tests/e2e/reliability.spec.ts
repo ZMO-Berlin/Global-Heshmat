@@ -156,9 +156,10 @@ test('saved albums serve reading images offline and report eviction accurately',
 	await page.keyboard.press('Escape');
 	await page.getByRole('link', { name: 'Open fieldbook' }).click();
 	await expect(page.locator('.fieldbook-list')).toContainText('Available offline');
+	// Simulate the browser evicting saved albums.
 	await page.evaluate(async () => {
 		for (const name of await caches.keys())
-			if (name.startsWith('saved-album-')) await caches.delete(name);
+			if (name.startsWith('saved-albums-')) await caches.delete(name);
 	});
 	await page.getByRole('button', { name: 'Check availability' }).click();
 	await expect(page.locator('.fieldbook-list')).toContainText('Download needed');

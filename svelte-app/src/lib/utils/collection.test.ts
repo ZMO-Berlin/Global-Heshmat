@@ -91,6 +91,7 @@ describe('collection browsing', () => {
 	it('all declared media dimensions match the decoded served images', async () => {
 		for (const [stem, variants] of Object.entries(manifest))
 			for (const [variant, dimensions] of Object.entries(variants)) {
+				if (typeof dimensions === 'string') continue; // the content version, v
 				const actual = await sharp(
 					fileURLToPath(new URL(`../../../static/images/${variant}/${stem}.webp`, import.meta.url))
 				).metadata();

@@ -20,13 +20,17 @@
 	let message = $state('');
 	let cancelled = false;
 	const today = () => new Date().toISOString().slice(0, 10);
-	async function refresh() {
+	async function refresh(list = items) {
 		availability = Object.fromEntries(
-			await Promise.all(all.map(async (item) => [entryKey(item), await albumAvailable(item)]))
+			await Promise.all(list.map(async (item) => [entryKey(item), await albumAvailable(item)]))
 		);
 	}
+	// The selection loads from device storage after mount, so check whatever is
+	// selected whenever it changes rather than once on mount.
+	$effect(() => {
+		void refresh(items).catch(() => {});
+	});
 	onMount(() => {
-		void refresh().catch(() => {});
 		const check = () => void refresh().catch(() => {});
 		window.addEventListener('online', check);
 		return () => {

@@ -8,10 +8,6 @@ import { execFileSync, spawn } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const rtlTextPluginPath = fileURLToPath(
-	new URL('./node_modules/@mapbox/mapbox-gl-rtl-text/dist/mapbox-gl-rtl-text.js', import.meta.url)
-);
-
 // A content-derived build ID also changes for uncommitted local builds. Saved
 // documents must never outlive the JavaScript version that can hydrate them.
 const hash = createHash('sha256');
@@ -37,23 +33,22 @@ const buildId = hash.digest('hex').slice(0, 16);
 
 export default defineConfig({
 	define: { __BUILD_ID__: JSON.stringify(buildId), __REVISION__: JSON.stringify(revision) },
-	plugins: [
-		{
-			name: 'emit-local-rtl-text-plugin',
-			configureServer(server) {
-				server.middlewares.use('/rtl-text-plugin.js', (_request, response) => {
-					response.setHeader('Content-Type', 'text/javascript; charset=utf-8');
-					response.end(readFileSync(rtlTextPluginPath));
-				});
-			},
-			generateBundle() {
-				this.emitFile({
-					type: 'asset',
-					fileName: 'rtl-text-plugin.js',
-					source: readFileSync(rtlTextPluginPath)
-				});
+	resolve: {
+		alias: [
+			// The package exports only its source entry; MapView imports the
+			// prebuilt worker script with ?url so it is emitted with a content hash.
+			{
+				find: /^\$rtl-text-plugin(?=\?|$)/,
+				replacement: fileURLToPath(
+					new URL(
+						'./node_modules/@mapbox/mapbox-gl-rtl-text/dist/mapbox-gl-rtl-text.js',
+						import.meta.url
+					)
+				)
 			}
-		},
+		]
+	},
+	plugins: [
 		{
 			name: 'watch-image-originals',
 			apply: 'serve',
@@ -160,7 +155,7 @@ export default defineConfig({
 					'**/maplibre-*.js',
 					'**/maplibre.*.css',
 					'**/immutable/workers/**',
-					'**/rtl-text-plugin.js',
+					'**/mapbox-gl-rtl-text*.js',
 					// No rendered text falls in these subsets (unicode-range means
 					// pages never request them); precaching them cost ~114 KB per
 					// install. Should such text appear, it is still fetched on demand.

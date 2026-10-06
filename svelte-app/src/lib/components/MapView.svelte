@@ -1,13 +1,16 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { onDestroy, onMount, untrack } from 'svelte';
-	import { base, resolve } from '$app/paths';
+	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	// MapLibre v6 is ESM-only and resolves its worker from `import.meta.url`, which
 	// bundlers cannot statically analyse. Vite emits the worker as an asset here and
 	// `setWorkerUrl` points MapLibre at it; without this the worker 404s in the build.
 	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+	// Self-hosted Arabic shaping, emitted with a content hash under /_app/immutable/
+	// so the service worker can keep it across deployments.
+	import rtlTextPluginUrl from '$rtl-text-plugin?url';
 	import type * as Maplibre from 'maplibre-gl';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
@@ -102,7 +105,7 @@
 			maplibregl.setWorkerUrl(workerUrl);
 
 			if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
-				void maplibregl.setRTLTextPlugin(`${base}/rtl-text-plugin.js`, true).catch(() => {
+				void maplibregl.setRTLTextPlugin(rtlTextPluginUrl, true).catch(() => {
 					// The basemap remains usable if optional RTL shaping cannot initialise.
 				});
 			}

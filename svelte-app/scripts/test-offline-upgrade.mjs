@@ -141,10 +141,30 @@ try {
 		);
 		expect(names).not.toContain(`entry-pages-${versions[0]}`);
 	}).toPass({ timeout: 15000 });
+	// The new worker re-fetched the saved album's page for its own build before
+	// retiring the old one; the album's images were kept, not downloaded again.
+	await expect
+		.poll(() =>
+			page.evaluate(
+				async (version) =>
+					!!(await (
+						await caches.open(`entry-pages-${version}`)
+					).match('/artworks/the-hassan-heshmat-museum/')),
+				versions[1]
+			)
+		)
+		.toBe(true);
+	const savedImages = await page.evaluate(
+		async () =>
+			(await (await caches.open('saved-albums-v1')).keys()).filter((request) =>
+				new URL(request.url).pathname.startsWith('/images/')
+			).length
+	);
+	expect(savedImages).toBeGreaterThan(0);
 	// RegisterSW may reload automatically after activation. Use an unseen record to verify the fallback too.
 	await page.goto(origin + '/fieldbook/');
 	await expect(page.locator('.fieldbook-list')).toContainText('The Hassan Heshmat Museum');
-	await expect(page.locator('.fieldbook-list')).toContainText('Download needed');
+	await expect(page.locator('.fieldbook-list')).toContainText('Available offline');
 	await page.goto(origin + '/collection/');
 	await context.setOffline(true);
 	await page.goto(origin + album);
@@ -187,7 +207,7 @@ try {
 		page.getByRole('button', { name: 'View image full screen', exact: true })
 	).toBeEnabled();
 	console.log(
-		`Offline upgrade passed: ${versions[0]} → ${versions[1]}; old HTML retired, new shell and refreshed album work offline.`
+		`Offline upgrade passed: ${versions[0]} → ${versions[1]}; old HTML retired, saved album kept its images and refreshed its page, new shell works offline.`
 	);
 } finally {
 	await browser?.close();

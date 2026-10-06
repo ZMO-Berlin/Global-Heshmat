@@ -1,15 +1,17 @@
 import {
+	albumMarker,
 	canonicalEntryPath,
 	documentMatchesVersion,
 	entryCacheName,
-	savedCachePrefix
+	isAlbumMarker,
+	SAVED_ALBUMS,
+	type AlbumRecord
 } from './keys';
 import { entryImages, entryKey, entryPath, type Entry } from '$lib/utils/collection';
 import { imageDimensions, thumbUrl, webUrl } from '$lib/utils/image';
 
 export const offlineSupported = () =>
 	typeof window !== 'undefined' && 'serviceWorker' in navigator && 'caches' in window;
-const albumCache = (entry: Entry) => savedCachePrefix(__BUILD_ID__) + entryKey(entry);
 export function albumAssets(entry: Entry): string[] {
 	return [
 		...new Set(entryImages(entry).flatMap((image) => [thumbUrl(image.src), webUrl(image.src)]))
@@ -39,15 +41,37 @@ export async function cacheEntryDocument(path: string): Promise<boolean> {
 	await (await caches.open(name)).put(canonical, response);
 	return true;
 }
+/** Every image URL some other saved album still needs. */
+async function assetsInUse(saved: Cache, except: string): Promise<Set<string>> {
+	const markers = (await saved.keys()).filter(
+		(request) => isAlbumMarker(request.url) && new URL(request.url).pathname !== except
+	);
+	const records = await Promise.all(
+		markers.map(
+			async (marker) => ((await (await saved.match(marker))?.json()) ?? null) as AlbumRecord | null
+		)
+	);
+	return new Set(records.flatMap((record) => record?.assets ?? []));
+}
+/** Drop an album's images that no other saved album uses (shared images are stored once). */
+async function releaseAssets(saved: Cache, marker: string, assets: string[]) {
+	const inUse = await assetsInUse(saved, marker);
+	await Promise.all(assets.filter((path) => !inUse.has(path)).map((path) => saved.delete(path)));
+}
+/**
+ * Available offline: this build's copy of the page (the worker re-fetches it
+ * after an update) and every current image. An image whose content changed has
+ * a new ?v= URL, so it reads as missing until the album is saved again.
+ */
 export async function albumAvailable(entry: Entry): Promise<boolean> {
 	if (!offlineSupported()) return false;
 	if (!(await caches.has(entryCacheName(__BUILD_ID__)))) return false;
 	const documents = await caches.open(entryCacheName(__BUILD_ID__));
 	if (!(await documents.match(entryPath(entry)))) return false;
-	if (!(await caches.has(albumCache(entry)))) return false;
-	const cache = await caches.open(albumCache(entry));
-	if (!(await cache.match('/offline-album-complete'))) return false;
-	return (await Promise.all(albumAssets(entry).map((path) => cache.match(path)))).every(Boolean);
+	if (!(await caches.has(SAVED_ALBUMS))) return false;
+	const saved = await caches.open(SAVED_ALBUMS);
+	if (!(await saved.match(albumMarker(entryKey(entry))))) return false;
+	return (await Promise.all(albumAssets(entry).map((path) => saved.match(path)))).every(Boolean);
 }
 export async function saveAlbum(
 	entry: Entry,
@@ -74,7 +98,8 @@ export async function saveAlbum(
 
 	if (!(await cacheEntryDocument(entryPath(entry))))
 		throw new Error('This collection has been updated. Reload before saving.');
-	const cache = await caches.open(albumCache(entry));
+	const cache = await caches.open(SAVED_ALBUMS);
+	const marker = albumMarker(entryKey(entry));
 	const assets = albumAssets(entry);
 	let completed = 0;
 	onProgress(completed, assets.length);
@@ -95,11 +120,29 @@ export async function saveAlbum(
 	);
 	const failed = downloads.find((result) => result.status === 'rejected');
 	if (failed?.status === 'rejected') throw failed.reason;
-	await cache.put('/offline-album-complete', new Response('complete'));
+	// Images replaced since the last save are released, unless another album uses them.
+	const previous = (await (await cache.match(marker))?.json()) as AlbumRecord | undefined;
+	const record: AlbumRecord = { path: entryPath(entry), assets };
+	await cache.put(
+		marker,
+		new Response(JSON.stringify(record), { headers: { 'Content-Type': 'application/json' } })
+	);
+	if (previous)
+		await releaseAssets(
+			cache,
+			marker,
+			previous.assets.filter((path) => !assets.includes(path))
+		);
 	if (!(await albumAvailable(entry)))
 		throw new Error('The browser could not retain this album. Free some storage and try again.');
 }
 export async function removeAlbum(entry: Entry): Promise<void> {
-	if (!offlineSupported()) return;
-	await caches.delete(albumCache(entry));
+	if (!offlineSupported() || !(await caches.has(SAVED_ALBUMS))) return;
+	const saved = await caches.open(SAVED_ALBUMS);
+	const marker = albumMarker(entryKey(entry));
+	const record = (await (await saved.match(marker))?.json()) as AlbumRecord | undefined;
+	await saved.delete(marker);
+	await releaseAssets(saved, marker, [
+		...new Set([...(record?.assets ?? []), ...albumAssets(entry)])
+	]);
 }
