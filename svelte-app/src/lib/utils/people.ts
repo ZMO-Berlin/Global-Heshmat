@@ -8,6 +8,11 @@ import type { CollectionFilters } from './map-filter';
 import { normalizeSearchText } from './search';
 import type { PeopleSort } from './url-facets';
 
+/** Site-relative canonical path of a profile page. */
+export function personPath(slug: string): string {
+	return `/people/${slug}/`;
+}
+
 const groupNames = new Map<string, string>(peopleGroups.map((group) => [group.id, group.name]));
 export function groupName(id: string): string {
 	return groupNames.get(id) ?? id;

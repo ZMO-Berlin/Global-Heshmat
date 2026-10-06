@@ -16,7 +16,8 @@ function artwork(id: number, name: string, city = 'Cairo', country = 'Egypt'): I
 		lng: 31,
 		status: 'located',
 		desc: '',
-		slug: `artwork-${id}`
+		slug: `artwork-${id}`,
+		kind: 'artwork'
 	};
 }
 

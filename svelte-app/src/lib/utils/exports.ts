@@ -1,11 +1,19 @@
 import { SITE_URL, SITE_NAME, PUBLISHER } from '$lib/config';
-import { entryKey, entryTitle, entryImages, mediaId, type Entry } from './collection';
+import {
+	entryKey,
+	entryPath,
+	entryStatus,
+	entryTitle,
+	entryImages,
+	mediaId,
+	type Entry
+} from './collection';
 import { webUrl } from './image';
 export const EDITORIAL_LICENSE = 'https://creativecommons.org/licenses/by/4.0/';
 export const MEDIA_RIGHTS =
 	'Photographs and videos are separately copyrighted; permission may be required. See individual credits.';
 export function recordUrl(item: Entry): string {
-	return `${SITE_URL}/${'status' in item ? 'artworks' : 'residences'}/${item.slug}/`;
+	return SITE_URL + entryPath(item);
 }
 export function citation(
 	item: Entry,
@@ -112,7 +120,7 @@ export function csv(items: Entry[], accessed: string): string {
 		entryTitle(item),
 		item.city,
 		item.country,
-		'status' in item ? item.status : 'residence',
+		entryStatus(item),
 		item.lat,
 		item.lng,
 		item.locationPrecision ?? 'undocumented',

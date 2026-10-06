@@ -26,12 +26,12 @@
 	const matches = $derived(all.slice(0, 8));
 	const open = $derived(searchOpen && store.filters.query.trim().length >= 2);
 	function resultKey(item: Entry | Person) {
-		return 'paragraphs' in item ? `person:${item.slug}` : entryKey(item);
+		return item.kind === 'person' ? `person:${item.slug}` : entryKey(item);
 	}
 	function select(item: Entry | Person) {
 		searchOpen = false;
 		activeIndex = -1;
-		if ('paragraphs' in item) void goto(store.personHref(item));
+		if (item.kind === 'person') void goto(store.personHref(item));
 		else {
 			store.returnKey = entryKey(item);
 			void goto(store.entryHref(item));
@@ -101,8 +101,9 @@
 						aria-selected={index === activeIndex}
 						class:active={index === activeIndex}
 						onclick={() => select(item)}
-						><span dir="auto">{'paragraphs' in item ? item.name : entryTitle(item)}</span><small
-							dir="auto">{'paragraphs' in item ? 'People' : `${item.city}, ${item.country}`}</small
+						><span dir="auto">{item.kind === 'person' ? item.name : entryTitle(item)}</span><small
+							dir="auto"
+							>{item.kind === 'person' ? 'People' : `${item.city}, ${item.country}`}</small
 						></button
 					>{/each}
 			</div>

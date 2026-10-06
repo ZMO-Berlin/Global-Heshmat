@@ -32,13 +32,3 @@ export function absoluteUrl(path: string): string {
 	const normalized = path.startsWith('/') ? path : `/${path}`;
 	return `${SITE_URL}${normalized}`;
 }
-
-/** Canonical path for an artwork's detail page. */
-export function artworkPath(slug: string): string {
-	return `/artworks/${slug}/`;
-}
-
-/** Canonical path for a place-of-residence detail page. */
-export function residencePath(slug: string): string {
-	return `/residences/${slug}/`;
-}

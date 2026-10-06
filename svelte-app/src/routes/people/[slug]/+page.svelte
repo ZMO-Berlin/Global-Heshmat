@@ -7,7 +7,7 @@
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
 	import { entryKey, entryTitle } from '$lib/utils/collection';
-	import { contextsFor, groupName, personExcerpt } from '$lib/utils/people';
+	import { contextsFor, groupName, personExcerpt, personPath } from '$lib/utils/people';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
@@ -23,7 +23,7 @@
 <Seo
 	title={`${person.name} — Global Heshmat`}
 	description={personExcerpt(person)}
-	path={`/people/${person.slug}/`}
+	path={personPath(person.slug)}
 />
 {#key page.url.pathname}
 	<article class="research-page" aria-labelledby="person-heading">

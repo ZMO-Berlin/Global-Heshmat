@@ -21,6 +21,7 @@
 	import AboutModal from '$lib/components/AboutModal.svelte';
 	import { createFieldbook } from '$lib/stores/fieldbook.svelte';
 	import { createBrowseStore } from '$lib/stores/browse.svelte';
+	import { isRecordPath } from '$lib/offline/keys';
 	let { children }: { children: Snippet } = $props();
 	const store = createBrowseStore();
 	$effect(() => {
@@ -32,8 +33,7 @@
 	// including a first visit that happens before the service worker activates.
 	afterNavigate(({ to }) => {
 		const path = to?.url.pathname;
-		if (!path || !/^\/(artworks|residences|people)\//.test(path) || !('serviceWorker' in navigator))
-			return;
+		if (!path || !isRecordPath(path) || !('serviceWorker' in navigator)) return;
 		void navigator.serviceWorker.ready
 			.then(async () => {
 				const { cacheEntryDocument } = await import('$lib/offline/client');

@@ -2,7 +2,7 @@
 	/* eslint-disable svelte/no-navigation-without-resolve -- Source and contribution URLs are external, validated editorial links. */
 	import type { Entry } from '$lib/utils/collection';
 	import { precisionLabel } from '$lib/utils/evidence';
-	import { entryKey } from '$lib/utils/collection';
+	import { entryKey, isToBeFound } from '$lib/utils/collection';
 	import { recordUrl } from '$lib/utils/exports';
 	let { item }: { item: Entry } = $props();
 	const contributionUrl = $derived(
@@ -18,7 +18,7 @@
 <section class="evidence" aria-label="Evidence and location">
 	<h3>Evidence and location</h3>
 	<p>{precisionLabel(item)}.</p>
-	{#if 'status' in item && item.status === 'search'}<p>
+	{#if isToBeFound(item)}<p>
 			The current location is unconfirmed. The marker represents the place recorded in this entry.
 		</p>{/if}
 	{#if item.updatedOn}<p>

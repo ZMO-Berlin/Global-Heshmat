@@ -11,6 +11,7 @@ const fixture: Entry = {
 	id: 1,
 	name: 'Research & archive',
 	slug: 'research-archive',
+	kind: 'artwork',
 	lat: 30,
 	lng: 31,
 	city: 'Cairo',

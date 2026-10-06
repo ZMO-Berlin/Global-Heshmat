@@ -1,11 +1,13 @@
+const RECORD_PATH = /^\/(artworks|residences|people)\/[^/]+\/?$/;
+/** A record page (artwork, residence or People profile) — the documents cached for offline use. */
+export const isRecordPath = (pathname: string) => RECORD_PATH.test(pathname);
 /** Shared by the window and worker: UI query parameters never identify documents. */
 export function canonicalEntryPath(
 	value: string,
 	origin = 'https://heshmat.zmo.de'
 ): string | null {
 	const url = new URL(value, origin);
-	if (url.origin !== origin || !/^\/(artworks|residences|people)\/[^/]+\/?$/.test(url.pathname))
-		return null;
+	if (url.origin !== origin || !isRecordPath(url.pathname)) return null;
 	return url.pathname.replace(/\/?$/, '/');
 }
 export const entryCacheName = (version: string) => `entry-pages-${version}`;

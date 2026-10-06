@@ -5,13 +5,7 @@ import { browser } from '$app/environment';
 import { page } from '$app/state';
 import { pushState, replaceState } from '$app/navigation';
 import { resolve } from '$app/paths';
-import {
-	entryKind,
-	entryImages,
-	matchesMediaId,
-	type Entry,
-	type Selection
-} from '$lib/utils/collection';
+import { entryImages, matchesMediaId, type Entry, type Selection } from '$lib/utils/collection';
 import {
 	readFilters,
 	writeFilters,
@@ -212,7 +206,7 @@ export function createBrowseStore() {
 			options: { view?: 'map' | 'gallery'; photo?: string; origin?: Origin } = {}
 		) {
 			const path =
-				entryKind(item) === 'artwork'
+				item.kind === 'artwork'
 					? resolve('/artworks/[slug]', { slug: item.slug })
 					: resolve('/residences/[slug]', { slug: item.slug });
 			const next = new SvelteURLSearchParams(filterParams);

@@ -4,7 +4,7 @@ import { recordUrl } from './exports';
 import type { Entry } from './collection';
 import { plainText } from './text';
 export function recordSchemaType(item: Entry): 'Place' | 'Collection' | 'VisualArtwork' {
-	if (!('status' in item) || item.entryKind === 'residence') return 'Place';
+	if (item.kind === 'residence' || item.entryKind === 'residence') return 'Place';
 	return item.entryKind === 'institution'
 		? 'Place'
 		: item.entryKind === 'ensemble'

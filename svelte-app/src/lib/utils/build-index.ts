@@ -14,8 +14,12 @@ export interface Indexable {
 	slug?: string;
 }
 
-/** An indexed entry: same fields, with the slug resolved and guaranteed. */
-export type Indexed<T extends Indexable> = T & { slug: string };
+/**
+ * An indexed entry: same fields, with the slug resolved and guaranteed, and
+ * an explicit `kind` — consumers switch on it instead of guessing the entity
+ * type from which optional fields happen to be present.
+ */
+export type Indexed<T extends Indexable, K extends string> = T & { slug: string; kind: K };
 
 /**
  * Take a raw collection (typically loaded by Vite's import.meta.glob) and
@@ -26,14 +30,17 @@ export type Indexed<T extends Indexable> = T & { slug: string };
  * empty string (e.g. a name with no ASCII alphanumerics), so URL and identity
  * collisions are caught at build time rather than in production.
  *
- * `noun` names the collection in those error messages ("artwork",
- * "residence"). Artworks and residences share this builder but keep separate
- * slug namespaces, because they live under different route prefixes
- * (/artworks/… vs /residences/…).
+ * `kind` is stamped on every entry and names the collection in those error
+ * messages ("artwork", "residence"). Artworks and residences share this
+ * builder but keep separate slug namespaces, because they live under
+ * different route prefixes (/artworks/… vs /residences/…).
  */
-export function buildIndex<T extends Indexable>(raw: T[], noun: string): Indexed<T>[] {
+export function buildIndex<T extends Indexable, K extends string>(
+	raw: T[],
+	kind: K
+): Indexed<T, K>[] {
 	const indexed = raw
-		.map((item) => ({ ...item, slug: item.slug ?? slugify(item.name) }))
+		.map((item) => ({ ...item, slug: item.slug ?? slugify(item.name), kind }))
 		.sort((a, b) => a.id - b.id);
 
 	const seenSlugs = new Map<string, number>();
@@ -41,16 +48,16 @@ export function buildIndex<T extends Indexable>(raw: T[], noun: string): Indexed
 	for (const item of indexed) {
 		if (!item.slug) {
 			throw new Error(
-				`${cap(noun)} id ${item.id} ("${item.name}") resolves to an empty slug. Set an explicit \`slug\` on it.`
+				`${cap(kind)} id ${item.id} ("${item.name}") resolves to an empty slug. Set an explicit \`slug\` on it.`
 			);
 		}
 		if (!Number.isSafeInteger(item.id) || item.id <= 0)
-			throw new Error(`${noun} ID must be a positive integer: ${item.id}`);
-		if (!SAFE_SLUG.test(item.slug)) throw new Error(`Unsafe ${noun} slug: ${item.slug}`);
+			throw new Error(`${kind} ID must be a positive integer: ${item.id}`);
+		if (!SAFE_SLUG.test(item.slug)) throw new Error(`Unsafe ${kind} slug: ${item.slug}`);
 		const slugOwner = seenSlugs.get(item.slug);
 		if (slugOwner !== undefined) {
 			throw new Error(
-				`Duplicate ${noun} slug "${item.slug}" — used by id ${slugOwner} and id ${item.id}. Set an explicit \`slug\` on one of them.`
+				`Duplicate ${kind} slug "${item.slug}" — used by id ${slugOwner} and id ${item.id}. Set an explicit \`slug\` on one of them.`
 			);
 		}
 		seenSlugs.set(item.slug, item.id);
@@ -58,7 +65,7 @@ export function buildIndex<T extends Indexable>(raw: T[], noun: string): Indexed
 		const idOwner = seenIds.get(item.id);
 		if (idOwner !== undefined) {
 			throw new Error(
-				`Duplicate ${noun} id ${item.id} — used by "${idOwner}" and "${item.name}". Give one of them the next free id (this happens when a copied file keeps the template's id).`
+				`Duplicate ${kind} id ${item.id} — used by "${idOwner}" and "${item.name}". Give one of them the next free id (this happens when a copied file keeps the template's id).`
 			);
 		}
 		seenIds.set(item.id, item.name);
@@ -94,6 +101,7 @@ export function buildPeopleIndex(
 		if (!record.paragraphs.length) throw new Error(`Person ${record.slug} has no paragraphs`);
 		return {
 			...record,
+			kind: 'person' as const,
 			relatedEntries: record.relatedEntries ?? [],
 			seeAlso: record.seeAlso ?? [],
 			notes: record.notes ?? []

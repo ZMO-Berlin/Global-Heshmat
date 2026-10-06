@@ -6,7 +6,8 @@
 	import {
 		entryTitle,
 		entryKey,
-		entryKind,
+		entryStatus,
+		isToBeFound,
 		entryImages,
 		coverImage,
 		mediaId
@@ -70,19 +71,10 @@
 			<a {href} onclick={remember}>{entryTitle(item)}</a>
 		</h3>
 		<p class="card-meta" dir="auto">
-			<MarkerGlyph
-				kind={entryKind(item) === 'residence'
-					? 'residence'
-					: 'status' in item && item.status === 'search'
-						? 'search'
-						: 'located'}
-				size={12}
-			/>{item.city}, {item.country}
+			<MarkerGlyph kind={entryStatus(item)} size={12} />{item.city}, {item.country}
 		</p>
-		{#if 'years' in item}<p class="card-meta">{item.years}</p>{/if}
-		{#if 'status' in item && item.status === 'search'}<p class="card-badge">
-				To be found · location unconfirmed
-			</p>{/if}
+		{#if item.kind === 'residence' && item.years}<p class="card-meta">{item.years}</p>{/if}
+		{#if isToBeFound(item)}<p class="card-badge">To be found · location unconfirmed</p>{/if}
 		<a class="map-link" href={store.entryHref(item, { view: 'map' })} onclick={remember}
 			><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
 				><use href="#collection-map-pin" /></svg

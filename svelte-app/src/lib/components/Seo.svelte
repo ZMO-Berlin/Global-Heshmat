@@ -10,10 +10,9 @@
 		SITE_DESCRIPTION,
 		PUBLISHER,
 		ARTIST,
-		absoluteUrl,
-		artworkPath,
-		residencePath
+		absoluteUrl
 	} from '$lib/config';
+	import { entryPath } from '$lib/utils/collection';
 
 	interface Props {
 		/** When provided, render artwork-specific metadata (title, OG, JSON-LD). */
@@ -77,11 +76,9 @@
 	const canonicalUrl = $derived(
 		path
 			? absoluteUrl(path)
-			: artwork
-				? absoluteUrl(artworkPath(artwork.slug))
-				: residence
-					? absoluteUrl(residencePath(residence.slug))
-					: `${SITE_URL}/`
+			: (artwork ?? residence)
+				? absoluteUrl(entryPath((artwork ?? residence)!))
+				: `${SITE_URL}/`
 	);
 
 	const jsonLd = $derived(

@@ -90,7 +90,7 @@ export interface Artwork extends DocumentaryMetadata {
  * An artwork after indexing (see `$lib/utils/build-index.ts`): the slug is
  * resolved and guaranteed, so consumers can build URLs without assertions.
  */
-export type IndexedArtwork = Indexed<Artwork>;
+export type IndexedArtwork = Indexed<Artwork, 'artwork'>;
 
 /**
  * A place where Hassan Heshmat lived or worked (his hometown on the Nile,
@@ -123,7 +123,7 @@ export interface Residence extends DocumentaryMetadata {
 }
 
 /** A residence after indexing — slug resolved and guaranteed. */
-export type IndexedResidence = Indexed<Residence>;
+export type IndexedResidence = Indexed<Residence, 'residence'>;
 
 /** A collection record reference, as produced by `entryKey()`: "artwork:3", "residence:3". */
 export type EntryKey = `${'artwork' | 'residence'}:${number}`;
@@ -169,4 +169,4 @@ export interface PersonRecord {
 }
 
 /** A profile after indexing: every optional list is present (possibly empty). */
-export type Person = Required<PersonRecord>;
+export type Person = Required<PersonRecord> & { kind: 'person' };

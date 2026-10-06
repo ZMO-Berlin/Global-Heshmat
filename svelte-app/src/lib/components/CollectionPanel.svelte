@@ -7,7 +7,7 @@
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { artworkPath, residencePath } from '$lib/config';
+	import { entryPath, entryStatus } from '$lib/utils/collection';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 	import MarkerGlyph from './MarkerGlyph.svelte';
 
@@ -124,11 +124,11 @@
 						<a
 							{href}
 							class="collection-item"
-							class:current={currentPath === artworkPath(artwork.slug)}
-							aria-current={currentPath === artworkPath(artwork.slug) ? 'page' : undefined}
+							class:current={currentPath === entryPath(artwork)}
+							aria-current={currentPath === entryPath(artwork) ? 'page' : undefined}
 							onclick={closeForNavigation}
 						>
-							<MarkerGlyph kind={artwork.status === 'search' ? 'search' : 'located'} size={11} />
+							<MarkerGlyph kind={entryStatus(artwork)} size={11} />
 							<span class="collection-name" dir="auto">{artwork.name}</span>
 							<span class="collection-city" dir="auto">
 								{artwork.city}
@@ -153,8 +153,8 @@
 						<a
 							{href}
 							class="collection-item"
-							class:current={currentPath === residencePath(residence.slug)}
-							aria-current={currentPath === residencePath(residence.slug) ? 'page' : undefined}
+							class:current={currentPath === entryPath(residence)}
+							aria-current={currentPath === entryPath(residence) ? 'page' : undefined}
 							onclick={closeForNavigation}
 						>
 							<MarkerGlyph kind="residence" size={11} />

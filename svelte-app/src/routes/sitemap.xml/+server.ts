@@ -1,7 +1,9 @@
 import { artworks } from '$lib/data/artworks';
 import { residences } from '$lib/data/residences';
 import { people } from '$lib/data/people';
-import { SITE_URL, artworkPath, residencePath } from '$lib/config';
+import { SITE_URL } from '$lib/config';
+import { entryPath } from '$lib/utils/collection';
+import { personPath } from '$lib/utils/people';
 import { escapeXml } from '$lib/utils/xml';
 
 // Prerender so the file is written once at build time and served as a
@@ -20,19 +22,19 @@ export function GET(): Response {
 		{ loc: `${SITE_URL}/collection/`, changefreq: 'weekly', priority: '0.9' },
 		{ loc: `${SITE_URL}/people/`, changefreq: 'monthly', priority: '0.8' },
 		...people.map((person) => ({
-			loc: `${SITE_URL}/people/${person.slug}/`,
+			loc: SITE_URL + personPath(person.slug),
 			changefreq: 'monthly' as const,
 			priority: '0.7'
 		})),
 		{ loc: `${SITE_URL}/trails/`, changefreq: 'monthly', priority: '0.7' },
 		{ loc: `${SITE_URL}/missing/`, changefreq: 'monthly', priority: '0.8' },
 		...artworks.map((a) => ({
-			loc: `${SITE_URL}${artworkPath(a.slug)}`,
+			loc: SITE_URL + entryPath(a),
 			changefreq: 'monthly' as const,
 			priority: '0.8'
 		})),
 		...residences.map((r) => ({
-			loc: `${SITE_URL}${residencePath(r.slug)}`,
+			loc: SITE_URL + entryPath(r),
 			changefreq: 'monthly' as const,
 			priority: '0.7'
 		}))

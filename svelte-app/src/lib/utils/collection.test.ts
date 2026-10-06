@@ -1,7 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import { artworks } from '$lib/data/artworks';
 import { residences } from '$lib/data/residences';
-import { entryImages, entryKey, mediaId, coverImage } from './collection';
+import { people } from '$lib/data/people';
+import {
+	entryImages,
+	entryKey,
+	entryPath,
+	entryStatus,
+	isToBeFound,
+	mediaId,
+	coverImage
+} from './collection';
 import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './map-filter';
 import { readFilters, writeFilters } from './url-facets';
 import { buildGhostGeoJSON, buildRelocationGeoJSON } from './geojson';
@@ -90,5 +99,25 @@ describe('collection browsing', () => {
 					height: dimensions.height
 				});
 			}
+	});
+});
+
+describe('entry kinds', () => {
+	it('stamps every record with its kind at load time', () => {
+		expect(new Set(artworks.map((a) => a.kind))).toEqual(new Set(['artwork']));
+		expect(new Set(residences.map((r) => r.kind))).toEqual(new Set(['residence']));
+		expect(new Set(people.map((p) => p.kind))).toEqual(new Set(['person']));
+	});
+
+	it('derives key, path and status from kind, not from which fields are present', () => {
+		// A residence that gains a status-like field must stay a residence.
+		const residence = { ...residences[0], status: 'located' };
+		expect(entryKey(residence)).toBe(`residence:${residence.id}`);
+		expect(entryPath(residence)).toBe(`/residences/${residence.slug}/`);
+		expect(entryStatus(residence)).toBe('residence');
+		expect(isToBeFound(residence)).toBe(false);
+		const missing = artworks.find((a) => a.status === 'search')!;
+		expect(entryStatus(missing)).toBe('search');
+		expect(isToBeFound(missing)).toBe(true);
 	});
 });

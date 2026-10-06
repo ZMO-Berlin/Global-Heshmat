@@ -4,13 +4,11 @@ import {
 	entryCacheName,
 	savedCachePrefix
 } from './keys';
-import { entryImages, entryKey, type Entry } from '$lib/utils/collection';
+import { entryImages, entryKey, entryPath, type Entry } from '$lib/utils/collection';
 import { imageDimensions, thumbUrl, webUrl } from '$lib/utils/image';
 
 export const offlineSupported = () =>
 	typeof window !== 'undefined' && 'serviceWorker' in navigator && 'caches' in window;
-export const entryPath = (entry: Entry) =>
-	`/${'status' in entry ? 'artworks' : 'residences'}/${entry.slug}/`;
 const albumCache = (entry: Entry) => savedCachePrefix(__BUILD_ID__) + entryKey(entry);
 export function albumAssets(entry: Entry): string[] {
 	return [

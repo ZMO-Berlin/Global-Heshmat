@@ -54,7 +54,7 @@ function jsonLd(html) {
 function schemaType(record) {
 	return record.entryKind === 'institution' ||
 		record.entryKind === 'residence' ||
-		!('status' in record)
+		record.kind === 'residence'
 		? 'Place'
 		: record.entryKind === 'ensemble'
 			? 'Collection'

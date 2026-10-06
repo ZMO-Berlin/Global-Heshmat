@@ -5,6 +5,7 @@ import {
 	legacyMediaId,
 	matchesMediaId,
 	entryKey,
+	isToBeFound,
 	type Entry
 } from '$lib/utils/collection';
 import type { SourceReference } from '$lib/data/types';
@@ -72,7 +73,7 @@ export function validateEntry(
 	if (!item.sources?.length) issue('Structured source references missing', 'warning');
 	if (!item.locationPrecision) issue('Location precision missing', 'warning');
 	if (!item.entryKind) issue('Entity kind missing', 'warning');
-	if ('status' in item && item.status === 'search' && item.locationPrecision === 'exact')
+	if (isToBeFound(item) && item.locationPrecision === 'exact')
 		issue('Unlocated work cannot claim an exact current location; use last-known or approximate');
 	if (item.updatedOn && (!validDate(item.updatedOn, true) || item.updatedOn > today))
 		issue('Invalid record update date');

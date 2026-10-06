@@ -8,7 +8,15 @@
 	import PeopleList from './PeopleList.svelte';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
-	import { entryKey, entryTitle, entryImages, mediaId, imageAlt } from '$lib/utils/collection';
+	import {
+		entryKey,
+		entryStatus,
+		entryTitle,
+		entryImages,
+		mediaId,
+		imageAlt,
+		STATUS_LABELS
+	} from '$lib/utils/collection';
 	import { imageDimensions } from '$lib/utils/image';
 	import CollectionTools from './CollectionTools.svelte';
 	import CollectionCard from './CollectionCard.svelte';
@@ -94,11 +102,7 @@
 							><span class="list-title" dir="auto">{entryTitle(item)}</span><span dir="auto"
 								>{item.city}, {item.country}</span
 							><span>{countLabel(entryImages(item).length, 'photo')}</span><span
-								>{'status' in item
-									? item.status === 'search'
-										? 'To be found'
-										: 'Located'
-									: 'Residence'}</span
+								>{STATUS_LABELS[entryStatus(item)]}</span
 							></a
 						>
 					</li>{/each}
