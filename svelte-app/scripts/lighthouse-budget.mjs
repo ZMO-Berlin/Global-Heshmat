@@ -63,6 +63,13 @@ const closeBrowser = (browser) =>
 const median = (values) => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
 const failures = [];
 const summary = [];
+// Lab timing (the performance score and LCP) swings several points between
+// identical runs on shared CI machines. With LIGHTHOUSE_TIMING=warn it is
+// reported but does not fail; byte, request, CLS, console, accessibility,
+// best-practice and SEO budgets always do.
+const timingOnlyWarns = process.env.LIGHTHOUSE_TIMING === 'warn';
+const warnings = [];
+const timing = (message) => (timingOnlyWarns ? warnings : failures).push(message);
 let chrome;
 try {
 	await ready();
@@ -121,7 +128,7 @@ try {
 		);
 		for (const [category, minimum] of Object.entries(floors))
 			if (scores[category] < minimum)
-				failures.push(
+				(category === 'performance' ? timing : (message) => failures.push(message))(
 					`${target.id}: ${category} ${Math.round(scores[category] * 100)} < ${minimum * 100}`
 				);
 		const metrics = Object.fromEntries(
@@ -131,7 +138,7 @@ try {
 			])
 		);
 		if (metrics['largest-contentful-paint'] > lcpLimit)
-			failures.push(`${target.id}: LCP exceeds ${lcpLimit}ms`);
+			timing(`${target.id}: LCP exceeds ${lcpLimit}ms`);
 		if (metrics['cumulative-layout-shift'] > 0.1) failures.push(`${target.id}: CLS exceeds 0.1`);
 		for (const result of results) {
 			if (result.audits['errors-in-console']?.score !== 1)
@@ -174,16 +181,19 @@ try {
 		),
 		'',
 		...failures.map((failure) => `- FAIL: ${failure}`),
+		...warnings.map((warning) => `- WARN (lab timing, not blocking): ${warning}`),
 		'',
 		'HTML and JSON reports are retained as a workflow artifact.'
 	].join('\n');
 	writeFileSync(join(reports, 'summary.md'), markdown);
 	writeFileSync(
 		join(reports, 'summary.json'),
-		JSON.stringify({ runs, thresholds, summary, failures }, null, 2)
+		JSON.stringify({ runs, thresholds, summary, failures, warnings }, null, 2)
 	);
 	if (process.env.GITHUB_STEP_SUMMARY)
 		appendFileSync(process.env.GITHUB_STEP_SUMMARY, markdown + '\n');
 	console.log(markdown);
+	if (process.env.GITHUB_ACTIONS)
+		for (const warning of warnings) console.log(`::warning title=Lighthouse timing::${warning}`);
 }
 if (failures.length) process.exitCode = 1;

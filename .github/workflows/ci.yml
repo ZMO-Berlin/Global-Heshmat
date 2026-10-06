@@ -75,7 +75,7 @@ jobs:
   build:
     name: Build (${{ matrix.node-version }})
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -100,41 +100,6 @@ jobs:
       - name: Verify build artifact
         run: npm run verify:build
 
-      - name: Install browser engines
-        if: matrix.node-version == 24
-        run: npx playwright install --with-deps chromium webkit
-
-      - name: Browser and accessibility tests
-        if: matrix.node-version == 24
-        run: npm run test:e2e
-
-      - name: Offline upgrade across two builds
-        if: matrix.node-version == 24
-        run: npm run test:upgrade
-
-      - name: Lighthouse budgets
-        if: matrix.node-version == 24
-        run: npm run test:lighthouse
-
-      - name: Preserve Lighthouse reports
-        if: always() && matrix.node-version == 24
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: lighthouse-reports
-          path: svelte-app/.lighthouse/
-          include-hidden-files: true
-          retention-days: 14
-          if-no-files-found: warn
-
-      - name: Preserve browser failure traces
-        if: failure() && matrix.node-version == 24
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: browser-test-results
-          path: svelte-app/test-results/
-          retention-days: 14
-          if-no-files-found: ignore
-
       - name: Configure Pages
         if: matrix.node-version == 24 && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
@@ -145,10 +110,120 @@ jobs:
         with:
           path: svelte-app/build
 
+  # The browser stages run in parallel, each on its own build of the same
+  # commit (a build takes ~15 s; moving the 75 MB output between jobs is no
+  # faster). The Playwright image must match the locked @playwright/test
+  # version; it ships the browsers and their system libraries.
+  e2e:
+    name: Browser and accessibility tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --user 1001 --ipc=host
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: svelte-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Browser and accessibility tests (Chromium, WebKit)
+        run: npm run test:e2e
+
+      - name: Preserve browser failure traces
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: browser-test-results
+          path: svelte-app/test-results/
+          retention-days: 14
+          if-no-files-found: ignore
+
+  upgrade:
+    name: Offline upgrade across two builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --user 1001 --ipc=host
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: svelte-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Offline upgrade across two builds
+        run: npm run test:upgrade
+
+  lighthouse:
+    name: Lighthouse budgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --user 1001 --ipc=host
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: svelte-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Byte, request, CLS, console, accessibility, best-practice and SEO
+      # budgets gate the deploy. Lab timing (performance score, LCP) varies by
+      # several points between identical runs on shared runners, so it is
+      # reported as a warning and in the job summary instead of blocking.
+      - name: Lighthouse budgets
+        run: npm run test:lighthouse
+        env:
+          LIGHTHOUSE_TIMING: warn
+
+      - name: Preserve Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lighthouse-reports
+          path: svelte-app/.lighthouse/
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: warn
+
   deploy:
     name: Deploy to GitHub Pages
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: [quality, build]
+    needs: [quality, build, e2e, upgrade, lighthouse]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

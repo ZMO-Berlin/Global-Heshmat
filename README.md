@@ -123,10 +123,10 @@ Use Node.js 22.13+ or Node.js 24. Node 20 is end-of-life and is no longer suppor
 
 Four layers, all run in CI:
 
-- **Vitest unit tests** live next to the source as `*.test.ts`. They cover the pure layer — `slugify`, `escapeXml`, the `artworkPath` / `absoluteUrl` helpers, the slug-collision checks in `buildIndex`, the map filter predicates and GeoJSON builders, the image-URL and `srcset` helpers, and YouTube id parsing. `contrast.test.ts` additionally reads the colour values straight out of `tokens.css` and asserts every text pairing clears WCAG AA, so a palette edit that regresses contrast fails the build. These are pure-function tests; no DOM, no SvelteKit runtime needed.
-- **Build-output assertions** in [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs) crack open every prerendered artwork and residence page and check the actual HTML files for the things unit tests can't see — exactly one `<title>` per page, canonical URLs pointing at `https://heshmat.zmo.de`, the JSON-LD `@type` matching the route, the Google Search Console verification meta tag landing on every page, no `localhost` leaks, sitemap listing every artwork directory, every referenced artwork image having a generated WebP derivative, and so on.
+- **Vitest unit tests** live next to the source as `*.test.ts`. They cover the pure layer — `slugify`, `escapeXml`, the `entryPath` / `absoluteUrl` helpers, the slug-collision checks in `buildIndex`, the map filter predicates and GeoJSON builders, the image-URL and `srcset` helpers, and YouTube id parsing. `contrast.test.ts` additionally reads the colour values straight out of `tokens.css` and asserts every text pairing clears WCAG AA, so a palette edit that regresses contrast fails the build. These are pure-function tests; no DOM, no SvelteKit runtime needed.
+- **Build-output assertions** in [`scripts/verify-build.mjs`](svelte-app/scripts/verify-build.mjs) crack open every prerendered artwork and residence page and check the actual HTML files for the things unit tests can't see — exactly one `<title>` per page, canonical URLs pointing at `https://heshmat.zmo.de`, the JSON-LD `@type` matching the route, the Google Search Console verification meta tag landing on every page, no `localhost` leaks, sitemap listing every artwork directory, every referenced artwork image having a generated WebP derivative, every image URL carrying its content version, every page's first-party JavaScript staying within a gzipped budget (110 KB for shell pages, 130 KB for record pages), and so on.
 - **Playwright + axe** exercise the real production UI: filter/URL synchronisation, keyboard search, panel and modal focus, mobile overflow and touch targets, route-level accessibility, and the guarantee that a direct collection-grid visit does not load MapLibre or CARTO.
-- **Lighthouse budgets** run three cold measurements each for the desktop/mobile collection, a mobile album and the mobile missing-works dossier. Median floors: performance 90 desktop / 85 simulated slow-4G mobile, accessibility 100, best practices 95, SEO 100; LCP ≤ 2.5 s desktop / 4 s simulated mobile, CLS ≤ 0.1, JavaScript ≤ 350 KiB. Map downloads on these pages fail the check. CI retains HTML/JSON reports and browser failure traces for 14 days. Chromium and WebKit run in CI.
+- **Lighthouse budgets** run three cold measurements each for the desktop/mobile collection, a mobile album and the mobile missing-works dossier. Median floors: performance 90 desktop / 85 simulated slow-4G mobile, accessibility 100, best practices 95, SEO 100; LCP ≤ 2.5 s desktop / 4 s simulated mobile, CLS ≤ 0.1, JavaScript ≤ 350 KiB. Map downloads on these pages fail the check. In CI, lab timing (the performance score and LCP) is reported as a warning rather than failing, because it varies by several points between identical runs; every other budget blocks the deploy. CI retains HTML/JSON reports and browser failure traces for 14 days. Chromium and WebKit run in CI.
 
 ## Adding a new artwork
 
@@ -260,8 +260,8 @@ The site is built and deployed by the `build` and `deploy` jobs in [`.github/wor
 1. Install deps with `npm ci`.
 2. Run lint, typecheck and unit tests once on Node 24.
 3. Build and assert the static artifact on Node 22 and 24.
-4. Run Playwright, axe and Lighthouse against the Node 24 production build.
-5. Upload that tested Node 24 build as the Pages artifact and publish it via `actions/deploy-pages`.
+4. In parallel, in the Playwright container matching the locked `@playwright/test` version: Playwright and axe on Chromium and WebKit, the two-build offline upgrade, and Lighthouse budgets, each on its own production build of the same commit.
+5. Once every job passes, publish the Node 24 build via `actions/deploy-pages`.
 
 **One-off setup in GitHub:**
 

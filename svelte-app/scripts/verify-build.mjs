@@ -13,6 +13,7 @@
  */
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { VARIANTS, imageStem } from './image-variants.mjs';
 import { parse } from 'parse5';
@@ -86,6 +87,55 @@ function verifyClientAssets(directory = BUILD_DIR) {
 	}
 }
 verifyClientAssets();
+
+// Deterministic JavaScript budget for every prerendered page, including the
+// map landing page that Lighthouse does not measure: the gzipped first-party
+// modules each page preloads or imports. Lab timing varies between runs; bytes
+// do not. Raise a budget deliberately, never to make a regression pass.
+const gzipped = new Map();
+function gzippedSize(file) {
+	if (!gzipped.has(file)) gzipped.set(file, gzipSync(readFileSync(file)).length);
+	return gzipped.get(file);
+}
+function pages(directory = BUILD_DIR) {
+	return readdirSync(directory, { withFileTypes: true }).flatMap((file) => {
+		const path = join(directory, file.name);
+		if (file.isDirectory())
+			return ['_app', 'images', 'videos'].includes(file.name) ? [] : pages(path);
+		return file.name === 'index.html' ? [path] : [];
+	});
+}
+const JS_BUDGET_KB = { shell: 110, record: 130 };
+const overBudget = [];
+const measured = pages();
+for (const path of measured) {
+	const route = path
+		.slice(BUILD_DIR.length)
+		.replace(/\\/g, '/')
+		.replace(/index\.html$/, '');
+	const html = readFileSync(path, 'utf8');
+	const modules = new Set(
+		[
+			...html.matchAll(
+				/(?:href|src)="([^"]*_app\/immutable\/[^"]+\.js)"|import\("([^"]*_app\/immutable\/[^"]+\.js)"\)/g
+			)
+		].map(([, attribute, dynamic]) => new URL(attribute ?? dynamic, SITE_URL + route).pathname)
+	);
+	const kb =
+		[...modules].reduce(
+			(sum, asset) => sum + gzippedSize(join(BUILD_DIR, decodeURIComponent(asset))),
+			0
+		) / 1024;
+	const budget = /^\/(artworks|residences|people)\/./.test(route)
+		? JS_BUDGET_KB.record
+		: JS_BUDGET_KB.shell;
+	if (kb > budget) overBudget.push(`${route} ${kb.toFixed(1)} KB > ${budget} KB`);
+}
+check(
+	`every page's first-party JavaScript fits its gzipped budget (shell ${JS_BUDGET_KB.shell} KB, records ${JS_BUDGET_KB.record} KB)`,
+	measured.length > 50 && overBudget.length === 0,
+	overBudget.slice(0, 3).join('; ') || `${measured.length} pages measured`
+);
 check('missing works dossier prerendered', existsSync(join(BUILD_DIR, 'missing/index.html')));
 // People profiles are one TypeScript module per person, collected by
 // import.meta.glob — load them through Vite rather than re-implementing the loader.
