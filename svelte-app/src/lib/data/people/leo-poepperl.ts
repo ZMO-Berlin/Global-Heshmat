@@ -2,13 +2,12 @@ import type { PersonRecord } from '../types';
 
 const person: PersonRecord = {
 	slug: 'leo-poepperl',
-	name: 'Dr. Leo Pöpperl',
+	name: 'Leo Pöpperl',
 	groups: ['selb'],
 	places: ['Selb'],
 	sourceParagraphs: [38],
 	paragraphs: [
-		'Dr. Leo Pöpperl, chemist at Netzsch company whom Heshmat visited in 1971. They lived in Ahornweg as well and were thus neighbours of the Haude family.'
-	]
+		'Leo Pöpperl worked for the Netzsch company. Netzsch was and remains a manufacturer of machinery and plant, whose technology has been widely used in the ceramics industry, for example for grinding, mixing, processing ceramic slurries and other production stages.']
 };
 
 export default person;

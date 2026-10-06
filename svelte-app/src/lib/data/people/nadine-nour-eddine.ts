@@ -6,7 +6,7 @@ const person: PersonRecord = {
 	groups: ['art-historians'],
 	places: ['London'],
 	sourceParagraphs: [62],
-	paragraphs: ['Nadine Nour Eddine (London), see above.'],
+	paragraphs: ['Nadine Nour el Din (London), see above.'],
 	seeAlso: ['emad-abu-ghazi']
 };
 

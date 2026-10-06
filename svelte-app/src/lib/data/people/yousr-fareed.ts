@@ -6,7 +6,7 @@ const person: PersonRecord = {
 	groups: ['art-historians'],
 	places: ['Manama', 'Bahrain'],
 	sourceParagraphs: [63],
-	paragraphs: ['Yousr Fareed, co-worker at al Dukkan Gallery, Manama, Bahrain.']
+	paragraphs: ['Yousr Fareed, collaborator at al Dukkan Gallery, Manama, Bahrain.']
 };
 
 export default person;
