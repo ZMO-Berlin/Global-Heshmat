@@ -31,7 +31,7 @@ describe('document-based People records', () => {
 			filterPeople(people, { ...DEFAULT_FILTERS, query }).map((p) => p.slug);
 		expect(search('Karin Haude')).toContain('frieda-adolf-haude');
 		expect(search('Sohair')).toEqual(['kamal-es-sarrag']);
-		expect(search('Popperl')).toEqual(['leo-poepperl']);
+		expect(search('Popperl')).toEqual(['frieda-adolf-haude', 'leo-poepperl']);
 		expect(search('Warsaw')).toEqual(
 			expect.arrayContaining(['mounir-kanaan', 'mamdouh-ammar', 'youssef-francis'])
 		);
