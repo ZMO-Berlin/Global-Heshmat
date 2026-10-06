@@ -1,5 +1,5 @@
 import { imageStem } from '$lib/media/variants.js';
-import type { IndexedArtwork, IndexedResidence, ArtworkImage } from '$lib/data/types';
+import type { IndexedArtwork, IndexedResidence, ArtworkImage, EntryKey } from '$lib/data/types';
 
 export type Entry = IndexedArtwork | IndexedResidence;
 export type Selection =
@@ -7,7 +7,7 @@ export type Selection =
 export function entryKind(item: Entry): Selection['kind'] {
 	return 'status' in item ? 'artwork' : 'residence';
 }
-export function entryKey(item: Entry): string {
+export function entryKey(item: Entry): EntryKey {
 	return `${entryKind(item)}:${item.id}`;
 }
 export function entryTitle(item: Entry): string {

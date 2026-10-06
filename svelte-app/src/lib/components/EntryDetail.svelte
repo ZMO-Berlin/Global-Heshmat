@@ -163,11 +163,8 @@
 					{/if}
 
 					{#if isSearch}
+						<!-- The "location unconfirmed" statement lives in EvidencePanel below. -->
 						<div class="sidebar-contact">
-							<p>
-								The current location is unconfirmed. The map indicates the place recorded in this
-								entry.
-							</p>
 							Do you know where this artwork is? Please contact
 							<a
 								href={`mailto:${about.contactEmail}?subject=${encodeURIComponent(`Global Heshmat — information about ${artwork.name} (artwork ${artwork.id})`)}`}

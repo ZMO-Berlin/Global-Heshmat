@@ -16,6 +16,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { VARIANTS, imageStem } from './image-variants.mjs';
 import { parse } from 'parse5';
+import { createServer } from 'vite';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const BUILD_DIR = join(__dirname, '..', 'build');
@@ -86,7 +87,20 @@ function verifyClientAssets(directory = BUILD_DIR) {
 }
 verifyClientAssets();
 check('missing works dossier prerendered', existsSync(join(BUILD_DIR, 'missing/index.html')));
-const peopleData = JSON.parse(readFileSync(join(__dirname, '../src/lib/data/people.json'), 'utf8'));
+// People profiles are one TypeScript module per person, collected by
+// import.meta.glob — load them through Vite rather than re-implementing the loader.
+const vite = await createServer({
+	root: join(__dirname, '..'),
+	server: { middlewareMode: true },
+	appType: 'custom',
+	logLevel: 'error'
+});
+let peopleData;
+try {
+	peopleData = await vite.ssrLoadModule('/src/lib/data/people.ts');
+} finally {
+	await vite.close();
+}
 check('People index prerendered', existsSync(join(BUILD_DIR, 'people/index.html')));
 function findClass(node, name) {
 	if (node.attrs?.some((attr) => attr.name === 'class' && attr.value.split(' ').includes(name)))
@@ -108,9 +122,7 @@ for (const person of peopleData.people) {
 	const sourceText = [
 		...person.paragraphs,
 		...person.notes,
-		...peopleData.contexts
-			.filter((context) => context.people.includes(person.slug))
-			.flatMap((context) => context.paragraphs)
+		...peopleData.contextsFor(person.slug).flatMap((context) => context.paragraphs)
 	];
 	check(
 		`${person.slug} preserves all source passages in readable HTML`,

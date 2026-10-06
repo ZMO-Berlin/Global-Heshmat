@@ -11,7 +11,6 @@
 	import { page } from '$app/state';
 	import { goto, afterNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import logo from '$lib/assets/logo-zmo.png';
 	import Header from '$lib/components/Header.svelte';
 	import FilterBar from '$lib/components/FilterBar.svelte';
 	import CollectionView from '$lib/components/CollectionView.svelte';
@@ -112,10 +111,6 @@
 
 <svelte:head
 	><meta name="collection-build" content={__BUILD_ID__} /><link
-		rel="icon"
-		href={logo}
-		type="image/png"
-	/><link
 		rel="preload"
 		href={cormorantLatin}
 		as="font"

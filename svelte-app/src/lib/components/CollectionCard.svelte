@@ -1,5 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
+	import { countLabel } from '$lib/utils/text';
 	import { ImageOff } from '@lucide/svelte';
 	import type { Entry } from '$lib/utils/collection';
 	import {
@@ -34,7 +35,7 @@
 		class="card-figure"
 		{href}
 		onclick={remember}
-		aria-label="Open album: {item.name}, {images.length} photographs"
+		aria-label="Open album: {item.name}, {countLabel(images.length, 'photograph')}"
 		data-entry-key={entryKey(item)}
 	>
 		{#if cover}<MediaImage
@@ -49,8 +50,7 @@
 		{#if images.length > 0}<span class="photo-count"
 				><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
 					><use href="#collection-images" /></svg
-				>{images.length}
-				{images.length === 1 ? 'photo' : 'photos'}</span
+				>{countLabel(images.length, 'photo')}</span
 			>{/if}
 	</a>
 	{#if images.length > 1}

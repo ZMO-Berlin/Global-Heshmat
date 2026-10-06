@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { countLabel } from '$lib/utils/text';
 	import Seo from '$lib/components/Seo.svelte';
 	import PeopleList from '$lib/components/PeopleList.svelte';
 	import { people } from '$lib/data/people';
@@ -27,7 +28,7 @@
 			has met and interviewed several of the individuals listed below.
 		</p>
 		<div class="people-toolbar">
-			<p role="status">{matches.length} {matches.length === 1 ? 'profile' : 'profiles'}</p>
+			<p role="status">{countLabel(matches.length, 'profile')}</p>
 			<label
 				>Sort by
 				<select

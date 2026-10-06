@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buildIndex } from './build-index';
-import type { Artwork, Residence } from '$lib/data/types';
+import { buildIndex, buildPeopleIndex } from './build-index';
+import type { Artwork, PeopleContext, PersonRecord, Residence } from '$lib/data/types';
 
 const artwork = (overrides: Partial<Artwork>): Artwork => ({
 	id: 1,
@@ -122,5 +122,65 @@ describe('buildIndex', () => {
 		// route prefixes, so only within-collection collisions are errors.
 		expect(buildIndex([artwork({ id: 1, name: 'Selb' })], 'artwork')[0].slug).toBe('selb');
 		expect(buildIndex([residence({ id: 1, name: 'Selb' })], 'residence')[0].slug).toBe('selb');
+	});
+});
+
+const person = (overrides: Partial<PersonRecord>): PersonRecord => ({
+	slug: 'jane-doe',
+	name: 'Jane Doe',
+	groups: ['peers'],
+	places: [],
+	sourceParagraphs: [1],
+	paragraphs: ['Jane Doe was a sculptor.'],
+	...overrides
+});
+/** Key records the way import.meta.glob does: by path, the file named after the slug. */
+const files = (...records: PersonRecord[]) =>
+	Object.fromEntries(records.map((record) => [`./${record.slug}.ts`, { default: record }]));
+
+describe('buildPeopleIndex', () => {
+	it('defaults the optional lists so consumers need no fallbacks', () => {
+		const [result] = buildPeopleIndex(files(person({})), []);
+		expect(result).toMatchObject({ relatedEntries: [], seeAlso: [], notes: [] });
+	});
+
+	it('orders profiles by first source paragraph, not by filename', () => {
+		const result = buildPeopleIndex(
+			files(
+				person({ slug: 'a-late', sourceParagraphs: [40, 2] }),
+				person({ slug: 'z-early', sourceParagraphs: [9] }),
+				person({ slug: 'm-undocumented', sourceParagraphs: [] })
+			),
+			[]
+		);
+		expect(result.map((p) => p.slug)).toEqual(['z-early', 'a-late', 'm-undocumented']);
+	});
+
+	it('throws when a file is not named after its slug', () => {
+		expect(() =>
+			buildPeopleIndex({ './jane-doe.ts': { default: person({ slug: 'jane-smith' }) } }, [])
+		).toThrow(/jane-doe\.ts declares slug "jane-smith"/);
+	});
+
+	it('throws on an unsafe slug or a profile without a passage', () => {
+		expect(() => buildPeopleIndex(files(person({ slug: 'Jane_Doe' })), [])).toThrow(
+			/Unsafe person slug/
+		);
+		expect(() => buildPeopleIndex(files(person({ paragraphs: [] })), [])).toThrow(/no paragraphs/);
+	});
+
+	it('throws on a seeAlso or shared passage naming an unknown profile', () => {
+		expect(() => buildPeopleIndex(files(person({ seeAlso: ['nobody'] })), [])).toThrow(
+			/jane-doe seeAlso refers to unknown person "nobody"/
+		);
+		const context: PeopleContext = {
+			id: 'warsaw',
+			people: ['jane-doe', 'nobody'],
+			sourceParagraphs: [2],
+			paragraphs: ['A shared passage.']
+		};
+		expect(() => buildPeopleIndex(files(person({})), [context])).toThrow(
+			/Shared passage warsaw refers to unknown person "nobody"/
+		);
 	});
 });

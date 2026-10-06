@@ -1,8 +1,9 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
+	import { countLabel } from '$lib/utils/text';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
-	import { people } from '$lib/data/people';
+	import { lazyPeople } from '$lib/data/people-lazy.svelte';
 	import { filterPeople } from '$lib/utils/people';
 	import PeopleList from './PeopleList.svelte';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
@@ -19,11 +20,17 @@
 		...filterResidences(residences, store.filters)
 	]);
 	const photoCount = $derived(items.reduce((count, item) => count + entryImages(item).length, 0));
-	const peopleMatches = $derived(
-		!store.peopleView && (store.filters.query.trim() || store.filters.type === 'person')
-			? filterPeople(people, store.filters)
-			: []
+	const wantsPeople = $derived(
+		!store.peopleView && (store.filters.query.trim() !== '' || store.filters.type === 'person')
 	);
+	$effect(() => {
+		if (wantsPeople) lazyPeople.load();
+	});
+	const peopleMatches = $derived(
+		wantsPeople && lazyPeople.current ? filterPeople(lazyPeople.current, store.filters) : []
+	);
+	// Hold the empty state until the profiles have been searched too.
+	const peoplePending = $derived(wantsPeople && !lazyPeople.current);
 </script>
 
 <div class="collection-page" data-testid="collection-scroll">
@@ -39,10 +46,9 @@
 			<div>
 				<h2>{store.mode === 'list' ? 'Collection index' : 'The collection'}</h2>
 				<p class="page-count" role="status">
-					{items.length}
-					{items.length === 1 ? 'entry' : 'entries'} · {photoCount} photographs
+					{countLabel(items.length, 'entry', 'entries')} · {countLabel(photoCount, 'photograph')}
 					{#if peopleMatches.length}
-						· {peopleMatches.length} {peopleMatches.length === 1 ? 'profile' : 'profiles'}{/if}
+						· {countLabel(peopleMatches.length, 'profile')}{/if}
 				</p>
 			</div>
 			<div class="gallery-modes" role="group" aria-label="Gallery display">
@@ -67,7 +73,7 @@
 				<h3>People</h3>
 				<PeopleList items={peopleMatches} />
 			</section>{/if}
-		{#if !items.length && !peopleMatches.length}<div class="empty">
+		{#if !items.length && !peopleMatches.length && !peoplePending}<div class="empty">
 				<h3>No entries match these filters</h3>
 				<p>Try another country, status or search term.</p>
 				<button disabled={!store.ready} onclick={() => store.resetFilters()}>Clear filters</button>
@@ -87,7 +93,7 @@
 							onclick={() => (store.returnKey = entryKey(item))}
 							><span class="list-title" dir="auto">{entryTitle(item)}</span><span dir="auto"
 								>{item.city}, {item.country}</span
-							><span>{entryImages(item).length} photos</span><span
+							><span>{countLabel(entryImages(item).length, 'photo')}</span><span
 								>{'status' in item
 									? item.status === 'search'
 										? 'To be found'
@@ -107,7 +113,7 @@
 							data-entry-key={entryKey(item)}
 							onclick={() => (store.returnKey = entryKey(item))}
 							dir="auto">{entryTitle(item)}</a
-						><span>{entryImages(item).length} photos</span>
+						><span>{countLabel(entryImages(item).length, 'photo')}</span>
 					</h3>
 					{#if entryImages(item).length}<div class="photo-grid">
 							{#each entryImages(item) as photo (mediaId(photo))}

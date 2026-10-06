@@ -3,11 +3,11 @@
 	import { page } from '$app/state';
 	import Seo from '$lib/components/Seo.svelte';
 	import SourceParagraph from '$lib/components/SourceParagraph.svelte';
-	import { getPersonBySlug, groupName, peopleContexts } from '$lib/data/people';
+	import { getPersonBySlug } from '$lib/data/people';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
 	import { entryKey, entryTitle } from '$lib/utils/collection';
-	import { personExcerpt } from '$lib/utils/people';
+	import { contextsFor, groupName, personExcerpt } from '$lib/utils/people';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
@@ -16,9 +16,7 @@
 	const related = $derived(
 		[...artworks, ...residences].filter((item) => person.relatedEntries.includes(entryKey(item)))
 	);
-	const contexts = $derived(
-		peopleContexts.filter((context) => context.people.includes(person.slug))
-	);
+	const contexts = $derived(contextsFor(person.slug));
 	const reference = $derived(getPersonBySlug(person.seeAlso[0] ?? ''));
 </script>
 

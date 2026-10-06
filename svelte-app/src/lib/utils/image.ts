@@ -26,7 +26,10 @@ function candidates(src: string, variants: Variant[]): string {
 	return [...widths].map(([width, source]) => `${source} ${width}w`).join(', ');
 }
 export const srcSet = (src: string) => candidates(src, ['preview', 'web', 'full']);
-export const cardSrcSet = (src: string) => candidates(src, ['thumb', 'preview', 'web']);
+// Cards and Photos-mode tiles stop at the 800px preview: their slots are at
+// most ~350 CSS px, so a 3x phone would otherwise fetch 1200px web files for
+// every cover (about 2.4x the bytes) for no visible gain.
+export const cardSrcSet = (src: string) => candidates(src, ['thumb', 'preview']);
 export function leadImage(item: Parameters<typeof coverImage>[0]): string | undefined {
 	return coverImage(item)?.src;
 }

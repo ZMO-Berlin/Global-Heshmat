@@ -33,13 +33,15 @@
 		>
 		<a class="header-btn header-btn-cta" href={resolve('/missing')}>
 			<span class="cta-full">Help us find missing works</span>
-			<span class="cta-short">Missing<span class="works-label"> works</span></span>
+			<!-- &nbsp; for the same reason as the wordmark: an ordinary leading space
+			     inside the span is collapsed, rendering "Missingworks". -->
+			<span class="cta-short">Missing<span class="works-label">&nbsp;works</span></span>
 		</a>
 	</div>
 </header>
 
 <style>
-	/* About stays visible in the fixed footer on phones, leaving room for People. */
+	/* About stays visible in the fixed footer on phones, leaving room for the CTA. */
 	@media (max-width: 480px) {
 		.about-button {
 			display: none;

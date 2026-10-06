@@ -160,7 +160,12 @@ export default defineConfig({
 					'**/maplibre-*.js',
 					'**/maplibre.*.css',
 					'**/immutable/workers/**',
-					'**/rtl-text-plugin.js'
+					'**/rtl-text-plugin.js',
+					// No rendered text falls in these subsets (unicode-range means
+					// pages never request them); precaching them cost ~114 KB per
+					// install. Should such text appear, it is still fetched on demand.
+					'**/*-cyrillic*.woff2',
+					'**/*-vietnamese*.woff2'
 				],
 				// Vite 8 preserves the logical MapLibre name only in its manifest,
 				// not in the emitted filename. Workbox's measured-size limit keeps

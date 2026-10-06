@@ -8,7 +8,10 @@ declare global {
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
-		// interface PageData {}
+		interface PageData {
+			/** Set by the People routes' layout for the "Place mentioned" facet. */
+			peoplePlaces?: string[];
+		}
 		interface PageState {
 			browseSearch?: string;
 			browseModal?: { key: 'photo' | 'about'; session: string };

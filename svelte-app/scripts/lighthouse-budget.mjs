@@ -52,6 +52,14 @@ async function ready() {
 	}
 	throw new Error('Preview startup timed out');
 }
+// Playwright's close() can stall indefinitely on Windows once Chromium's main
+// process has exited under Lighthouse's DevTools session. Every report is
+// written before closing, so bound the wait rather than hang the whole budget.
+const closeBrowser = (browser) =>
+	Promise.race([
+		browser.close().catch(() => {}),
+		new Promise((resolve) => setTimeout(resolve, 15_000).unref())
+	]);
 const median = (values) => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
 const failures = [];
 const summary = [];
@@ -99,7 +107,7 @@ try {
 			writeFileSync(join(reports, `${target.id}-${run}.json`), json);
 			writeFileSync(join(reports, `${target.id}-${run}.html`), html);
 			results.push(result.lhr);
-			await chrome.close();
+			await closeBrowser(chrome);
 			chrome = undefined;
 			console.log(
 				`${target.id} run ${run}/${runs}: ${Math.round(result.lhr.categories.performance.score * 100)}`
@@ -149,7 +157,7 @@ try {
 	failures.push(error.message);
 } finally {
 	try {
-		await chrome?.close();
+		if (chrome) await closeBrowser(chrome);
 	} catch (error) {
 		console.warn(`Browser cleanup: ${error.message}`);
 	}

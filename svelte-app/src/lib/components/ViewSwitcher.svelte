@@ -1,6 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
-	import { Map as MapIcon, LayoutGrid, List } from '@lucide/svelte';
+	import { Map as MapIcon, LayoutGrid, List, Users } from '@lucide/svelte';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { page } from '$app/state';
 	let {
@@ -50,7 +50,8 @@
 		class:active={store.peopleView}
 		href={store.peopleHref()}
 		aria-label="People"
-		aria-current={store.peopleView ? 'page' : undefined}>People</a
+		aria-current={store.peopleView ? 'page' : undefined}
+		><Users size={15} aria-hidden="true" /><span>People</span></a
 	>
 </div>
 

@@ -14,9 +14,12 @@ test-results
 
 # Hand-edited data files — kept out of Prettier so colleagues can add or
 # tweak entries without formatting churn failing CI. Both collections are
-# ignored symmetrically (artworks AND residences).
+# ignored symmetrically (artworks, residences AND people — everything in
+# people/ except its loader).
 src/lib/data/artworks/[0-9]*.ts
 src/lib/data/residences/Residence*.ts
+src/lib/data/people/*.ts
+!src/lib/data/people/index.ts
 
 .npm-cache/
 .lighthouse/

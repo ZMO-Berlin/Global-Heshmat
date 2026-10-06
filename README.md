@@ -28,7 +28,7 @@ A project by the [Leibniz-Zentrum Moderner Orient (ZMO)](http://www.zmo.de), Ber
 | --- | --- |
 | `.github/workflows/` | Quality gates, browser tests, Pages deployment, dependency audit and live smoke check |
 | `svelte-app/src/lib/components/` | Collection views, map, albums, research tools and modal controls |
-| `svelte-app/src/lib/data/` | One TypeScript file per artwork/residence, shared schema and generated image manifest |
+| `svelte-app/src/lib/data/` | One TypeScript file per artwork, residence and People profile, shared schema and generated image manifest |
 | `svelte-app/src/lib/stores/browse.svelte.ts` | Context-scoped filters, selection, URL state and modal history |
 | `svelte-app/src/lib/stores/fieldbook.svelte.ts` | Device-local research selections |
 | `svelte-app/src/lib/editorial/` | Data validation and research-quality reporting |
@@ -50,11 +50,13 @@ A project by the [Leibniz-Zentrum Moderner Orient (ZMO)](http://www.zmo.de), Ber
 | `/artworks/<slug>/`   | Prerendered album and record; add `?view=map` for the map sidebar |
 | `/collection/`        | Albums, grouped photographs and list, with combinable filters                      |
 | `/residences/<slug>/` | Same, for the places where Heshmat lived or worked                                 |
+| `/people/`            | People connected to Heshmat, with source-group and place facets |
+| `/people/<slug>/`     | Prerendered profile with its source passages and related records |
 | `/missing/`           | Dedicated dossier of unlocated works |
 | `/fieldbook/`         | Device-local selections, exports and offline album management |
 | `/trails/`            | Place-based reading sequences |
 | `/collection.json`    | Versioned public collection metadata and media-rights statements |
-| `/sitemap.xml`        | Auto-generated sitemap listing the home page and every artwork and residence URL   |
+| `/sitemap.xml`        | Auto-generated sitemap listing the home page and every artwork, residence and People URL |
 | `/robots.txt`         | Allows all crawlers; points to the sitemap                                         |
 | anything else         | `404.html` fallback, which renders `+error.svelte`                                 |
 
@@ -66,7 +68,7 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 
 - **Interactive WebGL map** — MapLibre GL JS with CartoDB Voyager basemap
 - **Marker clustering** — groups nearby markers, click to zoom in
-- **Three marker types** — located (teal), to-be-found (orange), ghost markers for relocated artworks (dashed outline)
+- **Three artwork marker types** — located (teal), to-be-found (orange), ghost markers for relocated artworks (dashed outline)
 - **Relocation visualisation** — dashed lines connecting original and current locations
 - **Places of residence** — a separate, unclustered marker layer for where Heshmat lived and worked
 - **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs
@@ -135,6 +137,14 @@ Four layers, all run in CI:
 5. Done — `index.ts` auto-imports all artwork files via `import.meta.glob`, the next build emits a new `/artworks/<slug>/` page and adds it to `sitemap.xml`.
 
 The slug is auto-derived from `name`. To pin a stable URL when renaming, set `slug: 'my-stable-slug'` explicitly. A build error is thrown if two artworks would resolve to the same slug.
+
+## Adding a person
+
+1. Copy `src/lib/data/people/_template.ts` and name the copy after the profile's URL slug, e.g. `jane-example.ts` for `/people/jane-example/`.
+2. Fill in the fields (documented in the template). Group ids come from `_groups.ts`; a typo is a type error in `npm run check`.
+3. Done — `people/index.ts` collects every profile file. The build fails if a filename and its `slug` differ, or if a `seeAlso` or shared passage (`_contexts.ts`) names an unknown profile.
+
+Profiles reproduce the source document's wording; see [`docs/people-source.md`](svelte-app/docs/people-source.md) for the editorial rules. Slugs are permanent: correct a name without renaming the file.
 
 ### Images
 

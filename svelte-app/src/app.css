@@ -133,11 +133,6 @@ body {
 [hidden] {
 	display: none !important;
 }
-@media (max-width: 768px) {
-	:root {
-		--filter-height: 108px;
-	}
-}
 
 /* Research pages share the collection's fixed-shell scrolling contract. */
 .research-page {

@@ -1,16 +1,11 @@
 /**
- * Svelte actions that hide an <img> whose source fails to load, so a missing
- * derivative leaves clean empty space rather than a broken-image glyph.
+ * A Svelte action that hides the element wrapping an <img> whose source fails
+ * to load — used for the lightbox's thumbnail buttons, where an empty button
+ * would otherwise remain in the strip as a clickable gap. (Album images show
+ * MediaImage's "Image unavailable" state instead.)
  *
- * Both listen for `load` as well as `error` and restore visibility on success:
- * the gallery swaps `src` on a single long-lived <img> as the user navigates,
- * so an element hidden by one bad image must come back for the next good one.
- *
- * `hideOnError` hides the image itself — used where the surrounding frame
- * should stay (the gallery's fixed-aspect slot, the lightbox stage).
- * `hideParentOnError` hides the wrapping element instead — used for thumbnail
- * buttons, where an empty button would otherwise remain in the strip as a
- * clickable gap.
+ * It listens for `load` as well as `error` and restores visibility on success,
+ * so an element hidden by one bad image comes back if its `src` is replaced.
  */
 
 function watch(node: HTMLImageElement, target: () => HTMLElement | null) {
@@ -36,11 +31,6 @@ function watch(node: HTMLImageElement, target: () => HTMLElement | null) {
 			node.removeEventListener('error', hide);
 		}
 	};
-}
-
-/** Hide the <img> itself when its source fails to load. */
-export function hideOnError(node: HTMLImageElement) {
-	return watch(node, () => node);
 }
 
 /** Hide the <img>'s parent (e.g. a thumbnail button) when loading fails. */

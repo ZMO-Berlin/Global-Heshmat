@@ -75,7 +75,7 @@ describe('image URL helpers', () => {
 
 	it('offers a thumbnail and intermediate candidates for collection cards', () => {
 		expect(cardSrcSet('Agiba_1.jpg')).toBe(
-			`/images/thumb/Agiba_1.webp ${imageDimensions('Agiba_1.jpg', 'thumb').width}w, /images/preview/Agiba_1.webp ${imageDimensions('Agiba_1.jpg', 'preview').width}w, /images/web/Agiba_1.webp ${imageDimensions('Agiba_1.jpg').width}w`
+			`/images/thumb/Agiba_1.webp ${imageDimensions('Agiba_1.jpg', 'thumb').width}w, /images/preview/Agiba_1.webp ${imageDimensions('Agiba_1.jpg', 'preview').width}w`
 		);
 	});
 

@@ -1,17 +1,33 @@
+<script module lang="ts">
+	// The visitor's explicit choice, kept at module level because the layout
+	// unmounts the legend whenever it leaves the map. Only ever set by a click,
+	// so prerendering never shares it.
+	let chosen: boolean | null = null;
+</script>
+
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { ChevronDown } from '@lucide/svelte';
 	import MarkerGlyph from './MarkerGlyph.svelte';
 	import { MARKER_SPECS } from '$lib/utils/marker-icons';
 
 	// Collapsible so it can be folded away on a phone, where five rows plus the
-	// footer eat most of an already short map. Open by default; the user's
-	// choice then sticks for the session.
-	let open = $state(true);
+	// footer eat most of an already short map. Open by default on larger
+	// screens (the prerendered state), folded on phones once hydrated; the
+	// visitor's own choice then sticks for the session.
+	let open = $state(chosen ?? true);
+	onMount(() => {
+		if (chosen === null && matchMedia('(max-width: 600px)').matches) open = false;
+	});
+	function toggle() {
+		open = !open;
+		chosen = open;
+	}
 	const titleId = $props.id();
 </script>
 
 <aside class="legend" class:collapsed={!open} aria-labelledby={titleId}>
-	<button class="legend-toggle" aria-expanded={open} onclick={() => (open = !open)}>
+	<button class="legend-toggle" aria-expanded={open} onclick={toggle}>
 		<!-- Was an <h4> directly under the page <h1>, skipping two levels. -->
 		<h2 id={titleId}>Legend</h2>
 		<ChevronDown class="legend-chevron" size={15} strokeWidth={2.5} aria-hidden="true" />

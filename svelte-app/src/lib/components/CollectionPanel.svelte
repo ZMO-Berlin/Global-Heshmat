@@ -1,5 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
+	import { countLabel } from '$lib/utils/text';
 	import { MapPin, Search as SearchIcon, X } from '@lucide/svelte';
 	import { page } from '$app/state';
 
@@ -98,7 +99,7 @@
 	<div class="collection-header">
 		<h2 id={titleId}>
 			Browse the collection
-			<span class="collection-count">{total} {total === 1 ? 'entry' : 'entries'}</span>
+			<span class="collection-count">{countLabel(total, 'entry', 'entries')}</span>
 		</h2>
 		<button class="btn-close" onclick={close} aria-label="Close the collection list">
 			<X size={20} strokeWidth={2.25} />

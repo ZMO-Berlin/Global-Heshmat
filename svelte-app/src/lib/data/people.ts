@@ -1,25 +1,25 @@
-import data from './people.json';
+import allPeople from './people/index';
+import type { Person } from './types';
 
-export interface Person {
-	slug: string;
-	name: string;
-	groups: string[];
-	places: string[];
-	sourceParagraphs: number[];
-	paragraphs: string[];
-	relatedEntries: string[];
-	seeAlso: string[];
-	notes: string[];
-}
-export const people: Person[] = data.people;
-export const peopleGroups = data.groups;
-export const peopleContexts = data.contexts;
+// Re-exported so the People routes (and scripts/verify-build.mjs) have one entry point.
+export { peopleGroups } from './people/_groups';
+export { peopleContexts } from './people/_contexts';
+export { contextsFor, groupName } from '$lib/utils/people';
+
+/**
+ * All People profiles in source-document order, each with every list present.
+ * Importing this module bundles every profile: the layout-level search uses
+ * `$lib/data/people-lazy.svelte.ts` instead.
+ */
+export const people: Person[] = allPeople;
+
+const bySlug = new Map<string, Person>(people.map((person) => [person.slug, person]));
+
+/** Every place mentioned in a profile, alphabetically — the "Place mentioned" facet. */
 export const peoplePlaces = [...new Set(people.flatMap((person) => person.places))].sort((a, b) =>
 	a.localeCompare(b, 'en')
 );
+
 export function getPersonBySlug(slug: string): Person | undefined {
-	return people.find((person) => person.slug === slug);
-}
-export function groupName(id: string): string {
-	return peopleGroups.find((group) => group.id === id)?.name ?? id;
+	return bySlug.get(slug);
 }

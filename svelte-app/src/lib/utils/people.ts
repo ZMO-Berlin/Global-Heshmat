@@ -1,7 +1,22 @@
-import { peopleContexts, groupName, type Person } from '$lib/data/people';
+// Deliberately not '$lib/data/people': these helpers serve the layout-level
+// search too, which must not pull every profile into each page's bundle
+// (see '$lib/data/people-lazy.svelte.ts'). Groups and shared passages are small.
+import { peopleGroups } from '$lib/data/people/_groups';
+import { peopleContexts } from '$lib/data/people/_contexts';
+import type { PeopleContext, Person } from '$lib/data/types';
 import type { CollectionFilters } from './map-filter';
 import { normalizeSearchText } from './search';
 import type { PeopleSort } from './url-facets';
+
+const groupNames = new Map<string, string>(peopleGroups.map((group) => [group.id, group.name]));
+export function groupName(id: string): string {
+	return groupNames.get(id) ?? id;
+}
+
+/** The shared passages shown on (and searchable from) a profile. */
+export function contextsFor(slug: string): PeopleContext[] {
+	return peopleContexts.filter((context) => context.people.includes(slug));
+}
 
 const nameCollator = new Intl.Collator('en', { sensitivity: 'base' });
 export function sortPeople(items: readonly Person[], sort: PeopleSort): Person[] {
@@ -18,7 +33,7 @@ export function filterPeople(items: readonly Person[], filters: CollectionFilter
 		return [];
 	const words = normalizeSearchText(filters.query).split(/\s+/).filter(Boolean);
 	return items.filter((person) => {
-		if (filters.group && !person.groups.includes(filters.group)) return false;
+		if (filters.group && !person.groups.some((group) => group === filters.group)) return false;
 		if (filters.place && !person.places.includes(filters.place)) return false;
 		let text = searchIndex.get(person);
 		if (text === undefined) {
@@ -29,9 +44,7 @@ export function filterPeople(items: readonly Person[], filters: CollectionFilter
 					...person.notes,
 					...person.places,
 					...person.groups.map(groupName),
-					...peopleContexts
-						.filter((context) => context.people.includes(person.slug))
-						.flatMap((context) => context.paragraphs)
+					...contextsFor(person.slug).flatMap((context) => context.paragraphs)
 				].join(' ')
 			);
 			searchIndex.set(person, text);
@@ -43,5 +56,7 @@ export function filterPeople(items: readonly Person[], filters: CollectionFilter
 /** A literal source excerpt, never a generated biography or summary. */
 export function personExcerpt(person: Person): string {
 	const text = person.paragraphs.join(' ');
-	return text.length > 210 ? text.slice(0, text.lastIndexOf(' ', 210)) + '…' : text;
+	if (text.length <= 210) return text;
+	// Drop punctuation left at the cut so "Netherlands." doesn't become "Netherlands.…".
+	return text.slice(0, text.lastIndexOf(' ', 210)).replace(/[\s.,;:–—-]+$/u, '') + '…';
 }

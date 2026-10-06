@@ -25,6 +25,20 @@ describe('artwork search', () => {
 		expect(normalizeSearchText('  Musée ÜBER  ')).toBe('musee uber');
 	});
 
+	it('folds apostrophe variants and treats other punctuation as a word break', () => {
+		expect(normalizeSearchText('Egypt’s')).toBe(normalizeSearchText("Egypt's"));
+		expect(normalizeSearchText('as-Sigini')).toBe('as sigini');
+		expect(normalizeSearchText('“The People’s Sculptor”, Berlin.')).toBe(
+			'the peoples sculptor berlin'
+		);
+	});
+
+	it('finds typographic apostrophes from a keyboard query', () => {
+		const items = [artwork(1, 'Children’s Village'), artwork(2, 'Dancers')];
+		expect(searchArtworks(items, "children's").map((item) => item.id)).toEqual([1]);
+		expect(searchArtworks(items, 'village, cairo').map((item) => item.id)).toEqual([1]);
+	});
+
 	it('matches every query word across searchable fields', () => {
 		const items = [artwork(1, 'Nile family'), artwork(2, 'Dancers', 'Selb', 'Germany')];
 		expect(searchArtworks(items, 'family cairo').map((item) => item.id)).toEqual([1]);

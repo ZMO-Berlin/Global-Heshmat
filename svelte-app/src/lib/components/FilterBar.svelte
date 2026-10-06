@@ -4,7 +4,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { peopleGroups, peoplePlaces } from '$lib/data/people';
+	import { peopleGroups } from '$lib/data/people/_groups';
 	import type { CollectionFilters } from '$lib/utils/map-filter';
 	import { countries } from '$lib/data/countries';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
@@ -58,7 +58,8 @@
 					onchange={(event) => peopleFacet({ place: event.currentTarget.value })}
 				>
 					<option value="">All places mentioned</option>
-					{#each peoplePlaces as place (place)}<option value={place}>{place}</option>{/each}
+					{#each page.data.peoplePlaces ?? [] as place (place)}<option value={place}>{place}</option
+						>{/each}
 				</select></label
 			>
 		{:else}

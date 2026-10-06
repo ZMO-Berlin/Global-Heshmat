@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { plainText } from '$lib/utils/text';
 	import type { IndexedArtwork, IndexedResidence } from '$lib/data/types';
 	import { entryStructuredData } from '$lib/utils/structured-data';
 	import { webUrl, leadImage } from '$lib/utils/image';
@@ -44,7 +45,6 @@
 			: `${SITE_URL}/og-image.png`
 	);
 
-	const stripHtml = (s: string) => s.replace(/<[^>]*>/g, '');
 	const truncate = (s: string, n: number) =>
 		s.length <= n ? s : s.slice(0, n - 1).trimEnd() + '…';
 
@@ -63,12 +63,12 @@
 			? descriptionOverride
 			: artwork
 				? truncate(
-						`${artwork.name} — ${artwork.city}, ${artwork.country}. ${stripHtml(artwork.desc)}`,
+						`${artwork.name} — ${artwork.city}, ${artwork.country}. ${plainText(artwork.desc)}`,
 						200
 					)
 				: residence
 					? truncate(
-							`${residence.name} — ${residence.city}, ${residence.country}. ${stripHtml(residence.desc)}`,
+							`${residence.name} — ${residence.city}, ${residence.country}. ${plainText(residence.desc)}`,
 							200
 						)
 					: SITE_DESCRIPTION

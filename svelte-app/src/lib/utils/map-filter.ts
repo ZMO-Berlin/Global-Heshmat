@@ -1,5 +1,6 @@
 import type { Artwork, Residence } from '$lib/data/types';
 import { normalizeSearchText } from './search';
+import { plainText } from './text';
 export const FILTER_ALL = 'all';
 export const FILTER_SEARCH = 'search';
 export const FILTER_RESIDENCE = 'residence';
@@ -44,7 +45,7 @@ function searchableText(item: Artwork | Residence): string {
 				item.district,
 				item.country,
 				'address' in item ? item.address : '',
-				item.desc.replace(/<[^>]*>/g, ' '),
+				plainText(item.desc),
 				...(item.aliases ?? []),
 				...(item.images ?? []).flatMap((image) => [image.caption, image.credit]),
 				...(item.sources ?? []).map((source) => source.label)

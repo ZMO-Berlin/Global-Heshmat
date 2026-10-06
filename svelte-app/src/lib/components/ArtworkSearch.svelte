@@ -4,7 +4,8 @@
 	import { Search } from '@lucide/svelte';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
-	import { people, type Person } from '$lib/data/people';
+	import { lazyPeople } from '$lib/data/people-lazy.svelte';
+	import type { Person } from '$lib/data/types';
 	import { filterPeople } from '$lib/utils/people';
 	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
 	import { entryKey, entryTitle, type Entry } from '$lib/utils/collection';
@@ -16,8 +17,12 @@
 	const all = $derived([
 		...filterArtworks(artworks, store.filters),
 		...filterResidences(residences, store.filters),
-		...filterPeople(people, store.filters)
+		...(lazyPeople.current ? filterPeople(lazyPeople.current, store.filters) : [])
 	]);
+	// Profiles arrive with the first focus or query; until then, don't claim "no results".
+	$effect(() => {
+		if (store.filters.query.trim()) lazyPeople.load();
+	});
 	const matches = $derived(all.slice(0, 8));
 	const open = $derived(searchOpen && store.filters.query.trim().length >= 2);
 	function resultKey(item: Entry | Person) {
@@ -81,7 +86,10 @@
 			searchOpen = true;
 			activeIndex = -1;
 		}}
-		onfocus={() => (searchOpen = true)}
+		onfocus={() => {
+			searchOpen = true;
+			lazyPeople.load();
+		}}
 		onkeydown={keys}
 	/>
 	{#if open}
@@ -98,9 +106,10 @@
 						></button
 					>{/each}
 			</div>
-			{#if !all.length}<p role="status">No entries found. Try clearing another filter.</p>{:else}<a
-					href={store.searchHref()}
-					onclick={() => (searchOpen = false)}>View all {all.length} results</a
+			{#if !all.length}<p role="status">
+					{lazyPeople.current ? 'No entries found. Try clearing another filter.' : 'Searching…'}
+				</p>{:else}<a href={store.searchHref()} onclick={() => (searchOpen = false)}
+					>View all {all.length} results</a
 				>{/if}
 		</div>
 	{/if}

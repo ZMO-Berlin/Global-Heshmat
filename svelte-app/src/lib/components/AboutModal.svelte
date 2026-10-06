@@ -12,7 +12,7 @@
 		<strong>{@html about.intro}</strong><br />{about.subtitle}
 	</p>
 
-	{#each about.paragraphs as paragraph (paragraph.slice(0, 30))}
+	{#each about.paragraphs as paragraph, i (i)}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		<p>{@html paragraph}</p>
 	{/each}

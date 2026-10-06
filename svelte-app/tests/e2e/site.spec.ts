@@ -143,7 +143,7 @@ test('missing works dossier links documentation and a prefilled contribution', a
 		.getByRole('link', { name: /View entry ·/ })
 		.first()
 		.click();
-	await page.getByRole('link', { name: 'Back to collection' }).click();
+	await page.getByRole('link', { name: 'Back to missing works', exact: true }).click();
 	await expect(page).toHaveURL(/\/missing\/?$/);
 	await accessible(page);
 });

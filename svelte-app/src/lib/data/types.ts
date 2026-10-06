@@ -1,4 +1,5 @@
 import type { Indexed } from '$lib/utils/build-index';
+import type { PeopleGroupId } from './people/_groups';
 
 export interface ArtworkLink {
 	label: string;
@@ -123,3 +124,49 @@ export interface Residence extends DocumentaryMetadata {
 
 /** A residence after indexing — slug resolved and guaranteed. */
 export type IndexedResidence = Indexed<Residence>;
+
+/** A collection record reference, as produced by `entryKey()`: "artwork:3", "residence:3". */
+export type EntryKey = `${'artwork' | 'residence'}:${number}`;
+
+/** One source group of the People profiles (see `people/_groups.ts`). */
+export interface PeopleGroup {
+	id: string;
+	name: string;
+	/** Zero-based paragraph index of the group heading in the source document. */
+	sourceParagraph: number;
+}
+
+/** A source passage about several people at once (see `people/_contexts.ts`). */
+export interface PeopleContext {
+	id: string;
+	/** Slugs of every profile the passage is shown on. */
+	people: string[];
+	sourceParagraphs: number[];
+	paragraphs: string[];
+}
+
+/**
+ * One People profile, as written in its data file `people/<slug>.ts` (see
+ * `people/_template.ts`). Profiles are document-based: `paragraphs` and
+ * `notes` are the source wording, never a generated summary.
+ */
+export interface PersonRecord {
+	/** Permanent URL slug — /people/<slug>/ — and the data file's name. */
+	slug: string;
+	name: string;
+	groups: PeopleGroupId[];
+	/** Places literally mentioned in the passage or its group heading. */
+	places: string[];
+	/** Zero-based paragraph indices in the source document; profiles are listed in this order. */
+	sourceParagraphs: number[];
+	paragraphs: string[];
+	/** Collection records the passage explicitly mentions. Shown reciprocally on each record. */
+	relatedEntries?: EntryKey[];
+	/** Slugs of profiles the passage refers to ("see above"). */
+	seeAlso?: string[];
+	/** Footnotes from the source document. */
+	notes?: string[];
+}
+
+/** A profile after indexing: every optional list is present (possibly empty). */
+export type Person = Required<PersonRecord>;

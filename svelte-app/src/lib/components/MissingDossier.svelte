@@ -1,5 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
+	import { countLabel } from '$lib/utils/text';
 	import MediaImage from '$lib/components/MediaImage.svelte';
 	import { imageDimensions } from '$lib/utils/image';
 	import { artworks } from '$lib/data/artworks';
@@ -55,7 +56,9 @@
 						<a
 							href={store.entryHref(artwork, { view: 'gallery', origin: 'missing' })}
 							onclick={() => (store.returnKey = entryKey(artwork))}
-							>View entry · {entryImages(artwork).length} photos</a
+							>View entry{entryImages(artwork).length
+								? ` · ${countLabel(entryImages(artwork).length, 'photo')}`
+								: ''}</a
 						><a href={store.entryHref(artwork, { view: 'map', origin: 'missing' })}
 							>Recorded place on map</a
 						>

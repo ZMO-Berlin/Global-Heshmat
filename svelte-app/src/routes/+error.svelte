@@ -28,8 +28,8 @@
 		<h1>{heading}</h1>
 		<p class="error-body">
 			{#if isNotFound}
-				The address <code>{page.url.pathname}</code> doesn't match any artwork or place of residence in
-				the collection.
+				The address <code>{page.url.pathname}</code> doesn't match any artwork, place of residence or
+				person in the collection.
 			{:else}
 				{page.error?.message ?? 'An unexpected error occurred.'}
 			{/if}

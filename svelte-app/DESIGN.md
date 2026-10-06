@@ -118,10 +118,10 @@ Typography establishes clear editorial hierarchy through two complementary typef
 
 ## Layout
 
-- **Fixed Chrome Receding**: Header (68px), Filter Bar (48px/52px), and Footer (64px) frame the central canvas with light ambient borders, avoiding heavy visual weight.
+- **Fixed Chrome Receding**: Header (68px), Filter Bar (60px; two rows, 108px, at 768px and below), and Footer (48px) frame the central canvas with light ambient borders, avoiding heavy visual weight.
 - **Map Viewport**: Full-bleed spatial presentation where markers and vector tiles command attention.
 - **Drawer Panels**: The Sidebar (460px desktop, full-width mobile) slides smoothly over the map without jarring layout shifts.
-- **Grid Layout**: Responsive multi-column masonry/grid for `/collection` adapting from 1 column on phones to 4 columns on large displays.
+- **Grid Layout**: Responsive multi-column grid for `/collection` adapting from 1 column on phones to 4 columns on large displays.
 
 ## Elevation & Depth
 
@@ -140,7 +140,7 @@ Typography establishes clear editorial hierarchy through two complementary typef
 ## Components
 
 - **Header**: Wordmark with italic gold emphasis, view switcher, and compact appeal action. On mobile, controls align to an exact 44px vertical bounding box.
-- **Collection Cards**: Framed 4:3 figure with warm background matting, subtle scale zoom on hover, and distinct metadata layout.
+- **Collection Cards**: Fixed-height (280px) contain-fit figure on warm background matting, album thumbnails and a photo count, then the title and place.
 - **Legend**: Floating, collapsible translucent box at bottom-left of the map with dashed relocation indicator.
 - **Artwork Detail Sidebar**: Editorial article presentation with gold rule accent under title, gallery viewer, provenance badges, and expandable descriptions.
 

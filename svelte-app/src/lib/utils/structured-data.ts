@@ -2,6 +2,7 @@ import { ARTIST, SITE_NAME, SITE_URL } from '$lib/config';
 import { leadImage, webUrl } from './image';
 import { recordUrl } from './exports';
 import type { Entry } from './collection';
+import { plainText } from './text';
 export function recordSchemaType(item: Entry): 'Place' | 'Collection' | 'VisualArtwork' {
 	if (!('status' in item) || item.entryKind === 'residence') return 'Place';
 	return item.entryKind === 'institution'
@@ -18,7 +19,7 @@ export function entryStructuredData(item: Entry) {
 		'@context': 'https://schema.org',
 		'@type': type,
 		name: item.name,
-		description: item.desc.replace(/<[^>]*>/g, ' ').slice(0, 300),
+		description: plainText(item.desc).slice(0, 300),
 		url: recordUrl(item),
 		image: cover ? SITE_URL + webUrl(cover) : undefined,
 		...(isWork
