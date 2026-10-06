@@ -1,7 +1,7 @@
 import type { PersonRecord } from '../types';
 
 const person: PersonRecord = {
-	slug: 'Gertraud-Fritz-Steppat',
+	slug: 'gertrude-fritz-steppat',
 	name: 'Gertraud Steppat / Prof. Fritz Steppat',
 	groups: ['cairo-crossroads'],
 	places: ['Cairo', 'Selb', 'Deutschland', 'Berlin'],

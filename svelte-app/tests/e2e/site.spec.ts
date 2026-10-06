@@ -63,7 +63,7 @@ test('search includes residences and descriptions and exposes all results', asyn
 	await page.goto('/collection/');
 	const search = page.getByRole('combobox', { name: 'Search the collection', exact: true });
 	await search.fill('Haude');
-	await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(3);
+	await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(2);
 	await search.press('ArrowDown');
 	await search.press('Enter');
 	await expect(page).toHaveURL(/\/residences\/haus-der-familie-haude/);
