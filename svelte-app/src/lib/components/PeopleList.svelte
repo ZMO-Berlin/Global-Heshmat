@@ -13,12 +13,11 @@
 		<li>
 			<a href={store.personHref(person)}>{person.name}</a>
 			<p class="groups">{person.groups.map(groupName).join(' · ')}</p>
-			<!-- Readers took a bare ellipsis for a sentence that breaks off: point to the full text. -->
+			<!-- Readers took a bare ellipsis for a sentence that breaks off: point to the full text.
+			     The hidden name keeps the link text descriptive (Lighthouse ignores aria-label). -->
 			<p class="excerpt">
-				{excerpt.text}{#if excerpt.truncated}…&nbsp;<a
-						class="more"
-						href={store.personHref(person)}
-						aria-label={`Read more about ${person.name}`}>Read more</a
+				{excerpt.text}{#if excerpt.truncated}…&nbsp;<a class="more" href={store.personHref(person)}
+						>Read more<span class="sr-only">&nbsp;about {person.name}</span></a
 					>{/if}
 			</p>
 		</li>

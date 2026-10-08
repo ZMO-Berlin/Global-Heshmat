@@ -273,10 +273,13 @@ test('a shortened excerpt ends with a Read more link to the profile', async ({ p
 	test.skip(!(await item.count()), 'Every People passage is short enough to show in full');
 	const name = (await item.locator('> a').textContent())!;
 	const person = people.find((p) => p.name === name)!;
-	// Only "Read more" is the link; the ellipsis stays with the passage.
-	await expect(item.locator('.more')).toHaveText('Read more');
+	// The ellipsis stays with the passage and only "Read more" shows; the hidden
+	// name keeps the link text descriptive for Lighthouse's SEO audit.
+	const more = item.getByRole('link', { name: `Read more about ${name}`, exact: true });
+	await expect(more).toHaveText(`Read more about ${name}`);
+	await expect(more.locator('.sr-only')).toContainText(`about ${name}`);
 	await expect(item.locator('.excerpt')).toContainText('… Read more');
-	await item.getByRole('link', { name: `Read more about ${name}`, exact: true }).click();
+	await more.click();
 	await expect(page).toHaveURL(profilePath(person.slug));
 });
 
