@@ -60,6 +60,16 @@
 						<h3>Notes</h3>
 						{#each person.notes as text, i (i)}<SourceParagraph {text} />{/each}
 					</section>{/if}
+				{#if person.sources.length}<section class="sources">
+						<h3>Sources</h3>
+						<ul>
+							{#each person.sources as source, i (i)}<li>
+									{#if source.url}<a href={source.url} target="_blank" rel="noopener noreferrer"
+											>{source.label}</a
+										>{:else}{source.label}{/if}
+								</li>{/each}
+						</ul>
+					</section>{/if}
 			</div>
 			{#if related.length}<section class="related">
 					<h3>Related collection entries</h3>
@@ -96,6 +106,7 @@
 	}
 	.context,
 	.notes,
+	.sources,
 	.related {
 		margin-top: var(--space-7);
 		padding-top: var(--space-5);
@@ -104,6 +115,10 @@
 	.related-links {
 		list-style: none;
 		padding: 0;
+	}
+	.sources li {
+		overflow-wrap: anywhere;
+		margin-block: var(--space-2);
 	}
 	@media (max-width: 600px) {
 		.person-inner {

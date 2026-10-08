@@ -172,6 +172,7 @@ for (const person of peopleData.people) {
 	const sourceText = [
 		...person.paragraphs,
 		...person.notes,
+		...person.sources.map((source) => source.label),
 		...peopleData.contextsFor(person.slug).flatMap((context) => context.paragraphs)
 	];
 	check(

@@ -5,8 +5,14 @@ import { leadImage } from './image';
 import { citation, bibtex, ris, csvCell, exportRecords } from './exports';
 import { entryStructuredData } from './structured-data';
 import { locationZoom } from './evidence';
-import { validateEntry, validDate } from '$lib/editorial/validate';
+import {
+	trackingParameter,
+	validateEntry,
+	validatePerson,
+	validDate
+} from '$lib/editorial/validate';
 import { artworks } from '$lib/data/artworks';
+import { people } from '$lib/data/people';
 const fixture: Entry = {
 	id: 1,
 	name: 'Research & archive',
@@ -104,5 +110,22 @@ describe('editorial validation', () => {
 			desc: '<script>alert(1)</script><a href="jav&#x61;script:alert(1)">bad</a>'
 		});
 		expect(issues.filter((issue) => issue.severity === 'error')).toHaveLength(3);
+	});
+	it('rejects tracking parameters and citations left in People passages', () => {
+		expect(trackingParameter('https://example.org/a/?utm_source=chatgpt.com')).toBe('utm_source');
+		expect(trackingParameter('https://example.org/a/?page=2')).toBeUndefined();
+		const issues = validatePerson({
+			...people[0],
+			paragraphs: ['A passage. (Source: https://example.org/?utm_source=chatgpt.com )'],
+			notes: [],
+			sources: [{ label: 'Article', url: 'https://example.org/?fbclid=1' }]
+		});
+		expect(issues.map((issue) => issue.message).join(' ')).toMatch(
+			/Source: ….*"utm_source".*"fbclid"/s
+		);
+	});
+	it('accepts every published People profile', () => {
+		for (const person of people)
+			expect(validatePerson(person).filter((issue) => issue.severity === 'error')).toEqual([]);
 	});
 });

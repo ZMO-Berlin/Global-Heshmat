@@ -104,7 +104,8 @@ export function buildPeopleIndex(
 			kind: 'person' as const,
 			relatedEntries: record.relatedEntries ?? [],
 			seeAlso: record.seeAlso ?? [],
-			notes: record.notes ?? []
+			notes: record.notes ?? [],
+			sources: record.sources ?? []
 		};
 	});
 	const firstParagraph = (person: Person) => person.sourceParagraphs[0] ?? Infinity;

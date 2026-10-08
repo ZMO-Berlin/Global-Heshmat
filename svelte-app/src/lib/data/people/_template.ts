@@ -38,6 +38,12 @@
  *                    links back to this profile.
  *  seeAlso           Slugs of profiles the passage refers to ("see above").
  *  notes             Footnotes from the source document.
+ *  sources           Articles or books cited for the passage, shown under
+ *                    "Sources" on the profile: { label, url?, checkedOn? }.
+ *                    Keep citations out of `paragraphs` — the build rejects
+ *                    "(Source: …)" in the passage text. Copy the address bar
+ *                    without tracking parameters (?utm_source=chatgpt.com…):
+ *                    the build rejects those too.
  *
  *  Shared passages are not repeated here: list the slug in the passage's
  *  `people` in _contexts.ts and it appears on this profile automatically.
@@ -58,7 +64,13 @@ const person: PersonRecord = {
 	paragraphs: ['Jane Example (1930–2000) commissioned a fountain for her garden in Cairo.'],
 	relatedEntries: ['artwork:5'],
 	seeAlso: ['louis-bishara'],
-	notes: ['A footnote from the source document.']
+	notes: ['A footnote from the source document.'],
+	sources: [
+		{
+			label: 'Author Name, “Article title”, Newspaper, 11 January 2022',
+			url: 'https://www.example.org/article/'
+		}
+	]
 };
 
 export default person;

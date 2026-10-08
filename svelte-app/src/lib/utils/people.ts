@@ -64,6 +64,7 @@ export function filterPeople(items: readonly Person[], filters: CollectionFilter
 					person.name,
 					...person.paragraphs,
 					...person.notes,
+					...person.sources.map((source) => source.label),
 					...person.places,
 					...person.groups.map(groupName),
 					...contextsFor(person.slug).flatMap((context) => context.paragraphs)
@@ -75,10 +76,19 @@ export function filterPeople(items: readonly Person[], filters: CollectionFilter
 	});
 }
 
-/** A literal source excerpt, never a generated biography or summary. */
-export function personExcerpt(person: Person): string {
+/**
+ * A literal source excerpt, never a generated biography or summary. `text`
+ * leaves out the ellipsis so the People list can make it a link to the profile.
+ */
+export function excerptParts(person: Person): { text: string; truncated: boolean } {
 	const text = person.paragraphs.join(' ');
-	if (text.length <= 210) return text;
+	if (text.length <= 210) return { text, truncated: false };
 	// Drop punctuation left at the cut so "Netherlands." doesn't become "Netherlands.…".
-	return text.slice(0, text.lastIndexOf(' ', 210)).replace(/[\s.,;:–—-]+$/u, '') + '…';
+	const cut = text.slice(0, text.lastIndexOf(' ', 210)).replace(/[\s.,;:–—-]+$/u, '');
+	return { text: cut, truncated: true };
+}
+
+export function personExcerpt(person: Person): string {
+	const { text, truncated } = excerptParts(person);
+	return truncated ? text + '…' : text;
 }

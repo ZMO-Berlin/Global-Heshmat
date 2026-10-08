@@ -166,6 +166,8 @@ export interface PersonRecord {
 	seeAlso?: string[];
 	/** Footnotes from the source document. */
 	notes?: string[];
+	/** Published works the editors cite beside the source document, without tracking parameters. */
+	sources?: SourceReference[];
 }
 
 /** A profile after indexing: every optional list is present (possibly empty). */

@@ -141,7 +141,7 @@ const files = (...records: PersonRecord[]) =>
 describe('buildPeopleIndex', () => {
 	it('defaults the optional lists so consumers need no fallbacks', () => {
 		const [result] = buildPeopleIndex(files(person({})), []);
-		expect(result).toMatchObject({ relatedEntries: [], seeAlso: [], notes: [] });
+		expect(result).toMatchObject({ relatedEntries: [], seeAlso: [], notes: [], sources: [] });
 	});
 
 	it('orders profiles by first source paragraph, not by filename', () => {

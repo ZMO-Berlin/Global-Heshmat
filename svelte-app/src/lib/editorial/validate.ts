@@ -8,7 +8,7 @@ import {
 	isToBeFound,
 	type Entry
 } from '$lib/utils/collection';
-import type { SourceReference } from '$lib/data/types';
+import type { Person, SourceReference } from '$lib/data/types';
 export interface DataIssue {
 	record: string;
 	severity: 'error' | 'warning';
@@ -28,6 +28,53 @@ export function safeUrl(value: string): boolean {
 	} catch {
 		return false;
 	}
+}
+/** `utm_source=chatgpt.com` and the like record how a link was found, not what it cites. */
+export function trackingParameter(value: string): string | undefined {
+	try {
+		return [...new URL(value).searchParams.keys()].find((key) =>
+			/^(?:utm_\w+|fbclid|gclid)$/i.test(key)
+		);
+	} catch {
+		return undefined;
+	}
+}
+type Report = (message: string, severity?: DataIssue['severity']) => void;
+function checkUrl(url: string, label: string, issue: Report) {
+	const tracking = trackingParameter(url);
+	if (!safeUrl(url)) issue(`Unsafe ${label}: ${url}`);
+	else if (tracking) issue(`Remove the tracking parameter "${tracking}" from ${url}`);
+}
+function checkSource(source: SourceReference, issue: Report, today: string) {
+	if (!source.label.trim()) issue('Source label is empty');
+	if (source.url) checkUrl(source.url, 'source URL', issue);
+	if (source.checkedOn && !validDate(source.checkedOn, true))
+		issue(`Invalid verification date: ${source.checkedOn}`);
+	else if (source.checkedOn && source.checkedOn > today)
+		issue(`Verification date is in the future: ${source.checkedOn}`);
+	else if (
+		source.checkedOn &&
+		Date.parse(today) - Date.parse(source.checkedOn) > 2 * 365.25 * 86400000
+	)
+		issue(`Source last checked more than two years ago: ${source.label}`, 'warning');
+}
+export function validatePerson(
+	person: Person,
+	today = new Date().toISOString().slice(0, 10)
+): DataIssue[] {
+	const issues: DataIssue[] = [];
+	const issue: Report = (message, severity = 'error') =>
+		issues.push({ record: `person:${person.slug}`, severity, message });
+	for (const text of person.paragraphs)
+		if (/\(\s*Sources?:/i.test(text))
+			issue('Move the "(Source: …)" citation out of the passage text into `sources`');
+	for (const text of [...person.paragraphs, ...person.notes])
+		for (const url of text.match(/https?:\/\/[^\s)]+/g) ?? []) {
+			const tracking = trackingParameter(url);
+			if (tracking) issue(`Remove the tracking parameter "${tracking}" from ${url}`);
+		}
+	for (const source of person.sources) checkSource(source, issue, today);
+	return issues;
 }
 export function validateEntry(
 	item: Entry,
@@ -56,19 +103,7 @@ export function validateEntry(
 		if (!Number.isInteger(item.movement.year) || item.movement.year < 1)
 			issue('Movement year must be a positive integer');
 	}
-	const validateSource = (source: SourceReference) => {
-		if (!source.label.trim()) issue('Source label is empty');
-		if (source.url && !safeUrl(source.url)) issue(`Unsafe source URL: ${source.url}`);
-		if (source.checkedOn && !validDate(source.checkedOn, true))
-			issue(`Invalid verification date: ${source.checkedOn}`);
-		else if (source.checkedOn && source.checkedOn > today)
-			issue(`Verification date is in the future: ${source.checkedOn}`);
-		else if (
-			source.checkedOn &&
-			Date.parse(today) - Date.parse(source.checkedOn) > 2 * 365.25 * 86400000
-		)
-			issue(`Source last checked more than two years ago: ${source.label}`, 'warning');
-	};
+	const validateSource = (source: SourceReference) => checkSource(source, issue, today);
 	for (const source of item.sources ?? []) validateSource(source);
 	if (!item.sources?.length) issue('Structured source references missing', 'warning');
 	if (!item.locationPrecision) issue('Location precision missing', 'warning');
@@ -103,8 +138,7 @@ export function validateEntry(
 	)
 		issue('Cover does not resolve to an album image');
 	if ('links' in item)
-		for (const link of item.links ?? [])
-			if (!safeUrl(link.url)) issue(`Unsafe external URL: ${link.url}`);
+		for (const link of item.links ?? []) checkUrl(link.url, 'external URL', issue);
 	if ('video' in item && item.video && !safeUrl(item.video)) issue('Unsafe video URL');
 	const eventIds = new Set();
 	for (const event of item.events ?? []) {
