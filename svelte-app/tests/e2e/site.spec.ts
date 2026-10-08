@@ -1,7 +1,13 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
-const corpus: { country: string; status?: string }[] = JSON.parse(
+const corpus: {
+	country: string;
+	status?: string;
+	slug: string;
+	name: string;
+	images: unknown[];
+}[] = JSON.parse(
 	readFileSync(new URL('../../build/collection.json', import.meta.url), 'utf8')
 ).records;
 const missingCount = corpus.filter((item) => item.status === 'search').length;
@@ -62,13 +68,15 @@ test('filters combine and follow Gallery, List and browser history', async ({ pa
 test('search includes residences and descriptions and exposes all results', async ({ page }) => {
 	await page.goto('/collection/');
 	const search = page.getByRole('combobox', { name: 'Search the collection', exact: true });
+	const residence = corpus.find((record) => record.slug === 'haus-der-familie-haude')!;
 	await search.fill('Haude');
-	await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(2);
+	// Collection entries come before People, whose passages may also mention the name.
+	await expect(page.getByRole('listbox').getByRole('option').first()).toContainText(residence.name);
 	await search.press('ArrowDown');
 	await search.press('Enter');
 	await expect(page).toHaveURL(/\/residences\/haus-der-familie-haude/);
 	await expect(page.locator('.sidebar h2')).toBeFocused();
-	await expect(page.locator('.gallery-counter')).toHaveText('1 / 11');
+	await expect(page.locator('.gallery-counter')).toHaveText(`1 / ${residence.images.length}`);
 });
 test('album returns to the same gallery scroll and focus', async ({ page }) => {
 	await page.goto('/collection/');

@@ -4,6 +4,8 @@ const port = Number(process.env.PLAYWRIGHT_PORT ?? 4178);
 
 export default defineConfig({
 	testDir: './tests/e2e',
+	// Snapshots the People data so tests don't hard-code editorial wording.
+	globalSetup: './tests/e2e/global-setup.ts',
 	fullyParallel: true,
 	forbidOnly: Boolean(process.env.CI),
 	retries: process.env.CI ? 1 : 0,

@@ -1,17 +1,24 @@
 import { describe, expect, it } from 'vitest';
+import { readdirSync } from 'node:fs';
 import { people, peopleGroups, peopleContexts } from '$lib/data/people';
 import { artworks } from '$lib/data/artworks';
 import { residences } from '$lib/data/residences';
 import { entryKey } from './collection';
-import { filterPeople, groupPeople, sortPeople } from './people';
 import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './map-filter';
 import { readFilters, writeFilters } from './url-facets';
 import { canonicalEntryPath } from '$lib/offline/keys';
 
+// Integrity checks on the published profiles. Search, sorting, grouping and
+// excerpts are tested on fixtures in people-search.test.ts, so that an editor's
+// correction to a passage never fails a test.
 describe('document-based People records', () => {
-	it('has unique profiles and valid source groups, cross-references and collection links', () => {
-		expect(people).toHaveLength(31);
-		expect(new Set(people.map((p) => p.slug)).size).toBe(people.length);
+	it('publishes every profile file exactly once', () => {
+		const files = readdirSync(new URL('../data/people/', import.meta.url))
+			.filter((file) => file.endsWith('.ts') && !file.startsWith('_') && file !== 'index.ts')
+			.map((file) => file.replace(/\.ts$/, ''));
+		expect(people.map((p) => p.slug).sort()).toEqual(files.sort());
+	});
+	it('has valid source groups, cross-references and collection links', () => {
 		const entries = [...artworks, ...residences].map(entryKey);
 		for (const person of people) {
 			expect(person.paragraphs.length).toBeGreaterThan(0);
@@ -19,36 +26,17 @@ describe('document-based People records', () => {
 				expect(peopleGroups.some((g) => g.id === group)).toBe(true);
 			for (const key of person.relatedEntries) expect(entries).toContain(key);
 			for (const slug of person.seeAlso) expect(people.some((p) => p.slug === slug)).toBe(true);
-			expect(person.paragraphs.join(' ')).not.toMatch(
-				/XXX|\[\+ photo|aunt in Heeze|total spannend/
-			);
 		}
 		for (const context of peopleContexts)
 			for (const slug of context.people) expect(people.some((p) => p.slug === slug)).toBe(true);
 	});
-	it('finds people mentioned within shared passages and searches diacritics and context', () => {
-		const search = (query: string) =>
-			filterPeople(people, { ...DEFAULT_FILTERS, query }).map((p) => p.slug);
-		expect(search('Karin Haude')).toContain('frieda-adolf-haude');
-		expect(search('Sohair')).toEqual(['kamal-es-sarrag']);
-		expect(search('Popperl')).toEqual(['frieda-adolf-haude', 'leo-poepperl']);
-		expect(search('Warsaw')).toEqual(
-			expect.arrayContaining(['mounir-kanaan', 'mamdouh-ammar', 'youssef-francis'])
-		);
+	it('leaves no drafting placeholders or editor comments in the passages', () => {
+		for (const person of people)
+			expect(person.paragraphs.join(' ')).not.toMatch(
+				/XXX|\[\+ photo|aunt in Heeze|total spannend/
+			);
 	});
-	it('combines group, place and query without applying artwork status to people', () => {
-		expect(
-			filterPeople(people, {
-				...DEFAULT_FILTERS,
-				type: 'person',
-				group: 'collectors',
-				place: '10th of Ramadan city',
-				query: 'Bishara'
-			}).map((p) => p.slug)
-		).toEqual(['louis-bishara', 'marie-bishara']);
-		expect(filterPeople(people, { ...DEFAULT_FILTERS, group: 'selb', place: 'Paris' })).toEqual([]);
-		expect(filterPeople(people, { ...DEFAULT_FILTERS, status: 'search' })).toEqual([]);
-		expect(filterPeople(people, { ...DEFAULT_FILTERS, type: 'artwork' })).toEqual([]);
+	it('keeps artwork and residence filters away from people', () => {
 		expect(filterArtworks(artworks, { ...DEFAULT_FILTERS, type: 'person' })).toEqual([]);
 		expect(filterResidences(residences, { ...DEFAULT_FILTERS, type: 'person' })).toEqual([]);
 	});
@@ -71,21 +59,5 @@ describe('document-based People records', () => {
 				'https://heshmat.zmo.de'
 			)
 		).toBe('/people/louis-bishara/');
-	});
-});
-
-describe('People grouping', () => {
-	it('lists the source groups in document order, a two-group profile under both', () => {
-		const sections = groupPeople(sortPeople(people, 'group'));
-		expect(sections.map((section) => section.group.id)).toEqual(peopleGroups.map((g) => g.id));
-		const shant = sections.filter((section) =>
-			section.members.some((person) => person.slug === 'shant-chant-avetisyan')
-		);
-		expect(shant.map((section) => section.group.id)).toEqual(['armenian-community', 'peers']);
-		expect(sections[0].members[0].slug).toBe('saeed-sadr');
-	});
-	it('drops groups with no matching profile', () => {
-		const selb = people.filter((person) => person.groups.includes('selb'));
-		expect(groupPeople(selb).map((section) => section.group.id)).toEqual(['selb']);
 	});
 });
