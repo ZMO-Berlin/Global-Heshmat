@@ -1,8 +1,8 @@
 import type { PersonRecord } from '../types';
 
 const person: PersonRecord = {
-	slug: 'nadine-nour-eddine',
-	name: 'Nadine Nour Eddine',
+	slug: 'nadine-nour-el-din',
+	name: 'Nadine Nour el Din',
 	groups: ['art-historians'],
 	places: ['London'],
 	sourceParagraphs: [62],
