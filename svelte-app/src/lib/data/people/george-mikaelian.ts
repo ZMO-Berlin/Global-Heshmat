@@ -13,8 +13,6 @@ const person: PersonRecord = {
 		{
 			label:
 				'Lemma Shehadi, “Celebrating Chant Avedissian: the artist who put Egypt’s Golden Age in the spotlight”, The National, 11 January 2022',
-			url: 'https://www.thenationalnews.com/arts-culture/art/2022/01/11/celebrating-chant-avedissian-the-artist-who-put-egypts-golden-age-in-the-spotlight/',
-			checkedOn: '2026-10-08'
 		}
 	]
 };

@@ -7,7 +7,7 @@ const person: PersonRecord = {
 	places: [],
 	sourceParagraphs: [56],
 	paragraphs: [
-		'Farida Fahmy (b. 1940), actress, dancer and co-founder (along with Mahmoud Reda) of the Reda Dance Troupe, a group that adapted Egyptian folk dances to modern dance.'
+		'Farida Fahmy (b. 1940), actress, dancer and co-founder (along with Mahmoud Reda) of the Reda Dance Troupe, a group that adapted Egyptian folk dances to modern dance. Heshmat attended their performances, met with both artists, and drew inspiration from them for one of his most significant artistic achievements: his small figurines of dancers.'
 	]
 };
 
