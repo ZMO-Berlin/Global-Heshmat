@@ -17,10 +17,16 @@ const artwork: Artwork = {
 	images: [
 		{
 			src: 'budapest 1.jpg',
-			caption: 'Hassan Heshmat and his wife Zeinab Hegasy at the vernissage of his exhibition at the Museum of Applied Arts in Budapest, Hungary, 1958.'
+			caption: 'Hassan Heshmat and his wife Zeinab Hegasy at the vernissage of his exhibition at the Museum of Applied Arts in Budapest, Hungary, 1958. The handwriting reads: To Soheir and Sonja with our love. Mum and Dad together at the vernissage of the Budapest exhibition”.'
 		},
-		{ src: 'budapest 3.jpg' },
-		{ src: 'budapest 2.jpg' }
+		{
+			 src: 'budapest 3.jpg',
+			caption: 'Hassan Heshmat at the Museum of Applied Arts in Budapest, Hungary, 1958.'
+		 },
+		{
+			 src: 'budapest 2.jpg',
+			 caption: 'On the back of the photo, written by hand: “Place these photographs in a frame in front of Soheir and Sonja. With great appreciation and thanks”.'
+		}
 	]
 };
 
