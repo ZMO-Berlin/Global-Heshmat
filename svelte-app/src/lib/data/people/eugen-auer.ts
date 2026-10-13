@@ -7,7 +7,7 @@ const person: PersonRecord = {
 	places: ['Heliopolis', 'Memmelsdorf', 'Bamberg'],
 	sourceParagraphs: [24],
 	paragraphs: [
-		'Eugen Auer, General Manager of the Heliopolis Sheraton from 1985-87, organized the Rotary meetings at the hotel and thus got to know Hassan Heshmat. The two couples also met privately, and Heshmat gave him a white bust of Nefertiti as a present. Auer lives today in Memmelsdorf close to Bamberg.'
+		'Eugen Auer, General Manager of the Heliopolis Sheraton from 1985 to 1987, first met Hassan Heshmat at one of the monthly dinner parties organized by the Chaine des Rotisseurs and held at the hotel. On the occasion of Auer’s departure to take up a new position in Dubai, Heshmat presented him with a white bust of Nefertiti as a farewell gift. Eugen Auer currently lives in Memmelsdorf, near Bamberg.'
 	],
 	relatedEntries: ['artwork:11']
 };
