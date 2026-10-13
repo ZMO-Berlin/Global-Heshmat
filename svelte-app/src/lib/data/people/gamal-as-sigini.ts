@@ -14,7 +14,7 @@ const person: PersonRecord = {
 		{
 			label:
 				'Nadine Nour el Din, “The People’s Sculptor - The Porcelain Legacy of Hassan Heshmat”, Online Lecture, Leibniz-Zentrum Moderner Orient, 01 August 2025, Min. 7:22 - 7:32.',
-			url: 'https://www.youtube.com/watch?v=d5prOiBSJBk&t=22s', 	
+			url: 'https://www.youtube.com/watch?v=d5prOiBSJBk&t=22s', 
 		}
 	]
 };
