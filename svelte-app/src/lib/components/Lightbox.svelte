@@ -233,7 +233,7 @@
 		text-align: center;
 		color: rgb(var(--color-on-dark-rgb) / 0.7);
 		font-family: var(--font-display);
-		font-size: var(--text-md);
+		font-size: var(--text-lg);
 		font-style: bold;
 		line-height: var(--leading-snug);
 	}
