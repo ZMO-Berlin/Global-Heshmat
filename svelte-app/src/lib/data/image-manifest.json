@@ -2529,6 +2529,29 @@
 		},
 		"v": "91f82321"
 	},
+	"Papeterie Khodeir": {
+		"thumb": {
+			"width": 266,
+			"height": 400,
+			"bytes": 11968
+		},
+		"preview": {
+			"width": 435,
+			"height": 653,
+			"bytes": 25118
+		},
+		"web": {
+			"width": 435,
+			"height": 653,
+			"bytes": 32934
+		},
+		"full": {
+			"width": 435,
+			"height": 653,
+			"bytes": 32934
+		},
+		"v": "075a34a9"
+	},
 	"Pendant for Karin Haude": {
 		"thumb": {
 			"width": 300,
