@@ -233,9 +233,14 @@
 		text-align: center;
 		color: rgb(var(--color-on-dark-rgb) / 0.7);
 		font-family: var(--font-display);
-		font-size: var(--text-lg);
-		font-style: bold;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: bold;
 		line-height: var(--leading-snug);
+	}
+
+	.lightbox-caption :global(.media-caption) {
+		font-size: inherit;
 	}
 
 	.lightbox-counter {
