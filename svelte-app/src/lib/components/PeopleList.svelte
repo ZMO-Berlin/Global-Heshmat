@@ -55,7 +55,7 @@
 	}
 	.more {
 		color: var(--color-primary-text);
-		font-weight: var(--weight-semibold);
+		font-weight: normal;
 		white-space: nowrap;
 		text-underline-offset: 3px;
 	}
