@@ -232,7 +232,7 @@
 		min-width: 100%;
 		text-align: center;
 		color: rgb(var(--color-on-dark-rgb) / 0.7);
-		font-family: var(--font-display);
+		font-family: var(--font-body);
 		font-size: 20px;
 		font-style: normal;
 		font-weight: bold;
