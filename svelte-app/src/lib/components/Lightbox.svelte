@@ -234,7 +234,7 @@
 		color: rgb(var(--color-on-dark-rgb) / 0.7);
 		font-family: var(--font-display);
 		font-size: var(--text-md);
-		font-style: italic;
+		font-style: bold;
 		line-height: var(--leading-snug);
 	}
 
