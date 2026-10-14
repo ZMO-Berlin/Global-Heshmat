@@ -235,7 +235,7 @@
 		font-family: var(--font-body);
 		font-size: 20px;
 		font-style: normal;
-		font-weight: bold;
+		font-weight: normal;
 		line-height: var(--leading-snug);
 	}
 
