@@ -139,7 +139,7 @@ Typography establishes clear editorial hierarchy through two complementary typef
 
 ## Components
 
-- **Header**: Wordmark with italic gold emphasis, view switcher, and compact appeal action. On mobile, controls align to an exact 44px vertical bounding box.
+- **Header**: Wordmark with italic gold emphasis, view switcher, Trails and About pills, and compact appeal action. The italic subtitle appears only from 1360px, where it fits on one line; Trails (below 520px) and About (below 480px) move to the footer. On mobile, controls align to an exact 44px vertical bounding box.
 - **Collection Cards**: Fixed-height (280px) contain-fit figure on warm background matting, album thumbnails and a photo count, then the title and place.
 - **Legend**: Floating, collapsible translucent box at bottom-left of the map with dashed relocation indicator.
 - **Artwork Detail Sidebar**: Editorial article presentation with gold rule accent under title, gallery viewer, provenance badges, and expandable descriptions.

@@ -77,6 +77,7 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Shape-coded markers** — located (disc), to be found (ring), place of residence (diamond) and former location (dashed ring). Shape rather than hue carries the distinction: under tritanopia the located and residence colours measure ΔE 12.4, indistinguishable at marker size. `MARKER_SPECS` is the single source, so the map canvas, the legend and the list cannot drift apart
 - **Real-time search** — searches names, aliases, descriptions, places, captions and source labels; folds accents and Arabic vowel marks
 - **Sidebar detail view** — images, description, status tags, address, external links
+- **Trails** — reading sequences by theme and by place at `/trails/`, linked from the header (from the footer on phones, where the header has no room)
 - **Multi-image gallery** — thumbnail strip, prev/next navigation, image counter
 - **Full-screen lightbox** — keyboard navigation (arrow keys, Escape)
 - **YouTube video embeds** — inline in the sidebar
@@ -135,6 +136,8 @@ Four layers, all run in CI:
 3. Fill in the fields (see the template for documentation).
 4. Drop any images into `originals/`; `npm run dev` watches this folder and generates WebP derivatives automatically (see [Images](#images)).
 5. Done — `index.ts` auto-imports all artwork files via `import.meta.glob`, the next build emits a new `/artworks/<slug>/` page and adds it to `sitemap.xml`.
+
+To put the artwork in one or more themed trails, list their ids in `trails` (for example `trails: ['museums']`); the ids and titles are in `src/lib/data/trail-themes.ts`, and a typo fails `npm run check`.
 
 The slug is auto-derived from `name`. To pin a stable URL when renaming, set `slug: 'my-stable-slug'` explicitly. A build error is thrown if two artworks would resolve to the same slug.
 
@@ -250,6 +253,7 @@ Each artwork file exports a single object with these fields:
 | `videoFile`    | `string`                | No       | Filename of a self-hosted clip in `static/videos/`      |
 | `videoCaption` | `string`                | No       | Credit line shown beneath the local video               |
 | `movement`     | `ArtworkMovement`       | No       | Relocation data (from-coordinates, year)                |
+| `trails`       | `TrailThemeId[]`        | No       | Themed trails that list this entry (`trail-themes.ts`)  |
 
 Places of residence use a parallel schema in `src/lib/data/residences/` — the same identity and image fields, plus a `years` string, and no `status` or `movement`. See `residences/_template.ts`.
 
@@ -323,7 +327,7 @@ cd svelte-app && npm run validate
 
 The gallery offers **Entries**, **Photos** (grouped by notice), and **List**. Every card exposes its photograph count and album previews. Albums retain complete image proportions, a contact sheet and a keyboard-operated full-screen viewer. A photo URL uses a filename-derived identifier (or an explicit media `id`), so rearranging an album does not change its shared links. Returning to the collection restores the open list's scroll and originating focus.
 
-The **Works still to be found** dossier at `/missing/` brings together the 13 unlocated entries, existing documentation, recorded locations and a prefilled email contribution. Recorded coordinates are explicitly distinguished from a confirmed current location. No speculative locations or sources have been added.
+The **Works still to be found** dossier at `/missing/` brings together the unlocated entries, existing documentation, recorded locations and a prefilled email contribution. Recorded coordinates are explicitly distinguished from a confirmed current location. No speculative locations or sources have been added.
 
 Optional notice metadata in `src/lib/data/types.ts`: `displayTitle`, `siteName`, `district`, `aliases`, `coverImage`, `entryKind`, `locationPrecision`, `sources` (label, URL, checkedOn), and `creationPlace`. Media can include `id`, `alt`, `credit`, `date`, and `documentType`. Populate these only from documented evidence; existing source descriptions remain authoritative. Explicit slugs are permanent URLs and must not change with a title correction.
 
@@ -345,7 +349,7 @@ The Workbox worker is authored in `src/service-worker.ts`. HTML caches are tied 
 
 `npm run validate:data` blocks invalid IDs, slugs, coordinates, unsafe links/HTML, ambiguous media IDs, unresolved covers, invalid dates and inconsistent location claims. Every production build runs it. `npm run report:editorial` writes `editorial-report.json`; CI keeps this report as an artifact. Missing sources, precision, entity kinds, media credits/dates/rights/alt text and stale verification dates are a visible editorial backlog, not invented values or a reason to reject the existing corpus.
 
-Optional fields include `sources: [{ label, url?, checkedOn? }]`, `updatedOn: 'YYYY-MM-DD'`, `locationPrecision`, `entryKind` and `creationPlace`. Only a documented creation place is emitted as `locationCreated`; a mapped current location does not supply it. An institution emits `Place`, without crediting its building to the artist. Undocumented/approximate locations use a broader map zoom. This is framing, not an invented uncertainty radius.
+Optional fields include `sources: [{ label, url?, checkedOn? }]`, `updatedOn: 'YYYY-MM-DD'`, `locationPrecision`, `entryKind` and `creationPlace`. Only a documented creation place is emitted as `locationCreated`; a mapped current location does not supply it. An institution emits `Place`, without crediting its building to the artist. Undocumented/approximate locations use a broader map zoom. This is framing, not an invented uncertainty radius. On a record page, the evidence panel shows precision, sources and the update date only when they are documented, plus the unconfirmed-location note for works still to be found; missing values stay in the editorial report instead of appearing as placeholders.
 
 Images support durable `id`, `alt`, `credit`, `date` (year, month or full date), `documentType`, `sourceUrl`, `rightsHolder` and `rights`. Existing filename-based photo links continue to resolve after an ID is assigned. Do not rename published record slugs. Shared cover and caption helpers keep the gallery, comparison, lightbox and SEO consistent.
 

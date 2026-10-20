@@ -37,6 +37,8 @@
  *            HTML is allowed (<em>, <a href="">, …).
  *  image         (optional) photo filename placed in originals/.
  *  imageCaption  (optional) credit line for that photo.
+ *  trails        (optional) themed trails that include this place, as ids
+ *                from src/lib/data/trail-themes.ts, e.g. ['east-west'].
  *
  * ============================================================
  *  FILLED EXAMPLE (copy and adapt)
