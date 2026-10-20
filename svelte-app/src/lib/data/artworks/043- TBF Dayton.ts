@@ -13,7 +13,7 @@ const artwork: Artwork = {
 	city: 'Dayton (Ohio)',
 	status: 'search',
 	address: 'unknown',
-	desc: 'A ceramic plaque (approx. 3.5 square metres) is expected to be located in Dayton, Ohio.'
+	desc: 'A ceramic plaque (approx. 3.5 square metres) might be located in Dayton, Ohio.'
 	
 
 	
