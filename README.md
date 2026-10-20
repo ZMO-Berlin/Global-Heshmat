@@ -54,7 +54,7 @@ A project by the [Leibniz-Zentrum Moderner Orient (ZMO)](http://www.zmo.de), Ber
 | `/people/<slug>/`     | Prerendered profile with its source passages and related records |
 | `/missing/`           | Dedicated dossier of unlocated works |
 | `/fieldbook/`         | Device-local selections, exports and offline album management |
-| `/trails/`            | Place-based reading sequences |
+| `/trails/`            | Thematic and place-based reading sequences |
 | `/collection.json`    | Versioned public collection metadata and media-rights statements |
 | `/sitemap.xml`        | Auto-generated sitemap listing the home page and every artwork, residence and People URL |
 | `/robots.txt`         | Allows all crawlers; points to the sitemap                                         |
@@ -339,7 +339,7 @@ Ordinary album navigation explicitly caches its canonical HTML after service-wor
 
 The Workbox worker is authored in `src/service-worker.ts`. HTML caches are tied to a content-derived build ID (it includes the git revision, which is compiled into the client) and retired on activation of a different build; old HTML is never served against a new app shell. Everything else is keyed by content and survives a deployment: hashed `/_app/immutable/` files (including the map renderer and the RTL plugin) share one cache, images are cached by their `?v=` version, and saved albums keep their images in one shared cache. On activation the new worker re-fetches each saved album's page for its own build, so albums stay available offline across updates; an image whose content changed reads as missing until the album is saved again, which downloads only what changed. The shell includes first-party fonts. An unseen uncached record has an explicit offline fallback.
 
-**Place trails** currently offer geographic reading sequences for Selb and 10th of Ramadan City based on existing records. They are not verified walking routes. **Compare two images** preserves dates, captions and credits where documented without asserting chronology.
+**Trails** offer reading sequences by theme (industry and everyday life, state and army commissions, East and West, faith and remembrance, museums) and by place (Selb, 10th of Ramadan City). An artwork joins a themed trail through its `trails` field (ids in `src/lib/data/trail-themes.ts`). They are not verified walking routes. **Compare two images** preserves dates, captions and credits where documented without asserting chronology.
 
 ## Editorial validation and evidence
 
