@@ -18,7 +18,7 @@ const residence: Residence = {
 		{ src: 'The Gemischtwarenladen, Ahornweg 6.jpg', caption: 'The Gemischtwarenladen, Ahornweg 6, Selb, Bavaria (Courtesy of Karin Haude)'}, 
 		{ src: 'Selb_Haus_II.jpeg', caption: 'Hassan Heshmat’s Accommodation in Selb, Bavaria, 2026' },
 		{ src: 'The room in Selb, Ahornweg 6.jpg', caption: 'The room in which Hassan Heshmat lived'},
-		{ src: 'Collected Karin Haude.jpg', caption: 'Karin Haude`s collected artworks by Hassan Heshamt'},
+		{ src: 'Collected Karin Haude.jpg', caption: 'Karin Haude’s collected artworks by Hassan Heshmat'},
 		{ src: 'Pendant for Karin Haude.jpg', caption: 'Pendant for Karin Haude'},
 		{ src: 'for Karin_from H Heshmat.jpg', caption: 'Pendant for Karin Haude, by Hassan Heshmat'},
 		{ src: 'Familienalbum mit Handschrift Fritz Haude.jpg', caption: 'Family album with handwriting of Fritz Haude (Courtesy of Karin Haude)'},

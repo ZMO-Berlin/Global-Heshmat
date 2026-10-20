@@ -12,7 +12,7 @@ const artwork: Artwork = {
     status: 'located',
     trails: ['industry-everyday'],
     address: '3 Al-Shawarbi Street',
-    desc: 'Papeterie Khodeir, founded in 1905 and still operating today, sold statues by Hassan Heshmat. We know this from Prof. Emad Abu Ghazi who remembers that "both my immediate and extended families regularly purchased Hassan Heshmat’s small artworks, which were sold at the Khodeir bookstore". The company writes: "During the decade of the 1930s, the Khodeir pen that was manufactured in Germany, was introduced in Egypt, Sudan, El Sham, Iraq & Mecca“.',
+    desc: 'Papeterie Khodeir, founded in 1905 and still operating today, sold statues by Hassan Heshmat. We know this from Prof. Emad Abu Ghazi who remembers that "both my immediate and extended families regularly purchased Hassan Heshmat’s small artworks, which were sold at the Khodeir bookstore". The company writes: "During the decade of the 1930s, the Khodeir pen that was manufactured in Germany, was introduced in Egypt, Sudan, El Sham, Iraq & Mecca”.',
     images: [
         {
             src: 'Papeterie Khodeir.jpg',

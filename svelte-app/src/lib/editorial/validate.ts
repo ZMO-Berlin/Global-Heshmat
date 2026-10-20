@@ -9,6 +9,7 @@ import {
 	type Entry
 } from '$lib/utils/collection';
 import type { Person, SourceReference } from '$lib/data/types';
+import { typographyIssues } from '$lib/utils/typography';
 export interface DataIssue {
 	record: string;
 	severity: 'error' | 'warning';
@@ -74,6 +75,7 @@ export function validatePerson(
 			if (tracking) issue(`Remove the tracking parameter "${tracking}" from ${url}`);
 		}
 	for (const source of person.sources) checkSource(source, issue, today);
+	for (const problem of typographyIssues(person)) issue(`Typography — ${problem}`, 'warning');
 	return issues;
 }
 export function validateEntry(
@@ -140,6 +142,8 @@ export function validateEntry(
 	if ('links' in item)
 		for (const link of item.links ?? []) checkUrl(link.url, 'external URL', issue);
 	if ('video' in item && item.video && !safeUrl(item.video)) issue('Unsafe video URL');
+	// Straight quotes and backtick apostrophes are converted at load; these need an editor.
+	for (const problem of typographyIssues(item)) issue(`Typography — ${problem}`, 'warning');
 	const eventIds = new Set();
 	for (const event of item.events ?? []) {
 		if (!event.id.trim() || eventIds.has(event.id))
