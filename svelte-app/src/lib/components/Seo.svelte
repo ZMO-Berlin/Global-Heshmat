@@ -135,7 +135,7 @@
 	<meta name="author" content="ZMO Berlin" />
 	<meta
 		name="keywords"
-		content="Hassan Heshmat, Egyptian sculptor, public art, sculpture map, ZMO, art history, Egypt, ceramics, porcelain"
+		content="Hassan Heshmat, Egyptian sculptor, Egyptian modernism, modern Egyptian art, public art, sculpture map, cultural diplomacy, Cold War, Rosenthal, Selb, ZMO, art history, Egypt, ceramics, porcelain"
 	/>
 	<meta name="robots" content="index, follow" />
 	<meta name="theme-color" content="#16192e" />

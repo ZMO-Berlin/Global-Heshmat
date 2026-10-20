@@ -12,6 +12,9 @@
 		<strong>{@html about.intro}</strong><br />{about.subtitle}
 	</p>
 
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	<p>{@html about.context}</p>
+
 	{#each about.paragraphs as paragraph, i (i)}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		<p>{@html paragraph}</p>
