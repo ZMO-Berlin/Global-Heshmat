@@ -12,8 +12,9 @@ const artwork: Artwork = {
 	country: 'Hungary',
 	city: 'Budapest',
 	status: 'search',
+	trails: ['east-west', 'museums'],
 	address: 'Üllői út 33-37, 1092 Budapest',
-	desc: 'The Iparművészeti Múzeum (Museum of Applied Arts) in Budapest once housed works by Hassan Heshmat. Currently, there is no information available and the works whereabouts are unknown.',
+	desc: 'The Iparművészeti Múzeum (Museum of Applied Arts) in Budapest once housed works by Hassan Heshmat. In his autobiography, Heshmat devotes half a page to his exhibition there. Currently, there is no information available and the works whereabouts are unknown.',
 	images: [
 		{
 			src: 'budapest 1.jpg',

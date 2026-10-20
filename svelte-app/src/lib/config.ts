@@ -12,7 +12,7 @@ export const SITE_NAME = 'Global Heshmat';
 export const SITE_TAGLINE = 'Following Hassan Heshmat around the world';
 
 export const SITE_DESCRIPTION =
-	'Research platform and map of the public artworks of Egyptian modernist sculptor Hassan Heshmat (1920–2006) across Egypt, Europe and beyond. By ZMO Berlin.';
+	'Research platform and interactive map of the public artworks of Egyptian modernist sculptor Hassan Heshmat (1920–2006) across Egypt, Europe and beyond. By ZMO Berlin.';
 
 export const PUBLISHER = {
 	name: 'Leibniz-Zentrum Moderner Orient (ZMO)',

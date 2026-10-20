@@ -3,6 +3,7 @@ import { readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { artworks } from './artworks';
 import { residences } from './residences';
+import { themeTrails, placeTrails } from './trails';
 
 /**
  * Cross-checks the hand-edited data files against the files actually on
@@ -178,6 +179,26 @@ describe('identity and coordinates', () => {
 			expect(a.movement.fromLat, `${a.name} fromLat`).toBeLessThanOrEqual(90);
 			expect(a.movement.fromLng, `${a.name} fromLng`).toBeGreaterThanOrEqual(-180);
 			expect(a.movement.fromLng, `${a.name} fromLng`).toBeLessThanOrEqual(180);
+		}
+	});
+});
+
+describe('trails', () => {
+	it('trail ids are unique (they are the page anchors)', () => {
+		const ids = [...themeTrails, ...placeTrails].map((trail) => trail.id);
+		expect(new Set(ids).size).toBe(ids.length);
+	});
+
+	it('every trail has at least one entry', () => {
+		for (const trail of [...themeTrails, ...placeTrails]) {
+			expect(trail.entries.length, trail.id).toBeGreaterThan(0);
+		}
+	});
+
+	it('no entry lists the same theme twice', () => {
+		for (const item of allItems) {
+			const trails = item.trails ?? [];
+			expect(new Set(trails).size, item.name).toBe(trails.length);
 		}
 	});
 });

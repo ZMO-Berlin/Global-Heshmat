@@ -11,6 +11,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Cairo (Ain Shams)',
 	status: 'located',
+	trails: ['state-army'],
 	address: 'Ain Shams Sharkeya, Ain Shams, Cairo Governorate 4630001',
 	desc: 'The Metro Station hosts the ‘Statue of Love’.',
 	image: 'Entrance Metro Station Ain Shams_E_Gothe.jpg',

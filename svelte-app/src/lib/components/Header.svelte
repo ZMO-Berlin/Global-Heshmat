@@ -26,6 +26,7 @@
 	<div class="header-right">
 		<!-- Shared views retain the visitor's active filters. -->
 		<ViewSwitcher variant="header" />
+		<a class="header-btn trails-link" href={resolve('/trails')}>Trails</a>
 		<button
 			disabled={!store.ready}
 			class="header-btn about-button"
@@ -41,7 +42,13 @@
 </header>
 
 <style>
-	/* About stays visible in the fixed footer on phones, leaving room for the CTA. */
+	/* Trails and About move to the fixed footer on phones, leaving room for the
+	   CTA; Trails goes first so the wordmark is not clipped. */
+	@media (max-width: 520px) {
+		.header-right .trails-link {
+			display: none;
+		}
+	}
 	@media (max-width: 480px) {
 		.about-button {
 			display: none;
@@ -61,7 +68,7 @@
 		text-align: start;
 		min-height: 44px;
 	}
-	.header-btn-cta {
+	a.header-btn {
 		display: flex;
 		align-items: center;
 		text-decoration: none;
@@ -76,7 +83,9 @@
 		color: rgb(var(--color-header-text-rgb) / 0.65);
 		margin-left: var(--space-1);
 	}
-	@media (max-width: 768px) {
+	/* The subtitle only appears where it fits on one line beside the buttons;
+	   wrapped, it overflows the fixed header height. */
+	@media (max-width: 1359px) {
 		.header-subtitle {
 			display: none;
 		}

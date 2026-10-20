@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { aboutContent as about } from '$lib/data/about';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import logo from '$lib/assets/logo-zmo-white-small.webp';
@@ -13,8 +14,11 @@
 		aria-label="Zentrum Moderner Orient"
 		><img src={logo} alt="ZMO" width="30" height="30" /><span>Leibniz-Zentrum Moderner Orient</span
 		></a
-	><button disabled={!store.ready} onclick={() => (store.aboutOpen = true)}
-		>About &amp; credits</button
+	><span class="footer-links"
+		><a class="trails-link" href={resolve('/trails')}>Trails</a><button
+			disabled={!store.ready}
+			onclick={() => (store.aboutOpen = true)}>About &amp; credits</button
+		></span
 	>
 </footer>
 
@@ -54,12 +58,27 @@
 		background: none;
 		cursor: pointer;
 	}
+	.footer-links {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+	}
+	/* The header carries the Trails link until it hands it over on phones. */
+	.trails-link {
+		display: none;
+		padding: var(--space-2);
+	}
 	@media (max-width: 600px) {
 		.site-footer {
 			padding: 0 var(--space-3);
 		}
 		a span {
 			display: none;
+		}
+	}
+	@media (max-width: 520px) {
+		.trails-link {
+			display: flex;
 		}
 	}
 </style>

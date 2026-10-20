@@ -39,7 +39,7 @@
 	<a href={resolve('/fieldbook')}
 		><BookMarked size={16} aria-hidden="true" />Fieldbook ({fieldbook.keys.length})</a
 	>
-	<a href={resolve('/trails')}><Route size={16} aria-hidden="true" />Place trails</a>
+	<a href={resolve('/trails')}><Route size={16} aria-hidden="true" />Trails</a>
 	<!-- A disclosure, not a link: it acts on the entries currently shown. -->
 	<details class="save" bind:this={menu}>
 		<summary bind:this={summary}

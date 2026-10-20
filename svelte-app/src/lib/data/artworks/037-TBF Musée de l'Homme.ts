@@ -12,6 +12,7 @@ const artwork: Artwork = {
 	country: 'France',
 	city: 'Paris',
 	status: 'search',
+	trails: ['east-west', 'museums'],
 	address: '17 Pl. du Trocadéro et du 11 Novembre, 75116 Paris',
 	desc: 'The Musée de l`Homme in Paris once housed works by Hassan Heshmat.',
     image: 'Musée_de_l`Homme.jpg',

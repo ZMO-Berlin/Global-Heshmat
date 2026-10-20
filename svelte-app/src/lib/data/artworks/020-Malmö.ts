@@ -12,6 +12,7 @@ const artwork: Artwork = {
 	country: 'Sweden',
 	city: 'Malmö',
 	status: 'located',
+	trails: ['east-west'],
 	address: 'Mobäcksgatan 11-25, 216 24, Malmö',
 	desc: 'Fountain, Malmö, 1985',
 	image: 'Två_kvinnor_av_Hassan_Heshmat_Malmö.jpg',

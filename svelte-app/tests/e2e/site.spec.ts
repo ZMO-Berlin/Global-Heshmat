@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
+import { trailThemes } from '../../src/lib/data/trail-themes';
 const corpus: {
 	country: string;
 	status?: string;
@@ -154,6 +155,31 @@ test('missing works dossier links documentation and a prefilled contribution', a
 	await page.getByRole('link', { name: 'Back to missing works', exact: true }).click();
 	await expect(page).toHaveURL(/\/missing\/?$/);
 	await accessible(page);
+});
+test('trails link leads to every thematic trail and stays reachable on phones', async ({
+	page
+}) => {
+	await page.goto('/collection/');
+	await page.locator('header').getByRole('link', { name: 'Trails', exact: true }).click();
+	await expect(page).toHaveURL(/\/trails\/?$/);
+	for (const theme of trailThemes) {
+		await expect(page.getByRole('heading', { name: theme.title, exact: true })).toBeVisible();
+	}
+	await expect(page.getByRole('heading', { name: 'Places', exact: true })).toBeVisible();
+	const last = trailThemes[trailThemes.length - 1];
+	await page
+		.getByRole('navigation', { name: 'Trails on this page' })
+		.getByRole('link', { name: last.title, exact: true })
+		.click();
+	await expect(page).toHaveURL(new RegExp(`#${last.id}$`));
+	await accessible(page);
+	await page.setViewportSize({ width: 390, height: 844 });
+	await expect(
+		page.locator('header').getByRole('link', { name: 'Trails', exact: true })
+	).toBeHidden();
+	await expect(
+		page.locator('footer').getByRole('link', { name: 'Trails', exact: true })
+	).toBeVisible();
 });
 test('mobile layout, controls and detail remain accessible', async ({ page }) => {
 	await page.setViewportSize({ width: 390, height: 844 });

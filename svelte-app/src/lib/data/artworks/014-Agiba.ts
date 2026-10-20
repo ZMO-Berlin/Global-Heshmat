@@ -13,6 +13,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Cairo (Nasr City)',
 	status: 'located',
+	trails: ['industry-everyday'],
 	address: '1 El Barameka Street, Al Hadiqah Ad Dawleyah, Nasr City, Cairo Governorate 4441404',
 	desc: '4.5 metres made of stone with yellow and red brass. This calligraphy from 1995 with the name of the petroleum company Agiba was the last work of the artist when writing his autobiography published in 1997.',
 	images: [{src: "Agiba Kalligraphie_family archive_Sonia.jpg",

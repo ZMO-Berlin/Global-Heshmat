@@ -138,7 +138,7 @@
 			</ul>
 		{:else}<p>
 				Your fieldbook is empty. <a href={resolve('/collection')}>Browse the collection</a> or
-				explore <a href={resolve('/trails')}>place trails</a>.
+				explore <a href={resolve('/trails')}>trails</a>.
 			</p>{/if}
 		<p role="status">{message || fieldbook.storageMessage}</p>
 	</div>

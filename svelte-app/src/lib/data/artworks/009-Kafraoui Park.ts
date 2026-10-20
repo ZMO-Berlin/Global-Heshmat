@@ -9,6 +9,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: '10th of Ramadan City',
 	status: 'located',
+	trails: ['industry-everyday'],
 	address: '10th of Ramadan City 1, Al-Sharqia Governorate 7063150',
 	desc: 'Louis Bishara donated a sculpture park for the industrial city with twelve of Heshmat’s works and a small gallery in the public Kafraoui Park, named after Hassaballah Al-Kafraoui (1930-2021), housing minister from 1977 to 1993. Under his auspices fell the first generation of new cities around Cairo, like 15th of May City or 10th of Ramadan City itself.',
 	images: [{src: "Bäuerin_Kafraoui Park c_E_Gothe.jpg",
