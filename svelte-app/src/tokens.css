@@ -220,8 +220,24 @@
 	}
 }
 
+/* Phones and tablets: the tab bar replaces the 48px footer. */
+@media (max-width: 1023px) {
+	:root {
+		--footer-height: 60px;
+	}
+}
+/* Phones: one filter row (search, Browse, Filters); the facets open below it. */
 @media (max-width: 768px) {
 	:root {
-		--filter-height: 108px;
+		--filter-height: 60px;
+	}
+}
+/* Phones held sideways: every bar slims so the page keeps over 60% of the
+   height; controls stay 44px. */
+@media (max-width: 1023px) and (max-height: 500px) {
+	:root {
+		--header-height: 52px;
+		--filter-height: 52px;
+		--footer-height: 48px;
 	}
 }

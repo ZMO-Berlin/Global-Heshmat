@@ -173,23 +173,51 @@ test('trails link leads to every thematic trail and stays reachable on phones', 
 		.click();
 	await expect(page).toHaveURL(new RegExp(`#${last.id}$`));
 	await accessible(page);
+	// On phones the same menu becomes a tab bar along the bottom edge.
 	await page.setViewportSize({ width: 390, height: 844 });
-	await expect(
-		page.locator('header').getByRole('link', { name: 'Trails', exact: true })
-	).toBeHidden();
-	await expect(
-		page.locator('footer').getByRole('link', { name: 'Trails', exact: true })
-	).toBeVisible();
+	const tab = page
+		.getByRole('navigation', { name: 'Main' })
+		.getByRole('link', { name: 'Trails', exact: true });
+	await expect(tab).toBeVisible();
+	await expect(tab).toHaveAttribute('aria-current', 'page');
+	const box = (await tab.boundingBox())!;
+	expect(box.y + box.height).toBeGreaterThan(844 - 70);
+	expect(box.height).toBeGreaterThanOrEqual(44);
+});
+test('the fieldbook is one tap away and counts additions on every screen size', async ({
+	page
+}) => {
+	await page.goto(museum);
+	await page.getByRole('button', { name: 'Add to fieldbook' }).click();
+	const nav = page.getByRole('navigation', { name: 'Main' });
+	// The count is part of the link's accessible name, in the header menu…
+	await expect(nav.getByRole('link', { name: 'Fieldbook, 1 saved', exact: true })).toBeVisible();
+	// …and in the phone tab bar.
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.goto('/');
+	const tab = nav.getByRole('link', { name: 'Fieldbook, 1 saved', exact: true });
+	await expect(tab).toBeVisible();
+	await tab.click();
+	await expect(page).toHaveURL(/\/fieldbook\/?$/);
+	await expect(page.getByText('1 selected entry ·')).toBeVisible();
+	await accessible(page);
 });
 test('mobile layout, controls and detail remain accessible', async ({ page }) => {
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.goto('/collection/');
 	expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+	// Phones fold the facets behind one Filters button in a single-row bar.
+	const filters = page.getByRole('button', { name: 'Filters', exact: true });
+	await filters.click();
+	await expect(filters).toHaveAttribute('aria-expanded', 'true');
 	for (const name of ['Country', 'Status', 'Entry type', 'Search the collection']) {
 		const box = await page.getByRole('combobox', { name, exact: true }).boundingBox();
 		expect(box!.height).toBeGreaterThanOrEqual(44);
 	}
 	await accessible(page);
+	await page.keyboard.press('Escape');
+	await expect(filters).toHaveAttribute('aria-expanded', 'false');
+	await expect(filters).toBeFocused();
 	await page.locator('.card-figure').first().click();
 	await accessible(page);
 });

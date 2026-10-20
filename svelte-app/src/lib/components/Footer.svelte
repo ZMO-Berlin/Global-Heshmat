@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import { aboutContent as about } from '$lib/data/about';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import logo from '$lib/assets/logo-zmo-white-small.webp';
 	const store = getBrowseStore();
 </script>
 
+<!-- Desktop only: below 1024px the tab bar takes this place, and the ZMO
+     credit moves into the About window. -->
 <footer class="site-footer">
 	<a
 		href={about.impressum.website}
@@ -14,11 +15,8 @@
 		aria-label="Zentrum Moderner Orient"
 		><img src={logo} alt="ZMO" width="30" height="30" /><span>Leibniz-Zentrum Moderner Orient</span
 		></a
-	><span class="footer-links"
-		><a class="trails-link" href={resolve('/trails')}>Trails</a><button
-			disabled={!store.ready}
-			onclick={() => (store.aboutOpen = true)}>About &amp; credits</button
-		></span
+	><button disabled={!store.ready} onclick={() => (store.aboutOpen = true)}
+		>About &amp; credits</button
 	>
 </footer>
 
@@ -58,27 +56,9 @@
 		background: none;
 		cursor: pointer;
 	}
-	.footer-links {
-		display: flex;
-		align-items: center;
-		gap: var(--space-2);
-	}
-	/* The header carries the Trails link until it hands it over on phones. */
-	.trails-link {
-		display: none;
-		padding: var(--space-2);
-	}
-	@media (max-width: 600px) {
+	@media (max-width: 1023px) {
 		.site-footer {
-			padding: 0 var(--space-3);
-		}
-		a span {
 			display: none;
-		}
-	}
-	@media (max-width: 520px) {
-		.trails-link {
-			display: flex;
 		}
 	}
 </style>

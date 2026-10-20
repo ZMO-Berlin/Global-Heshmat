@@ -73,7 +73,7 @@
 						aria-label="Show image {i + 1} of {images.length}: {img.caption || name}"
 						onclick={() => (current = i)}
 					>
-						<MediaImage src={img.src} alt="" sizes="120px" />
+						<MediaImage src={img.src} alt="" sizes="120px" low />
 					</button>
 				{/each}
 			</div>

@@ -111,6 +111,9 @@
  *     - Can include HTML for formatting: <em>italic</em>, <strong>bold</strong>,
  *       <a href="https://...">links</a>.
  *     - Keep it concise but informative — a short paragraph is ideal.
+ *     - Type quotes and apostrophes however is easiest (' or " are fine):
+ *       the site shows typographic ones (l’Homme, “Love”). Image
+ *       filenames are not converted: avoid quotes and backticks in them.
  *
  *  5. MOVEMENT
  *     - Only use if the artwork was physically moved from one location to another.

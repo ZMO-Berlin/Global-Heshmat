@@ -71,13 +71,14 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Three artwork marker types** — located (teal), to-be-found (orange), ghost markers for relocated artworks (dashed outline)
 - **Relocation visualisation** — dashed lines connecting original and current locations
 - **Places of residence** — blue diamond markers for where Heshmat lived and worked; they cluster with nearby artworks, and a cluster that contains one carries a diamond on its rim
-- **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs
+- **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs. On phones the bar is one row: search, plus a Filters button that shows how many filters are active and opens the facets below
 - **Three ways to read the collection** — the map, a photo grid at `/collection/`, and a side list, switchable from any of them. The grid also exposes works that overlap at world-map scale, especially around Cairo
 - **Browsable collection index** — a grouped, filter-aware text list of every entry, opened with Browse on the map. It is also the site's internal link graph: the collection index carries real links to every entry
 - **Shape-coded markers** — located (disc), to be found (ring), place of residence (diamond) and former location (dashed ring). Shape rather than hue carries the distinction: under tritanopia the located and residence colours measure ΔE 12.4, indistinguishable at marker size. `MARKER_SPECS` is the single source, so the map canvas, the legend and the list cannot drift apart
 - **Real-time search** — searches names, aliases, descriptions, places, captions and source labels; folds accents and Arabic vowel marks
 - **Sidebar detail view** — images, description, status tags, address, external links
-- **Trails** — reading sequences by theme and by place at `/trails/`, linked from the header (from the footer on phones, where the header has no room)
+- **One menu at every size** — Map, Gallery, List, People, Trails and Fieldbook. Desktop shows them in the header (views as icons below 1180px); phones and tablets (below 1024px) get the same items in a bottom tab bar that replaces the footer. It is one `<nav>` (`SiteNav.svelte`) styled two ways, so the two stay in step and hydrate once. The Fieldbook link carries a live count of saved entries. Items and their current state come from `src/lib/utils/navigation.ts`
+- **Trails** — reading sequences by theme and by place at `/trails/`
 - **Multi-image gallery** — thumbnail strip, prev/next navigation, image counter
 - **Full-screen lightbox** — keyboard navigation (arrow keys, Escape)
 - **YouTube video embeds** — inline in the sidebar
@@ -348,6 +349,8 @@ The Workbox worker is authored in `src/service-worker.ts`. HTML caches are tied 
 ## Editorial validation and evidence
 
 `npm run validate:data` blocks invalid IDs, slugs, coordinates, unsafe links/HTML, ambiguous media IDs, unresolved covers, invalid dates and inconsistent location claims. Every production build runs it. `npm run report:editorial` writes `editorial-report.json`; CI keeps this report as an artifact. Missing sources, precision, entity kinds, media credits/dates/rights/alt text and stale verification dates are a visible editorial backlog, not invented values or a reason to reject the existing corpus.
+
+**Typography.** Editors may type straight quotes, or a backtick for an apostrophe: prose fields (names, descriptions, captions, link labels, People passages and notes) are converted to typographic quotes when the data loads (`src/lib/utils/typography.ts`), so every surface, from cards to search, SEO and exports, shows `l’Homme` and “quotes”. HTML tags are left untouched, and slugs cannot change because `slugify()` maps every quote to the same hyphen. What a converter cannot settle is reported as an editorial warning prefixed `Typography —`: a quote facing the wrong way, a quotation never closed, a caption that is a filename, or a misspelt artist name. German „…“ quotation is left as written.
 
 Optional fields include `sources: [{ label, url?, checkedOn? }]`, `updatedOn: 'YYYY-MM-DD'`, `locationPrecision`, `entryKind` and `creationPlace`. Only a documented creation place is emitted as `locationCreated`; a mapped current location does not supply it. An institution emits `Place`, without crediting its building to the artist. Undocumented/approximate locations use a broader map zoom. This is framing, not an invented uncertainty radius. On a record page, the evidence panel shows precision, sources and the update date only when they are documented, plus the unconfirmed-location note for works still to be found; missing values stay in the editorial report instead of appearing as placeholders.
 

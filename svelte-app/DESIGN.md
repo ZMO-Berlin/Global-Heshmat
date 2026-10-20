@@ -118,7 +118,7 @@ Typography establishes clear editorial hierarchy through two complementary typef
 
 ## Layout
 
-- **Fixed Chrome Receding**: Header (68px), Filter Bar (60px; two rows, 108px, at 768px and below), and Footer (48px) frame the central canvas with light ambient borders, avoiding heavy visual weight.
+- **Fixed Chrome Receding**: Header (68px), Filter Bar (60px, one row at every width) and Footer (48px, desktop) or Tab Bar (60px, below 1024px) frame the central canvas with light ambient borders, avoiding heavy visual weight. Phones held sideways (height 500px or less) slim them to 52, 52 and 48px. All fixed layers position themselves from the `--header-height`, `--filter-height` and `--footer-height` tokens.
 - **Map Viewport**: Full-bleed spatial presentation where markers and vector tiles command attention.
 - **Drawer Panels**: The Sidebar (460px desktop, full-width mobile) slides smoothly over the map without jarring layout shifts.
 - **Grid Layout**: Responsive multi-column grid for `/collection` adapting from 1 column on phones to 4 columns on large displays.
@@ -139,7 +139,12 @@ Typography establishes clear editorial hierarchy through two complementary typef
 
 ## Components
 
-- **Header**: Wordmark with italic gold emphasis, view switcher, Trails and About pills, and compact appeal action. The italic subtitle appears only from 1360px, where it fits on one line; Trails (below 520px) and About (below 480px) move to the footer. On mobile, controls align to an exact 44px vertical bounding box.
+- **Header**: Wordmark with italic gold emphasis, the main menu (desktop), About and the appeal action. The italic subtitle appears only from 1500px, where it fits on one line beside the full menu. Below 1024px the header keeps the full wordmark, About and the appeal. Pills are 36px under a mouse and 44px on touch screens.
+- **Main menu (desktop, 1024px and up)**: two pill groups on the navy header: the views (Map, Gallery, List, People; icons with tooltips below 1180px) and the research tools (Trails, Fieldbook), which keep their words because their icons explain less. The current destination takes the accent-tinted fill.
+- **Tab Bar (below 1024px)**: the same destinations minus List (a mode inside the gallery), in a navy bar within thumb reach that replaces the footer. It is the header menu itself, restyled below 1024px, so the two never drift apart. The current tab has a short gold rule on the top edge, a gold icon and an ivory label. Phones held sideways set icon and label side by side. The ZMO credit moves into the About window.
+- **Fieldbook count**: a gold pill with ink numerals on the Fieldbook link (inline in the header, on the icon corner in the tab bar). It bumps once when an entry is added, never on page load, and not at all under reduced motion; the number is part of the link's accessible name.
+- **Filter Bar on phones**: search, Browse (map only) and a Filters button with a count of active facets; the facets open below as a two-column sheet, closed by Escape or a tap outside.
+- **Thumbnail strips** (album contact sheets, card previews) load at low fetch priority, so on phones they never compete with the main photo, the page’s largest paint.
 - **Collection Cards**: Fixed-height (280px) contain-fit figure on warm background matting, album thumbnails and a photo count, then the title and place.
 - **Legend**: Floating, collapsible translucent box at bottom-left of the map with dashed relocation indicator.
 - **Artwork Detail Sidebar**: Editorial article presentation with gold rule accent under title, gallery viewer, provenance badges, and expandable descriptions.
