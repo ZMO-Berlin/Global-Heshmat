@@ -63,7 +63,7 @@
 			>{about.impressum.ideaResearch.name}</a
 		>, {about.impressum.ideaResearch.affiliation}<br />
 		Configuration:<br />
-		{#each about.impressum.configuration as person}
+		{#each about.impressum.configuration as person (person)}
 			{person}<br />
 		{/each}
 		Development:
