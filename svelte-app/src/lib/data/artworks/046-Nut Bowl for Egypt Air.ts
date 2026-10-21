@@ -2,7 +2,7 @@ import type { Artwork } from '../types';
 
 const artwork: Artwork = {
 
-    id: 44,
+    id: 46,
     slug: "nut-bowl-for-egypt-air",
     name: 'Nut Bowl for Egypt Air',
     lat: 30.120251,  
