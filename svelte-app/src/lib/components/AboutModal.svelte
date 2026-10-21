@@ -2,6 +2,7 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { aboutContent as about } from '$lib/data/about';
+	import zmoLogo from '$lib/assets/logo-zmo-small.webp';
 
 	const store = getBrowseStore();
 </script>
@@ -11,6 +12,9 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		<strong>{@html about.intro}</strong><br />{about.subtitle}
 	</p>
+
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	<p>{@html about.context}</p>
 
 	{#each about.paragraphs as paragraph, i (i)}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -38,6 +42,21 @@
 	</div>
 
 	<div class="impressum">
+		<!-- The ZMO credit lives here on phones and tablets, where the tab bar
+		     replaces the footer that carries it on desktop. -->
+		<a
+			class="zmo-logo"
+			href={about.impressum.website}
+			target="_blank"
+			rel="noopener noreferrer external"
+			><img
+				src={zmoLogo}
+				alt="Leibniz-Zentrum Moderner Orient (ZMO)"
+				width="80"
+				height="74"
+				loading="lazy"
+			/></a
+		>
 		<strong>Impressum</strong><br />
 		Idea &amp; Research:
 		<a href={about.impressum.ideaResearch.url} target="_blank" rel="noopener noreferrer external"
@@ -55,3 +74,14 @@
 		{about.impressum.thanks}
 	</div>
 </Modal>
+
+<style>
+	.zmo-logo {
+		display: block;
+		width: fit-content;
+		margin-bottom: var(--space-3);
+	}
+	.zmo-logo img {
+		display: block;
+	}
+</style>

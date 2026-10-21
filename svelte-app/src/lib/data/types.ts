@@ -1,5 +1,6 @@
 import type { Indexed } from '$lib/utils/build-index';
 import type { PeopleGroupId } from './people/_groups';
+import type { TrailThemeId } from './trail-themes';
 
 export interface ArtworkLink {
 	label: string;
@@ -46,6 +47,8 @@ export interface DocumentaryMetadata {
 	locationPrecision?: 'exact' | 'approximate' | 'city' | 'last-known';
 	sources?: SourceReference[];
 	creationPlace?: { name: string; lat?: number; lng?: number };
+	/** Thematic trails this entry belongs to (ids from trail-themes.ts). */
+	trails?: TrailThemeId[];
 }
 
 export interface ArtworkMovement {

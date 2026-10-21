@@ -54,7 +54,7 @@ A project by the [Leibniz-Zentrum Moderner Orient (ZMO)](http://www.zmo.de), Ber
 | `/people/<slug>/`     | Prerendered profile with its source passages and related records |
 | `/missing/`           | Dedicated dossier of unlocated works |
 | `/fieldbook/`         | Device-local selections, exports and offline album management |
-| `/trails/`            | Place-based reading sequences |
+| `/trails/`            | Thematic and place-based reading sequences |
 | `/collection.json`    | Versioned public collection metadata and media-rights statements |
 | `/sitemap.xml`        | Auto-generated sitemap listing the home page and every artwork, residence and People URL |
 | `/robots.txt`         | Allows all crawlers; points to the sitemap                                         |
@@ -71,12 +71,14 @@ Legacy `/?artwork=<id>` links are auto-redirected to the new canonical URLs on t
 - **Three artwork marker types** — located (teal), to-be-found (orange), ghost markers for relocated artworks (dashed outline)
 - **Relocation visualisation** — dashed lines connecting original and current locations
 - **Places of residence** — blue diamond markers for where Heshmat lived and worked; they cluster with nearby artworks, and a cluster that contains one carries a diamond on its rim
-- **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs
+- **Country & status filters** — combinable country, status, entry type and text search, preserved in URLs. On phones the bar is one row: search, plus a Filters button that shows how many filters are active and opens the facets below
 - **Three ways to read the collection** — the map, a photo grid at `/collection/`, and a side list, switchable from any of them. The grid also exposes works that overlap at world-map scale, especially around Cairo
 - **Browsable collection index** — a grouped, filter-aware text list of every entry, opened with Browse on the map. It is also the site's internal link graph: the collection index carries real links to every entry
 - **Shape-coded markers** — located (disc), to be found (ring), place of residence (diamond) and former location (dashed ring). Shape rather than hue carries the distinction: under tritanopia the located and residence colours measure ΔE 12.4, indistinguishable at marker size. `MARKER_SPECS` is the single source, so the map canvas, the legend and the list cannot drift apart
 - **Real-time search** — searches names, aliases, descriptions, places, captions and source labels; folds accents and Arabic vowel marks
 - **Sidebar detail view** — images, description, status tags, address, external links
+- **One menu at every size** — Map, Gallery, List, People, Trails and Fieldbook. Desktop shows them in the header (views as icons below 1180px); phones and tablets (below 1024px) get the same items in a bottom tab bar that replaces the footer. It is one `<nav>` (`SiteNav.svelte`) styled two ways, so the two stay in step and hydrate once. The Fieldbook link carries a live count of saved entries. Items and their current state come from `src/lib/utils/navigation.ts`
+- **Trails** — reading sequences by theme and by place at `/trails/`
 - **Multi-image gallery** — thumbnail strip, prev/next navigation, image counter
 - **Full-screen lightbox** — keyboard navigation (arrow keys, Escape)
 - **YouTube video embeds** — inline in the sidebar
@@ -135,6 +137,8 @@ Four layers, all run in CI:
 3. Fill in the fields (see the template for documentation).
 4. Drop any images into `originals/`; `npm run dev` watches this folder and generates WebP derivatives automatically (see [Images](#images)).
 5. Done — `index.ts` auto-imports all artwork files via `import.meta.glob`, the next build emits a new `/artworks/<slug>/` page and adds it to `sitemap.xml`.
+
+To put the artwork in one or more themed trails, list their ids in `trails` (for example `trails: ['museums']`); the ids and titles are in `src/lib/data/trail-themes.ts`, and a typo fails `npm run check`.
 
 The slug is auto-derived from `name`. To pin a stable URL when renaming, set `slug: 'my-stable-slug'` explicitly. A build error is thrown if two artworks would resolve to the same slug.
 
@@ -250,6 +254,7 @@ Each artwork file exports a single object with these fields:
 | `videoFile`    | `string`                | No       | Filename of a self-hosted clip in `static/videos/`      |
 | `videoCaption` | `string`                | No       | Credit line shown beneath the local video               |
 | `movement`     | `ArtworkMovement`       | No       | Relocation data (from-coordinates, year)                |
+| `trails`       | `TrailThemeId[]`        | No       | Themed trails that list this entry (`trail-themes.ts`)  |
 
 Places of residence use a parallel schema in `src/lib/data/residences/` — the same identity and image fields, plus a `years` string, and no `status` or `movement`. See `residences/_template.ts`.
 
@@ -323,7 +328,7 @@ cd svelte-app && npm run validate
 
 The gallery offers **Entries**, **Photos** (grouped by notice), and **List**. Every card exposes its photograph count and album previews. Albums retain complete image proportions, a contact sheet and a keyboard-operated full-screen viewer. A photo URL uses a filename-derived identifier (or an explicit media `id`), so rearranging an album does not change its shared links. Returning to the collection restores the open list's scroll and originating focus.
 
-The **Works still to be found** dossier at `/missing/` brings together the 13 unlocated entries, existing documentation, recorded locations and a prefilled email contribution. Recorded coordinates are explicitly distinguished from a confirmed current location. No speculative locations or sources have been added.
+The **Works still to be found** dossier at `/missing/` brings together the unlocated entries, existing documentation, recorded locations and a prefilled email contribution. Recorded coordinates are explicitly distinguished from a confirmed current location. No speculative locations or sources have been added.
 
 Optional notice metadata in `src/lib/data/types.ts`: `displayTitle`, `siteName`, `district`, `aliases`, `coverImage`, `entryKind`, `locationPrecision`, `sources` (label, URL, checkedOn), and `creationPlace`. Media can include `id`, `alt`, `credit`, `date`, and `documentType`. Populate these only from documented evidence; existing source descriptions remain authoritative. Explicit slugs are permanent URLs and must not change with a title correction.
 
@@ -339,13 +344,15 @@ Ordinary album navigation explicitly caches its canonical HTML after service-wor
 
 The Workbox worker is authored in `src/service-worker.ts`. HTML caches are tied to a content-derived build ID (it includes the git revision, which is compiled into the client) and retired on activation of a different build; old HTML is never served against a new app shell. Everything else is keyed by content and survives a deployment: hashed `/_app/immutable/` files (including the map renderer and the RTL plugin) share one cache, images are cached by their `?v=` version, and saved albums keep their images in one shared cache. On activation the new worker re-fetches each saved album's page for its own build, so albums stay available offline across updates; an image whose content changed reads as missing until the album is saved again, which downloads only what changed. The shell includes first-party fonts. An unseen uncached record has an explicit offline fallback.
 
-**Place trails** currently offer geographic reading sequences for Selb and 10th of Ramadan City based on existing records. They are not verified walking routes. **Compare two images** preserves dates, captions and credits where documented without asserting chronology.
+**Trails** offer reading sequences by theme (industry and everyday life, state and army commissions, East and West, faith and remembrance, museums) and by place (Selb, 10th of Ramadan City). An artwork joins a themed trail through its `trails` field (ids in `src/lib/data/trail-themes.ts`). They are not verified walking routes. **Compare two images** preserves dates, captions and credits where documented without asserting chronology.
 
 ## Editorial validation and evidence
 
 `npm run validate:data` blocks invalid IDs, slugs, coordinates, unsafe links/HTML, ambiguous media IDs, unresolved covers, invalid dates and inconsistent location claims. Every production build runs it. `npm run report:editorial` writes `editorial-report.json`; CI keeps this report as an artifact. Missing sources, precision, entity kinds, media credits/dates/rights/alt text and stale verification dates are a visible editorial backlog, not invented values or a reason to reject the existing corpus.
 
-Optional fields include `sources: [{ label, url?, checkedOn? }]`, `updatedOn: 'YYYY-MM-DD'`, `locationPrecision`, `entryKind` and `creationPlace`. Only a documented creation place is emitted as `locationCreated`; a mapped current location does not supply it. An institution emits `Place`, without crediting its building to the artist. Undocumented/approximate locations use a broader map zoom. This is framing, not an invented uncertainty radius.
+**Typography.** Editors may type straight quotes, or a backtick for an apostrophe: prose fields (names, descriptions, captions, link labels, People passages and notes) are converted to typographic quotes when the data loads (`src/lib/utils/typography.ts`), so every surface, from cards to search, SEO and exports, shows `l’Homme` and “quotes”. HTML tags are left untouched, and slugs cannot change because `slugify()` maps every quote to the same hyphen. What a converter cannot settle is reported as an editorial warning prefixed `Typography —`: a quote facing the wrong way, a quotation never closed, a caption that is a filename, or a misspelt artist name. German „…“ quotation is left as written.
+
+Optional fields include `sources: [{ label, url?, checkedOn? }]`, `updatedOn: 'YYYY-MM-DD'`, `locationPrecision`, `entryKind` and `creationPlace`. Only a documented creation place is emitted as `locationCreated`; a mapped current location does not supply it. An institution emits `Place`, without crediting its building to the artist. Undocumented/approximate locations use a broader map zoom. This is framing, not an invented uncertainty radius. On a record page, the evidence panel shows precision, sources and the update date only when they are documented, plus the unconfirmed-location note for works still to be found; missing values stay in the editorial report instead of appearing as placeholders.
 
 Images support durable `id`, `alt`, `credit`, `date` (year, month or full date), `documentType`, `sourceUrl`, `rightsHolder` and `rights`. Existing filename-based photo links continue to resolve after an ID is assigned. Do not rename published record slugs. Shared cover and caption helpers keep the gallery, comparison, lightbox and SEO consistent.
 

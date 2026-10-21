@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { resolve } from '$app/paths';
-	import ViewSwitcher from './ViewSwitcher.svelte';
+	import SiteNav from './SiteNav.svelte';
 
 	let { onreset }: { onreset: () => void } = $props();
 	const store = getBrowseStore();
@@ -16,16 +16,15 @@
 			aria-label="Reset world view"
 		>
 			<!-- Non-breaking space: Svelte collapses ordinary whitespace around the
-		     span boundary, which would render "GlobalHeshmat". Keeping it inside
-		     the hidden span also removes it along with the word on narrow
-		     viewports. -->
-			<span><span class="wordmark-global">Global&nbsp;</span>Heshmat</span>
+		     span boundary, which would render "GlobalHeshmat". -->
+			<span>Global&nbsp;Heshmat</span>
 			<span class="header-subtitle">&mdash; Following Hassan Heshmat around the world</span>
 		</button>
 	</h1>
 	<div class="header-right">
-		<!-- Shared views retain the visitor's active filters. -->
-		<ViewSwitcher variant="header" />
+		<!-- The main menu: pills here on desktop, a bottom tab bar below 1024px.
+		     Shared views retain the visitor's active filters. -->
+		<SiteNav />
 		<button
 			disabled={!store.ready}
 			class="header-btn about-button"
@@ -41,12 +40,6 @@
 </header>
 
 <style>
-	/* About stays visible in the fixed footer on phones, leaving room for the CTA. */
-	@media (max-width: 480px) {
-		.about-button {
-			display: none;
-		}
-	}
 	@media (max-width: 360px) {
 		.works-label {
 			display: none;
@@ -61,7 +54,7 @@
 		text-align: start;
 		min-height: 44px;
 	}
-	.header-btn-cta {
+	a.header-btn {
 		display: flex;
 		align-items: center;
 		text-decoration: none;
@@ -76,20 +69,22 @@
 		color: rgb(var(--color-header-text-rgb) / 0.65);
 		margin-left: var(--space-1);
 	}
-	@media (max-width: 768px) {
+	/* The subtitle only appears where it fits on one line beside the full menu
+	   (measured: from about 1460px); wrapped, it overflows the header height. */
+	@media (max-width: 1499px) {
 		.header-subtitle {
 			display: none;
 		}
 	}
-	/* Below ~400px even the short labels overflow, so drop to the wordmark the
-	   PWA manifest already uses as short_name. */
-	@media (max-width: 400px) {
-		.wordmark-global {
-			display: none;
+	/* Touch screens wider than a phone (tablets, touch laptops) keep the desktop
+	   header, with pills grown to a 44px target. */
+	@media (pointer: coarse) and (min-width: 769px) {
+		.header-btn {
+			min-height: 44px;
 		}
 	}
 
-	/* Top bar: wordmark, subtitle, the view switcher and the two buttons. */
+	/* Top bar: wordmark, subtitle, the menu, About and the appeal. */
 	/* ═══════════════════════════════════════════
 	   Header
 	   ═══════════════════════════════════════════ */
@@ -185,8 +180,9 @@
 			padding: 0 var(--space-3-5);
 		}
 
+		/* With the menu in the tab bar, the full wordmark fits even at 320px. */
 		.header h1 {
-			font-size: var(--text-base);
+			font-size: var(--text-lg);
 			white-space: nowrap;
 			/* Absorb any remaining squeeze here instead of letting the button row
 				   overflow the viewport. */
@@ -202,13 +198,13 @@
 
 		.header-btn {
 			min-width: 44px;
-			height: 50px;
+			height: 44px;
 			padding: 6px var(--space-2-5);
 			font-size: var(--text-xs);
 			letter-spacing: normal;
 		}
 
-		/* Swap to the compact CTA label so three buttons fit a phone header. */
+		/* Swap to the compact CTA label so it fits beside About on a phone. */
 		.header-btn-cta .cta-full {
 			display: none;
 		}

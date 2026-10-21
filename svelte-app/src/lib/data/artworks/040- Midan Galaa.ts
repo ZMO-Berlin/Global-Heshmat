@@ -9,6 +9,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Cairo (Heliopolis)',
 	status: 'located',
+	trails: ['state-army'],
 	address: 'Almazah, El Nozha, Cairo Governorate',
 	desc: 'From 1982 to 2022, this square was home to the sculpture ‚The Dawn of Egypt’, eight-metre high and made of white stone. Every day, tens of thousands of people passed by. Popularly known as Galaa Masr, as it stood near the bridge of the same name in el-Nozha and referred to the Anglo-Egyptian Agreement of 1954 on the evacuation of British forces from the Suez Zone. In 2022, the statue had to make way for road construction and was moved to 10th of Ramadan City, where it stands today, completely renovated (see ‚The Dawn of Egypt’).',
 	images: [

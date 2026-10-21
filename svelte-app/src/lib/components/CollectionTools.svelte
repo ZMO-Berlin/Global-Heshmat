@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import { BookMarked, ChevronDown, Route } from '@lucide/svelte';
+	import { ChevronDown } from '@lucide/svelte';
 	import type { Entry } from '$lib/utils/collection';
 	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
@@ -35,11 +34,7 @@
 	}}
 />
 
-<nav class="collection-tools" aria-label="Collection research tools">
-	<a href={resolve('/fieldbook')}
-		><BookMarked size={16} aria-hidden="true" />Fieldbook ({fieldbook.keys.length})</a
-	>
-	<a href={resolve('/trails')}><Route size={16} aria-hidden="true" />Place trails</a>
+<div class="collection-tools">
 	<!-- A disclosure, not a link: it acts on the entries currently shown. -->
 	<details class="save" bind:this={menu}>
 		<summary bind:this={summary}
@@ -70,7 +65,7 @@
 			>
 		</div>
 	</details>
-</nav>
+</div>
 
 <style>
 	.collection-tools {
@@ -80,9 +75,6 @@
 		align-items: center;
 		margin-bottom: var(--space-4);
 	}
-	/* One control style for all three: the border marks them as controls, so
-	   the links drop their underline; icons say which is which at a glance. */
-	a,
 	summary {
 		display: inline-flex;
 		align-items: center;
@@ -102,7 +94,6 @@
 			border-color var(--duration-fast) var(--ease-out),
 			background-color var(--duration-fast) var(--ease-out);
 	}
-	a:hover,
 	summary:hover,
 	.save[open] summary {
 		border-color: var(--color-primary-text);

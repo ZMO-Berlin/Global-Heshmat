@@ -5,6 +5,8 @@
 	const store = getBrowseStore();
 </script>
 
+<!-- Desktop only: below 1024px the tab bar takes this place, and the ZMO
+     credit moves into the About window. -->
 <footer class="site-footer">
 	<a
 		href={about.impressum.website}
@@ -54,11 +56,8 @@
 		background: none;
 		cursor: pointer;
 	}
-	@media (max-width: 600px) {
+	@media (max-width: 1023px) {
 		.site-footer {
-			padding: 0 var(--space-3);
-		}
-		a span {
 			display: none;
 		}
 	}

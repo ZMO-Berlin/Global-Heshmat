@@ -13,6 +13,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Cairo (Zamalek)',
 	status: 'located',
+	trails: ['industry-everyday'],
 	address: '3 El Thawra Council St Zamalek, El Orman, Cairo Governorate 11518',
 	desc: 'Heshmat equipped various branches of the Sheraton in Cairo with towering statues. At the Gezirah Sheraton it was the statue of ‘Love’. This figurine was also commissioned as a gift edition in 13cm for VIP-visitors of the hotel. <br> Name today: Sofitel Cairo Nile El Gezirah.',
 	images: [{src: "Gastgeschenk Heshmat.jpg",

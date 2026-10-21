@@ -1,4 +1,5 @@
 import { slugify } from './slug';
+import { typeset } from './typography';
 import type { PeopleContext, Person, PersonRecord } from '$lib/data/types';
 
 const SAFE_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -40,7 +41,8 @@ export function buildIndex<T extends Indexable, K extends string>(
 	kind: K
 ): Indexed<T, K>[] {
 	const indexed = raw
-		.map((item) => ({ ...item, slug: item.slug ?? slugify(item.name), kind }))
+		// Prose gets typographic quotes; the slug still comes from the name as typed.
+		.map((item) => ({ ...typeset(item), slug: item.slug ?? slugify(item.name), kind }))
 		.sort((a, b) => a.id - b.id);
 
 	const seenSlugs = new Map<string, number>();
@@ -100,7 +102,7 @@ export function buildPeopleIndex(
 			);
 		if (!record.paragraphs.length) throw new Error(`Person ${record.slug} has no paragraphs`);
 		return {
-			...record,
+			...typeset(record),
 			kind: 'person' as const,
 			relatedEntries: record.relatedEntries ?? [],
 			seeAlso: record.seeAlso ?? [],

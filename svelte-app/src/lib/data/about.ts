@@ -3,6 +3,9 @@ export const aboutContent = {
 	intro: 'Global Heshmat &ndash; Following the Egyptian Sculptor Hassan Heshmat Around the World.',
 	subtitle: 'Artworks in public spaces*',
 
+	context:
+		'Hassan Heshmat (1920&ndash;2006) is one of many artists of Egyptian modernism whose work has never been fully documented: complete catalogues of works by twentieth-century Arab artists remain rare. His sculptures, reliefs, mosaics and porcelain travelled from Cairo to East Berlin, Selb, Warsaw, Malm&ouml;, Beijing and Boston, to name just a few places, and many still stand in public space today. Yet the artist behind them has largely dropped out of art history, and owners often know little more than the name carved into their work. &lsquo;Global Heshmat&rsquo; brings these dispersed works back together as an open, growing record.',
+
 	paragraphs: [
 		'Heshmat was born in a small town on the Nile and began working with clay as a child. At the age of twelve, his father allowed him to choose his own career, and Heshmat went to Cairo to attend the School of Applied Arts. There he meets a teacher who would later also become famous, the sculptor Saeed Sadr.',
 
@@ -12,7 +15,9 @@ export const aboutContent = {
 
 		'Throughout his life, Heshmat was supported by one person in particular: Tharwat Okasha, a polyglot genius who served as Minister of Culture several times under Nasser. After Heshmat returned from Selb, Okasha asked him to design a gift for Egypt&rsquo;s state guests. Heshmat interprets an unfinished head of Queen Nefertiti in brown quartz, which is on display in the Egyptian Museum in Cairo. From 1958 to 1988, this reproduction of the ancient bust in porcelain was presented to 82 heads of state.',
 
-		'Heshmat was an internationally renowned artist who found admirers all over the world. His sculptures can be found not only on the Nile, but have also been exported to Brazzaville, Frankfurt am Main, Warsaw, Malm&ouml;, East Berlin and Boston. In 10th of Ramadan City, the founder of a well-known fashion company, the Copt Louis Bishara, had a small open-air museum for Heshmat built in a public park. Various industrialists have erected Heshmat&rsquo;s art on their premises. A large relief by him still adorns the officers&rsquo; club on Zamalek&rsquo;s main street.',
+		'Heshmat was an internationally renowned artist who found admirers all over the world. During the Cold War, his work travelled on both sides of the Iron Curtain, to East and West Germany as well as to Eastern and Western Europe. His sculptures can be found not only on the Nile, but have also been exported to Brazzaville, Frankfurt/Main, Warsaw, Malm&ouml;, East Berlin or Hasselt in Belgium.',
+
+		'His work remained in demand after Nasser. With Sadat&rsquo;s economic opening (<em>infitah</em>) from the 1970s and the growth of the private sector under Mubarak, industrialists, hotels and companies became important patrons alongside the state. In 10th of Ramadan City, the founder of a well-known fashion company, the Copt Louis Bishara, had a small open-air museum for Heshmat built in a public park. Various industrialists have erected Heshmat&rsquo;s art on their premises. A large relief by him still adorns the officers&rsquo; club on Zamalek&rsquo;s main street.',
 
 		'Heshmat held solo exhibitions all over Europe, among other in Paris and Budapest in 1957, in Susteren in 1968, 1970 in Bonn and Radhus, 1978 in Roskilde or 1979 in Ystad. In 2000 Heshmat was awarded the State Appreciation Award, Egypt&rsquo;s highest award.',
 

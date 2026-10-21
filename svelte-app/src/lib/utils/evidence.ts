@@ -8,14 +8,13 @@ export function locationZoom(item: DocumentaryMetadata): number {
 				? 10
 				: 11;
 }
-export function precisionLabel(item: DocumentaryMetadata): string {
+/** The documented location precision, or undefined when none is recorded. */
+export function precisionLabel(item: DocumentaryMetadata): string | undefined {
 	const labels = {
 		exact: 'Documented location',
 		approximate: 'Approximate location',
 		city: 'City-level location',
 		'last-known': 'Last known location'
 	};
-	return item.locationPrecision
-		? labels[item.locationPrecision]
-		: 'Location precision not yet documented';
+	return item.locationPrecision && labels[item.locationPrecision];
 }

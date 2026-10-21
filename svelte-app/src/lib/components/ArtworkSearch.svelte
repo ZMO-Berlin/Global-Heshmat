@@ -184,9 +184,13 @@
 		color: var(--color-primary-text);
 		font-size: var(--text-sm);
 	}
+	/* Phones: the search shares one row with Browse and Filters, taking what
+	   they leave. */
 	@media (max-width: 768px) {
 		.search-wrapper {
-			width: 100%;
+			flex: 1;
+			min-width: 0;
+			width: auto;
 		}
 	}
 </style>

@@ -6,6 +6,9 @@ const STORAGE_KEY = 'global-heshmat-fieldbook-v1';
 export function createFieldbook() {
 	let keys = $state<string[]>([]);
 	let storageMessage = $state('');
+	// Counts additions made on this page (not restores), so the nav badge can
+	// acknowledge an addition without animating on every page load.
+	let pulse = $state(0);
 	onMount(() => {
 		function restore() {
 			try {
@@ -43,16 +46,25 @@ export function createFieldbook() {
 		get storageMessage() {
 			return storageMessage;
 		},
+		get pulse() {
+			return pulse;
+		},
 		has(item: Entry) {
 			return keys.includes(entryKey(item));
 		},
 		toggle(item: Entry) {
 			const key = entryKey(item);
-			keys = keys.includes(key) ? keys.filter((k) => k !== key) : [...keys, key];
+			if (keys.includes(key)) keys = keys.filter((k) => k !== key);
+			else {
+				keys = [...keys, key];
+				pulse++;
+			}
 			persist();
 		},
 		add(items: Entry[]) {
+			const before = keys.length;
 			keys = [...new SvelteSet([...keys, ...items.map(entryKey)])];
+			if (keys.length > before) pulse++;
 			persist();
 		},
 		clear() {

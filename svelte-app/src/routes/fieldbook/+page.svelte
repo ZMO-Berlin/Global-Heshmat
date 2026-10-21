@@ -9,6 +9,7 @@
 	import { entryKey, entryTitle } from '$lib/utils/collection';
 	import { albumBytes, albumAvailable, saveAlbum, removeAlbum } from '$lib/offline/client';
 	import { csv, exportRecords, download } from '$lib/utils/exports';
+	import { countLabel } from '$lib/utils/text';
 	import Seo from '$lib/components/Seo.svelte';
 	const fieldbook = getFieldbook();
 	const browse = getBrowseStore();
@@ -93,7 +94,9 @@
 		>
 		{#if items.length}
 			<p>
-				{items.length} selected entries · estimated image download {(bytes / 1048576).toFixed(1)} MB
+				{countLabel(items.length, 'selected entry', 'selected entries')} · estimated image download {(
+					bytes / 1048576
+				).toFixed(1)} MB
 			</p>
 			<div class="research-actions">
 				<button disabled={busy || !browse.ready} onclick={() => void save()}
@@ -138,7 +141,7 @@
 			</ul>
 		{:else}<p>
 				Your fieldbook is empty. <a href={resolve('/collection')}>Browse the collection</a> or
-				explore <a href={resolve('/trails')}>place trails</a>.
+				explore <a href={resolve('/trails')}>trails</a>.
 			</p>{/if}
 		<p role="status">{message || fieldbook.storageMessage}</p>
 	</div>

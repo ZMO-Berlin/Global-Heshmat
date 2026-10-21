@@ -22,6 +22,16 @@
 				starting points for further research. A marker on the map indicates a recorded place, not a confirmed
 				present-day location.
 			</p>
+			<p class="intro">
+				Every lead helps. Research for this collection has already brought works back to light, such
+				as two porcelain figures Heshmat designed for Rosenthal, found in the Porzellanikon
+				collection in Selb in 2025. If you recognise a work below, or if your museum, archive or
+				collection holds works or documents by Heshmat, please write to
+				<a
+					href={`mailto:${aboutContent.contactEmail}?subject=${encodeURIComponent('Global Heshmat — works or documents by Hassan Heshmat')}`}
+					>{aboutContent.contactEmail}</a
+				>.
+			</p>
 			<p class="missing-count" role="status">{missing.length} of {total} entries shown</p>
 		</header>
 		{#if !missing.length}<p>No missing works match these filters.</p>

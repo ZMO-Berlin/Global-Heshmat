@@ -12,6 +12,7 @@ const artwork: Artwork = {
 	country: 'United States of America',
 	city: 'Boston (Massachusetts)',
 	status: 'search',
+	trails: ['east-west', 'faith-remembrance'],
 	address: 'unknown',
 	desc: 'Two-meter work out of basalt stone in a church in Boston, USA. Photo from the museum in Ain Shams, 1974. Another of this figurine is located at the Cairo International Stadium.',
 	image: 'The_stable_family.jpg',

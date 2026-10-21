@@ -5,6 +5,7 @@
 	import { entryKey, isToBeFound } from '$lib/utils/collection';
 	import { recordUrl } from '$lib/utils/exports';
 	let { item }: { item: Entry } = $props();
+	const precision = $derived(precisionLabel(item));
 	const contributionUrl = $derived(
 		'https://github.com/ZMO-Berlin/Global-Heshmat/issues/new?' +
 			new URLSearchParams({
@@ -17,7 +18,7 @@
 
 <section class="evidence" aria-label="Evidence and location">
 	<h3>Evidence and location</h3>
-	<p>{precisionLabel(item)}.</p>
+	{#if precision}<p>{precision}.</p>{/if}
 	{#if isToBeFound(item)}<p>
 			The current location is unconfirmed. The marker represents the place recorded in this entry.
 		</p>{/if}
@@ -34,10 +35,7 @@
 						· Checked <time datetime={source.checkedOn}>{source.checkedOn}</time>{/if}
 				</li>{/each}
 		</ul>
-	{:else}<p>
-			Structured source references have not yet been added. Consult the entry text, image captions
-			and linked material.
-		</p>{/if}
+	{/if}
 	{#if item.events?.length}
 		<h3>Documented events</h3>
 		<ol>

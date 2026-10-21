@@ -7,6 +7,7 @@
 		size = 'card',
 		sizes = '100vw',
 		priority = false,
+		low = false,
 		fit = 'contain'
 	}: {
 		src: string;
@@ -14,6 +15,9 @@
 		size?: 'card' | 'web' | 'full';
 		sizes?: string;
 		priority?: boolean;
+		/** Supporting imagery (thumbnail strips): yields bandwidth to the main
+		 * photo even when it is on screen, where Chrome would otherwise raise it. */
+		low?: boolean;
 		fit?: 'contain' | 'cover';
 	} = $props();
 	let failed = $state(false);
@@ -33,7 +37,7 @@
 		width={dimensions.width}
 		height={dimensions.height}
 		loading={priority ? 'eager' : 'lazy'}
-		fetchpriority={priority ? 'high' : 'auto'}
+		fetchpriority={priority ? 'high' : low ? 'low' : 'auto'}
 		decoding="async"
 		style:object-fit={fit}
 		onerror={() => (failed = true)}

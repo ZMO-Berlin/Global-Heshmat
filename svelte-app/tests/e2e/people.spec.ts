@@ -168,6 +168,7 @@ test('People and a long profile work on mobile with accessible controls', async 
 	await page.setViewportSize({ width: 390, height: 844 });
 	for (const path of ['/people/', `/people/${longest.slug}/`]) {
 		await page.goto(path);
+		await page.getByRole('button', { name: 'Filters', exact: true }).click();
 		await expect(page.getByRole('combobox', { name: 'Entry type', exact: true })).toBeEnabled();
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true

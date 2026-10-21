@@ -75,6 +75,16 @@
  *                  - fromName:  original location name       (REQUIRED)
  *                  - year:      year of relocation           (REQUIRED)
  *
+ *  trails        Thematic trails on the Trails page that include this artwork,
+ *                as ids from  src/lib/data/trail-themes.ts :
+ *                  'industry-everyday'   Art for industry, hotels and everyday life
+ *                  'state-army'          Commissions for the state and the army
+ *                  'east-west'           Between East and West
+ *                  'faith-remembrance'   Faith and remembrance
+ *                  'museums'             Museums
+ *                An artwork can join several trails. A typo is a type error
+ *                (`npm run check`). To add a new theme, add it to trail-themes.ts.
+ *
  * ============================================================
  *  IMPORTANT NOTES
  * ============================================================
@@ -101,6 +111,9 @@
  *     - Can include HTML for formatting: <em>italic</em>, <strong>bold</strong>,
  *       <a href="https://...">links</a>.
  *     - Keep it concise but informative — a short paragraph is ideal.
+ *     - Type quotes and apostrophes however is easiest (' or " are fine):
+ *       the site shows typographic ones (l’Homme, “Love”). Image
+ *       filenames are not converted: avoid quotes and backticks in them.
  *
  *  5. MOVEMENT
  *     - Only use if the artwork was physically moved from one location to another.
@@ -132,6 +145,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Cairo (Downtown)',
 	status: 'located',
+	trails: ['industry-everyday'], // optional — see "trails" above
 	address: '123 Tahrir Square, Downtown Cairo, Cairo Governorate',
 	desc: 'A large bronze relief commissioned in 1975 for the entrance hall of the National Bank. The work depicts a procession of sphinxes and was unveiled by President Sadat. See also the <a href="https://example.com">museum catalogue</a>.',
 

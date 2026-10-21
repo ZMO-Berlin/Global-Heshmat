@@ -13,6 +13,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Cairo (Ain Shams)',
 	status: 'located',
+	trails: ['museums'],
 	address: 'Ein Shams Al Gharbeyah, El Matareya, Cairo Governorate 4533483',
 	desc: 'The Museum of the artist Hassan Heshmat in Ain Shams is one of the precious house museums in Egypt. Its former owner, the sculptor Hassan Heshmat (1920-2006) worked with numerous materials like clay, wood, metal, stone or porcelain in sizes between 10cm and 10m. His works can be found all over Egypt. He donated his private house, workshop, gallery and sculpture garden to the Ministry of Culture which opened the current museum in 2018.',
 	images: [{src: "Balcony 1st floor Museum.jpg",

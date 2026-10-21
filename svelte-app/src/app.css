@@ -189,10 +189,35 @@ body {
 	padding-block: var(--space-3);
 	border-top: 1px solid var(--color-border);
 }
+.trail-index div {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+	margin-block: var(--space-2);
+	line-height: var(--leading-relaxed);
+	color: var(--color-text-secondary);
+}
+.trail-index ul {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.trail-index li + li::before {
+	content: '·';
+	margin-inline: var(--space-2);
+}
+.trail-group > h3 {
+	margin-top: var(--space-7);
+}
 .trail {
 	margin-top: var(--space-6);
 	padding-top: var(--space-4);
 	border-top: 1px solid var(--color-border);
+}
+.trail h4 {
+	font: var(--weight-semibold) var(--text-xl) var(--font-display);
 }
 .trail ol {
 	padding-inline-start: var(--space-6);

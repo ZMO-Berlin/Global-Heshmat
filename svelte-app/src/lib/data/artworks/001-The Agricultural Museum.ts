@@ -13,6 +13,7 @@ const artwork: Artwork = {
 	country: 'Egypt',
 	city: 'Cairo (Dokki)',
 	status: 'located',
+	trails: ['museums'],
 	address: 'Ad Doqi, Dokki, Giza Governorate 12611',
 	desc: 'The palace of princess Fatima Ismail (1853-1920) at the Agricultural Museum houses a collection of over 500 rare pieces of art dating to the late 19th and early 20th centuries. Today, we find famous Egyptian artists like Mahmoud Mukhtar as well as several works of Hassan Heshmat in the exhibition.',
 	images: [{src: "Agricultural museum_1.jpeg"},

@@ -2,11 +2,14 @@
 // search too, which must not pull every profile into each page's bundle
 // (see '$lib/data/people-lazy.svelte.ts'). Groups and shared passages are small.
 import { peopleGroups } from '$lib/data/people/_groups';
-import { peopleContexts } from '$lib/data/people/_contexts';
+import { peopleContexts as rawContexts } from '$lib/data/people/_contexts';
 import type { PeopleContext, Person } from '$lib/data/types';
 import type { CollectionFilters } from './map-filter';
 import { normalizeSearchText } from './search';
+import { typeset } from './typography';
 import type { PeopleSort } from './url-facets';
+
+const peopleContexts = typeset(rawContexts);
 
 /** Site-relative canonical path of a profile page. */
 export function personPath(slug: string): string {

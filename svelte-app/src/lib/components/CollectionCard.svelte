@@ -61,7 +61,7 @@
 					href={store.entryHref(item, { view: 'gallery', photo: mediaId(image) })}
 					onclick={remember}
 					aria-label="Open photograph: {image.caption || `${item.name}, ${i + 2}`}"
-					><MediaImage src={image.src} alt="" sizes="100px" /></a
+					><MediaImage src={image.src} alt="" sizes="100px" low /></a
 				>
 			{/each}
 		</div>

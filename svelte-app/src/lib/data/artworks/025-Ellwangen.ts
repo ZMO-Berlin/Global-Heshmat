@@ -12,6 +12,7 @@ const artwork: Artwork = {
 	country: 'Germany',
 	city: 'Ellwangen',
 	status: 'located',
+	trails: ['east-west'],
 	address: 'Hohenstaufenstr. 14, 73479 Ellwangen (Jagst)',
 	desc: 'According to his CV, Dr Karl Kraus worked in the pharmaceutical industry and had been a member of the Rotary Club (like Hassan Heshmat) since May 1969, initially in Egypt (Giza and Heliopolis), later in Brazil and Italy. In 1992/93, he became vice-president of the Rotary Club in Ellwangen. On the wall of his house is a work of art by Hassan Heshmat dated 1969. After Dr. Kraus death, the owners of the house changed in 2025, but were surprised to be able to identify the artist thanks to the Berlin exhibition by Divan and ZMO in the same year.',
 	image: 'Ellwangen_private_house.jpg',

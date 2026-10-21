@@ -12,6 +12,7 @@ const artwork: Artwork = {
 	country: 'United States of America',
 	city: 'Dayton (Ohio)',
 	status: 'search',
+	trails: ['east-west'],
 	address: 'unknown',
 	desc: 'A ceramic plaque (approx. 3.5 square metres) might be located in Dayton, Ohio.'
 	
