@@ -14,7 +14,7 @@ const artwork: Artwork = {
 	status: 'search',
 	trails: ['east-west'],
 	address: 'unknown',
-	desc: 'A ceramic plaque (approx. 3.5 square metres) might be located in Dayton, Ohio.'
+	desc:'According to the artist’s résumé on the website of the Fine Arts Sector, an official government body under the Egyptian Ministry of Culture, the approximately 3.5-square-meter artwork was commissioned by the National Cash Register for its headquarters in Dayton.'
 	
 
 	

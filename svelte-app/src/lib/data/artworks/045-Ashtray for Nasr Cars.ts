@@ -9,7 +9,8 @@ const artwork: Artwork = {
     lng: 31.320276,
     country: 'Egypt',
     city: 'Cairo',
-    status: 'search',
+    status: 'located',
+    trails: ['industry-everyday'],
     address: 'Hadayek Helwan, Al-Masara, Cairo Governorate, Egypt',
     desc: 'Ashtray for Nasr Cars, designed by Hassan Heshmat', 
         images: [
