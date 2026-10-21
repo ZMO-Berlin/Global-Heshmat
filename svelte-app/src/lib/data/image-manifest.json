@@ -459,6 +459,75 @@
 		},
 		"v": "79ebefe5"
 	},
+	"Aschenbecher Nasr 1": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 18786
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 48074
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 103216
+		},
+		"full": {
+			"width": 1280,
+			"height": 960,
+			"bytes": 112926
+		},
+		"v": "8f8e8e70"
+	},
+	"Aschenbecher Nasr 2": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 22892
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 58302
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 124552
+		},
+		"full": {
+			"width": 1280,
+			"height": 960,
+			"bytes": 136626
+		},
+		"v": "6cdf7519"
+	},
+	"Aschenbecher Nasr 3": {
+		"thumb": {
+			"width": 300,
+			"height": 400,
+			"bytes": 22320
+		},
+		"preview": {
+			"width": 600,
+			"height": 800,
+			"bytes": 58152
+		},
+		"web": {
+			"width": 900,
+			"height": 1200,
+			"bytes": 125592
+		},
+		"full": {
+			"width": 960,
+			"height": 1280,
+			"bytes": 138908
+		},
+		"v": "defe010f"
+	},
 	"Ausstellung_Heshmat_mit_Motherhood": {
 		"thumb": {
 			"width": 400,
@@ -2712,6 +2781,29 @@
 			"bytes": 33420
 		},
 		"v": "bb5cc26c"
+	},
+	"Schale für EgyptAir": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 11374
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 35810
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 87150
+		},
+		"full": {
+			"width": 1280,
+			"height": 960,
+			"bytes": 94702
+		},
+		"v": "d7cc9c77"
 	},
 	"Schlacht von Hattin_Ahmed Kamel": {
 		"thumb": {
