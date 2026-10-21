@@ -14,8 +14,14 @@ const artwork: Artwork = {
 	status: 'search',
 	trails: ['east-west'],
 	address: 'unknown',
-	desc:'According to the artist’s résumé on the website of the Fine Arts Sector, an official government body under the Egyptian Ministry of Culture, the approximately 3.5-square-meter artwork was commissioned by the National Cash Register for its headquarters in Dayton.'
-	
+	desc:'According to the artist’s résumé on the website of the Fine Arts Sector, an official government body under the Egyptian Ministry of Culture, the approximately 3.5-square-meter artwork was commissioned by the National Cash Register for its headquarters in Dayton.',
+	sources: [
+			{
+				label:
+					'Fine Arts Sector, Egyptian Ministry of Culture', 
+				url: 'https://www.fineart.gov.eg/arb/cv/cv.asp?IDS=607', 
+			}
+		] 
 
 	
 	
