@@ -14,15 +14,15 @@ const artwork: Artwork = {
     desc: 'Ashtray for Nasr Cars, designed by Hassan Heshmat', 
         images: [
         {
-            src: 'Aschenbecher Nasr 1.jpg',
+            src: 'Aschenbecher Nasr 1.jpeg',
             caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat',
         },
         {
-            src: 'Aschenbecher Nasr 2.jpg',
+            src: 'Aschenbecher Nasr 2.jpeg',
             caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat',
          },  
          {
-            src: 'Aschenbecher Nasr 3.jpg',
+            src: 'Aschenbecher Nasr 3.jpeg',
             caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat',
          }
 

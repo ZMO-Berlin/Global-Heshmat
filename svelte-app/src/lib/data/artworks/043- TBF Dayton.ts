@@ -5,8 +5,8 @@ import type { Artwork } from '../types';
 const artwork: Artwork = {
 	
 	id: 43,
-	slug: "dayton",
-	name: 'Dayton',
+	slug: "national-cash-register-dayton",
+	name: 'National Cash Register Dayton',
 	lat: 39.755224224225465,
 	lng: -84.2085177939844,
 	country: 'United States of America',
