@@ -80,6 +80,7 @@
 	select {
 		min-height: 44px;
 		width: 100%;
+		padding: var(--space-2) var(--space-3);
 		font: inherit;
 		color: var(--color-ink);
 		background: var(--color-surface);
