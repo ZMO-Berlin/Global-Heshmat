@@ -27,6 +27,7 @@ export function GET(): Response {
 			priority: '0.7'
 		})),
 		{ loc: `${SITE_URL}/trails/`, changefreq: 'monthly', priority: '0.7' },
+		{ loc: `${SITE_URL}/memoir/`, changefreq: 'monthly', priority: '0.7' },
 		{ loc: `${SITE_URL}/missing/`, changefreq: 'monthly', priority: '0.8' },
 		...artworks.map((a) => ({
 			loc: SITE_URL + entryPath(a),

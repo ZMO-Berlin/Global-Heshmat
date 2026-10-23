@@ -1,7 +1,7 @@
 import { resolve } from '$app/paths';
 import type { getBrowseStore } from '$lib/stores/browse.svelte';
 
-export type NavId = 'map' | 'gallery' | 'list' | 'people' | 'trails' | 'fieldbook';
+export type NavId = 'map' | 'gallery' | 'list' | 'people' | 'trails' | 'memoir' | 'fieldbook';
 
 export interface NavItem {
 	id: NavId;
@@ -63,6 +63,13 @@ export function navItems(
 			name: 'Trails',
 			href: resolve('/trails'),
 			current: routeId === '/trails'
+		},
+		{
+			id: 'memoir',
+			label: 'Memoir',
+			name: 'Memoir',
+			href: resolve('/memoir'),
+			current: routeId === '/memoir'
 		},
 		{
 			id: 'fieldbook',

@@ -1,0 +1,4459 @@
+{
+	"book": {
+		"title": "Tajārubī fī al-fann wa-al-ḥayāh",
+		"titleAr": "تجاربى فى الفن والحياة",
+		"translation": "My experiences in art and life",
+		"publisher": "al-Hayʾa al-Miṣriyya al-ʿĀmma lil-Kitāb",
+		"year": 1997,
+		"doi": "https://doi.org/10.58144/20240607-000"
+	},
+	"method": {
+		"model": "claude-sonnet-5-5",
+		"date": "2026-10-23",
+		"pdfPages": 66,
+		"pages": 121,
+		"sections": 53,
+		"paragraphs": 451,
+		"mentions": 989,
+		"notFound": 7,
+		"firstPass": 522,
+		"merges": 44,
+		"drops": 10,
+		"entities": 458,
+		"placesLocated": 117,
+		"placesByHand": 11
+	},
+	"counts": {
+		"person": 99,
+		"place": 119,
+		"organisation": 149,
+		"artwork": 48,
+		"exhibition": 43
+	},
+	"entities": [
+		{
+			"id": "e0001",
+			"type": "person",
+			"name": "Tharwat Okasha",
+			"nameAr": "ثروت عكاشة",
+			"mentions": 13,
+			"pages": [
+				8,
+				31,
+				32,
+				53,
+				54,
+				56,
+				60,
+				61,
+				66
+			],
+			"description": "Author of the foreword; former Egyptian minister of culture",
+			"record": "person:tharwat-okasha",
+			"years": [
+				1958,
+				1959,
+				1960
+			]
+		},
+		{
+			"id": "e0002",
+			"type": "person",
+			"name": "Gamal Abdel Nasser",
+			"nameAr": "جمال عبد الناصر",
+			"mentions": 6,
+			"pages": [
+				20,
+				22,
+				31,
+				53,
+				54,
+				60,
+				61
+			],
+			"description": "President who placed the 1954 exhibition under his patronage",
+			"years": [
+				1955,
+				1958
+			]
+		},
+		{
+			"id": "e0003",
+			"type": "person",
+			"name": "Saeed Sadr",
+			"nameAr": "سعيد الصدر",
+			"mentions": 5,
+			"pages": [
+				11,
+				13,
+				19,
+				20
+			],
+			"description": "His teacher at the school",
+			"record": "person:saeed-sadr"
+		},
+		{
+			"id": "e0004",
+			"type": "person",
+			"name": "Abdel Qader Hatem",
+			"nameAr": "عبد القادر حاتم",
+			"mentions": 4,
+			"pages": [
+				47,
+				51,
+				52,
+				56
+			],
+			"description": "Minister of Culture at the time, who opened the artist's museum in 1972",
+			"years": [
+				1972,
+				1980
+			]
+		},
+		{
+			"id": "e0005",
+			"type": "person",
+			"name": "Ahmed Osman",
+			"nameAr": "أحمد عثمان",
+			"mentions": 3,
+			"pages": [
+				23,
+				31
+			],
+			"description": "Head of sculpture at Fine Arts, once Heshmat's teacher for one class in 1933"
+		},
+		{
+			"id": "e0006",
+			"type": "person",
+			"name": "Ahmed Youssef",
+			"nameAr": "أحمد يوسف",
+			"mentions": 3,
+			"pages": [
+				18,
+				20,
+				32
+			],
+			"description": "Dean of the Applied Arts college, Heshmat's former teacher"
+		},
+		{
+			"id": "e0007",
+			"type": "person",
+			"name": "Salah Kamel",
+			"nameAr": "صلاح كامل",
+			"mentions": 3,
+			"pages": [
+				37,
+				53,
+				60,
+				61
+			],
+			"description": "Wrote the introduction in the catalogue of the Rome exhibition",
+			"years": [
+				1958
+			]
+		},
+		{
+			"id": "e0008",
+			"type": "person",
+			"name": "Abdel Aziz El-Qousi",
+			"nameAr": "عبد العزيز القوصي",
+			"mentions": 2,
+			"pages": [
+				42,
+				48
+			],
+			"description": "Doctor who wrote that the artist breathed life into ceramics"
+		},
+		{
+			"id": "e0009",
+			"type": "person",
+			"name": "Ahmed El-Sawy Mohamed",
+			"nameAr": "أحمد الصاوى محمد",
+			"mentions": 2,
+			"pages": [
+				20,
+				66
+			],
+			"description": "Editor-in-chief of Al-Ahram who commented on the exhibition"
+		},
+		{
+			"id": "e0010",
+			"type": "person",
+			"name": "Ahmed Nawar",
+			"nameAr": "أحمد نوار",
+			"mentions": 2,
+			"pages": [
+				9,
+				52,
+				53
+			],
+			"description": "Author of the foreword; head of the National Center for Fine Arts and Museums",
+			"years": [
+				1995
+			]
+		},
+		{
+			"id": "e0011",
+			"type": "person",
+			"name": "Anis Mansour",
+			"nameAr": "أنيس منصور",
+			"mentions": 2,
+			"pages": [
+				35,
+				36,
+				66
+			],
+			"description": "Writer who reviewed the exhibition in Al-Akhbar newspaper, 22 Nov 1967",
+			"years": [
+				1967
+			]
+		},
+		{
+			"id": "e0012",
+			"type": "person",
+			"name": "Boutros Boutros-Ghali",
+			"nameAr": "بطرس غالي",
+			"mentions": 2,
+			"pages": [
+				51
+			],
+			"description": "State minister at the Foreign Ministry who commissioned three stone statues for African states"
+		},
+		{
+			"id": "e0013",
+			"type": "person",
+			"name": "Ezz El-Din Hammouda",
+			"nameAr": "عز الدين حمودة",
+			"mentions": 2,
+			"pages": [
+				18,
+				21
+			],
+			"description": "Artist who wrote a comment on the exhibition"
+		},
+		{
+			"id": "e0014",
+			"type": "person",
+			"name": "Gamal as-Sigini",
+			"nameAr": "جمال السجيني",
+			"mentions": 2,
+			"pages": [
+				21
+			],
+			"description": "Artist who wrote praise of Heshmat's ceramics",
+			"record": "person:gamal-as-sigini"
+		},
+		{
+			"id": "e0015",
+			"type": "person",
+			"name": "Hassan Abdel Moneim",
+			"nameAr": "حسن عبدالمنعم",
+			"mentions": 2,
+			"pages": [
+				34,
+				35,
+				43
+			],
+			"description": "Undersecretary of the Ministry of Culture who opened the exhibition and wrote a tribute"
+		},
+		{
+			"id": "e0017",
+			"type": "person",
+			"name": "Ihsan Abdel Quddous",
+			"nameAr": "إحسان عبد القدوس",
+			"mentions": 2,
+			"pages": [
+				32,
+				66
+			],
+			"description": "Writer who wrote a tribute in the visitors' book"
+		},
+		{
+			"id": "e0018",
+			"type": "person",
+			"name": "Saeed Khattab",
+			"nameAr": "سعيد خطاب",
+			"mentions": 2,
+			"pages": [
+				22,
+				23
+			],
+			"description": "Artist who wrote a tribute in the exhibition's visitor book"
+		},
+		{
+			"id": "e0019",
+			"type": "person",
+			"name": "Salah Taher",
+			"nameAr": "صلاح طاهر",
+			"mentions": 2,
+			"pages": [
+				20,
+				66
+			],
+			"description": "Artist who wrote congratulations on the exhibition's colour"
+		},
+		{
+			"id": "e0020",
+			"type": "person",
+			"name": "Sami Abu El-Futouh",
+			"nameAr": "سامي أبو الفتوح",
+			"mentions": 2,
+			"pages": [
+				27,
+				28
+			],
+			"description": "Egyptian ambassador in London who opened the exhibition",
+			"years": [
+				1956
+			]
+		},
+		{
+			"id": "e0021",
+			"type": "person",
+			"name": "Youssef El-Sebai",
+			"nameAr": "يوسف السباعي",
+			"mentions": 2,
+			"pages": [
+				48,
+				66
+			],
+			"description": "Minister of Culture who opened the artist's second exhibition in 1974",
+			"years": [
+				1974
+			]
+		},
+		{
+			"id": "e0022",
+			"type": "person",
+			"name": "Zakaria El-Adly",
+			"nameAr": "زكريا العدلي",
+			"mentions": 2,
+			"pages": [
+				45
+			],
+			"description": "New Egyptian ambassador to Sweden who commissioned and opened the exhibition",
+			"years": [
+				1968,
+				1970
+			]
+		},
+		{
+			"id": "e0023",
+			"type": "person",
+			"name": "Abbas al-Aqqad",
+			"nameAr": "عباس محمود العقاد",
+			"mentions": 1,
+			"pages": [
+				11
+			],
+			"description": "Author of al-Abqariyyat that he read"
+		},
+		{
+			"id": "e0024",
+			"type": "person",
+			"name": "Abdel Azim Refaat",
+			"nameAr": "عبد العظيم رفعت",
+			"mentions": 1,
+			"pages": [
+				59,
+				60
+			],
+			"description": "Friend, chief surgeon at Qasr al-Aini, who removed his tumour",
+			"years": [
+				1973
+			]
+		},
+		{
+			"id": "e0025",
+			"type": "person",
+			"name": "Abdel Fattah Eid",
+			"nameAr": "عبدالفتاح عيد",
+			"mentions": 1,
+			"pages": [
+				20
+			],
+			"description": "Artist who commented on the exhibition"
+		},
+		{
+			"id": "e0026",
+			"type": "person",
+			"name": "Abdel Hadi El-Gazzar",
+			"nameAr": "عبد الهادي الجزار",
+			"mentions": 1,
+			"pages": [],
+			"description": "Artist in group exhibition with Heshmat"
+		},
+		{
+			"id": "e0027",
+			"type": "person",
+			"name": "Abdou Salam",
+			"nameAr": "عبده سلام",
+			"mentions": 1,
+			"pages": [
+				44
+			],
+			"description": "Minister of Health who wrote in the exhibition's visitor book"
+		},
+		{
+			"id": "e0028",
+			"type": "person",
+			"name": "Abdulaziz Al-Nasser",
+			"nameAr": "عبد العزيز الناصر",
+			"mentions": 1,
+			"pages": [
+				46
+			],
+			"description": "Visitor who wrote that such exhibitions are like rain on arid land"
+		},
+		{
+			"id": "e0029",
+			"type": "person",
+			"name": "Ahmed El-Masry",
+			"nameAr": "أحمد المصري",
+			"mentions": 1,
+			"pages": [
+				31
+			],
+			"description": "Visitor from Faculty of Commerce in Alexandria who wrote a comment"
+		},
+		{
+			"id": "e0030",
+			"type": "person",
+			"name": "Ahmed Hassanein Pasha",
+			"nameAr": "أحمد حسنين باشا",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"description": "Presented Heshmat the gold medal on behalf of the king",
+			"years": [
+				1946
+			]
+		},
+		{
+			"id": "e0031",
+			"type": "person",
+			"name": "Ahmed Hegazy",
+			"nameAr": "أحمد حجازي",
+			"mentions": 1,
+			"pages": [],
+			"description": "Dedicatee of the book, addressed as dear brother"
+		},
+		{
+			"id": "e0032",
+			"type": "person",
+			"name": "Ali Farag",
+			"nameAr": "على فرج",
+			"mentions": 1,
+			"pages": [
+				18,
+				19
+			],
+			"description": "Egyptian citizen titled Sheikh who commented on the exhibition"
+		},
+		{
+			"id": "e0033",
+			"type": "person",
+			"name": "Ali el-Raei",
+			"nameAr": "علي الراعي",
+			"mentions": 1,
+			"pages": [
+				24
+			],
+			"description": "Critic who wrote about the exhibition"
+		},
+		{
+			"id": "e0034",
+			"type": "person",
+			"name": "Ata Afifi",
+			"nameAr": "عطا عفيفي",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"description": "Salon juror"
+		},
+		{
+			"id": "e0035",
+			"type": "person",
+			"name": "Belinda Lee",
+			"nameAr": "بلندا لي",
+			"mentions": 1,
+			"pages": [
+				27,
+				28
+			],
+			"description": "Actress in the film he worked on"
+		},
+		{
+			"id": "e0036",
+			"type": "person",
+			"name": "Cesar Groppi",
+			"nameAr": "سيزار جروبى",
+			"mentions": 1,
+			"pages": [
+				13,
+				14
+			],
+			"description": "Director of Groppi who commissioned special works"
+		},
+		{
+			"id": "e0038",
+			"type": "person",
+			"name": "David",
+			"nameAr": "داوود",
+			"mentions": 1,
+			"pages": [
+				44
+			],
+			"description": "Prophet for whom iron was softened, cited in a visitor's comment"
+		},
+		{
+			"id": "e0039",
+			"type": "person",
+			"name": "Dr. Morsi Saad El-Din",
+			"nameAr": "مرسي سعد الدين",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"description": "Cultural attaché in London who requested an exhibition"
+		},
+		{
+			"id": "e0041",
+			"type": "person",
+			"name": "El-Hussein Fawzi",
+			"nameAr": "الحسين فوزي",
+			"mentions": 1,
+			"pages": [],
+			"description": "Prominent artist who wrote in the visitors' book"
+		},
+		{
+			"id": "e0042",
+			"type": "person",
+			"name": "Emad Fadly",
+			"nameAr": "عماد فضلي",
+			"mentions": 1,
+			"pages": [
+				48
+			],
+			"description": "Doctor and professor at Ain Shams medical faculty who wrote in the visitors' book"
+		},
+		{
+			"id": "e0043",
+			"type": "person",
+			"name": "Farid El-Sayed",
+			"nameAr": "فريد السيد",
+			"mentions": 1,
+			"pages": [],
+			"description": "Name appearing in plate caption, probably an inscription on a work"
+		},
+		{
+			"id": "e0044",
+			"type": "person",
+			"name": "Farouk Hosny",
+			"nameAr": "فاروق حسني",
+			"mentions": 1,
+			"pages": [],
+			"description": "Minister of Culture who presented him a tribute certificate and gold medal",
+			"years": [
+				1996
+			]
+		},
+		{
+			"id": "e0045",
+			"type": "person",
+			"name": "Fikri Abaza",
+			"nameAr": "فكري أباظة",
+			"mentions": 1,
+			"pages": [
+				11
+			],
+			"description": "Author of the book al-Dahik al-Baki that he read"
+		},
+		{
+			"id": "e0046",
+			"type": "person",
+			"name": "Gamal Qutb",
+			"nameAr": "جمال قطب",
+			"mentions": 1,
+			"pages": [
+				24
+			],
+			"description": "Artist who wrote congratulations on the exhibition"
+		},
+		{
+			"id": "e0047",
+			"type": "person",
+			"name": "Garnet Lloyd",
+			"nameAr": "جارنت لويد",
+			"mentions": 1,
+			"pages": [
+				13,
+				14
+			],
+			"description": "English manager of Roberts Hughes who displayed his statues"
+		},
+		{
+			"id": "e0048",
+			"type": "person",
+			"name": "Georges Raymond",
+			"nameAr": "جورج ريمون",
+			"mentions": 1,
+			"pages": [
+				15
+			],
+			"description": "French first director general of Fine Arts in Egypt who bought Heshmat's works"
+		},
+		{
+			"id": "e0049",
+			"type": "person",
+			"name": "Hamdy El-Bambi",
+			"nameAr": "حمدي البمبي",
+			"mentions": 1,
+			"pages": [
+				52,
+				53
+			],
+			"description": "Minister of Petroleum who unveiled the Agiba statue",
+			"years": [
+				1995
+			]
+		},
+		{
+			"id": "e0050",
+			"type": "person",
+			"name": "Hamed Saeed",
+			"nameAr": "حامد سعيد",
+			"mentions": 1,
+			"pages": [
+				23
+			],
+			"description": "Artist who wrote a comment on the exhibition"
+		},
+		{
+			"id": "e0051",
+			"type": "person",
+			"name": "Harry Hubner",
+			"nameAr": "هاري هوبنر",
+			"mentions": 1,
+			"pages": [
+				28
+			],
+			"description": "Al-Ahram editor in London who wrote on the exhibition"
+		},
+		{
+			"id": "e0052",
+			"type": "person",
+			"name": "Hashem El-Ashmouni",
+			"nameAr": "هاشم الأشموني",
+			"mentions": 1,
+			"pages": [],
+			"description": "Credited with the book's artistic direction"
+		},
+		{
+			"id": "e0053",
+			"type": "person",
+			"name": "Hassan El-Sherif",
+			"nameAr": "حسن الشريف",
+			"mentions": 1,
+			"pages": [
+				48
+			],
+			"description": "Minister of Insurance who wrote a note praising the exhibition"
+		},
+		{
+			"id": "e0054",
+			"type": "person",
+			"name": "Hassan Khallaf",
+			"nameAr": "حسن خلاف",
+			"mentions": 1,
+			"pages": [
+				39
+			],
+			"description": "Egyptian ambassador in Geneva who visited and praised the exhibition"
+		},
+		{
+			"id": "e0055",
+			"type": "person",
+			"name": "Hassan Osman",
+			"nameAr": "حسن عثمان",
+			"mentions": 1,
+			"pages": [
+				19
+			],
+			"description": "Artist who commented on the exhibition"
+		},
+		{
+			"id": "e0056",
+			"type": "person",
+			"name": "Hassan Soliman",
+			"nameAr": "حسن سليمان",
+			"mentions": 1,
+			"pages": [
+				18
+			],
+			"description": "Artist who wrote a comment on the exhibition"
+		},
+		{
+			"id": "e0057",
+			"type": "person",
+			"name": "Heba Abdallah",
+			"nameAr": "هبه عبدالله",
+			"mentions": 1,
+			"pages": [
+				18
+			],
+			"description": "Artist who wrote a comment on the exhibition"
+		},
+		{
+			"id": "e0058",
+			"type": "person",
+			"name": "Hussein Bicar",
+			"nameAr": "حسين بيكار",
+			"mentions": 1,
+			"pages": [
+				21
+			],
+			"description": "Artist who wrote praise of Heshmat in the guestbook",
+			"record": "person:hussein-bicar"
+		},
+		{
+			"id": "e0060",
+			"type": "person",
+			"name": "Isaac Fanous",
+			"nameAr": "إيزاك فانوس",
+			"mentions": 1,
+			"pages": [
+				19
+			],
+			"description": "Artist who commented on the exhibition"
+		},
+		{
+			"id": "e0061",
+			"type": "person",
+			"name": "Johann Sebastian Bach",
+			"nameAr": "يوهان سباستيان باخ",
+			"mentions": 1,
+			"pages": [
+				45
+			],
+			"description": "Composer whose music was sung at the memorial celebration"
+		},
+		{
+			"id": "e0062",
+			"type": "person",
+			"name": "Kamal Naguib",
+			"nameAr": "كمال نجيب",
+			"mentions": 1,
+			"pages": [
+				43
+			],
+			"description": "Prominent journalist who wrote a tribute to Heshmat"
+		},
+		{
+			"id": "e0063",
+			"type": "person",
+			"name": "Kamal el-Din Hussein",
+			"nameAr": "كمال الدين حسين",
+			"mentions": 1,
+			"pages": [
+				23
+			],
+			"description": "Minister of Education who opened the fourth exhibition and ordered its showing in Paris",
+			"years": [
+				1955
+			]
+		},
+		{
+			"id": "e0064",
+			"type": "person",
+			"name": "Kamal el-Gwaily",
+			"nameAr": "كمال الجويلي",
+			"mentions": 1,
+			"pages": [
+				24
+			],
+			"description": "Art critic, head of the art critics' association, wrote in al-Masaa in 1975",
+			"years": [
+				1975
+			]
+		},
+		{
+			"id": "e0065",
+			"type": "person",
+			"name": "Kamel Zuhairy",
+			"nameAr": "كامل زهيري",
+			"mentions": 1,
+			"pages": [
+				21
+			],
+			"description": "Critic who praised the simplicity and spirit of the works"
+		},
+		{
+			"id": "e0066",
+			"type": "person",
+			"name": "King Farouk",
+			"nameAr": "الملك فاروق",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"description": "King who opened the 1950 international exhibition and acquired a piece",
+			"years": [
+				1950
+			]
+		},
+		{
+			"id": "e0067",
+			"type": "person",
+			"name": "Mahmoud Afifi",
+			"nameAr": "محمود عفيفي",
+			"mentions": 1,
+			"pages": [
+				23
+			],
+			"description": "Artist, member of Fine Arts supervision, wrote praise of the exhibition"
+		},
+		{
+			"id": "e0068",
+			"type": "person",
+			"name": "Mahmoud El-Hindi",
+			"nameAr": "محمود الهندي",
+			"mentions": 1,
+			"pages": [],
+			"description": "Credited with the book's cover"
+		},
+		{
+			"id": "e0069",
+			"type": "person",
+			"name": "Mahmoud Fahmy El-Nokrashy Pasha",
+			"nameAr": "محمود فهمي النقراشي باشا",
+			"mentions": 1,
+			"pages": [
+				15
+			],
+			"description": "Minister of Public Education whom Heshmat petitioned and met in the early 1940s"
+		},
+		{
+			"id": "e0070",
+			"type": "person",
+			"name": "Mahmoud Saber",
+			"nameAr": "محمود صابر",
+			"mentions": 1,
+			"pages": [
+				18
+			],
+			"description": "Professor of ceramics at Applied Arts who commented on the exhibition"
+		},
+		{
+			"id": "e0071",
+			"type": "person",
+			"name": "Mahmoud Said",
+			"nameAr": "محمود سعيد",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"description": "Artist serving as salon juror"
+		},
+		{
+			"id": "e0072",
+			"type": "person",
+			"name": "Mankarius Nazmi",
+			"nameAr": "منقريوس نظمي",
+			"mentions": 1,
+			"pages": [
+				20
+			],
+			"description": "General who opened the exhibition on Nasser's behalf"
+		},
+		{
+			"id": "e0073",
+			"type": "person",
+			"name": "Mansour Hassan",
+			"nameAr": "منصور حسن",
+			"mentions": 1,
+			"pages": [],
+			"description": "Minister of Culture who presented the certificate of merit",
+			"years": [
+				1980
+			]
+		},
+		{
+			"id": "e0074",
+			"type": "person",
+			"name": "Mikhali Kastis",
+			"nameAr": "مخالي كاستيس",
+			"mentions": 1,
+			"pages": [
+				12
+			],
+			"description": "Greek owner of the pottery factory where he trained"
+		},
+		{
+			"id": "e0075",
+			"type": "person",
+			"name": "Mohamed Hafez Ismail",
+			"nameAr": "محمد حافظ إسماعيل",
+			"mentions": 1,
+			"pages": [
+				36
+			],
+			"description": "Egyptian ambassador to Italy who opened the Rome exhibition",
+			"years": [
+				1967
+			]
+		},
+		{
+			"id": "e0076",
+			"type": "person",
+			"name": "Mohamed Hassan",
+			"nameAr": "محمد حسن",
+			"mentions": 1,
+			"pages": [
+				31
+			],
+			"description": "Artist, director general of Fine Arts, congratulated Heshmat"
+		},
+		{
+			"id": "e0077",
+			"type": "person",
+			"name": "Mohamed Mahmoud Khalil",
+			"nameAr": "محمد محمود خليل",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"description": "Salon juror"
+		},
+		{
+			"id": "e0078",
+			"type": "person",
+			"name": "Mohamed Selima",
+			"nameAr": "محمد سليمة",
+			"mentions": 1,
+			"pages": [
+				52
+			],
+			"description": "Artist who wrote about the statue in Al-Ahram Al-Masai",
+			"years": [
+				1994
+			]
+		},
+		{
+			"id": "e0079",
+			"type": "person",
+			"name": "Mokhtar El-Attar",
+			"nameAr": "مختار العطار",
+			"mentions": 1,
+			"pages": [
+				50
+			],
+			"description": "Artist and critic who wrote in the visitors' book"
+		},
+		{
+			"id": "e0080",
+			"type": "person",
+			"name": "Mr. Fritzenberg",
+			"nameAr": "مستر فرتسنبرج",
+			"mentions": 1,
+			"pages": [
+				14
+			],
+			"description": "Client to whom he promised delivery of works"
+		},
+		{
+			"id": "e0081",
+			"type": "person",
+			"name": "Muhammad Naguib",
+			"nameAr": "محمد نجيب",
+			"mentions": 1,
+			"pages": [],
+			"description": "First president of the republic, patron of the exhibition",
+			"years": [
+				1953
+			]
+		},
+		{
+			"id": "e0082",
+			"type": "person",
+			"name": "Naguib El-Rihani",
+			"nameAr": "نجيب الريحاني",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"description": "Egyptian comedian named in visitor's comment"
+		},
+		{
+			"id": "e0083",
+			"type": "person",
+			"name": "Naguib Hashem",
+			"nameAr": "نجيب هاشم",
+			"mentions": 1,
+			"pages": [
+				53,
+				54
+			],
+			"description": "Minister of Education asked to open the Ain Shams workshop"
+		},
+		{
+			"id": "e0084",
+			"type": "person",
+			"name": "Nagy El-Habashi",
+			"nameAr": "ناجي الحبشي",
+			"mentions": 1,
+			"pages": [],
+			"description": "Egyptian cellist who played at the opening",
+			"years": [
+				1968
+			]
+		},
+		{
+			"id": "e0085",
+			"type": "person",
+			"name": "Nasser al-Din al-Nashashibi",
+			"nameAr": "ناصر الدين النشاشيبي",
+			"mentions": 1,
+			"pages": [
+				38,
+				39
+			],
+			"description": "Wrote a note in the guestbook praising the Geneva exhibition"
+		},
+		{
+			"id": "e0086",
+			"type": "person",
+			"name": "Paul Cézanne",
+			"nameAr": "سيزان",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"description": "Painter whose works he saw in Paris"
+		},
+		{
+			"id": "e0087",
+			"type": "person",
+			"name": "Paul Gauguin",
+			"nameAr": "جوجان",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"description": "Painter whose works he saw in Paris"
+		},
+		{
+			"id": "e0088",
+			"type": "person",
+			"name": "Ragheb Ayad",
+			"nameAr": "راغب عياد",
+			"mentions": 1,
+			"pages": [],
+			"description": "Artist in group exhibition with Heshmat"
+		},
+		{
+			"id": "e0089",
+			"type": "person",
+			"name": "Saad Kamel",
+			"nameAr": "سعد كامل",
+			"mentions": 1,
+			"pages": [],
+			"description": "Artist in group exhibition with Heshmat"
+		},
+		{
+			"id": "e0090",
+			"type": "person",
+			"name": "Sabry Ragheb",
+			"nameAr": "صبري راغب",
+			"mentions": 1,
+			"pages": [
+				47,
+				48
+			],
+			"description": "Artist and artistic adviser to the sports stadium who commissioned four stone statues",
+			"record": "person:sabry-ragheb",
+			"years": [
+				1974
+			]
+		},
+		{
+			"id": "e0091",
+			"type": "person",
+			"name": "Salah El-Shahed",
+			"nameAr": "صلاح الشاهد",
+			"mentions": 1,
+			"pages": [
+				60,
+				61
+			],
+			"description": "At Qubba Palace; brought him to meet President Nasser",
+			"years": [
+				1958
+			]
+		},
+		{
+			"id": "e0092",
+			"type": "person",
+			"name": "Samir Sabri",
+			"nameAr": "سمير صبري",
+			"mentions": 1,
+			"pages": [],
+			"description": "Ambassador who opened the Beirut exhibition",
+			"years": [
+				1969
+			]
+		},
+		{
+			"id": "e0093",
+			"type": "person",
+			"name": "Shafiq Ghorbal",
+			"nameAr": "شفيق غربال",
+			"mentions": 1,
+			"pages": [
+				19
+			],
+			"description": "Under-secretary of the Ministry of Education who commented on the exhibition"
+		},
+		{
+			"id": "e0094",
+			"type": "person",
+			"name": "Shafiq Zaher",
+			"nameAr": "شفيق زاهر",
+			"mentions": 1,
+			"pages": [
+				19
+			],
+			"description": "Under-secretary of the Ministry of Education who commented on the exhibition"
+		},
+		{
+			"id": "e0095",
+			"type": "person",
+			"name": "Solomon",
+			"nameAr": "سليمان",
+			"mentions": 1,
+			"pages": [
+				44
+			],
+			"description": "Prophet for whom jinn were subjected, cited in a visitor's comment"
+		},
+		{
+			"id": "e0096",
+			"type": "person",
+			"name": "Stanisław Lorentz",
+			"nameAr": "ستانيسلاف لورنتس",
+			"mentions": 1,
+			"pages": [
+				26
+			],
+			"description": "Professor, director of the National Museum in Warsaw; wrote thanking Heshmat for his gift"
+		},
+		{
+			"id": "e0097",
+			"type": "person",
+			"name": "Tawfiq Abdel Fattah",
+			"nameAr": "توفيق عبدالفتاح",
+			"mentions": 1,
+			"pages": [
+				38
+			],
+			"description": "Egyptian ambassador in Bern who opened the exhibition in Switzerland",
+			"years": [
+				1968
+			]
+		},
+		{
+			"id": "e0098",
+			"type": "person",
+			"name": "Thabet al-Aris",
+			"nameAr": "ثابت العريس",
+			"mentions": 1,
+			"pages": [
+				32
+			],
+			"description": "Syrian minister of culture who opened the first exhibition",
+			"years": [
+				1960
+			]
+		},
+		{
+			"id": "e0099",
+			"type": "person",
+			"name": "Umm Kulthum",
+			"nameAr": "أم كلثوم",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"description": "Singer named in visitor's comment"
+		},
+		{
+			"id": "e0101",
+			"type": "person",
+			"name": "Wassef",
+			"nameAr": "واصف",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"description": "Film producer who wrote in the guest book to his daughter"
+		},
+		{
+			"id": "e0102",
+			"type": "person",
+			"name": "Zeinab Ahmed",
+			"nameAr": "زينب أحمد",
+			"mentions": 1,
+			"pages": [],
+			"description": "Journalist who wrote a comment on the exhibition"
+		},
+		{
+			"id": "e0103",
+			"type": "person",
+			"name": "Ziad Al-Dajani",
+			"nameAr": "زياد الدجاني",
+			"mentions": 1,
+			"pages": [
+				32
+			],
+			"description": "Palestinian visitor who wrote a comment"
+		},
+		{
+			"id": "e0104",
+			"type": "person",
+			"name": "Édouard Manet",
+			"nameAr": "مانيه",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"description": "Painter whose works he saw in Paris"
+		},
+		{
+			"id": "e0105",
+			"type": "place",
+			"name": "Egypt",
+			"nameAr": "مصر",
+			"mentions": 30,
+			"pages": [
+				7,
+				11,
+				15,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				30,
+				36,
+				37,
+				38,
+				43,
+				48,
+				50,
+				58,
+				59,
+				119
+			],
+			"level": "country",
+			"lat": 26.25405,
+			"lng": 29.26755,
+			"osm": "relation/1473947"
+		},
+		{
+			"id": "e0106",
+			"type": "place",
+			"name": "Ain Shams",
+			"nameAr": "عين شمس",
+			"mentions": 21,
+			"pages": [
+				34,
+				35,
+				36,
+				44,
+				48,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				58,
+				59,
+				61,
+				116,
+				117
+			],
+			"years": [
+				1959
+			],
+			"level": "district",
+			"lat": 30.13048,
+			"lng": 31.31675,
+			"osm": "node/384320947"
+		},
+		{
+			"id": "e0107",
+			"type": "place",
+			"name": "Cairo",
+			"nameAr": "القاهرة",
+			"mentions": 21,
+			"pages": [
+				13,
+				14,
+				28,
+				30,
+				31,
+				34,
+				40,
+				53,
+				56,
+				58,
+				59,
+				60,
+				116
+			],
+			"level": "city",
+			"lat": 30.04439,
+			"lng": 31.23573,
+			"osm": "relation/5466227"
+		},
+		{
+			"id": "e0108",
+			"type": "place",
+			"name": "Germany",
+			"nameAr": "ألمانيا",
+			"mentions": 17,
+			"pages": [
+				7,
+				30,
+				37,
+				38,
+				39,
+				40,
+				45,
+				53,
+				54,
+				58,
+				59,
+				60,
+				61,
+				66,
+				116
+			],
+			"years": [
+				1957
+			],
+			"level": "country",
+			"lat": 51.16382,
+			"lng": 10.44783,
+			"osm": "relation/51477"
+		},
+		{
+			"id": "e0109",
+			"type": "place",
+			"name": "London",
+			"nameAr": "لندن",
+			"mentions": 16,
+			"pages": [
+				7,
+				27,
+				28,
+				30,
+				59,
+				60,
+				119
+			],
+			"years": [
+				1956
+			],
+			"level": "city",
+			"lat": 51.50745,
+			"lng": -0.12777,
+			"osm": "relation/175342"
+		},
+		{
+			"id": "e0110",
+			"type": "place",
+			"name": "10th of Ramadan City",
+			"nameAr": "العاشر من رمضان",
+			"mentions": 14,
+			"pages": [
+				10,
+				52,
+				55,
+				117,
+				118
+			],
+			"level": "city",
+			"lat": 30.29001,
+			"lng": 31.74934,
+			"osm": "way/605783816"
+		},
+		{
+			"id": "e0111",
+			"type": "place",
+			"name": "Alexandria",
+			"nameAr": "الإسكندرية",
+			"mentions": 12,
+			"pages": [
+				22,
+				31,
+				44,
+				54,
+				117,
+				119
+			],
+			"level": "city",
+			"lat": 31.19918,
+			"lng": 29.89517,
+			"osm": "node/27565020"
+		},
+		{
+			"id": "e0112",
+			"type": "place",
+			"name": "Kuwait",
+			"nameAr": "الكويت",
+			"mentions": 12,
+			"pages": [
+				46,
+				47,
+				59,
+				60
+			],
+			"level": "country",
+			"lat": 29.2734,
+			"lng": 47.49795,
+			"osm": "relation/305099"
+		},
+		{
+			"id": "e0113",
+			"type": "place",
+			"name": "Paris",
+			"nameAr": "باريس",
+			"mentions": 12,
+			"pages": [
+				7,
+				23,
+				27,
+				28,
+				30,
+				34,
+				116,
+				119
+			],
+			"level": "city",
+			"lat": 48.85889,
+			"lng": 2.32004,
+			"osm": "relation/7444"
+		},
+		{
+			"id": "e0114",
+			"type": "place",
+			"name": "Sweden",
+			"nameAr": "السويد",
+			"mentions": 12,
+			"pages": [
+				7,
+				45,
+				46,
+				51,
+				62,
+				117
+			],
+			"level": "country",
+			"lat": 59.67497,
+			"lng": 14.52086,
+			"osm": "relation/52822"
+		},
+		{
+			"id": "e0115",
+			"type": "place",
+			"name": "Belgium",
+			"nameAr": "بلجيكا",
+			"mentions": 11,
+			"pages": [
+				7,
+				40,
+				45,
+				62,
+				117,
+				119
+			],
+			"years": [
+				1970
+			],
+			"level": "country",
+			"lat": 50.64028,
+			"lng": 4.66671,
+			"osm": "relation/52411"
+		},
+		{
+			"id": "e0116",
+			"type": "place",
+			"name": "Rome",
+			"nameAr": "روما",
+			"mentions": 9,
+			"pages": [
+				7,
+				36,
+				37,
+				38,
+				53,
+				116
+			],
+			"level": "city",
+			"lat": 41.89332,
+			"lng": 12.48293,
+			"osm": "relation/41485"
+		},
+		{
+			"id": "e0117",
+			"type": "place",
+			"name": "Geneva",
+			"nameAr": "جنيف",
+			"mentions": 8,
+			"pages": [
+				34,
+				36,
+				38,
+				39,
+				116
+			],
+			"level": "city",
+			"lat": 46.20176,
+			"lng": 6.1466,
+			"osm": "relation/1685488"
+		},
+		{
+			"id": "e0118",
+			"type": "place",
+			"name": "Netherlands",
+			"nameAr": "هولندا",
+			"mentions": 8,
+			"pages": [
+				7,
+				40,
+				45,
+				117,
+				119
+			],
+			"level": "country",
+			"lat": 52.2435,
+			"lng": 5.63432,
+			"osm": "relation/47796"
+		},
+		{
+			"id": "e0119",
+			"type": "place",
+			"name": "Heliopolis",
+			"nameAr": "مصر الجديدة",
+			"mentions": 7,
+			"pages": [
+				51,
+				55,
+				56,
+				118
+			],
+			"level": "district",
+			"lat": 30.1006,
+			"lng": 31.33291,
+			"osm": "node/768591736"
+		},
+		{
+			"id": "e0120",
+			"type": "place",
+			"name": "Italy",
+			"nameAr": "إيطاليا",
+			"mentions": 7,
+			"pages": [
+				20,
+				36,
+				37,
+				38,
+				53
+			],
+			"years": [
+				1964
+			],
+			"level": "country",
+			"lat": 42.63843,
+			"lng": 12.6743,
+			"osm": "relation/365331"
+		},
+		{
+			"id": "e0121",
+			"type": "place",
+			"name": "Denmark",
+			"nameAr": "الدانمارك",
+			"mentions": 6,
+			"pages": [
+				7,
+				50,
+				54,
+				63
+			],
+			"level": "country",
+			"lat": 55.67025,
+			"lng": 10.33333,
+			"osm": "relation/50046"
+		},
+		{
+			"id": "e0122",
+			"type": "place",
+			"name": "Hungary",
+			"nameAr": "المجر",
+			"mentions": 6,
+			"pages": [
+				58,
+				59
+			],
+			"level": "country",
+			"lat": 47.18176,
+			"lng": 19.50609,
+			"osm": "relation/21335"
+		},
+		{
+			"id": "e0123",
+			"type": "place",
+			"name": "Switzerland",
+			"nameAr": "سويسرا",
+			"mentions": 6,
+			"pages": [
+				7,
+				38,
+				116
+			],
+			"level": "country",
+			"lat": 46.79856,
+			"lng": 8.23197,
+			"osm": "relation/51701"
+		},
+		{
+			"id": "e0124",
+			"type": "place",
+			"name": "Warsaw",
+			"nameAr": "وارسو",
+			"mentions": 6,
+			"pages": [
+				25,
+				26
+			],
+			"level": "city",
+			"lat": 52.23337,
+			"lng": 21.07115,
+			"osm": "relation/336074"
+		},
+		{
+			"id": "e0125",
+			"type": "place",
+			"name": "Damascus",
+			"nameAr": "دمشق",
+			"mentions": 5,
+			"pages": [
+				32,
+				34
+			],
+			"level": "city",
+			"lat": 33.51307,
+			"lng": 36.30958,
+			"osm": "node/1091272140"
+		},
+		{
+			"id": "e0126",
+			"type": "place",
+			"name": "Europe",
+			"nameAr": "أوروبا",
+			"mentions": 5,
+			"pages": [
+				30,
+				47,
+				54
+			],
+			"level": "region",
+			"lat": 51.0,
+			"lng": 10.0,
+			"osm": "node/25871341"
+		},
+		{
+			"id": "e0127",
+			"type": "place",
+			"name": "Ezbet El Nakhl",
+			"nameAr": "عزبة النخل",
+			"mentions": 5,
+			"pages": [
+				11,
+				12,
+				13,
+				16,
+				58,
+				59,
+				60,
+				61
+			],
+			"record": "residence:4",
+			"years": [
+				1943
+			],
+			"level": "district",
+			"lat": 30.13928,
+			"lng": 31.32449,
+			"osm": "node/5349031067"
+		},
+		{
+			"id": "e0128",
+			"type": "place",
+			"name": "Norway",
+			"nameAr": "النرويج",
+			"mentions": 5,
+			"pages": [
+				7,
+				46,
+				62,
+				63
+			],
+			"level": "country",
+			"lat": 61.15294,
+			"lng": 8.78767,
+			"osm": "relation/2978650"
+		},
+		{
+			"id": "e0129",
+			"type": "place",
+			"name": "United States of America",
+			"nameAr": "أمريكا",
+			"mentions": 5,
+			"pages": [
+				54,
+				55,
+				117
+			],
+			"level": "country",
+			"lat": 39.78373,
+			"lng": -100.44588,
+			"osm": "relation/148838"
+		},
+		{
+			"id": "e0130",
+			"type": "place",
+			"name": "Budapest",
+			"nameAr": "بودابست",
+			"mentions": 4,
+			"pages": [
+				30
+			],
+			"years": [
+				1957
+			],
+			"level": "city",
+			"lat": 47.48185,
+			"lng": 19.14491,
+			"osm": "relation/37244"
+		},
+		{
+			"id": "e0131",
+			"type": "place",
+			"name": "England",
+			"nameAr": "إنجلترا",
+			"mentions": 4,
+			"pages": [
+				28
+			],
+			"level": "region",
+			"lat": 52.53102,
+			"lng": -1.26491,
+			"osm": "relation/58447"
+		},
+		{
+			"id": "e0132",
+			"type": "place",
+			"name": "France",
+			"nameAr": "فرنسا",
+			"mentions": 4,
+			"pages": [
+				27,
+				28
+			],
+			"level": "country",
+			"lat": 46.60335,
+			"lng": 1.88833,
+			"osm": "relation/2202162"
+		},
+		{
+			"id": "e0133",
+			"type": "place",
+			"name": "Hurghada",
+			"nameAr": "الغردقة",
+			"mentions": 4,
+			"pages": [
+				54,
+				55,
+				117
+			],
+			"level": "city",
+			"lat": 27.22256,
+			"lng": 33.83071,
+			"osm": "node/27084072"
+		},
+		{
+			"id": "e0134",
+			"type": "place",
+			"name": "Maadi",
+			"nameAr": "المعادي",
+			"mentions": 4,
+			"pages": [
+				8,
+				56
+			],
+			"years": [
+				1996
+			],
+			"level": "district",
+			"lat": 29.95971,
+			"lng": 31.25808,
+			"osm": "way/210595252"
+		},
+		{
+			"id": "e0135",
+			"type": "place",
+			"name": "Malmö",
+			"nameAr": "مالمو",
+			"mentions": 4,
+			"pages": [
+				51,
+				62,
+				117
+			],
+			"level": "city",
+			"lat": 55.60529,
+			"lng": 13.00016,
+			"osm": "relation/10663667"
+		},
+		{
+			"id": "e0136",
+			"type": "place",
+			"name": "Aleppo",
+			"nameAr": "حلب",
+			"mentions": 3,
+			"pages": [
+				32,
+				34
+			],
+			"level": "city",
+			"lat": 36.19924,
+			"lng": 37.16373,
+			"osm": "node/32520143"
+		},
+		{
+			"id": "e0137",
+			"type": "place",
+			"name": "Berlin",
+			"nameAr": "برلين",
+			"mentions": 3,
+			"pages": [
+				34,
+				50,
+				54
+			],
+			"level": "city",
+			"lat": 52.51739,
+			"lng": 13.39513,
+			"osm": "relation/62422"
+		},
+		{
+			"id": "e0138",
+			"type": "place",
+			"name": "Boston",
+			"nameAr": "بوسطن",
+			"mentions": 3,
+			"pages": [
+				55,
+				117
+			],
+			"level": "city",
+			"lat": 42.35883,
+			"lng": -71.05783,
+			"osm": "relation/2315704"
+		},
+		{
+			"id": "e0139",
+			"type": "place",
+			"name": "Frankfurt",
+			"nameAr": "فرانكفورت",
+			"mentions": 3,
+			"pages": [
+				36,
+				39,
+				40
+			],
+			"years": [
+				1968
+			],
+			"level": "city",
+			"lat": 50.11064,
+			"lng": 8.68209,
+			"osm": "relation/62400"
+		},
+		{
+			"id": "e0140",
+			"type": "place",
+			"name": "Giza",
+			"nameAr": "الجيزة",
+			"mentions": 3,
+			"pages": [
+				11,
+				12,
+				60
+			],
+			"level": "city",
+			"lat": 29.98708,
+			"lng": 31.21181,
+			"osm": "node/27565120"
+		},
+		{
+			"id": "e0141",
+			"type": "place",
+			"name": "Imbaba",
+			"nameAr": "إمبابة",
+			"mentions": 3,
+			"pages": [
+				56
+			],
+			"level": "district",
+			"lat": 30.07596,
+			"lng": 31.20755,
+			"osm": "node/11495591856"
+		},
+		{
+			"id": "e0142",
+			"type": "place",
+			"name": "Lebanon",
+			"nameAr": "لبنان",
+			"mentions": 3,
+			"pages": [],
+			"level": "country",
+			"lat": 33.87506,
+			"lng": 35.84341,
+			"osm": "relation/184843"
+		},
+		{
+			"id": "e0143",
+			"type": "place",
+			"name": "Nasr City",
+			"nameAr": "مدينة نصر",
+			"mentions": 3,
+			"pages": [
+				52,
+				53,
+				118
+			],
+			"level": "district",
+			"lat": 30.05212,
+			"lng": 31.3422,
+			"osm": "node/768552342"
+		},
+		{
+			"id": "e0144",
+			"type": "place",
+			"name": "Qasr El Nil Street",
+			"nameAr": "شارع قصر النيل",
+			"mentions": 3,
+			"pages": [
+				13,
+				14,
+				53,
+				60
+			],
+			"level": "street",
+			"lat": 30.04745,
+			"lng": 31.23679,
+			"osm": "way/98328366"
+		},
+		{
+			"id": "e0145",
+			"type": "place",
+			"name": "Syria",
+			"nameAr": "سوريا",
+			"mentions": 3,
+			"pages": [
+				32
+			],
+			"level": "country",
+			"lat": 34.64019,
+			"lng": 39.04941,
+			"osm": "relation/184840"
+		},
+		{
+			"id": "e0146",
+			"type": "place",
+			"name": "Ain Shams West Metro Station",
+			"nameAr": "محطة مترو أنفاق عين شمس الغربية",
+			"mentions": 2,
+			"pages": [],
+			"record": "artwork:4",
+			"level": "site",
+			"lat": 30.13107,
+			"lng": 31.31946,
+			"osm": "way/1536109535"
+		},
+		{
+			"id": "e0147",
+			"type": "place",
+			"name": "Al-Ayat",
+			"nameAr": "العياط",
+			"mentions": 2,
+			"pages": [
+				11
+			],
+			"level": "city",
+			"lat": 29.61333,
+			"lng": 31.25751,
+			"osm": "way/259229311"
+		},
+		{
+			"id": "e0148",
+			"type": "place",
+			"name": "Bavaria",
+			"nameAr": "بافاريا",
+			"mentions": 2,
+			"pages": [
+				30
+			],
+			"level": "region",
+			"lat": 48.94676,
+			"lng": 11.40387,
+			"osm": "relation/2145268"
+		},
+		{
+			"id": "e0149",
+			"type": "place",
+			"name": "Beijing",
+			"nameAr": "بكين",
+			"mentions": 2,
+			"pages": [
+				30
+			],
+			"level": "city",
+			"lat": 39.90571,
+			"lng": 116.3913,
+			"osm": "relation/912940"
+		},
+		{
+			"id": "e0150",
+			"type": "place",
+			"name": "Beirut",
+			"nameAr": "بيروت",
+			"mentions": 2,
+			"pages": [
+				42
+			],
+			"level": "city",
+			"lat": 33.88923,
+			"lng": 35.50256,
+			"osm": "relation/5466662"
+		},
+		{
+			"id": "e0151",
+			"type": "place",
+			"name": "Dayton, Ohio",
+			"nameAr": "ديتون أوهايو",
+			"mentions": 2,
+			"pages": [
+				55
+			],
+			"level": "city",
+			"lat": 39.75895,
+			"lng": -84.19161,
+			"osm": "relation/182954"
+		},
+		{
+			"id": "e0152",
+			"type": "place",
+			"name": "El Marg",
+			"nameAr": "المرج",
+			"mentions": 2,
+			"pages": [
+				55
+			],
+			"level": "district",
+			"lat": 30.13706,
+			"lng": 31.33628,
+			"osm": "way/1563285049"
+		},
+		{
+			"id": "e0153",
+			"type": "place",
+			"name": "Florence",
+			"nameAr": "فلورنسا",
+			"mentions": 2,
+			"pages": [
+				30
+			],
+			"level": "city",
+			"lat": 43.7698,
+			"lng": 11.25564,
+			"osm": "relation/42602"
+		},
+		{
+			"id": "e0154",
+			"type": "place",
+			"name": "Ghamra",
+			"nameAr": "غمرة",
+			"mentions": 2,
+			"pages": [
+				55
+			],
+			"level": "district",
+			"lat": 30.06902,
+			"lng": 31.26794,
+			"osm": "way/702497450"
+		},
+		{
+			"id": "e0155",
+			"type": "place",
+			"name": "Haram (Giza)",
+			"nameAr": "الهرم",
+			"mentions": 2,
+			"pages": [
+				55,
+				117
+			],
+			"level": "district",
+			"lat": 30.00631,
+			"lng": 31.19208,
+			"osm": "node/9775640060"
+		},
+		{
+			"id": "e0156",
+			"type": "place",
+			"name": "Lagos",
+			"nameAr": "لاجوس",
+			"mentions": 2,
+			"pages": [
+				34
+			],
+			"level": "city",
+			"lat": 6.45506,
+			"lng": 3.39418,
+			"osm": "node/27565124"
+		},
+		{
+			"id": "e0157",
+			"type": "place",
+			"name": "Manama",
+			"nameAr": "المنامة",
+			"mentions": 2,
+			"pages": [
+				56
+			],
+			"level": "city",
+			"lat": 26.2235,
+			"lng": 50.58224,
+			"osm": "node/38903284"
+		},
+		{
+			"id": "e0158",
+			"type": "place",
+			"name": "Midan Galaa",
+			"nameAr": "ميدان الجلاء",
+			"mentions": 2,
+			"pages": [
+				118
+			],
+			"record": "artwork:40",
+			"level": "site",
+			"lat": 30.09546,
+			"lng": 31.34209,
+			"osm": "node/14106933072"
+		},
+		{
+			"id": "e0159",
+			"type": "place",
+			"name": "Mokattam",
+			"nameAr": "المقطم",
+			"mentions": 2,
+			"pages": [
+				56
+			],
+			"level": "district",
+			"lat": 30.03333,
+			"lng": 31.28333,
+			"osm": "node/768552480"
+		},
+		{
+			"id": "e0160",
+			"type": "place",
+			"name": "Nag Hammadi",
+			"nameAr": "نجع حمادي",
+			"mentions": 2,
+			"pages": [
+				55
+			],
+			"level": "city",
+			"lat": 26.04899,
+			"lng": 32.24163,
+			"osm": "node/332074267"
+		},
+		{
+			"id": "e0161",
+			"type": "place",
+			"name": "Palermo",
+			"nameAr": "باليرمو",
+			"mentions": 2,
+			"pages": [
+				30
+			],
+			"level": "city",
+			"lat": 38.11123,
+			"lng": 13.35244,
+			"osm": "relation/39513"
+		},
+		{
+			"id": "e0162",
+			"type": "place",
+			"name": "Palestine",
+			"nameAr": "فلسطين",
+			"mentions": 2,
+			"pages": [
+				32,
+				43
+			],
+			"level": "region",
+			"lat": 32.25914,
+			"lng": 35.30159,
+			"osm": "relation/1703814"
+		},
+		{
+			"id": "e0163",
+			"type": "place",
+			"name": "Poland",
+			"nameAr": "بولندا",
+			"mentions": 2,
+			"pages": [
+				25,
+				26
+			],
+			"level": "country",
+			"lat": 52.21593,
+			"lng": 19.13442,
+			"osm": "relation/49715"
+		},
+		{
+			"id": "e0164",
+			"type": "place",
+			"name": "Republic of the Congo",
+			"nameAr": "الكونغو برازافيل",
+			"mentions": 2,
+			"pages": [
+				51
+			],
+			"level": "country",
+			"lat": -0.72643,
+			"lng": 15.64192,
+			"osm": "relation/192794"
+		},
+		{
+			"id": "e0165",
+			"type": "place",
+			"name": "Roskilde",
+			"nameAr": "روسكيلده",
+			"mentions": 2,
+			"pages": [
+				50,
+				54
+			],
+			"level": "city",
+			"lat": 55.64335,
+			"lng": 12.08192,
+			"osm": "node/21040334"
+		},
+		{
+			"id": "e0166",
+			"type": "place",
+			"name": "Rwanda",
+			"nameAr": "رواندا",
+			"mentions": 2,
+			"pages": [
+				51
+			],
+			"level": "country",
+			"lat": -2.00021,
+			"lng": 30.0004,
+			"osm": "relation/171496"
+		},
+		{
+			"id": "e0167",
+			"type": "place",
+			"name": "Shubra",
+			"nameAr": "شبرا",
+			"mentions": 2,
+			"pages": [
+				12,
+				13
+			],
+			"level": "district",
+			"lat": 30.06698,
+			"lng": 31.24512,
+			"osm": "way/45928742"
+		},
+		{
+			"id": "e0168",
+			"type": "place",
+			"name": "Sierra Leone",
+			"nameAr": "سيراليون",
+			"mentions": 2,
+			"pages": [
+				51
+			],
+			"level": "country",
+			"lat": 8.64003,
+			"lng": -11.84003,
+			"osm": "relation/192777"
+		},
+		{
+			"id": "e0169",
+			"type": "place",
+			"name": "Stockholm",
+			"nameAr": "ستوكهولم",
+			"mentions": 2,
+			"pages": [
+				45,
+				46
+			],
+			"level": "city",
+			"lat": 59.32512,
+			"lng": 18.07109,
+			"osm": "node/25929985"
+		},
+		{
+			"id": "e0170",
+			"type": "place",
+			"name": "Tokyo",
+			"nameAr": "طوكيو",
+			"mentions": 2,
+			"pages": [
+				34
+			],
+			"level": "city",
+			"lat": 35.67686,
+			"lng": 139.76389,
+			"osm": "relation/1543125"
+		},
+		{
+			"id": "e0171",
+			"type": "place",
+			"name": "United Arab Republic",
+			"nameAr": "الجمهورية العربية المتحدة",
+			"mentions": 2,
+			"pages": [
+				37
+			]
+		},
+		{
+			"id": "e0172",
+			"type": "place",
+			"name": "West Germany",
+			"nameAr": "ألمانيا الغربية",
+			"mentions": 2,
+			"pages": [
+				47
+			],
+			"level": "country",
+			"lat": 51.16382,
+			"lng": 10.44783,
+			"osm": "relation/51477"
+		},
+		{
+			"id": "e0173",
+			"type": "place",
+			"name": "Zamalek",
+			"nameAr": "الزمالك",
+			"mentions": 2,
+			"pages": [
+				54
+			],
+			"level": "district",
+			"lat": 30.06299,
+			"lng": 31.21963,
+			"osm": "node/13800621826"
+		},
+		{
+			"id": "e0174",
+			"type": "place",
+			"name": "6th of October City",
+			"nameAr": "مدينة ٦ أكتوبر",
+			"mentions": 1,
+			"pages": [
+				56
+			],
+			"level": "city",
+			"lat": 29.97235,
+			"lng": 30.94092,
+			"osm": "node/299523927"
+		},
+		{
+			"id": "e0175",
+			"type": "place",
+			"name": "Abbasiya",
+			"nameAr": "العباسية",
+			"mentions": 1,
+			"pages": [
+				56
+			],
+			"level": "district",
+			"lat": 30.06667,
+			"lng": 31.28333,
+			"osm": "node/768552341"
+		},
+		{
+			"id": "e0176",
+			"type": "place",
+			"name": "Aden",
+			"nameAr": "عدن",
+			"mentions": 1,
+			"pages": [
+				34
+			],
+			"level": "city",
+			"lat": 12.78959,
+			"lng": 45.0285,
+			"osm": "relation/9134191"
+		},
+		{
+			"id": "e0177",
+			"type": "place",
+			"name": "Ain Shams Street",
+			"nameAr": "شارع عين شمس",
+			"mentions": 1,
+			"pages": [],
+			"level": "street",
+			"lat": 30.13309,
+			"lng": 31.33751,
+			"osm": "node/6658055740"
+		},
+		{
+			"id": "e0178",
+			"type": "place",
+			"name": "Ain Sokhna",
+			"nameAr": "العين السخنة",
+			"mentions": 1,
+			"pages": [
+				55
+			],
+			"level": "city",
+			"lat": 29.63961,
+			"lng": 32.30574,
+			"osm": "node/11489833146"
+		},
+		{
+			"id": "e0179",
+			"type": "place",
+			"name": "Aswan",
+			"nameAr": "أسوان",
+			"mentions": 1,
+			"pages": [
+				47,
+				48
+			],
+			"level": "region",
+			"lat": 23.10462,
+			"lng": 32.42392,
+			"osm": "relation/3061757"
+		},
+		{
+			"id": "e0180",
+			"type": "place",
+			"name": "Bad Godesberg",
+			"nameAr": "باد جودسبرج",
+			"mentions": 1,
+			"pages": [
+				45
+			],
+			"level": "district",
+			"lat": 50.68507,
+			"lng": 7.15632,
+			"osm": "relation/55070"
+		},
+		{
+			"id": "e0181",
+			"type": "place",
+			"name": "Bern",
+			"nameAr": "برن",
+			"mentions": 1,
+			"pages": [
+				38
+			],
+			"level": "city",
+			"lat": 46.94847,
+			"lng": 7.45217,
+			"osm": "relation/1682378"
+		},
+		{
+			"id": "e0182",
+			"type": "place",
+			"name": "Bonn",
+			"nameAr": "بون",
+			"mentions": 1,
+			"pages": [
+				45
+			],
+			"level": "city",
+			"lat": 50.73526,
+			"lng": 7.10246,
+			"osm": "relation/62508"
+		},
+		{
+			"id": "e0183",
+			"type": "place",
+			"name": "Britain",
+			"nameAr": "بريطانيا",
+			"mentions": 1,
+			"pages": [
+				28
+			],
+			"level": "country",
+			"lat": 54.70235,
+			"lng": -3.27658,
+			"osm": "relation/62149"
+		},
+		{
+			"id": "e0184",
+			"type": "place",
+			"name": "Cairo–Alexandria Road",
+			"nameAr": "طريق مصر إسكندرية",
+			"mentions": 1,
+			"pages": [
+				61,
+				62
+			],
+			"level": "street",
+			"lat": 31.09462,
+			"lng": 29.85392,
+			"osm": "way/744878485"
+		},
+		{
+			"id": "e0185",
+			"type": "place",
+			"name": "Calais",
+			"nameAr": "كاليه",
+			"mentions": 1,
+			"pages": [
+				27,
+				28
+			],
+			"level": "city",
+			"lat": 50.95248,
+			"lng": 1.85384,
+			"osm": "relation/286380"
+		},
+		{
+			"id": "e0186",
+			"type": "place",
+			"name": "Corniche El Nile",
+			"nameAr": "كورنيش النيل",
+			"mentions": 1,
+			"pages": [],
+			"level": "street",
+			"lat": 30.04561,
+			"lng": 31.23171,
+			"osm": "way/229710225"
+		},
+		{
+			"id": "e0187",
+			"type": "place",
+			"name": "Czechoslovakia",
+			"nameAr": "تشيكوسلوفاكيا",
+			"mentions": 1,
+			"pages": [
+				25,
+				26
+			],
+			"level": "country",
+			"lat": 49.7439,
+			"lng": 15.33811,
+			"osm": "relation/51684"
+		},
+		{
+			"id": "e0188",
+			"type": "place",
+			"name": "Danube",
+			"nameAr": "الدانوب",
+			"mentions": 1,
+			"pages": [],
+			"level": "site",
+			"lat": 47.52867,
+			"lng": 19.04386,
+			"osm": "way/851474508"
+		},
+		{
+			"id": "e0189",
+			"type": "place",
+			"name": "Dover",
+			"nameAr": "دوفر",
+			"mentions": 1,
+			"pages": [
+				27,
+				28
+			],
+			"level": "city",
+			"lat": 51.12513,
+			"lng": 1.31342,
+			"osm": "node/21421224"
+		},
+		{
+			"id": "e0190",
+			"type": "place",
+			"name": "East Berlin",
+			"nameAr": "برلين الشرقية",
+			"mentions": 1,
+			"pages": [],
+			"level": "city",
+			"lat": 52.51739,
+			"lng": 13.39513,
+			"osm": "relation/62422"
+		},
+		{
+			"id": "e0191",
+			"type": "place",
+			"name": "Edfu",
+			"nameAr": "إدفو",
+			"mentions": 1,
+			"pages": [
+				55
+			],
+			"level": "city",
+			"lat": 24.98028,
+			"lng": 32.87472,
+			"osm": "way/544329301"
+		},
+		{
+			"id": "e0192",
+			"type": "place",
+			"name": "Egyptian countryside",
+			"nameAr": "الريف المصري",
+			"mentions": 1,
+			"pages": [
+				47
+			]
+		},
+		{
+			"id": "e0193",
+			"type": "place",
+			"name": "El Qanater El Khayreya",
+			"nameAr": "القناطر الخيرية",
+			"mentions": 1,
+			"pages": [],
+			"level": "city",
+			"lat": 30.19662,
+			"lng": 31.13391,
+			"osm": "node/768553824"
+		},
+		{
+			"id": "e0194",
+			"type": "place",
+			"name": "Fayed",
+			"nameAr": "فايد",
+			"mentions": 1,
+			"pages": [],
+			"level": "city",
+			"lat": 30.32848,
+			"lng": 32.30078,
+			"osm": "node/3783957266"
+		},
+		{
+			"id": "e0195",
+			"type": "place",
+			"name": "Gaza",
+			"nameAr": "غزة",
+			"mentions": 1,
+			"pages": [
+				50
+			],
+			"level": "city",
+			"lat": 31.50626,
+			"lng": 34.4616,
+			"osm": "node/14189516474"
+		},
+		{
+			"id": "e0196",
+			"type": "place",
+			"name": "International Garden",
+			"nameAr": "الحديقة الدولية",
+			"mentions": 1,
+			"pages": [
+				52,
+				53
+			],
+			"level": "site",
+			"lat": 30.04915,
+			"lng": 31.33655,
+			"osm": "way/24784187"
+		},
+		{
+			"id": "e0197",
+			"type": "place",
+			"name": "Kobri el-Limoun",
+			"nameAr": "كوبري الليمون",
+			"mentions": 1,
+			"pages": [
+				11,
+				12
+			],
+			"level": "site",
+			"lat": 30.0619,
+			"lng": 31.24592,
+			"osm": "way/673822616"
+		},
+		{
+			"id": "e0198",
+			"type": "place",
+			"name": "Marrakesh",
+			"nameAr": "مراكش",
+			"mentions": 1,
+			"pages": [
+				22
+			],
+			"level": "city",
+			"lat": 31.62583,
+			"lng": -7.98916,
+			"osm": "relation/2799538"
+		},
+		{
+			"id": "e0199",
+			"type": "place",
+			"name": "Matrouh",
+			"nameAr": "مطروح",
+			"mentions": 1,
+			"pages": [
+				47,
+				48
+			],
+			"level": "region",
+			"lat": 29.78764,
+			"lng": 27.42704,
+			"osm": "relation/3061826"
+		},
+		{
+			"id": "e0200",
+			"type": "place",
+			"name": "Menouf",
+			"nameAr": "منوف",
+			"mentions": 1,
+			"pages": [],
+			"level": "city",
+			"lat": 30.46269,
+			"lng": 30.93888,
+			"osm": "node/5741713896"
+		},
+		{
+			"id": "e0201",
+			"type": "place",
+			"name": "Menoufia",
+			"nameAr": "المنوفية",
+			"mentions": 1,
+			"pages": [
+				47,
+				48
+			],
+			"level": "region",
+			"lat": 30.55805,
+			"lng": 31.0189,
+			"osm": "way/1450083918"
+		},
+		{
+			"id": "e0202",
+			"type": "place",
+			"name": "Misr Station Square",
+			"nameAr": "ميدان محطة مصر",
+			"mentions": 1,
+			"pages": [
+				11,
+				12
+			],
+			"level": "site",
+			"lat": 30.06185,
+			"lng": 31.24602,
+			"osm": "node/5194295702"
+		},
+		{
+			"id": "e0203",
+			"type": "place",
+			"name": "Nigeria",
+			"nameAr": "نيجيريا",
+			"mentions": 1,
+			"pages": [],
+			"level": "country",
+			"lat": 9.60004,
+			"lng": 7.99997,
+			"osm": "relation/192787"
+		},
+		{
+			"id": "e0204",
+			"type": "place",
+			"name": "Nile",
+			"nameAr": "النيل",
+			"mentions": 1,
+			"pages": [
+				42
+			],
+			"level": "site",
+			"lat": 22.72438,
+			"lng": 32.10533,
+			"osm": "relation/50793"
+		},
+		{
+			"id": "e0205",
+			"type": "place",
+			"name": "Philippines",
+			"nameAr": "الفلبين",
+			"mentions": 1,
+			"pages": [],
+			"level": "country",
+			"lat": 12.75035,
+			"lng": 122.73121,
+			"osm": "relation/443174"
+		},
+		{
+			"id": "e0206",
+			"type": "place",
+			"name": "Piraeus",
+			"nameAr": "بيريه",
+			"mentions": 1,
+			"pages": [
+				25,
+				26
+			],
+			"level": "city",
+			"lat": 37.94316,
+			"lng": 23.64706,
+			"osm": "node/154089041"
+		},
+		{
+			"id": "e0207",
+			"type": "place",
+			"name": "Place de l'Opéra",
+			"nameAr": "ميدان الأوبرا",
+			"mentions": 1,
+			"pages": [],
+			"level": "site",
+			"lat": 48.87019,
+			"lng": 2.33263,
+			"osm": "way/83537399"
+		},
+		{
+			"id": "e0208",
+			"type": "place",
+			"name": "Prague",
+			"nameAr": "براغ",
+			"mentions": 1,
+			"pages": [
+				25,
+				26
+			],
+			"level": "city",
+			"lat": 50.08747,
+			"lng": 14.42125,
+			"osm": "relation/435514"
+		},
+		{
+			"id": "e0209",
+			"type": "place",
+			"name": "Pyramids",
+			"nameAr": "الأهرام",
+			"mentions": 1,
+			"pages": [
+				8
+			],
+			"level": "site",
+			"lat": 29.97078,
+			"lng": 31.12423,
+			"osm": "way/73227488"
+		},
+		{
+			"id": "e0210",
+			"type": "place",
+			"name": "Qena",
+			"nameAr": "قنا",
+			"mentions": 1,
+			"pages": [
+				47,
+				48
+			],
+			"level": "region",
+			"lat": 26.24083,
+			"lng": 32.90842,
+			"osm": "relation/3726189"
+		},
+		{
+			"id": "e0211",
+			"type": "place",
+			"name": "Ramses Square",
+			"nameAr": "ميدان المحطة (رمسيس)",
+			"mentions": 1,
+			"pages": [
+				60
+			],
+			"level": "site",
+			"lat": 30.06185,
+			"lng": 31.24602,
+			"osm": "node/5194295702"
+		},
+		{
+			"id": "e0212",
+			"type": "place",
+			"name": "Red Sea",
+			"nameAr": "البحر الأحمر",
+			"mentions": 1,
+			"pages": [
+				54
+			],
+			"level": "region",
+			"lat": 24.66018,
+			"lng": 34.13999,
+			"osm": "relation/3061758"
+		},
+		{
+			"id": "e0213",
+			"type": "place",
+			"name": "Rhine",
+			"nameAr": "الراين",
+			"mentions": 1,
+			"pages": [
+				39,
+				40
+			],
+			"level": "region",
+			"lat": 50.46776,
+			"lng": 7.35199,
+			"osm": "relation/123924"
+		},
+		{
+			"id": "e0214",
+			"type": "place",
+			"name": "Shubra al-Balad",
+			"nameAr": "شبرا البلد",
+			"mentions": 1,
+			"pages": [
+				12
+			],
+			"level": "district",
+			"lat": 30.06698,
+			"lng": 31.24512,
+			"osm": "way/45928742"
+		},
+		{
+			"id": "e0215",
+			"type": "place",
+			"name": "Sidi Abdel Rahman",
+			"nameAr": "سيدي عبد الرحمن",
+			"mentions": 1,
+			"pages": [
+				55
+			],
+			"level": "district",
+			"lat": 30.96515,
+			"lng": 28.74325,
+			"osm": "node/768812338"
+		},
+		{
+			"id": "e0216",
+			"type": "place",
+			"name": "Sudan",
+			"nameAr": "السودان",
+			"mentions": 1,
+			"pages": [
+				36
+			],
+			"level": "country",
+			"lat": 14.58444,
+			"lng": 29.49177,
+			"osm": "relation/192789"
+		},
+		{
+			"id": "e0217",
+			"type": "place",
+			"name": "Suez Canal",
+			"nameAr": "قناة السويس",
+			"mentions": 1,
+			"pages": [
+				118
+			],
+			"level": "site",
+			"lat": 30.60528,
+			"lng": 32.3331,
+			"osm": "relation/7719838"
+		},
+		{
+			"id": "e0218",
+			"type": "place",
+			"name": "Susteren",
+			"nameAr": "سوسترين",
+			"mentions": 1,
+			"pages": [
+				40
+			],
+			"level": "city",
+			"lat": 51.06542,
+			"lng": 5.85189,
+			"osm": "relation/1419386"
+		},
+		{
+			"id": "e0219",
+			"type": "place",
+			"name": "The Hague",
+			"nameAr": "لاهاي",
+			"mentions": 1,
+			"pages": [
+				40
+			],
+			"level": "city",
+			"lat": 52.07998,
+			"lng": 4.31135,
+			"osm": "relation/192737"
+		},
+		{
+			"id": "e0220",
+			"type": "place",
+			"name": "Vatican",
+			"nameAr": "الفاتيكان",
+			"mentions": 1,
+			"pages": [
+				38
+			],
+			"level": "country",
+			"lat": 41.90349,
+			"lng": 12.45283,
+			"osm": "node/424311883"
+		},
+		{
+			"id": "e0221",
+			"type": "place",
+			"name": "Venice",
+			"nameAr": "فينسيا",
+			"mentions": 1,
+			"pages": [
+				25,
+				26
+			],
+			"level": "city",
+			"lat": 45.43719,
+			"lng": 12.33459,
+			"osm": "relation/44741"
+		},
+		{
+			"id": "e0222",
+			"type": "place",
+			"name": "Wikalat al-Balah",
+			"nameAr": "وكالة البلح",
+			"mentions": 1,
+			"pages": [
+				13
+			],
+			"level": "site",
+			"lat": 30.06094,
+			"lng": 31.22839,
+			"osm": "node/1133540892"
+		},
+		{
+			"id": "e0223",
+			"type": "place",
+			"name": "Zeitoun",
+			"nameAr": "الزيتون",
+			"mentions": 1,
+			"pages": [
+				58,
+				59
+			],
+			"level": "district",
+			"lat": 30.115,
+			"lng": 31.31363,
+			"osm": "way/646601658"
+		},
+		{
+			"id": "e0224",
+			"type": "organisation",
+			"name": "Hassan Heshmat Museum",
+			"nameAr": "متحف حسن حشمت",
+			"mentions": 22,
+			"pages": [
+				34,
+				35,
+				47,
+				48,
+				51,
+				56,
+				116,
+				117,
+				118
+			],
+			"record": "artwork:3",
+			"years": [
+				1961,
+				1964,
+				1967,
+				1972,
+				1974,
+				1983,
+				1998
+			]
+		},
+		{
+			"id": "e0235",
+			"type": "organisation",
+			"name": "Museum of Egyptian Modern Art",
+			"nameAr": "متحف الفن الحديث بالقاهرة",
+			"mentions": 4,
+			"pages": [
+				53
+			],
+			"record": "artwork:2",
+			"years": [
+				1996
+			]
+		},
+		{
+			"id": "e0236",
+			"type": "organisation",
+			"name": "National Museum in Warsaw",
+			"nameAr": "المتحف الأهلي بوارسو",
+			"mentions": 4,
+			"pages": [
+				26
+			],
+			"record": "artwork:22"
+		},
+		{
+			"id": "e0237",
+			"type": "organisation",
+			"name": "Cairo International Stadium",
+			"nameAr": "استاد القاهرة الدولي",
+			"mentions": 3,
+			"pages": [
+				47,
+				48,
+				117
+			],
+			"record": "artwork:41",
+			"years": [
+				1974
+			]
+		},
+		{
+			"id": "e0239",
+			"type": "organisation",
+			"name": "Musée de l'Homme",
+			"nameAr": "متحف الإنسان",
+			"mentions": 3,
+			"pages": [
+				27
+			],
+			"record": "artwork:37",
+			"years": [
+				1956
+			]
+		},
+		{
+			"id": "e0243",
+			"type": "organisation",
+			"name": "Sheraton Heliopolis",
+			"nameAr": "فندق شيراتون هليوبوليس",
+			"mentions": 3,
+			"pages": [
+				55,
+				117,
+				118
+			],
+			"record": "artwork:11"
+		},
+		{
+			"id": "e0248",
+			"type": "organisation",
+			"name": "Armed Forces Officers Club",
+			"nameAr": "نادي الضباط بالزمالك",
+			"mentions": 2,
+			"pages": [
+				54
+			],
+			"record": "artwork:13"
+		},
+		{
+			"id": "e0250",
+			"type": "organisation",
+			"name": "Beijing Museum",
+			"nameAr": "متحف بكين",
+			"mentions": 2,
+			"pages": [],
+			"record": "artwork:38"
+		},
+		{
+			"id": "e0259",
+			"type": "organisation",
+			"name": "Heilig Kruiskerk",
+			"nameAr": "كنيسة بلجيكا",
+			"mentions": 2,
+			"pages": [
+				45
+			],
+			"record": "artwork:18",
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0263",
+			"type": "organisation",
+			"name": "Jollyville Mövenpick Hotel",
+			"nameAr": "فندق جولي فيل بالهرم",
+			"mentions": 2,
+			"pages": [
+				55,
+				117
+			],
+			"record": "artwork:12"
+		},
+		{
+			"id": "e0264",
+			"type": "organisation",
+			"name": "Le Méridien Heliopolis",
+			"nameAr": "فندق ميريديان هليوبوليس",
+			"mentions": 2,
+			"pages": [
+				55,
+				118
+			],
+			"record": "artwork:15"
+		},
+		{
+			"id": "e0266",
+			"type": "organisation",
+			"name": "Museum of Applied Arts, Budapest",
+			"nameAr": "متحف الفن التطبيقي في بودابست",
+			"mentions": 2,
+			"pages": [],
+			"record": "artwork:36"
+		},
+		{
+			"id": "e0267",
+			"type": "organisation",
+			"name": "Nasser Military Academy",
+			"nameAr": "أكاديمية ناصر العسكرية",
+			"mentions": 2,
+			"pages": [
+				54
+			],
+			"record": "artwork:33"
+		},
+		{
+			"id": "e0272",
+			"type": "organisation",
+			"name": "Sheraton Gezirah Hotel",
+			"nameAr": "فندق شيراتون الجزيرة",
+			"mentions": 2,
+			"pages": [
+				55,
+				117
+			],
+			"record": "artwork:10"
+		},
+		{
+			"id": "e0274",
+			"type": "organisation",
+			"name": "State College of Porcelain, Selb",
+			"nameAr": "أكاديمية البورسلين",
+			"mentions": 2,
+			"pages": [
+				30,
+				66
+			],
+			"record": "artwork:24",
+			"years": [
+				1957,
+				1958
+			]
+		},
+		{
+			"id": "e0277",
+			"type": "organisation",
+			"name": "Agricultural Museum",
+			"nameAr": "المتحف الزراعي",
+			"mentions": 1,
+			"pages": [
+				117
+			],
+			"record": "artwork:1"
+		},
+		{
+			"id": "e0333",
+			"type": "organisation",
+			"name": "Kafraoui Park",
+			"nameAr": "حديقة الكفراوي",
+			"mentions": 1,
+			"pages": [],
+			"record": "artwork:9"
+		},
+		{
+			"id": "e0356",
+			"type": "organisation",
+			"name": "Panorama October",
+			"nameAr": "بانوراما أكتوبر",
+			"mentions": 1,
+			"pages": [
+				118
+			],
+			"record": "artwork:16",
+			"years": [
+				1979
+			]
+		},
+		{
+			"id": "e0366",
+			"type": "organisation",
+			"name": "Small museum in the public park of 10th of Ramadan City",
+			"nameAr": "المتحف الصغير بالحديقة العامة بمدينة العاشر من رمضان",
+			"mentions": 1,
+			"pages": [
+				10
+			],
+			"record": "artwork:9"
+		},
+		{
+			"id": "e0367",
+			"type": "organisation",
+			"name": "St. Therese Armenian Catholic Church",
+			"nameAr": "كنيسة الأرمن بمصر الجديدة",
+			"mentions": 1,
+			"pages": [
+				55
+			],
+			"record": "artwork:17"
+		},
+		{
+			"id": "e0376",
+			"type": "artwork",
+			"name": "Launch of Industry in Egypt",
+			"nameAr": "انطلاق الصناعة بمصر",
+			"mentions": 6,
+			"pages": [
+				52,
+				118
+			],
+			"record": "artwork:6",
+			"years": [
+				1992,
+				1994
+			]
+		},
+		{
+			"id": "e0377",
+			"type": "artwork",
+			"name": "Memorial for a church in Belgium",
+			"nameAr": "النصب التذكارى لكنيسة بلجيكا",
+			"mentions": 6,
+			"pages": [
+				40,
+				45,
+				117
+			],
+			"record": "artwork:18",
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0378",
+			"type": "artwork",
+			"name": "Agiba Statue",
+			"nameAr": "تمثال عجيبة",
+			"mentions": 5,
+			"pages": [
+				10,
+				52,
+				53,
+				118
+			],
+			"record": "artwork:14",
+			"years": [
+				1995
+			]
+		},
+		{
+			"id": "e0379",
+			"type": "artwork",
+			"name": "Mermaid with Wings",
+			"nameAr": "عروس البحر",
+			"mentions": 4,
+			"pages": [
+				54,
+				117
+			],
+			"record": "artwork:28"
+		},
+		{
+			"id": "e0380",
+			"type": "artwork",
+			"name": "Female Peasants with Breadbasket",
+			"nameAr": "تمثال الفلاحتين",
+			"mentions": 3,
+			"pages": [
+				51,
+				117
+			],
+			"record": "artwork:20",
+			"years": [
+				1985
+			]
+		},
+		{
+			"id": "e0381",
+			"type": "artwork",
+			"name": "The Dawn of Egypt",
+			"nameAr": "انطلاقة مصر",
+			"mentions": 3,
+			"pages": [
+				55,
+				118
+			],
+			"record": "artwork:5",
+			"years": [
+				1982
+			]
+		},
+		{
+			"id": "e0382",
+			"type": "artwork",
+			"name": "The Proud Son of the Country",
+			"nameAr": "ابن البلد المعتز",
+			"mentions": 3,
+			"pages": [
+				55,
+				117
+			]
+		},
+		{
+			"id": "e0383",
+			"type": "artwork",
+			"name": "The Stable Family",
+			"nameAr": "الأسرة المستقرة",
+			"mentions": 3,
+			"pages": [
+				55,
+				117
+			],
+			"record": "artwork:32",
+			"years": [
+				1974
+			]
+		},
+		{
+			"id": "e0384",
+			"type": "artwork",
+			"name": "Mykerinos Triad",
+			"nameAr": "ثلاثي منقرع",
+			"mentions": 2,
+			"pages": [
+				116
+			],
+			"record": "artwork:31"
+		},
+		{
+			"id": "e0385",
+			"type": "artwork",
+			"name": "Nefertiti Statue",
+			"nameAr": "تمثال نفرتيتي",
+			"mentions": 2,
+			"pages": [
+				61,
+				116
+			],
+			"years": [
+				1959
+			]
+		},
+		{
+			"id": "e0386",
+			"type": "artwork",
+			"name": "Obelisk Body of Egypt",
+			"nameAr": "المسلة جسم مصر",
+			"mentions": 2,
+			"pages": [
+				56,
+				118
+			],
+			"record": "artwork:8",
+			"years": [
+				1994
+			]
+		},
+		{
+			"id": "e0387",
+			"type": "artwork",
+			"name": "Peasant Woman with Basket",
+			"nameAr": "فلاحة بالمشنة",
+			"mentions": 2,
+			"pages": [
+				116
+			],
+			"years": [
+				1954,
+				1968
+			]
+		},
+		{
+			"id": "e0388",
+			"type": "artwork",
+			"name": "The Gallant Son of the Country",
+			"nameAr": "ابن البلد الشهم",
+			"mentions": 2,
+			"pages": [
+				117
+			]
+		},
+		{
+			"id": "e0389",
+			"type": "artwork",
+			"name": "Welcome",
+			"nameAr": "الترحيب",
+			"mentions": 2,
+			"pages": [
+				117,
+				118
+			],
+			"record": "artwork:11",
+			"years": [
+				1980
+			]
+		},
+		{
+			"id": "e0390",
+			"type": "artwork",
+			"name": "Bedouin Woman Spinning",
+			"nameAr": "البدوية تغزل",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1954
+			]
+		},
+		{
+			"id": "e0391",
+			"type": "artwork",
+			"name": "Bronze statue of the aluminium complex founder",
+			"nameAr": "تمثال مؤسس مجمع الألومنيوم",
+			"mentions": 1,
+			"pages": [
+				55
+			]
+		},
+		{
+			"id": "e0392",
+			"type": "artwork",
+			"name": "Ceramic Panels at a Swimming Pool",
+			"nameAr": "لوحات خزفية على حائط حمام سباحة",
+			"mentions": 1,
+			"pages": [
+				117
+			],
+			"record": "artwork:19",
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0393",
+			"type": "artwork",
+			"name": "Ceramic panel, Dayton Ohio",
+			"nameAr": "لوحة خزفية في ديتون أوهايو",
+			"mentions": 1,
+			"pages": [
+				55
+			],
+			"record": "artwork:43"
+		},
+		{
+			"id": "e0394",
+			"type": "artwork",
+			"name": "Crossing the Impossible",
+			"nameAr": "عبور المستحيل",
+			"mentions": 1,
+			"pages": [
+				118
+			],
+			"record": "artwork:16",
+			"years": [
+				1979
+			]
+		},
+		{
+			"id": "e0395",
+			"type": "artwork",
+			"name": "Daughter of the Nile",
+			"nameAr": "بنت النيل",
+			"mentions": 1,
+			"pages": [
+				117
+			],
+			"record": "artwork:12"
+		},
+		{
+			"id": "e0396",
+			"type": "artwork",
+			"name": "Egypt Rising with Two Wings",
+			"nameAr": "مصر ترتفع بجناحين",
+			"mentions": 1,
+			"pages": [
+				118
+			],
+			"years": [
+				1972
+			]
+		},
+		{
+			"id": "e0397",
+			"type": "artwork",
+			"name": "Egypt, a Blooming Rose",
+			"nameAr": "مصر وردة متفتحة",
+			"mentions": 1,
+			"pages": [
+				117
+			],
+			"record": "artwork:1"
+		},
+		{
+			"id": "e0398",
+			"type": "artwork",
+			"name": "Horus Statue",
+			"nameAr": "تمثال حورس",
+			"mentions": 1,
+			"pages": [
+				118
+			],
+			"record": "artwork:15"
+		},
+		{
+			"id": "e0399",
+			"type": "artwork",
+			"name": "Licorice Drink Seller",
+			"nameAr": "بائع العرقسوس بالبورسلين",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1968
+			]
+		},
+		{
+			"id": "e0400",
+			"type": "artwork",
+			"name": "Mosaic panel on the achievements of the Revolution",
+			"nameAr": "لوحة موزاييك عن أعمال الثورة",
+			"mentions": 1,
+			"pages": [
+				54
+			]
+		},
+		{
+			"id": "e0401",
+			"type": "artwork",
+			"name": "Motherhood Vase",
+			"nameAr": "زهرية الأمومة",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1953
+			]
+		},
+		{
+			"id": "e0402",
+			"type": "artwork",
+			"name": "Motherhood on the Shoulder",
+			"nameAr": "أمومة على الكتف",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1958
+			]
+		},
+		{
+			"id": "e0403",
+			"type": "artwork",
+			"name": "Olive Branch Vase",
+			"nameAr": "زهرية غصن السلام",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1954
+			]
+		},
+		{
+			"id": "e0404",
+			"type": "artwork",
+			"name": "Open-air sculpture museum, 10th of Ramadan City",
+			"nameAr": "المتحف المفتوح بمدينة العاشر من رمضان",
+			"mentions": 1,
+			"pages": [
+				55
+			],
+			"record": "artwork:9"
+		},
+		{
+			"id": "e0405",
+			"type": "artwork",
+			"name": "Rababa Player",
+			"nameAr": "تمثال عازف الربابة",
+			"mentions": 1,
+			"pages": [
+				15
+			]
+		},
+		{
+			"id": "e0406",
+			"type": "artwork",
+			"name": "Return of the Spirit",
+			"nameAr": "تمثال عودة الروح",
+			"mentions": 1,
+			"pages": [
+				118
+			]
+		},
+		{
+			"id": "e0407",
+			"type": "artwork",
+			"name": "Statue of Spinning",
+			"nameAr": "تمثال الغزل",
+			"mentions": 1,
+			"pages": [
+				117
+			],
+			"record": "artwork:10"
+		},
+		{
+			"id": "e0408",
+			"type": "artwork",
+			"name": "Statue of the Crossing",
+			"nameAr": "تمثال العبور",
+			"mentions": 1,
+			"pages": [
+				48
+			]
+		},
+		{
+			"id": "e0409",
+			"type": "artwork",
+			"name": "Statues of the creators of the Armenian script",
+			"nameAr": "تمثالان لمبدعي الخط الأرمني",
+			"mentions": 1,
+			"pages": [
+				55
+			],
+			"record": "artwork:17"
+		},
+		{
+			"id": "e0410",
+			"type": "artwork",
+			"name": "Stone facade and statue at the airline's Paris office",
+			"nameAr": "واجهة حجرية وتمثال حجري لمكتب الشركة بباريس",
+			"mentions": 1,
+			"pages": [
+				34
+			],
+			"record": "artwork:31"
+		},
+		{
+			"id": "e0411",
+			"type": "artwork",
+			"name": "Stone panel at Nasser Military Academy entrance",
+			"nameAr": "لوحة حجرية بمدخل أكاديمية ناصر العسكرية",
+			"mentions": 1,
+			"pages": [
+				54
+			],
+			"record": "artwork:33"
+		},
+		{
+			"id": "e0412",
+			"type": "artwork",
+			"name": "Stone panel on the Officers Club theatre, Zamalek",
+			"nameAr": "لوحة حجرية على مسرح نادي الضباط بالزمالك",
+			"mentions": 1,
+			"pages": [
+				54
+			],
+			"record": "artwork:13"
+		},
+		{
+			"id": "e0413",
+			"type": "artwork",
+			"name": "Stone statue of President Nasser",
+			"nameAr": "تمثال الرئيس جمال عبد الناصر بالغردقة",
+			"mentions": 1,
+			"pages": [
+				54
+			]
+		},
+		{
+			"id": "e0414",
+			"type": "artwork",
+			"name": "Symbol of Matrouh Governorate",
+			"nameAr": "رمز محافظة مطروح",
+			"mentions": 1,
+			"pages": [
+				117
+			]
+		},
+		{
+			"id": "e0415",
+			"type": "artwork",
+			"name": "The Family like Pyramids",
+			"nameAr": "الأسرة كالأهرام والأب كالهرم الأكبر",
+			"mentions": 1,
+			"pages": [
+				118
+			]
+		},
+		{
+			"id": "e0416",
+			"type": "artwork",
+			"name": "The Farmer's Family",
+			"nameAr": "أسرة الفلاح",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1953
+			]
+		},
+		{
+			"id": "e0417",
+			"type": "artwork",
+			"name": "The Gift of Motherhood",
+			"nameAr": "عطاء الأمومة",
+			"mentions": 1,
+			"pages": [
+				117
+			],
+			"record": "artwork:34"
+		},
+		{
+			"id": "e0418",
+			"type": "artwork",
+			"name": "The Lion",
+			"nameAr": "الأسد",
+			"mentions": 1,
+			"pages": [
+				118
+			],
+			"record": "artwork:8"
+		},
+		{
+			"id": "e0419",
+			"type": "artwork",
+			"name": "The Peasant",
+			"nameAr": "الفلاح",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1953
+			]
+		},
+		{
+			"id": "e0420",
+			"type": "artwork",
+			"name": "The Rooster",
+			"nameAr": "الديك",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1953
+			]
+		},
+		{
+			"id": "e0421",
+			"type": "artwork",
+			"name": "Three Peasant Women Mosaic",
+			"nameAr": "لوحة الثلاث فلاحات",
+			"mentions": 1,
+			"pages": [
+				117
+			],
+			"years": [
+				1961
+			]
+		},
+		{
+			"id": "e0422",
+			"type": "artwork",
+			"name": "Transparency of Love",
+			"nameAr": "شفافية الحب",
+			"mentions": 1,
+			"pages": []
+		},
+		{
+			"id": "e0423",
+			"type": "artwork",
+			"name": "Two Doves",
+			"nameAr": "حمامتان",
+			"mentions": 1,
+			"pages": [
+				116
+			],
+			"years": [
+				1954
+			]
+		},
+		{
+			"id": "e0424",
+			"type": "exhibition",
+			"name": "Geneva, 1968",
+			"nameAr": "معرض جنيف",
+			"mentions": 3,
+			"pages": [
+				38,
+				116
+			],
+			"years": [
+				1968
+			]
+		},
+		{
+			"id": "e0425",
+			"type": "exhibition",
+			"name": "Akhenaten Hall, Cairo, 1969",
+			"nameAr": "معرض قاعة إخناتون",
+			"mentions": 2,
+			"pages": [
+				43
+			],
+			"years": [
+				1969
+			]
+		},
+		{
+			"id": "e0426",
+			"type": "exhibition",
+			"name": "Bavaria, 1958",
+			"nameAr": "معرض بافاريا",
+			"mentions": 2,
+			"pages": [
+				30
+			],
+			"years": [
+				1958
+			]
+		},
+		{
+			"id": "e0427",
+			"type": "exhibition",
+			"name": "Belgium, 1970",
+			"nameAr": "معرض مصاحب لافتتاح النصب التذكارى في بلجيكا",
+			"mentions": 2,
+			"pages": [
+				45
+			],
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0428",
+			"type": "exhibition",
+			"name": "Budapest, 1957",
+			"nameAr": "معرض بودابست",
+			"mentions": 2,
+			"pages": [
+				30
+			],
+			"years": [
+				1957
+			]
+		},
+		{
+			"id": "e0429",
+			"type": "exhibition",
+			"name": "Florence",
+			"nameAr": "المعرض الدولي بفلورنسا",
+			"mentions": 2,
+			"pages": [
+				30
+			]
+		},
+		{
+			"id": "e0430",
+			"type": "exhibition",
+			"name": "Galleon Hall, Cairo, 1959",
+			"nameAr": "معرض قاعة الغليون",
+			"mentions": 2,
+			"pages": [
+				31
+			],
+			"years": [
+				1959
+			]
+		},
+		{
+			"id": "e0431",
+			"type": "exhibition",
+			"name": "Goldenberg Hall, Cairo, 1938",
+			"nameAr": "معرض دفعة التخرج في قاعة جولدنبرج",
+			"mentions": 2,
+			"pages": [
+				53,
+				60
+			],
+			"years": [
+				1938
+			]
+		},
+		{
+			"id": "e0432",
+			"type": "exhibition",
+			"name": "Kuwait Museum, Kuwait, 1973",
+			"nameAr": "معرض الكويت",
+			"mentions": 2,
+			"pages": [
+				46,
+				59,
+				60
+			],
+			"years": [
+				1973
+			]
+		},
+		{
+			"id": "e0433",
+			"type": "exhibition",
+			"name": "London, 1956",
+			"nameAr": "معرض لندن",
+			"mentions": 2,
+			"pages": [
+				27,
+				28
+			],
+			"years": [
+				1956
+			]
+		},
+		{
+			"id": "e0434",
+			"type": "exhibition",
+			"name": "Palermo",
+			"nameAr": "المعرض الدولي بباليرمو",
+			"mentions": 2,
+			"pages": [
+				30
+			]
+		},
+		{
+			"id": "e0436",
+			"type": "exhibition",
+			"name": "Ain Shams University, Cairo, 1975",
+			"nameAr": "معرض جماعي بجامعة عين شمس",
+			"mentions": 1,
+			"pages": [],
+			"years": [
+				1975
+			]
+		},
+		{
+			"id": "e0437",
+			"type": "exhibition",
+			"name": "Aladdin Hall, Cairo, 1953",
+			"nameAr": "المعرض الخاص الأول بقاعة علاء الدين",
+			"mentions": 1,
+			"pages": [],
+			"years": [
+				1953
+			]
+		},
+		{
+			"id": "e0438",
+			"type": "exhibition",
+			"name": "Aladdin Hall, Cairo, 1954",
+			"nameAr": "المعرض الثاني (١٩٥٤)",
+			"mentions": 1,
+			"pages": [
+				20
+			],
+			"years": [
+				1954
+			]
+		},
+		{
+			"id": "e0439",
+			"type": "exhibition",
+			"name": "Alexandria, 1959",
+			"nameAr": "معرض الإسكندرية ١٩٥٩",
+			"mentions": 1,
+			"pages": [
+				31
+			],
+			"years": [
+				1959
+			]
+		},
+		{
+			"id": "e0440",
+			"type": "exhibition",
+			"name": "Atelier Hall, Alexandria, 1955",
+			"nameAr": "المعرض الثالث بقاعة الأتيليه بالإسكندرية",
+			"mentions": 1,
+			"pages": [
+				22
+			],
+			"years": [
+				1955
+			]
+		},
+		{
+			"id": "e0441",
+			"type": "exhibition",
+			"name": "Atelier Hall, Alexandria, 1970",
+			"nameAr": "معرض الإسكندرية الثاني بقاعة الأتيليه",
+			"mentions": 1,
+			"pages": [
+				44
+			],
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0442",
+			"type": "exhibition",
+			"name": "Atelier du Caire, Cairo",
+			"nameAr": "معرض جماعي بالأتيليه",
+			"mentions": 1,
+			"pages": []
+		},
+		{
+			"id": "e0443",
+			"type": "exhibition",
+			"name": "Baron's castle, Denmark, 1978",
+			"nameAr": "معرض في القصر بالدانمارك",
+			"mentions": 1,
+			"pages": [
+				50
+			],
+			"years": [
+				1978
+			]
+		},
+		{
+			"id": "e0444",
+			"type": "exhibition",
+			"name": "Beijing",
+			"nameAr": "معرض بكين",
+			"mentions": 1,
+			"pages": [
+				30
+			]
+		},
+		{
+			"id": "e0445",
+			"type": "exhibition",
+			"name": "Bengtsson Hall, Stockholm, 1970",
+			"nameAr": "معرض ستوكهولم الثاني",
+			"mentions": 1,
+			"pages": [
+				45
+			],
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0446",
+			"type": "exhibition",
+			"name": "Berlin",
+			"nameAr": "معرض برلين",
+			"mentions": 1,
+			"pages": [
+				54
+			]
+		},
+		{
+			"id": "e0447",
+			"type": "exhibition",
+			"name": "Cairo, 1946",
+			"nameAr": "معرض دولي بالقاهرة ١٩٤٦",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"years": [
+				1946
+			]
+		},
+		{
+			"id": "e0448",
+			"type": "exhibition",
+			"name": "Cairo, 1950",
+			"nameAr": "معرض دولي للفنون التطبيقية بالقاهرة",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"years": [
+				1950
+			]
+		},
+		{
+			"id": "e0449",
+			"type": "exhibition",
+			"name": "Cairo, 1955",
+			"nameAr": "المعرض الرابع",
+			"mentions": 1,
+			"pages": [
+				23
+			],
+			"years": [
+				1955
+			]
+		},
+		{
+			"id": "e0450",
+			"type": "exhibition",
+			"name": "Cultural Centre, Bad Godesberg, 1970",
+			"nameAr": "معرض باد جودسبرج",
+			"mentions": 1,
+			"pages": [
+				45
+			],
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0451",
+			"type": "exhibition",
+			"name": "Damascus, 1960",
+			"nameAr": "معرض دمشق",
+			"mentions": 1,
+			"pages": [
+				32
+			],
+			"years": [
+				1960
+			]
+		},
+		{
+			"id": "e0452",
+			"type": "exhibition",
+			"name": "Egyptian Centre for International Cultural Cooperation, Cairo, 1974",
+			"nameAr": "معرض المركز المصري للتعاون الثقافي الدولي",
+			"mentions": 1,
+			"pages": [
+				48
+			],
+			"years": [
+				1974
+			]
+		},
+		{
+			"id": "e0454",
+			"type": "exhibition",
+			"name": "Foreign Diplomats Centre, Cairo, 1980",
+			"nameAr": "معرض مركز الدبلوماسيين الأجانب",
+			"mentions": 1,
+			"pages": [
+				51,
+				52
+			],
+			"years": [
+				1980
+			]
+		},
+		{
+			"id": "e0455",
+			"type": "exhibition",
+			"name": "Foreign Diplomats Hall, Cairo, 1969",
+			"nameAr": "معرض قاعة الدبلوماسيين الأجانب",
+			"mentions": 1,
+			"pages": [
+				34,
+				35
+			],
+			"years": [
+				1969
+			]
+		},
+		{
+			"id": "e0456",
+			"type": "exhibition",
+			"name": "Frankfurt, 1968",
+			"nameAr": "معرض فرانكفورت",
+			"mentions": 1,
+			"pages": [
+				39,
+				40
+			],
+			"years": [
+				1968
+			]
+		},
+		{
+			"id": "e0457",
+			"type": "exhibition",
+			"name": "Goethe-Institut Cairo, 1977",
+			"nameAr": "معرض معهد جوته الألماني",
+			"mentions": 1,
+			"pages": [
+				48
+			],
+			"years": [
+				1977
+			]
+		},
+		{
+			"id": "e0458",
+			"type": "exhibition",
+			"name": "Hassan Heshmat Museum, Ain Shams, 1967",
+			"nameAr": "معرض متحف عين شمس 1967",
+			"mentions": 1,
+			"pages": [
+				34,
+				35
+			],
+			"years": [
+				1967
+			]
+		},
+		{
+			"id": "e0459",
+			"type": "exhibition",
+			"name": "Hotel St. Georges, Beirut, 1969",
+			"nameAr": "معرض بيروت",
+			"mentions": 1,
+			"pages": [],
+			"years": [
+				1969
+			]
+		},
+		{
+			"id": "e0460",
+			"type": "exhibition",
+			"name": "Hungary, 1957 (Egyptian travelling general exhibition)",
+			"nameAr": "المعرض المصرى العام المتجول",
+			"mentions": 1,
+			"pages": [],
+			"years": [
+				1957
+			]
+		},
+		{
+			"id": "e0461",
+			"type": "exhibition",
+			"name": "Norway, 1970",
+			"nameAr": "معرض النرويج الأول",
+			"mentions": 1,
+			"pages": [
+				46
+			],
+			"years": [
+				1970
+			]
+		},
+		{
+			"id": "e0462",
+			"type": "exhibition",
+			"name": "Rome, 1967",
+			"nameAr": "معرض روما",
+			"mentions": 1,
+			"pages": [
+				36
+			],
+			"years": [
+				1967
+			]
+		},
+		{
+			"id": "e0463",
+			"type": "exhibition",
+			"name": "Roskilde, 1978",
+			"nameAr": "معرض في روسكيلده",
+			"mentions": 1,
+			"pages": [
+				50
+			],
+			"years": [
+				1978
+			]
+		},
+		{
+			"id": "e0464",
+			"type": "exhibition",
+			"name": "Society of Fine Arts Lovers Salon, Cairo, 1938",
+			"nameAr": "صالون جمعية محبي الفنون الجميلة",
+			"mentions": 1,
+			"pages": [
+				53
+			],
+			"years": [
+				1938
+			]
+		},
+		{
+			"id": "e0465",
+			"type": "exhibition",
+			"name": "Stockholm, 1968",
+			"nameAr": "معرض السويد",
+			"mentions": 1,
+			"pages": [],
+			"years": [
+				1968
+			]
+		},
+		{
+			"id": "e0466",
+			"type": "exhibition",
+			"name": "Susteren",
+			"nameAr": "معرض سوسترين",
+			"mentions": 1,
+			"pages": [
+				40
+			]
+		},
+		{
+			"id": "e0467",
+			"type": "exhibition",
+			"name": "UNESCO, Paris, 1956",
+			"nameAr": "معرض باريس في اليونسكو",
+			"mentions": 1,
+			"pages": [
+				27
+			],
+			"years": [
+				1956
+			]
+		},
+		{
+			"id": "e0468",
+			"type": "exhibition",
+			"name": "Warsaw, 1955",
+			"nameAr": "مهرجان الشباب الدولي بوارسو",
+			"mentions": 1,
+			"pages": [
+				25,
+				26
+			],
+			"years": [
+				1955
+			]
+		}
+	]
+}

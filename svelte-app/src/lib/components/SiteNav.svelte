@@ -1,6 +1,14 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- hrefs come from the browse store and resolve() in navItems. */
-	import { Map as MapIcon, LayoutGrid, List, Users, Route, BookMarked } from '@lucide/svelte';
+	import {
+		Map as MapIcon,
+		LayoutGrid,
+		List,
+		Users,
+		Route,
+		BookOpenText,
+		BookMarked
+	} from '@lucide/svelte';
 	import { page } from '$app/state';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
@@ -14,6 +22,7 @@
 		list: List,
 		people: Users,
 		trails: Route,
+		memoir: BookOpenText,
 		fieldbook: BookMarked
 	};
 	const items = $derived(navItems(store, page.route.id));
@@ -124,7 +133,7 @@
 		}
 	}
 	/* Below 1180px the full menu no longer fits beside the wordmark. The four
-	   views fall back to their familiar icons (named, with a tooltip); Trails
+	   views fall back to their familiar icons (named, with a tooltip); Trails, Memoir
 	   and Fieldbook keep their words, since their icons explain less. */
 	@media (min-width: 1024px) and (max-width: 1179px) {
 		.views .label {
@@ -160,7 +169,7 @@
 		.item-list {
 			display: none;
 		}
-		/* Five tabs spread to a comfortable thumb span on tablets rather than
+		/* Six tabs spread to a comfortable thumb span on tablets rather than
 		   across the whole width. */
 		li {
 			flex: 1;

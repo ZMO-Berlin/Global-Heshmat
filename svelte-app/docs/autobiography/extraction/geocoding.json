@@ -1,0 +1,1316 @@
+{
+ "places": {
+  "Egypt": {
+   "query": "Egypt",
+   "level": "country",
+   "result": {
+    "lat": 26.25405,
+    "lng": 29.26755,
+    "osm": "relation/1473947",
+    "displayName": "مصر"
+   },
+   "geocodedAt": "2026-10-23T14:39:55+00:00"
+  },
+  "Ain Shams": {
+   "query": "Ain Shams, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.13048,
+    "lng": 31.31675,
+    "osm": "node/384320947",
+    "displayName": "عين شمس, القاهرة, 18531, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:39:56+00:00"
+  },
+  "Cairo": {
+   "query": "Cairo, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 30.04439,
+    "lng": 31.23573,
+    "osm": "relation/5466227",
+    "displayName": "القاهرة, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:39:58+00:00"
+  },
+  "Germany": {
+   "query": "Germany",
+   "level": "country",
+   "result": {
+    "lat": 51.16382,
+    "lng": 10.44783,
+    "osm": "relation/51477",
+    "displayName": "Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:39:59+00:00"
+  },
+  "London": {
+   "query": "London, United Kingdom",
+   "level": "city",
+   "result": {
+    "lat": 51.50745,
+    "lng": -0.12777,
+    "osm": "relation/175342",
+    "displayName": "Greater London, England, United Kingdom"
+   },
+   "geocodedAt": "2026-10-23T14:40:01+00:00"
+  },
+  "10th of Ramadan City": {
+   "query": "10th of Ramadan City, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 30.29001,
+    "lng": 31.74934,
+    "osm": "way/605783816",
+    "displayName": "العاشر من رمضان, الشرقية, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:02+00:00"
+  },
+  "Alexandria": {
+   "query": "Alexandria, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 31.19918,
+    "lng": 29.89517,
+    "osm": "node/27565020",
+    "displayName": "الإسكندرية, 21519, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:04+00:00"
+  },
+  "Kuwait": {
+   "query": "Kuwait",
+   "level": "country",
+   "result": {
+    "lat": 29.2734,
+    "lng": 47.49795,
+    "osm": "relation/305099",
+    "displayName": "الكويت"
+   },
+   "geocodedAt": "2026-10-23T14:40:06+00:00"
+  },
+  "Paris": {
+   "query": "Paris, France",
+   "level": "city",
+   "result": {
+    "lat": 48.85889,
+    "lng": 2.32004,
+    "osm": "relation/7444",
+    "displayName": "Paris, Île-de-France, France métropolitaine, France"
+   },
+   "geocodedAt": "2026-10-23T14:40:08+00:00"
+  },
+  "Sweden": {
+   "query": "Sweden",
+   "level": "country",
+   "result": {
+    "lat": 59.67497,
+    "lng": 14.52086,
+    "osm": "relation/52822",
+    "displayName": "Sverige"
+   },
+   "geocodedAt": "2026-10-23T14:40:09+00:00"
+  },
+  "Belgium": {
+   "query": "Belgium",
+   "level": "country",
+   "result": {
+    "lat": 50.64028,
+    "lng": 4.66671,
+    "osm": "relation/52411",
+    "displayName": "België / Belgique / Belgien"
+   },
+   "geocodedAt": "2026-10-23T14:40:11+00:00"
+  },
+  "Rome": {
+   "query": "Rome, Italy",
+   "level": "city",
+   "result": {
+    "lat": 41.89332,
+    "lng": 12.48293,
+    "osm": "relation/41485",
+    "displayName": "Roma, Roma Capitale, Lazio, Italia"
+   },
+   "geocodedAt": "2026-10-23T14:40:12+00:00"
+  },
+  "Geneva": {
+   "query": "Geneva, Switzerland",
+   "level": "city",
+   "result": {
+    "lat": 46.20176,
+    "lng": 6.1466,
+    "osm": "relation/1685488",
+    "displayName": "Genève, Schweiz/Suisse/Svizzera/Svizra"
+   },
+   "geocodedAt": "2026-10-23T14:40:13+00:00"
+  },
+  "Netherlands": {
+   "query": "Netherlands",
+   "level": "country",
+   "result": {
+    "lat": 52.2435,
+    "lng": 5.63432,
+    "osm": "relation/47796",
+    "displayName": "Nederland"
+   },
+   "geocodedAt": "2026-10-23T14:40:15+00:00"
+  },
+  "Heliopolis": {
+   "query": "Heliopolis, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.1006,
+    "lng": 31.33291,
+    "osm": "node/768591736",
+    "displayName": "مصر الجديدة, القاهرة, 11757, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:17+00:00"
+  },
+  "Italy": {
+   "query": "Italy",
+   "level": "country",
+   "result": {
+    "lat": 42.63843,
+    "lng": 12.6743,
+    "osm": "relation/365331",
+    "displayName": "Italia"
+   },
+   "geocodedAt": "2026-10-23T14:40:18+00:00"
+  },
+  "Denmark": {
+   "query": "Denmark",
+   "level": "country",
+   "result": {
+    "lat": 55.67025,
+    "lng": 10.33333,
+    "osm": "relation/50046",
+    "displayName": "Danmark"
+   },
+   "geocodedAt": "2026-10-23T14:40:19+00:00"
+  },
+  "Hungary": {
+   "query": "Hungary",
+   "level": "country",
+   "result": {
+    "lat": 47.18176,
+    "lng": 19.50609,
+    "osm": "relation/21335",
+    "displayName": "Magyarország"
+   },
+   "geocodedAt": "2026-10-23T14:40:21+00:00"
+  },
+  "Switzerland": {
+   "query": "Switzerland",
+   "level": "country",
+   "result": {
+    "lat": 46.79856,
+    "lng": 8.23197,
+    "osm": "relation/51701",
+    "displayName": "Schweiz/Suisse/Svizzera/Svizra"
+   },
+   "geocodedAt": "2026-10-23T14:40:22+00:00"
+  },
+  "Warsaw": {
+   "query": "Warsaw, Poland",
+   "level": "city",
+   "result": {
+    "lat": 52.23337,
+    "lng": 21.07115,
+    "osm": "relation/336074",
+    "displayName": "Warszawa, województwo mazowieckie, Polska"
+   },
+   "geocodedAt": "2026-10-23T14:40:23+00:00"
+  },
+  "Damascus": {
+   "query": "Damascus, Syria",
+   "level": "city",
+   "result": {
+    "lat": 33.51307,
+    "lng": 36.30958,
+    "osm": "node/1091272140",
+    "displayName": "دمشق, بلدية دمشق القديمة, ناحية دمشق, منطقة دمشق, محافظة دمشق, سوريا"
+   },
+   "geocodedAt": "2026-10-23T14:40:25+00:00"
+  },
+  "Europe": {
+   "query": "Europe",
+   "level": "region",
+   "result": {
+    "lat": 51.0,
+    "lng": 10.0,
+    "osm": "node/25871341",
+    "displayName": "Europe"
+   },
+   "geocodedAt": "2026-10-23T14:40:27+00:00"
+  },
+  "Ezbet El Nakhl": {
+   "query": "Ezbet El Nakhl, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.13928,
+    "lng": 31.32449,
+    "osm": "node/5349031067",
+    "displayName": "محطة عزبة النخل, شارع شرق السكه الحديد, القاهرة, القليوبية, 11761, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:28+00:00"
+  },
+  "Norway": {
+   "query": "Norway",
+   "level": "country",
+   "result": {
+    "lat": 61.15294,
+    "lng": 8.78767,
+    "osm": "relation/2978650",
+    "displayName": "Norge"
+   },
+   "geocodedAt": "2026-10-23T14:40:30+00:00"
+  },
+  "United States of America": {
+   "query": "United States",
+   "level": "country",
+   "result": {
+    "lat": 39.78373,
+    "lng": -100.44588,
+    "osm": "relation/148838",
+    "displayName": "United States"
+   },
+   "geocodedAt": "2026-10-23T14:40:31+00:00"
+  },
+  "Budapest": {
+   "query": "Budapest, Hungary",
+   "level": "city",
+   "result": {
+    "lat": 47.48185,
+    "lng": 19.14491,
+    "osm": "relation/37244",
+    "displayName": "Budapest, Magyarország"
+   },
+   "geocodedAt": "2026-10-23T14:40:32+00:00"
+  },
+  "England": {
+   "query": "England, United Kingdom",
+   "level": "region",
+   "result": {
+    "lat": 52.53102,
+    "lng": -1.26491,
+    "osm": "relation/58447",
+    "displayName": "England, United Kingdom"
+   },
+   "geocodedAt": "2026-10-23T14:40:34+00:00"
+  },
+  "France": {
+   "query": "France",
+   "level": "country",
+   "result": {
+    "lat": 46.60335,
+    "lng": 1.88833,
+    "osm": "relation/2202162",
+    "displayName": "France"
+   },
+   "geocodedAt": "2026-10-23T14:40:38+00:00"
+  },
+  "Hurghada": {
+   "query": "Hurghada, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 27.22256,
+    "lng": 33.83071,
+    "osm": "node/27084072",
+    "displayName": "الغردقة, البحر الأحمر, 84512, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:39+00:00"
+  },
+  "Maadi": {
+   "query": "Maadi, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 29.95971,
+    "lng": 31.25808,
+    "osm": "way/210595252",
+    "displayName": "المعادى, Cairo Maadi, القاهرة, 11728, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:41+00:00"
+  },
+  "Malmö": {
+   "query": "Malmö, Sweden",
+   "level": "city",
+   "result": {
+    "lat": 55.60529,
+    "lng": 13.00016,
+    "osm": "relation/10663667",
+    "displayName": "Malmö, Malmö kommun, Skåne län, Sverige"
+   },
+   "geocodedAt": "2026-10-23T14:40:42+00:00"
+  },
+  "Aleppo": {
+   "query": "Aleppo, Syria",
+   "level": "city",
+   "result": {
+    "lat": 36.19924,
+    "lng": 37.16373,
+    "osm": "node/32520143",
+    "displayName": "حلب, ناحية مركز جبل سمعان, منطقة جبل سمعان, محافظة حلب, سوريا"
+   },
+   "geocodedAt": "2026-10-23T14:40:44+00:00"
+  },
+  "Berlin": {
+   "query": "Berlin, Germany",
+   "level": "city",
+   "result": {
+    "lat": 52.51739,
+    "lng": 13.39513,
+    "osm": "relation/62422",
+    "displayName": "Berlin, Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:40:47+00:00"
+  },
+  "Boston": {
+   "query": "Boston, Massachusetts, USA",
+   "level": "city",
+   "result": {
+    "lat": 42.35883,
+    "lng": -71.05783,
+    "osm": "relation/2315704",
+    "displayName": "Boston, Suffolk County, Massachusetts, United States"
+   },
+   "geocodedAt": "2026-10-23T14:40:49+00:00"
+  },
+  "Frankfurt": {
+   "query": "Frankfurt, Germany",
+   "level": "city",
+   "result": {
+    "lat": 50.11064,
+    "lng": 8.68209,
+    "osm": "relation/62400",
+    "displayName": "Frankfurt am Main, Hessen, Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:40:50+00:00"
+  },
+  "Giza": {
+   "query": "Giza, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 29.98708,
+    "lng": 31.21181,
+    "osm": "node/27565120",
+    "displayName": "الجيزة, 12524, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:51+00:00"
+  },
+  "Imbaba": {
+   "query": "Imbaba, Giza, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.07596,
+    "lng": 31.20755,
+    "osm": "node/11495591856",
+    "displayName": "Imbaba, شارع المزارع, عبد النعيم, كيت كات, الجيزة, 12658, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:53+00:00"
+  },
+  "Lebanon": {
+   "query": "Lebanon",
+   "level": "country",
+   "result": {
+    "lat": 33.87506,
+    "lng": 35.84341,
+    "osm": "relation/184843",
+    "displayName": "لبنان"
+   },
+   "geocodedAt": "2026-10-23T14:40:54+00:00"
+  },
+  "Nasr City": {
+   "query": "Nasr City, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.05212,
+    "lng": 31.3422,
+    "osm": "node/768552342",
+    "displayName": "مدينة نصر, القاهرة, 11765, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:56+00:00"
+  },
+  "Qasr El Nil Street": {
+   "query": "Qasr El Nil Street, Cairo, Egypt",
+   "level": "street",
+   "result": {
+    "lat": 30.04745,
+    "lng": 31.23679,
+    "osm": "way/98328366",
+    "displayName": "Qasr el Nil Theatre, شارع قصر النيل, الإسماعيلية, باب اللوق, القاهرة, 11556, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:40:58+00:00"
+  },
+  "Syria": {
+   "query": "Syria",
+   "level": "country",
+   "result": {
+    "lat": 34.64019,
+    "lng": 39.04941,
+    "osm": "relation/184840",
+    "displayName": "سوريا"
+   },
+   "geocodedAt": "2026-10-23T14:40:59+00:00"
+  },
+  "Ain Shams West Metro Station": {
+   "query": "محطة مترو عين شمس",
+   "level": "site",
+   "result": {
+    "lat": 30.13107,
+    "lng": 31.31946,
+    "osm": "way/1536109535",
+    "displayName": "موقف محطة مترو عين شمس, شارع اساس الهجانه, عين شمس, القاهرة, 11782, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:44:51+00:00",
+   "queryByHand": true
+  },
+  "Al-Ayat": {
+   "query": "Al Ayat, Giza, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 29.61333,
+    "lng": 31.25751,
+    "osm": "way/259229311",
+    "displayName": "مدينه العياط, الجيزة, 12929, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:03+00:00"
+  },
+  "Bavaria": {
+   "query": "Bavaria, Germany",
+   "level": "region",
+   "result": {
+    "lat": 48.94676,
+    "lng": 11.40387,
+    "osm": "relation/2145268",
+    "displayName": "Bayern, Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:41:05+00:00"
+  },
+  "Beijing": {
+   "query": "Beijing, China",
+   "level": "city",
+   "result": {
+    "lat": 39.90571,
+    "lng": 116.3913,
+    "osm": "relation/912940",
+    "displayName": "北京市, 中国"
+   },
+   "geocodedAt": "2026-10-23T14:41:07+00:00"
+  },
+  "Beirut": {
+   "query": "Beirut, Lebanon",
+   "level": "city",
+   "result": {
+    "lat": 33.88923,
+    "lng": 35.50256,
+    "osm": "relation/5466662",
+    "displayName": "بيروت, البسطة التحتا, باشورة, محافظة بيروت, لبنان"
+   },
+   "geocodedAt": "2026-10-23T14:41:10+00:00"
+  },
+  "Dayton, Ohio": {
+   "query": "Dayton, Ohio, USA",
+   "level": "city",
+   "result": {
+    "lat": 39.75895,
+    "lng": -84.19161,
+    "osm": "relation/182954",
+    "displayName": "Dayton, Montgomery County, Ohio, United States"
+   },
+   "geocodedAt": "2026-10-23T14:41:11+00:00"
+  },
+  "El Marg": {
+   "query": "El Marg, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.13706,
+    "lng": 31.33628,
+    "osm": "way/1563285049",
+    "displayName": "ادارة المرج التعليمية, شارع حسين عوده, عين شمس, القاهرة, 11888, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:14+00:00"
+  },
+  "Florence": {
+   "query": "Florence, Italy",
+   "level": "city",
+   "result": {
+    "lat": 43.7698,
+    "lng": 11.25564,
+    "osm": "relation/42602",
+    "displayName": "Firenze, Toscana, Italia"
+   },
+   "geocodedAt": "2026-10-23T14:41:16+00:00"
+  },
+  "Ghamra": {
+   "query": "Ghamra, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.06902,
+    "lng": 31.26794,
+    "osm": "way/702497450",
+    "displayName": "غمره, السكاكيني, القاهرة, 11674, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:18+00:00"
+  },
+  "Haram (Giza)": {
+   "query": "Al Haram, Giza, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.00631,
+    "lng": 31.19208,
+    "osm": "node/9775640060",
+    "displayName": "خزان مياه الهرم, شارع الاهرام, الجيزة, 12551, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:44:52+00:00",
+   "queryByHand": true
+  },
+  "Lagos": {
+   "query": "Lagos, Nigeria",
+   "level": "city",
+   "result": {
+    "lat": 6.45506,
+    "lng": 3.39418,
+    "osm": "node/27565124",
+    "displayName": "Lagos, Lagos Island, Lagos, 100242, Nigeria"
+   },
+   "geocodedAt": "2026-10-23T14:41:21+00:00"
+  },
+  "Manama": {
+   "query": "Manama, Bahrain",
+   "level": "city",
+   "result": {
+    "lat": 26.2235,
+    "lng": 50.58224,
+    "osm": "node/38903284",
+    "displayName": "المنامة, محافظة العاصمة, 308, البحرين"
+   },
+   "geocodedAt": "2026-10-23T14:41:23+00:00"
+  },
+  "Midan Galaa": {
+   "query": "ميدان الجلاء، مصر الجديدة",
+   "level": "site",
+   "result": {
+    "lat": 30.09546,
+    "lng": 31.34209,
+    "osm": "node/14106933072",
+    "displayName": "ميدان الجلاء, مصر الجديدة, القاهرة, 11736, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:44:54+00:00",
+   "queryByHand": true
+  },
+  "Mokattam": {
+   "query": "Mokattam, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.03333,
+    "lng": 31.28333,
+    "osm": "node/768552480",
+    "displayName": "جبل المقطم, القاهرة, 11699, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:26+00:00"
+  },
+  "Nag Hammadi": {
+   "query": "Nag Hammadi, Qena, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 26.04899,
+    "lng": 32.24163,
+    "osm": "node/332074267",
+    "displayName": "نجع حمادي, قنا, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:27+00:00"
+  },
+  "Palermo": {
+   "query": "Palermo, Italy",
+   "level": "city",
+   "result": {
+    "lat": 38.11123,
+    "lng": 13.35244,
+    "osm": "relation/39513",
+    "displayName": "Palermo, Sicilia, Italia"
+   },
+   "geocodedAt": "2026-10-23T14:41:29+00:00"
+  },
+  "Palestine": {
+   "query": "Palestine",
+   "level": "region",
+   "result": {
+    "lat": 32.25914,
+    "lng": 35.30159,
+    "osm": "relation/1703814",
+    "displayName": "الأراضي الفلسطينية, الضفة الغربية, الأراضي الفلسطينية"
+   },
+   "geocodedAt": "2026-10-23T14:41:30+00:00"
+  },
+  "Poland": {
+   "query": "Poland",
+   "level": "country",
+   "result": {
+    "lat": 52.21593,
+    "lng": 19.13442,
+    "osm": "relation/49715",
+    "displayName": "Polska"
+   },
+   "geocodedAt": "2026-10-23T14:41:31+00:00"
+  },
+  "Republic of the Congo": {
+   "query": "Republic of the Congo",
+   "level": "country",
+   "result": {
+    "lat": -0.72643,
+    "lng": 15.64192,
+    "osm": "relation/192794",
+    "displayName": "Congo"
+   },
+   "geocodedAt": "2026-10-23T14:41:33+00:00"
+  },
+  "Roskilde": {
+   "query": "Roskilde, Denmark",
+   "level": "city",
+   "result": {
+    "lat": 55.64335,
+    "lng": 12.08192,
+    "osm": "node/21040334",
+    "displayName": "Roskilde, Roskilde Kommune, Region Sjælland, 4000, Danmark"
+   },
+   "geocodedAt": "2026-10-23T14:41:34+00:00"
+  },
+  "Rwanda": {
+   "query": "Rwanda",
+   "level": "country",
+   "result": {
+    "lat": -2.00021,
+    "lng": 30.0004,
+    "osm": "relation/171496",
+    "displayName": "Rwanda"
+   },
+   "geocodedAt": "2026-10-23T14:41:36+00:00"
+  },
+  "Shubra": {
+   "query": "Shubra, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.06698,
+    "lng": 31.24512,
+    "osm": "way/45928742",
+    "displayName": "اتجاه شوبرا, شارع مرسي صالح, الشماشرجى, روض الفرج, القاهرة, 11652, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:37+00:00"
+  },
+  "Sierra Leone": {
+   "query": "Sierra Leone",
+   "level": "country",
+   "result": {
+    "lat": 8.64003,
+    "lng": -11.84003,
+    "osm": "relation/192777",
+    "displayName": "Sierra Leone"
+   },
+   "geocodedAt": "2026-10-23T14:41:38+00:00"
+  },
+  "Stockholm": {
+   "query": "Stockholm, Sweden",
+   "level": "city",
+   "result": {
+    "lat": 59.32512,
+    "lng": 18.07109,
+    "osm": "node/25929985",
+    "displayName": "Stockholm, Stockholms kommun, Stockholms län, 111 29, Sverige"
+   },
+   "geocodedAt": "2026-10-23T14:41:40+00:00"
+  },
+  "Tokyo": {
+   "query": "Tokyo, Japan",
+   "level": "city",
+   "result": {
+    "lat": 35.67686,
+    "lng": 139.76389,
+    "osm": "relation/1543125",
+    "displayName": "東京都, 日本"
+   },
+   "geocodedAt": "2026-10-23T14:41:41+00:00"
+  },
+  "United Arab Republic": {
+   "query": null,
+   "level": "country",
+   "result": null,
+   "geocodedAt": null
+  },
+  "West Germany": {
+   "query": "Germany",
+   "level": "country",
+   "result": {
+    "lat": 51.16382,
+    "lng": 10.44783,
+    "osm": "relation/51477",
+    "displayName": "Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:41:42+00:00"
+  },
+  "Zamalek": {
+   "query": "Zamalek, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.06299,
+    "lng": 31.21963,
+    "osm": "node/13800621826",
+    "displayName": "الزمالك, القاهرة, 11561, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:44+00:00"
+  },
+  "6th of October City": {
+   "query": "6th of October City, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 29.97235,
+    "lng": 30.94092,
+    "osm": "node/299523927",
+    "displayName": "السادس من أكتوبر, الجيزة, 12591, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:45+00:00"
+  },
+  "Abbasiya": {
+   "query": "Abbasiya, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.06667,
+    "lng": 31.28333,
+    "osm": "node/768552341",
+    "displayName": "العباسية, الدمرداش, القاهرة, 11535, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:47+00:00"
+  },
+  "Aden": {
+   "query": "Aden, Yemen",
+   "level": "city",
+   "result": {
+    "lat": 12.78959,
+    "lng": 45.0285,
+    "osm": "relation/9134191",
+    "displayName": "مدينة عدن, محافظة عدن, اليمن"
+   },
+   "geocodedAt": "2026-10-23T14:41:49+00:00"
+  },
+  "Ain Shams Street": {
+   "query": "Ain Shams Street, Cairo, Egypt",
+   "level": "street",
+   "result": {
+    "lat": 30.13309,
+    "lng": 31.33751,
+    "osm": "node/6658055740",
+    "displayName": "NFC Egypt Store, 10L, شارع مسجد التقوي, مصر الجديدة, القاهرة, 11781, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:50+00:00"
+  },
+  "Ain Sokhna": {
+   "query": "Ain Sokhna, Suez, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 29.63961,
+    "lng": 32.30574,
+    "osm": "node/11489833146",
+    "displayName": "العين السخنة, السويس, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:52+00:00"
+  },
+  "Aswan": {
+   "query": "Aswan Governorate, Egypt",
+   "level": "region",
+   "result": {
+    "lat": 23.10462,
+    "lng": 32.42392,
+    "osm": "relation/3061757",
+    "displayName": "أسوان, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:41:53+00:00"
+  },
+  "Bad Godesberg": {
+   "query": "Bad Godesberg, Bonn, Germany",
+   "level": "district",
+   "result": {
+    "lat": 50.68507,
+    "lng": 7.15632,
+    "osm": "relation/55070",
+    "displayName": "Bad Godesberg, Bonn, Nordrhein-Westfalen, Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:41:54+00:00"
+  },
+  "Bern": {
+   "query": "Bern, Switzerland",
+   "level": "city",
+   "result": {
+    "lat": 46.94847,
+    "lng": 7.45217,
+    "osm": "relation/1682378",
+    "displayName": "Bern, Verwaltungskreis Bern-Mittelland, Verwaltungsregion Bern-Mittelland, Bern/Berne, Schweiz/Suisse/Svizzera/Svizra"
+   },
+   "geocodedAt": "2026-10-23T14:41:56+00:00"
+  },
+  "Bonn": {
+   "query": "Bonn, Germany",
+   "level": "city",
+   "result": {
+    "lat": 50.73526,
+    "lng": 7.10246,
+    "osm": "relation/62508",
+    "displayName": "Bonn, Nordrhein-Westfalen, Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:41:57+00:00"
+  },
+  "Britain": {
+   "query": "United Kingdom",
+   "level": "country",
+   "result": {
+    "lat": 54.70235,
+    "lng": -3.27658,
+    "osm": "relation/62149",
+    "displayName": "United Kingdom"
+   },
+   "geocodedAt": "2026-10-23T14:41:58+00:00"
+  },
+  "Cairo–Alexandria Road": {
+   "query": "Cairo-Alexandria Desert Road, Egypt",
+   "level": "street",
+   "result": {
+    "lat": 31.09462,
+    "lng": 29.85392,
+    "osm": "way/744878485",
+    "displayName": "طريق القاهرة, الاسكندرية الصحراوي, الإسكندرية, 23722, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:00+00:00"
+  },
+  "Calais": {
+   "query": "Calais, France",
+   "level": "city",
+   "result": {
+    "lat": 50.95248,
+    "lng": 1.85384,
+    "osm": "relation/286380",
+    "displayName": "Calais, Pas-de-Calais, Hauts-de-France, France métropolitaine, 62100, France"
+   },
+   "geocodedAt": "2026-10-23T14:42:01+00:00"
+  },
+  "Corniche El Nile": {
+   "query": "Corniche El Nil, Cairo, Egypt",
+   "level": "street",
+   "result": {
+    "lat": 30.04561,
+    "lng": 31.23171,
+    "osm": "way/229710225",
+    "displayName": "شارع كورنيش النيل, الإسماعيلية, باب اللوق, القاهرة, 11519, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:03+00:00"
+  },
+  "Czechoslovakia": {
+   "query": "Czech Republic",
+   "level": "country",
+   "result": {
+    "lat": 49.7439,
+    "lng": 15.33811,
+    "osm": "relation/51684",
+    "displayName": "Česko"
+   },
+   "geocodedAt": "2026-10-23T14:42:04+00:00"
+  },
+  "Danube": {
+   "query": "Danube, Budapest, Hungary",
+   "level": "site",
+   "result": {
+    "lat": 47.52867,
+    "lng": 19.04386,
+    "osm": "way/851474508",
+    "displayName": "Duna, V. kerület, Budapest, Magyarország"
+   },
+   "geocodedAt": "2026-10-23T14:42:06+00:00"
+  },
+  "Dover": {
+   "query": "Dover, England, United Kingdom",
+   "level": "city",
+   "result": {
+    "lat": 51.12513,
+    "lng": 1.31342,
+    "osm": "node/21421224",
+    "displayName": "Dover, Kent, England, CT16 1NB, United Kingdom"
+   },
+   "geocodedAt": "2026-10-23T14:42:07+00:00"
+  },
+  "East Berlin": {
+   "query": "Berlin, Germany",
+   "level": "city",
+   "result": {
+    "lat": 52.51739,
+    "lng": 13.39513,
+    "osm": "relation/62422",
+    "displayName": "Berlin, Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:42:08+00:00"
+  },
+  "Edfu": {
+   "query": "Edfu, Aswan, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 24.98028,
+    "lng": 32.87472,
+    "osm": "way/544329301",
+    "displayName": "مدينه ادفو, أسوان, 81644, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:10+00:00"
+  },
+  "Egyptian countryside": {
+   "query": null,
+   "level": "region",
+   "result": null,
+   "geocodedAt": null
+  },
+  "El Qanater El Khayreya": {
+   "query": "القناطر الخيرية",
+   "level": "city",
+   "result": {
+    "lat": 30.19662,
+    "lng": 31.13391,
+    "osm": "node/768553824",
+    "displayName": "القناطر الخيرية, القليوبية, 13621, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:44:55+00:00",
+   "queryByHand": true
+  },
+  "Fayed": {
+   "query": "Fayed, Ismailia, Egypt",
+   "level": "city",
+   "result": {
+    "lat": 30.32848,
+    "lng": 32.30078,
+    "osm": "node/3783957266",
+    "displayName": "فايد, الإسماعيلية, 41618, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:13+00:00"
+  },
+  "Gaza": {
+   "query": "Gaza City, Palestine",
+   "level": "city",
+   "result": {
+    "lat": 31.50626,
+    "lng": 34.4616,
+    "osm": "node/14189516474",
+    "displayName": "ميدان فلسطين, مدينة غزة القديمة, غزة, محافظة غزة, 888, الأراضي الفلسطينية"
+   },
+   "geocodedAt": "2026-10-23T14:44:56+00:00",
+   "queryByHand": true
+  },
+  "International Garden": {
+   "query": "الحديقة الدولية",
+   "level": "site",
+   "result": {
+    "lat": 30.04915,
+    "lng": 31.33655,
+    "osm": "way/24784187",
+    "displayName": "الحديقة الدولية, مدينة نصر, القاهرة, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:44:58+00:00",
+   "queryByHand": true
+  },
+  "Kobri el-Limoun": {
+   "query": "كوبري الليمون",
+   "level": "site",
+   "result": {
+    "lat": 30.0619,
+    "lng": 31.24592,
+    "osm": "way/673822616",
+    "displayName": "كوبرى الليمون, الفجاله, الأزبكية, القاهرة, 11523, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:44:59+00:00",
+   "queryByHand": true
+  },
+  "Marrakesh": {
+   "query": "Marrakesh, Morocco",
+   "level": "city",
+   "result": {
+    "lat": 31.62583,
+    "lng": -7.98916,
+    "osm": "relation/2799538",
+    "displayName": "Marrakech ⵎⵕⵕⴰⴽⵯⵛ مراكش, Pachalik de Marrakech, Préfecture de Marrakech عمالة مراكش, Marrakech-Safi ⵎⵕⵕⴰⴽⵛ-ⴰⵙⴼⵉ مراكش-أسفي, Maroc ⵍⵎⵖⵔⵉⴱ المغرب"
+   },
+   "geocodedAt": "2026-10-23T14:42:19+00:00"
+  },
+  "Matrouh": {
+   "query": "Matrouh Governorate, Egypt",
+   "level": "region",
+   "result": {
+    "lat": 29.78764,
+    "lng": 27.42704,
+    "osm": "relation/3061826",
+    "displayName": "مطروح, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:20+00:00"
+  },
+  "Menouf": {
+   "query": "Menouf",
+   "level": "city",
+   "result": {
+    "lat": 30.46269,
+    "lng": 30.93888,
+    "osm": "node/5741713896",
+    "displayName": "منوف, شارع الصوامع, منوف, محافظة المنوفية, 32951, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:45:01+00:00",
+   "queryByHand": true
+  },
+  "Menoufia": {
+   "query": "Menofia Governorate, Egypt",
+   "level": "region",
+   "result": {
+    "lat": 30.55805,
+    "lng": 31.0189,
+    "osm": "way/1450083918",
+    "displayName": "ITI Menofia Branch, Creativa, شارع عبد الرحمن الشرقاوي, شبين الكوم, محافظة المنوفية, 32514, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:23+00:00"
+  },
+  "Misr Station Square": {
+   "query": "Ramses Railway Station",
+   "level": "site",
+   "result": {
+    "lat": 30.06185,
+    "lng": 31.24602,
+    "osm": "node/5194295702",
+    "displayName": "الشهداء, كوبرى الليمون, الفجاله, الأزبكية, القاهرة, 11523, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:45:02+00:00",
+   "queryByHand": true
+  },
+  "Nigeria": {
+   "query": "Nigeria",
+   "level": "country",
+   "result": {
+    "lat": 9.60004,
+    "lng": 7.99997,
+    "osm": "relation/192787",
+    "displayName": "Nigeria"
+   },
+   "geocodedAt": "2026-10-23T14:42:26+00:00"
+  },
+  "Nile": {
+   "query": "Nile River",
+   "level": "site",
+   "result": {
+    "lat": 22.72438,
+    "lng": 32.10533,
+    "osm": "relation/50793",
+    "displayName": "نهر النيل, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:27+00:00"
+  },
+  "Philippines": {
+   "query": "Philippines",
+   "level": "country",
+   "result": {
+    "lat": 12.75035,
+    "lng": 122.73121,
+    "osm": "relation/443174",
+    "displayName": "Philippines"
+   },
+   "geocodedAt": "2026-10-23T14:42:28+00:00"
+  },
+  "Piraeus": {
+   "query": "Piraeus, Greece",
+   "level": "city",
+   "result": {
+    "lat": 37.94316,
+    "lng": 23.64706,
+    "osm": "node/154089041",
+    "displayName": "Πειραιάς, Δήμος Πειραιώς, Περιφερειακή Ενότητα Πειραιώς, Περιφέρεια Αττικής, Αποκεντρωμένη Διοίκηση Αττικής, 185 35, Ελλάς"
+   },
+   "geocodedAt": "2026-10-23T14:42:30+00:00"
+  },
+  "Place de l'Opéra": {
+   "query": "Place de l'Opéra, Paris, France",
+   "level": "site",
+   "result": {
+    "lat": 48.87019,
+    "lng": 2.33263,
+    "osm": "way/83537399",
+    "displayName": "Place de l'Opéra, Gaillon, Paris 2e Arrondissement, Paris, Île-de-France, France métropolitaine, 75002, France"
+   },
+   "geocodedAt": "2026-10-23T14:42:31+00:00"
+  },
+  "Prague": {
+   "query": "Prague, Czechia",
+   "level": "city",
+   "result": {
+    "lat": 50.08747,
+    "lng": 14.42125,
+    "osm": "relation/435514",
+    "displayName": "Praha, Česko"
+   },
+   "geocodedAt": "2026-10-23T14:42:33+00:00"
+  },
+  "Pyramids": {
+   "query": "Giza Pyramids, Giza, Egypt",
+   "level": "site",
+   "result": {
+    "lat": 29.97078,
+    "lng": 31.12423,
+    "osm": "way/73227488",
+    "displayName": "أهرامات الجيزة, الجيزة, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:34+00:00"
+  },
+  "Qena": {
+   "query": "Qena Governorate, Egypt",
+   "level": "region",
+   "result": {
+    "lat": 26.24083,
+    "lng": 32.90842,
+    "osm": "relation/3726189",
+    "displayName": "قنا, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:35+00:00"
+  },
+  "Ramses Square": {
+   "query": "Ramses Railway Station",
+   "level": "site",
+   "result": {
+    "lat": 30.06185,
+    "lng": 31.24602,
+    "osm": "node/5194295702",
+    "displayName": "الشهداء, كوبرى الليمون, الفجاله, الأزبكية, القاهرة, 11523, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:45:04+00:00",
+   "queryByHand": true
+  },
+  "Red Sea": {
+   "query": "Red Sea Governorate, Egypt",
+   "level": "region",
+   "result": {
+    "lat": 24.66018,
+    "lng": 34.13999,
+    "osm": "relation/3061758",
+    "displayName": "البحر الأحمر, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:38+00:00"
+  },
+  "Rhine": {
+   "query": "Rhine, Germany",
+   "level": "region",
+   "result": {
+    "lat": 50.46776,
+    "lng": 7.35199,
+    "osm": "relation/123924",
+    "displayName": "Rhein, Deutschland"
+   },
+   "geocodedAt": "2026-10-23T14:42:39+00:00"
+  },
+  "Shubra al-Balad": {
+   "query": "Shubra, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.06698,
+    "lng": 31.24512,
+    "osm": "way/45928742",
+    "displayName": "اتجاه شوبرا, شارع مرسي صالح, الشماشرجى, روض الفرج, القاهرة, 11652, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:40+00:00"
+  },
+  "Sidi Abdel Rahman": {
+   "query": "Sidi Abdel Rahman, Matrouh, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.96515,
+    "lng": 28.74325,
+    "osm": "node/768812338",
+    "displayName": "سيدى عبد الرحمن, مطروح, 51732, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:42+00:00"
+  },
+  "Sudan": {
+   "query": "Sudan",
+   "level": "country",
+   "result": {
+    "lat": 14.58444,
+    "lng": 29.49177,
+    "osm": "relation/192789",
+    "displayName": "السودان"
+   },
+   "geocodedAt": "2026-10-23T14:42:43+00:00"
+  },
+  "Suez Canal": {
+   "query": "Suez Canal, Egypt",
+   "level": "site",
+   "result": {
+    "lat": 30.60528,
+    "lng": 32.3331,
+    "osm": "relation/7719838",
+    "displayName": "قناة السويس, الإسماعيلية, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:45+00:00"
+  },
+  "Susteren": {
+   "query": "Susteren, Netherlands",
+   "level": "city",
+   "result": {
+    "lat": 51.06542,
+    "lng": 5.85189,
+    "osm": "relation/1419386",
+    "displayName": "Susteren, Echt-Susteren, Limburg, Nederland"
+   },
+   "geocodedAt": "2026-10-23T14:42:46+00:00"
+  },
+  "The Hague": {
+   "query": "The Hague, Netherlands",
+   "level": "city",
+   "result": {
+    "lat": 52.07998,
+    "lng": 4.31135,
+    "osm": "relation/192737",
+    "displayName": "Den Haag, Zuid-Holland, Nederland"
+   },
+   "geocodedAt": "2026-10-23T14:42:48+00:00"
+  },
+  "Vatican": {
+   "query": "Vatican City",
+   "level": "country",
+   "result": {
+    "lat": 41.90349,
+    "lng": 12.45283,
+    "osm": "node/424311883",
+    "displayName": "Civitas Vaticana - Città del Vaticano, 00120, Civitas Vaticana - Città del Vaticano"
+   },
+   "geocodedAt": "2026-10-23T14:42:49+00:00"
+  },
+  "Venice": {
+   "query": "Venice, Italy",
+   "level": "city",
+   "result": {
+    "lat": 45.43719,
+    "lng": 12.33459,
+    "osm": "relation/44741",
+    "displayName": "Venezia, Veneto, 30121-30176, Italia"
+   },
+   "geocodedAt": "2026-10-23T14:42:50+00:00"
+  },
+  "Wikalat al-Balah": {
+   "query": "وكالة البلح",
+   "level": "site",
+   "result": {
+    "lat": 30.06094,
+    "lng": 31.22839,
+    "osm": "node/1133540892",
+    "displayName": "كنيسة وكالة البلح, شارع سوق الحطب, سوق العصر, السبتية, القاهرة, 11221, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:45:05+00:00",
+   "queryByHand": true
+  },
+  "Zeitoun": {
+   "query": "Zeitoun, Cairo, Egypt",
+   "level": "district",
+   "result": {
+    "lat": 30.115,
+    "lng": 31.31363,
+    "osm": "way/646601658",
+    "displayName": "شارع محطه حلميه الزيتون, المطريه القبليه, عين شمس, القاهرة, 11718, مصر"
+   },
+   "geocodedAt": "2026-10-23T14:42:53+00:00"
+  }
+ },
+ "model": "claude-sonnet-5-5",
+ "service": "https://nominatim.openstreetmap.org/search"
+}

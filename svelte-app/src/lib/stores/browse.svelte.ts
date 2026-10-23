@@ -26,13 +26,15 @@ const CONTEXT = Symbol('collection-browser');
 const ORIGIN_LABELS = {
 	missing: 'Back to missing works',
 	fieldbook: 'Back to fieldbook',
-	trails: 'Back to trails'
+	trails: 'Back to trails',
+	memoir: 'Back to memoir'
 } as const;
 type Origin = keyof typeof ORIGIN_LABELS;
 const ROUTE_ORIGINS: Partial<Record<string, Origin>> = {
 	'/missing': 'missing',
 	'/fieldbook': 'fieldbook',
-	'/trails': 'trails'
+	'/trails': 'trails',
+	'/memoir': 'memoir'
 };
 const isOrigin = (value: string | null | undefined): value is Origin =>
 	!!value && Object.hasOwn(ORIGIN_LABELS, value);
@@ -236,6 +238,7 @@ export function createBrowseStore() {
 			const origin = params().get('origin');
 			if (origin === 'fieldbook') return resolve('/fieldbook');
 			if (origin === 'trails') return resolve('/trails');
+			if (origin === 'memoir') return resolve('/memoir');
 			if (origin === 'missing') {
 				const next = writeFilters(new SvelteURLSearchParams(), { ...this.filters, status: 'all' });
 				return resolve('/missing') + (next.size ? `?${next}` : '');

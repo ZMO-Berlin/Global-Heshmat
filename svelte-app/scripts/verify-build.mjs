@@ -126,7 +126,9 @@ for (const path of measured) {
 			(sum, asset) => sum + gzippedSize(join(BUILD_DIR, decodeURIComponent(asset))),
 			0
 		) / 1024;
-	const budget = /^\/(artworks|residences|people)\/./.test(route)
+	// The Memoir page carries its own data (the names extracted from the autobiography,
+	// about 20 KB gzipped), so it is measured like a record page.
+	const budget = /^\/((artworks|residences|people)\/.|memoir\/$)/.test(route)
 		? JS_BUDGET_KB.record
 		: JS_BUDGET_KB.shell;
 	if (kb > budget) overBudget.push(`${route} ${kb.toFixed(1)} KB > ${budget} KB`);
