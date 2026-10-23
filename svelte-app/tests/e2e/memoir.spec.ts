@@ -53,6 +53,11 @@ test('the memoir view lists what the book names and explains its method', async 
 	const pager = page.getByRole('navigation', { name: 'Pages of people' });
 	await expect(pager.getByRole('button', { name: 'Previous', exact: true })).toBeDisabled();
 	await pager.getByRole('button', { name: 'Next', exact: true }).click();
+	// A new page is read from its top: the heading is in view and focused.
+	const heading = page.getByRole('heading', { name: 'People', exact: true });
+	await expect(heading).toBeFocused();
+	await expect(heading).toBeInViewport();
+	await expect(list.first()).toBeInViewport();
 	await expect(pager.getByRole('button', { name: 'Page 2', exact: true })).toHaveAttribute(
 		'aria-current',
 		'page'

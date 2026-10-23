@@ -1,7 +1,7 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- record links come from the browse store's resolved builders; #ids are in-page anchors; the rest are external. */
 	import Seo from '$lib/components/Seo.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
@@ -67,10 +67,15 @@
 	const firstShown = $derived((peoplePage - 1) * PEOPLE_PER_PAGE);
 	const shownPeople = $derived(persons.slice(firstShown, firstShown + PEOPLE_PER_PAGE));
 	let peopleHeading: HTMLHeadingElement;
-	function showPeoplePage(page: number) {
+	async function showPeoplePage(page: number) {
 		peoplePage = page;
-		// Back to the top of the list, so the new page is read from its first name.
-		peopleHeading.focus();
+		// Once the new page is drawn, bring its heading to the top of the scroll area and
+		// move focus there, so the page is read (and tabbed through) from its first name.
+		// The jump is instant, like turning a page (smooth scrolling stalls in this fixed
+		// scroll container).
+		await tick();
+		peopleHeading.scrollIntoView({ block: 'start' });
+		peopleHeading.focus({ preventScroll: true });
 	}
 
 	// Site records the book refers to, with the names it uses for them.
@@ -493,6 +498,9 @@
 	}
 	details {
 		margin-top: var(--space-5);
+	}
+	#people-heading {
+		scroll-margin-top: var(--space-5);
 	}
 	#people-heading:focus {
 		outline: none;
