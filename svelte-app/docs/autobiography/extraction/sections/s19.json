@@ -1,0 +1,134 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s19",
+ "extractedAt": "2026-10-23T14:03:05+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 40,
+  "output_tokens": 873,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0141",
+   "surface": "شركة الطيران العربية",
+   "type": "organisation",
+   "name_ar": "شركة الطيران العربية",
+   "name_en": "Arab Airlines company",
+   "description": "Airline that contracted Heshmat in April 1962 for small porcelain statuettes for first-class passengers",
+   "date": "1962-04",
+   "place": null,
+   "record": null,
+   "uncertain": true,
+   "note": "Likely Egypt Air (United Arab Airlines); the text says 'Arab airline company'.",
+   "section": "s19",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0141",
+   "surface": "بباريس",
+   "type": "place",
+   "name_ar": "باريس",
+   "name_en": "Paris",
+   "description": "City where the airline's office received a stone facade and large stone statue",
+   "date": null,
+   "place": null,
+   "record": "artwork:31",
+   "uncertain": false,
+   "note": "Prefix preposition attached (ب); letters cannot be separated.",
+   "section": "s19",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0141",
+   "surface": "برلين",
+   "type": "place",
+   "name_ar": "برلين",
+   "name_en": "Berlin",
+   "description": "City whose airline office received large ceramic panel facades",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s19",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0141",
+   "surface": "جنيف",
+   "type": "place",
+   "name_ar": "جنيف",
+   "name_en": "Geneva",
+   "description": "City whose airline office received large ceramic panel facades",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s19",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0141",
+   "surface": "لاجوس",
+   "type": "place",
+   "name_ar": "لاجوس",
+   "name_en": "Lagos",
+   "description": "City whose airline office received large ceramic panel facades",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s19",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0141",
+   "surface": "عدن",
+   "type": "place",
+   "name_ar": "عدن",
+   "name_en": "Aden",
+   "description": "City whose airline office received large ceramic panel facades",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s19",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0141",
+   "surface": "واجهة حجرية ضخمة وتمثال حجرى كبير خارج وداخل مكتب الشركة بباريس",
+   "type": "artwork",
+   "name_ar": "واجهة حجرية وتمثال حجري لمكتب الشركة بباريس",
+   "name_en": "Stone facade and statue at the airline's Paris office",
+   "description": "Large stone facade and stone statue outside and inside the airline's Paris office",
+   "date": null,
+   "place": "Paris",
+   "record": "artwork:31",
+   "uncertain": false,
+   "note": null,
+   "section": "s19",
+   "problems": []
+  }
+ ]
+}

@@ -1,0 +1,149 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s46",
+ "extractedAt": "2026-10-23T14:04:31+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 113,
+  "output_tokens": 1213,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0289",
+   "surface": "أنا برتر سعكر",
+   "type": "person",
+   "name_ar": "أنا برتر سعكر",
+   "name_en": "Unknown (garbled OCR)",
+   "description": "Garbled name in plate caption, possibly a person; identity unclear",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": true,
+   "note": "OCR looks garbled; may be a caption fragment such as 'أنا مع ...' rather than a person.",
+   "section": "s46",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0290",
+   "surface": "Farid Eh, Sayed",
+   "type": "person",
+   "name_ar": "فريد السيد",
+   "name_en": "Farid El-Sayed",
+   "description": "Name appearing in plate caption, probably an inscription on a work",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": true,
+   "note": "OCR garbled; identity unclear; possibly Farid Khamis not certain.",
+   "section": "s46",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0291",
+   "surface": "RED SEA GOVERNORATE",
+   "type": "organisation",
+   "name_ar": "محافظة البحر الأحمر",
+   "name_en": "Red Sea Governorate",
+   "description": "Governorate whose building bears Heshmat's sculpture, per plate inscription",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s46",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0292",
+   "surface": "ديوان عام محافظة البحر الأحمر",
+   "type": "organisation",
+   "name_ar": "ديوان عام محافظة البحر الأحمر",
+   "name_en": "Red Sea Governorate General Office",
+   "description": "Governorate headquarters, caption of plate with Heshmat's sculpture",
+   "date": null,
+   "place": "Hurghada",
+   "record": null,
+   "uncertain": true,
+   "note": "Hurghada inferred from other sections, not stated here.",
+   "section": "s46",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0293",
+   "surface": "THE BREAK THROUGH OF R.T.M.",
+   "type": "artwork",
+   "name_ar": "انطلاقة الصناعة (تمثال بي تي إم)",
+   "name_en": "The Break Through of R.T.M.",
+   "description": "Statue commemorating reestablishment of the factories after the fire",
+   "date": "1992-06-20",
+   "place": "10th of Ramadan City",
+   "record": "artwork:6",
+   "uncertain": true,
+   "note": "Date on plaque reads 1992 though other sections date it 1994; city inferred from other sections.",
+   "section": "s46",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0295",
+   "surface": "HASSAN EL SHAAT",
+   "type": "person",
+   "name_ar": "حسن حشمت",
+   "name_en": "Hassan Heshmat",
+   "description": "Sculptor's name misspelled on the plaque",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": true,
+   "note": "Misspelling of the narrator's name; instructions say skip Heshmat himself, listed only for review.",
+   "section": "s46",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0297",
+   "surface": "RTM",
+   "type": "organisation",
+   "name_ar": "مصانع بي تي إم",
+   "name_en": "BTM",
+   "description": "Factory company whose statue is shown, rebuilt after a fire",
+   "date": null,
+   "place": "10th of Ramadan City",
+   "record": null,
+   "uncertain": true,
+   "note": "Spelled RTM on the plaque; BTM elsewhere.",
+   "section": "s46",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0299",
+   "surface": "تمثال عجيبة",
+   "type": "artwork",
+   "name_ar": "تمثال عجيبة",
+   "name_en": "Agiba Statue",
+   "description": "Heshmat's last statue, for Agiba Petroleum Company",
+   "date": "1995",
+   "place": "Cairo",
+   "record": "artwork:14",
+   "uncertain": false,
+   "note": "Date from p0301.",
+   "section": "s46",
+   "problems": []
+  }
+ ]
+}

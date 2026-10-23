@@ -1,0 +1,5229 @@
+{
+ "model": "claude-sonnet-5-5",
+ "effort": "high",
+ "instructions_sha256": "1af5c942c798b5d94ce626742772b9e27ecaba67fc7a6b3092c001fd1a6eab31",
+ "firstPass": "0afe78a18c912812f7ed5192e2fd6c0b76787bce7380de350b1ed1b349e3570e",
+ "consolidatedAt": "2026-10-23T14:30:15+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 0,
+  "inference_geo": "global",
+  "input_tokens": 89731,
+  "output_tokens": 52470,
+  "output_tokens_details": {
+   "thinking_tokens": 20337
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "problems": [],
+ "groups": [
+  {
+   "members": [
+    "e0001"
+   ],
+   "type": "person",
+   "name_en": "Tharwat Okasha",
+   "name_ar": "ثروت عكاشة",
+   "record": "person:tharwat-okasha",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0002"
+   ],
+   "type": "person",
+   "name_en": "Gamal Abdel Nasser",
+   "name_ar": "جمال عبد الناصر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0003"
+   ],
+   "type": "person",
+   "name_en": "Saeed Sadr",
+   "name_ar": "سعيد الصدر",
+   "record": "person:saeed-sadr",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0004"
+   ],
+   "type": "person",
+   "name_en": "Abdel Qader Hatem",
+   "name_ar": "عبد القادر حاتم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0005"
+   ],
+   "type": "person",
+   "name_en": "Ahmed Osman",
+   "name_ar": "أحمد عثمان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0006"
+   ],
+   "type": "person",
+   "name_en": "Ahmed Youssef",
+   "name_ar": "أحمد يوسف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0007"
+   ],
+   "type": "person",
+   "name_en": "Salah Kamel",
+   "name_ar": "صلاح كامل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0008"
+   ],
+   "type": "person",
+   "name_en": "Ahmed El-Sawy Mohamed",
+   "name_ar": "أحمد الصاوى محمد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0009"
+   ],
+   "type": "person",
+   "name_en": "Ahmed Nawar",
+   "name_ar": "أحمد نوار",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0010"
+   ],
+   "type": "person",
+   "name_en": "Anis Mansour",
+   "name_ar": "أنيس منصور",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0011"
+   ],
+   "type": "person",
+   "name_en": "Boutros Boutros-Ghali",
+   "name_ar": "بطرس غالي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0012"
+   ],
+   "type": "person",
+   "name_en": "Gamal as-Sigini",
+   "name_ar": "جمال السجيني",
+   "record": "person:gamal-as-sigini",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0013"
+   ],
+   "type": "person",
+   "name_en": "Hassan Abdel Moneim",
+   "name_ar": "حسن عبدالمنعم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0014"
+   ],
+   "type": "person",
+   "name_en": "Hassan Heshmat",
+   "name_ar": "حسن حشمت",
+   "record": null,
+   "action": "drop",
+   "reason": "This is the narrator himself (the plaque form is just a misspelling), not a separate entity."
+  },
+  {
+   "members": [
+    "e0015"
+   ],
+   "type": "person",
+   "name_en": "Ihsan Abdel Quddous",
+   "name_ar": "إحسان عبد القدوس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0016"
+   ],
+   "type": "person",
+   "name_en": "Saeed Khattab",
+   "name_ar": "سعيد خطاب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0017"
+   ],
+   "type": "person",
+   "name_en": "Salah Taher",
+   "name_ar": "صلاح طاهر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0018"
+   ],
+   "type": "person",
+   "name_en": "Sami Abu El-Futouh",
+   "name_ar": "سامي أبو الفتوح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0019"
+   ],
+   "type": "person",
+   "name_en": "Youssef El-Sebai",
+   "name_ar": "يوسف السباعي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0020"
+   ],
+   "type": "person",
+   "name_en": "Zakaria El-Adly",
+   "name_ar": "زكريا العدلي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0021"
+   ],
+   "type": "person",
+   "name_en": "Abbas al-Aqqad",
+   "name_ar": "عباس محمود العقاد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0022"
+   ],
+   "type": "person",
+   "name_en": "Abdel Azim Refaat",
+   "name_ar": "عبد العظيم رفعت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0023",
+    "e0024"
+   ],
+   "type": "person",
+   "name_en": "Abdel Aziz El-Qousi",
+   "name_ar": "عبد العزيز القوصي",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Arabic name in two spellings; the Beirut professor and the doctor are likely one person."
+  },
+  {
+   "members": [
+    "e0025"
+   ],
+   "type": "person",
+   "name_en": "Abdel Fattah Eid",
+   "name_ar": "عبدالفتاح عيد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0026"
+   ],
+   "type": "person",
+   "name_en": "Abdel Hadi El-Gazzar",
+   "name_ar": "عبد الهادي الجزار",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0027"
+   ],
+   "type": "person",
+   "name_en": "Abdou Salam",
+   "name_ar": "عبده سلام",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0028"
+   ],
+   "type": "person",
+   "name_en": "Abdulaziz Al-Nasser",
+   "name_ar": "عبد العزيز الناصر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0029"
+   ],
+   "type": "person",
+   "name_en": "Ahmed El-Masry",
+   "name_ar": "أحمد المصري",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0030"
+   ],
+   "type": "person",
+   "name_en": "Ahmed Hassanein Pasha",
+   "name_ar": "أحمد حسنين باشا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0031"
+   ],
+   "type": "person",
+   "name_en": "Ahmed Hegazy",
+   "name_ar": "أحمد حجازي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0032"
+   ],
+   "type": "person",
+   "name_en": "Ali Farag",
+   "name_ar": "على فرج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0033"
+   ],
+   "type": "person",
+   "name_en": "Ali el-Raei",
+   "name_ar": "علي الراعي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0034"
+   ],
+   "type": "person",
+   "name_en": "Ata Afifi",
+   "name_ar": "عطا عفيفي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0035"
+   ],
+   "type": "person",
+   "name_en": "Belinda Lee",
+   "name_ar": "بلندا لي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0036"
+   ],
+   "type": "person",
+   "name_en": "Cesar Groppi",
+   "name_ar": "سيزار جروبى",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0037"
+   ],
+   "type": "person",
+   "name_en": "Danish Baron",
+   "name_ar": "البارون الدانماركي",
+   "record": null,
+   "action": "drop",
+   "reason": "Unnamed title only, not a name."
+  },
+  {
+   "members": [
+    "e0038"
+   ],
+   "type": "person",
+   "name_en": "David",
+   "name_ar": "داوود",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0039"
+   ],
+   "type": "person",
+   "name_en": "Dr. Morsi Saad El-Din",
+   "name_ar": "مرسي سعد الدين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0040"
+   ],
+   "type": "person",
+   "name_en": "Egyptian ambassador to Paris",
+   "name_ar": "سفير مصر بباريس",
+   "record": null,
+   "action": "drop",
+   "reason": "Unnamed office holder, not a name."
+  },
+  {
+   "members": [
+    "e0041"
+   ],
+   "type": "person",
+   "name_en": "El-Hussein Fawzi",
+   "name_ar": "الحسين فوزي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0042"
+   ],
+   "type": "person",
+   "name_en": "Emad Fadly",
+   "name_ar": "عماد فضلي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0043",
+    "e0044"
+   ],
+   "type": "person",
+   "name_en": "Ezz El-Din Hammouda",
+   "name_ar": "عز الدين حمودة",
+   "record": null,
+   "action": "keep",
+   "reason": "Same artist, two spellings of the Arabic name."
+  },
+  {
+   "members": [
+    "e0045"
+   ],
+   "type": "person",
+   "name_en": "Farid El-Sayed",
+   "name_ar": "فريد السيد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0046"
+   ],
+   "type": "person",
+   "name_en": "Farouk Hosny",
+   "name_ar": "فاروق حسني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0047"
+   ],
+   "type": "person",
+   "name_en": "Fikri Abaza",
+   "name_ar": "فكري أباظة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0048"
+   ],
+   "type": "person",
+   "name_en": "Gamal Qutb",
+   "name_ar": "جمال قطب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0049"
+   ],
+   "type": "person",
+   "name_en": "Garnet Lloyd",
+   "name_ar": "جارنت لويد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0050"
+   ],
+   "type": "person",
+   "name_en": "Georges Raymond",
+   "name_ar": "جورج ريمون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0051"
+   ],
+   "type": "person",
+   "name_en": "Hamdy El-Bambi",
+   "name_ar": "حمدي البمبي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0052"
+   ],
+   "type": "person",
+   "name_en": "Hamed Saeed",
+   "name_ar": "حامد سعيد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0053"
+   ],
+   "type": "person",
+   "name_en": "Harry Hubner",
+   "name_ar": "هاري هوبنر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0054"
+   ],
+   "type": "person",
+   "name_en": "Hashem El-Ashmouni",
+   "name_ar": "هاشم الأشموني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0055"
+   ],
+   "type": "person",
+   "name_en": "Hassan El-Sherif",
+   "name_ar": "حسن الشريف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0056"
+   ],
+   "type": "person",
+   "name_en": "Hassan Khallaf",
+   "name_ar": "حسن خلاف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0057"
+   ],
+   "type": "person",
+   "name_en": "Hassan Osman",
+   "name_ar": "حسن عثمان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0058"
+   ],
+   "type": "person",
+   "name_en": "Hassan Soliman",
+   "name_ar": "حسن سليمان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0059"
+   ],
+   "type": "person",
+   "name_en": "Heba Abdallah",
+   "name_ar": "هبه عبدالله",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0060"
+   ],
+   "type": "person",
+   "name_en": "Hussein Bicar",
+   "name_ar": "حسين بيكار",
+   "record": "person:hussein-bicar",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0061"
+   ],
+   "type": "person",
+   "name_en": "Iraqi consul",
+   "name_ar": "القنصل العراقى",
+   "record": null,
+   "action": "drop",
+   "reason": "Unnamed office holder, not a name."
+  },
+  {
+   "members": [
+    "e0062"
+   ],
+   "type": "person",
+   "name_en": "Isaac Fanous",
+   "name_ar": "إيزاك فانوس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0063"
+   ],
+   "type": "person",
+   "name_en": "Johann Sebastian Bach",
+   "name_ar": "يوهان سباستيان باخ",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0064"
+   ],
+   "type": "person",
+   "name_en": "Kamal Naguib",
+   "name_ar": "كمال نجيب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0065"
+   ],
+   "type": "person",
+   "name_en": "Kamal el-Din Hussein",
+   "name_ar": "كمال الدين حسين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0066"
+   ],
+   "type": "person",
+   "name_en": "Kamal el-Gwaily",
+   "name_ar": "كمال الجويلي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0067"
+   ],
+   "type": "person",
+   "name_en": "Kamel Zuhairy",
+   "name_ar": "كامل زهيري",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0068"
+   ],
+   "type": "person",
+   "name_en": "King Farouk",
+   "name_ar": "الملك فاروق",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0069"
+   ],
+   "type": "person",
+   "name_en": "Mahmoud Afifi",
+   "name_ar": "محمود عفيفي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0070"
+   ],
+   "type": "person",
+   "name_en": "Mahmoud El-Hindi",
+   "name_ar": "محمود الهندي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0071"
+   ],
+   "type": "person",
+   "name_en": "Mahmoud Fahmy El-Nokrashy Pasha",
+   "name_ar": "محمود فهمي النقراشي باشا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0072"
+   ],
+   "type": "person",
+   "name_en": "Mahmoud Saber",
+   "name_ar": "محمود صابر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0073"
+   ],
+   "type": "person",
+   "name_en": "Mahmoud Said",
+   "name_ar": "محمود سعيد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0074"
+   ],
+   "type": "person",
+   "name_en": "Mankarius Nazmi",
+   "name_ar": "منقريوس نظمي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0075"
+   ],
+   "type": "person",
+   "name_en": "Mansour Hassan",
+   "name_ar": "منصور حسن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0076"
+   ],
+   "type": "person",
+   "name_en": "Mikhali Kastis",
+   "name_ar": "مخالي كاستيس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0077"
+   ],
+   "type": "person",
+   "name_en": "Mohamed Hafez Ismail",
+   "name_ar": "محمد حافظ إسماعيل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0078"
+   ],
+   "type": "person",
+   "name_en": "Mohamed Hassan",
+   "name_ar": "محمد حسن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0079"
+   ],
+   "type": "person",
+   "name_en": "Mohamed Mahmoud Khalil",
+   "name_ar": "محمد محمود خليل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0080"
+   ],
+   "type": "person",
+   "name_en": "Mohamed Selima",
+   "name_ar": "محمد سليمة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0081"
+   ],
+   "type": "person",
+   "name_en": "Mokhtar El-Attar",
+   "name_ar": "مختار العطار",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0082"
+   ],
+   "type": "person",
+   "name_en": "Mr. Fritzenberg",
+   "name_ar": "مستر فرتسنبرج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0083"
+   ],
+   "type": "person",
+   "name_en": "Muhammad Naguib",
+   "name_ar": "محمد نجيب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0084"
+   ],
+   "type": "person",
+   "name_en": "Naguib El-Rihani",
+   "name_ar": "نجيب الريحاني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0085"
+   ],
+   "type": "person",
+   "name_en": "Naguib Hashem",
+   "name_ar": "نجيب هاشم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0086"
+   ],
+   "type": "person",
+   "name_en": "Nagy El-Habashi",
+   "name_ar": "ناجي الحبشي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0087"
+   ],
+   "type": "person",
+   "name_en": "Nasser al-Din al-Nashashibi",
+   "name_ar": "ناصر الدين النشاشيبي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0088"
+   ],
+   "type": "person",
+   "name_en": "Paul Cézanne",
+   "name_ar": "سيزان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0089"
+   ],
+   "type": "person",
+   "name_en": "Paul Gauguin",
+   "name_ar": "جوجان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0090"
+   ],
+   "type": "person",
+   "name_en": "Ragheb Ayad",
+   "name_ar": "راغب عياد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0091"
+   ],
+   "type": "person",
+   "name_en": "Saad Kamel",
+   "name_ar": "سعد كامل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0092"
+   ],
+   "type": "person",
+   "name_en": "Sabry Ragheb",
+   "name_ar": "صبري راغب",
+   "record": "person:sabry-ragheb",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0093"
+   ],
+   "type": "person",
+   "name_en": "Salah El-Shahed",
+   "name_ar": "صلاح الشاهد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0094"
+   ],
+   "type": "person",
+   "name_en": "Samir Sabri",
+   "name_ar": "سمير صبري",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0095"
+   ],
+   "type": "person",
+   "name_en": "Shafiq Ghorbal",
+   "name_ar": "شفيق غربال",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0096"
+   ],
+   "type": "person",
+   "name_en": "Shafiq Zaher",
+   "name_ar": "شفيق زاهر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0097"
+   ],
+   "type": "person",
+   "name_en": "Solomon",
+   "name_ar": "سليمان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0098"
+   ],
+   "type": "person",
+   "name_en": "Stanisław Lorentz",
+   "name_ar": "ستانيسلاف لورنتس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0099"
+   ],
+   "type": "person",
+   "name_en": "Tawfiq Abdel Fattah",
+   "name_ar": "توفيق عبدالفتاح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0100"
+   ],
+   "type": "person",
+   "name_en": "Thabet al-Aris",
+   "name_ar": "ثابت العريس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0101"
+   ],
+   "type": "person",
+   "name_en": "Umm Kulthum",
+   "name_ar": "أم كلثوم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0102"
+   ],
+   "type": "person",
+   "name_en": "Unknown (garbled OCR)",
+   "name_ar": "أنا برتر سعكر",
+   "record": null,
+   "action": "drop",
+   "reason": "Garbled plate caption, not a recognisable name."
+  },
+  {
+   "members": [
+    "e0103"
+   ],
+   "type": "person",
+   "name_en": "Wassef",
+   "name_ar": "واصف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0104"
+   ],
+   "type": "person",
+   "name_en": "Zeinab Ahmed",
+   "name_ar": "زينب أحمد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0105"
+   ],
+   "type": "person",
+   "name_en": "Ziad Al-Dajani",
+   "name_ar": "زياد الدجاني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0106"
+   ],
+   "type": "person",
+   "name_en": "Édouard Manet",
+   "name_ar": "مانيه",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0107"
+   ],
+   "type": "place",
+   "name_en": "Egypt",
+   "name_ar": "مصر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0108"
+   ],
+   "type": "place",
+   "name_en": "Ain Shams",
+   "name_ar": "عين شمس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0109"
+   ],
+   "type": "place",
+   "name_en": "Cairo",
+   "name_ar": "القاهرة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0110"
+   ],
+   "type": "place",
+   "name_en": "Germany",
+   "name_ar": "ألمانيا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0111"
+   ],
+   "type": "place",
+   "name_en": "London",
+   "name_ar": "لندن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0112"
+   ],
+   "type": "place",
+   "name_en": "10th of Ramadan City",
+   "name_ar": "العاشر من رمضان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0113"
+   ],
+   "type": "place",
+   "name_en": "Alexandria",
+   "name_ar": "الإسكندرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0114"
+   ],
+   "type": "place",
+   "name_en": "Kuwait",
+   "name_ar": "الكويت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0115"
+   ],
+   "type": "place",
+   "name_en": "Paris",
+   "name_ar": "باريس",
+   "record": null,
+   "action": "keep",
+   "reason": "A city must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0116"
+   ],
+   "type": "place",
+   "name_en": "Sweden",
+   "name_ar": "السويد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0117"
+   ],
+   "type": "place",
+   "name_en": "Belgium",
+   "name_ar": "بلجيكا",
+   "record": null,
+   "action": "keep",
+   "reason": "A country must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0118"
+   ],
+   "type": "place",
+   "name_en": "Rome",
+   "name_ar": "روما",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0119"
+   ],
+   "type": "place",
+   "name_en": "Geneva",
+   "name_ar": "جنيف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0120"
+   ],
+   "type": "place",
+   "name_en": "Netherlands",
+   "name_ar": "هولندا",
+   "record": null,
+   "action": "keep",
+   "reason": "A country must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0121"
+   ],
+   "type": "place",
+   "name_en": "Heliopolis",
+   "name_ar": "مصر الجديدة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0122"
+   ],
+   "type": "place",
+   "name_en": "Italy",
+   "name_ar": "إيطاليا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0123"
+   ],
+   "type": "place",
+   "name_en": "Denmark",
+   "name_ar": "الدانمارك",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0124"
+   ],
+   "type": "place",
+   "name_en": "Hungary",
+   "name_ar": "المجر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0125"
+   ],
+   "type": "place",
+   "name_en": "Switzerland",
+   "name_ar": "سويسرا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0126"
+   ],
+   "type": "place",
+   "name_en": "Warsaw",
+   "name_ar": "وارسو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0127"
+   ],
+   "type": "place",
+   "name_en": "Damascus",
+   "name_ar": "دمشق",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0128"
+   ],
+   "type": "place",
+   "name_en": "Europe",
+   "name_ar": "أوروبا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0129"
+   ],
+   "type": "place",
+   "name_en": "Ezbet El Nakhl",
+   "name_ar": "عزبة النخل",
+   "record": "residence:4",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0130"
+   ],
+   "type": "place",
+   "name_en": "Norway",
+   "name_ar": "النرويج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0131"
+   ],
+   "type": "place",
+   "name_en": "Budapest",
+   "name_ar": "بودابست",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0132"
+   ],
+   "type": "place",
+   "name_en": "England",
+   "name_ar": "إنجلترا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0133"
+   ],
+   "type": "place",
+   "name_en": "France",
+   "name_ar": "فرنسا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0134"
+   ],
+   "type": "place",
+   "name_en": "Hurghada",
+   "name_ar": "الغردقة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0135"
+   ],
+   "type": "place",
+   "name_en": "Maadi",
+   "name_ar": "المعادي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0136"
+   ],
+   "type": "place",
+   "name_en": "Malmö",
+   "name_ar": "مالمو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0137",
+    "e0176"
+   ],
+   "type": "place",
+   "name_en": "United States of America",
+   "name_ar": "أمريكا",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Arabic name (أمريكا); the 'region' entry is the same country."
+  },
+  {
+   "members": [
+    "e0138"
+   ],
+   "type": "place",
+   "name_en": "Aleppo",
+   "name_ar": "حلب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0139"
+   ],
+   "type": "place",
+   "name_en": "Berlin",
+   "name_ar": "برلين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0140"
+   ],
+   "type": "place",
+   "name_en": "Boston",
+   "name_ar": "بوسطن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0141"
+   ],
+   "type": "place",
+   "name_en": "Frankfurt",
+   "name_ar": "فرانكفورت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0142"
+   ],
+   "type": "place",
+   "name_en": "Giza",
+   "name_ar": "الجيزة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0143"
+   ],
+   "type": "place",
+   "name_en": "Imbaba",
+   "name_ar": "إمبابة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0144"
+   ],
+   "type": "place",
+   "name_en": "Lebanon",
+   "name_ar": "لبنان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0145"
+   ],
+   "type": "place",
+   "name_en": "Nasr City",
+   "name_ar": "مدينة نصر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0146"
+   ],
+   "type": "place",
+   "name_en": "Syria",
+   "name_ar": "سوريا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0147"
+   ],
+   "type": "place",
+   "name_en": "Al-Ayat",
+   "name_ar": "العياط",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0148"
+   ],
+   "type": "place",
+   "name_en": "Bavaria",
+   "name_ar": "بافاريا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0149"
+   ],
+   "type": "place",
+   "name_en": "Beijing",
+   "name_ar": "بكين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0150"
+   ],
+   "type": "place",
+   "name_en": "Beirut",
+   "name_ar": "بيروت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0151"
+   ],
+   "type": "place",
+   "name_en": "Dayton, Ohio",
+   "name_ar": "ديتون أوهايو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0152"
+   ],
+   "type": "place",
+   "name_en": "El Marg",
+   "name_ar": "المرج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0153"
+   ],
+   "type": "place",
+   "name_en": "Florence",
+   "name_ar": "فلورنسا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0154"
+   ],
+   "type": "place",
+   "name_en": "Ghamra",
+   "name_ar": "غمرة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0155"
+   ],
+   "type": "place",
+   "name_en": "Lagos",
+   "name_ar": "لاجوس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0156"
+   ],
+   "type": "place",
+   "name_en": "Manama",
+   "name_ar": "المنامة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0157"
+   ],
+   "type": "place",
+   "name_en": "Midan Galaa",
+   "name_ar": "ميدان الجلاء",
+   "record": "artwork:40",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0158"
+   ],
+   "type": "place",
+   "name_en": "Nag Hammadi",
+   "name_ar": "نجع حمادي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0159"
+   ],
+   "type": "place",
+   "name_en": "Palermo",
+   "name_ar": "باليرمو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0160"
+   ],
+   "type": "place",
+   "name_en": "Palestine",
+   "name_ar": "فلسطين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0161"
+   ],
+   "type": "place",
+   "name_en": "Poland",
+   "name_ar": "بولندا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0162"
+   ],
+   "type": "place",
+   "name_en": "Roskilde",
+   "name_ar": "روسكيلده",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0163"
+   ],
+   "type": "place",
+   "name_en": "Rwanda",
+   "name_ar": "رواندا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0164"
+   ],
+   "type": "place",
+   "name_en": "Shubra",
+   "name_ar": "شبرا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0165"
+   ],
+   "type": "place",
+   "name_en": "Sierra Leone",
+   "name_ar": "سيراليون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0166"
+   ],
+   "type": "place",
+   "name_en": "Stockholm",
+   "name_ar": "ستوكهولم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0167"
+   ],
+   "type": "place",
+   "name_en": "Tokyo",
+   "name_ar": "طوكيو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0168"
+   ],
+   "type": "place",
+   "name_en": "United Arab Republic",
+   "name_ar": "الجمهورية العربية المتحدة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0169"
+   ],
+   "type": "place",
+   "name_en": "West Germany",
+   "name_ar": "ألمانيا الغربية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0170"
+   ],
+   "type": "place",
+   "name_en": "Zamalek",
+   "name_ar": "الزمالك",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0171"
+   ],
+   "type": "place",
+   "name_en": "6th of October City",
+   "name_ar": "مدينة ٦ أكتوبر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0172"
+   ],
+   "type": "place",
+   "name_en": "Abbasiya",
+   "name_ar": "العباسية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0173"
+   ],
+   "type": "place",
+   "name_en": "Aden",
+   "name_ar": "عدن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0174"
+   ],
+   "type": "place",
+   "name_en": "Ain Shams Street",
+   "name_ar": "شارع عين شمس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0175"
+   ],
+   "type": "place",
+   "name_en": "Ain Sokhna",
+   "name_ar": "العين السخنة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0177"
+   ],
+   "type": "place",
+   "name_en": "Aswan",
+   "name_ar": "أسوان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0178"
+   ],
+   "type": "place",
+   "name_en": "Bad Godesberg",
+   "name_ar": "باد جودسبرج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0179"
+   ],
+   "type": "place",
+   "name_en": "Bern",
+   "name_ar": "برن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0180"
+   ],
+   "type": "place",
+   "name_en": "Bonn",
+   "name_ar": "بون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0181"
+   ],
+   "type": "place",
+   "name_en": "Britain",
+   "name_ar": "بريطانيا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0182"
+   ],
+   "type": "place",
+   "name_en": "Cairo–Alexandria Road",
+   "name_ar": "طريق مصر إسكندرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0183"
+   ],
+   "type": "place",
+   "name_en": "Calais",
+   "name_ar": "كاليه",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0184",
+    "e0219"
+   ],
+   "type": "place",
+   "name_en": "Republic of the Congo",
+   "name_ar": "الكونغو برازافيل",
+   "record": null,
+   "action": "keep",
+   "reason": "Congo-Brazzaville and Republic of the Congo are the same country with the same Arabic name."
+  },
+  {
+   "members": [
+    "e0185"
+   ],
+   "type": "place",
+   "name_en": "Corniche El Nile",
+   "name_ar": "كورنيش النيل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0186"
+   ],
+   "type": "place",
+   "name_en": "Czechoslovakia",
+   "name_ar": "تشيكوسلوفاكيا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0187"
+   ],
+   "type": "place",
+   "name_en": "Danube",
+   "name_ar": "الدانوب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0188"
+   ],
+   "type": "place",
+   "name_en": "Dover",
+   "name_ar": "دوفر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0189"
+   ],
+   "type": "place",
+   "name_en": "East Berlin",
+   "name_ar": "برلين الشرقية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0190"
+   ],
+   "type": "place",
+   "name_en": "Edfu",
+   "name_ar": "إدفو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0191"
+   ],
+   "type": "place",
+   "name_en": "Egyptian countryside",
+   "name_ar": "الريف المصري",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0192"
+   ],
+   "type": "place",
+   "name_en": "El Qanater El Khayreya",
+   "name_ar": "القناطر الخيرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0193"
+   ],
+   "type": "place",
+   "name_en": "Fayed",
+   "name_ar": "فايد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0194"
+   ],
+   "type": "place",
+   "name_en": "Gaza",
+   "name_ar": "غزة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0195",
+    "e0196"
+   ],
+   "type": "place",
+   "name_en": "Haram (Giza)",
+   "name_ar": "الهرم",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Pyramids district of Giza with the same Arabic name."
+  },
+  {
+   "members": [
+    "e0197"
+   ],
+   "type": "place",
+   "name_en": "International Garden",
+   "name_ar": "الحديقة الدولية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0198"
+   ],
+   "type": "place",
+   "name_en": "Kobri el-Limoun",
+   "name_ar": "كوبري الليمون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0199"
+   ],
+   "type": "place",
+   "name_en": "Marrakesh",
+   "name_ar": "مراكش",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0200"
+   ],
+   "type": "place",
+   "name_en": "Matrouh",
+   "name_ar": "مطروح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0201"
+   ],
+   "type": "place",
+   "name_en": "Menouf",
+   "name_ar": "منوف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0202"
+   ],
+   "type": "place",
+   "name_en": "Menoufia",
+   "name_ar": "المنوفية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0203"
+   ],
+   "type": "place",
+   "name_en": "Misr Station Square",
+   "name_ar": "ميدان محطة مصر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0204",
+    "e0205"
+   ],
+   "type": "place",
+   "name_en": "Mokattam",
+   "name_ar": "المقطم",
+   "record": null,
+   "action": "keep",
+   "reason": "Two spellings of the same Cairo district."
+  },
+  {
+   "members": [
+    "e0206"
+   ],
+   "type": "place",
+   "name_en": "Nigeria",
+   "name_ar": "نيجيريا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0207"
+   ],
+   "type": "place",
+   "name_en": "Nile",
+   "name_ar": "النيل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0208"
+   ],
+   "type": "place",
+   "name_en": "Philippines",
+   "name_ar": "الفلبين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0209"
+   ],
+   "type": "place",
+   "name_en": "Piraeus",
+   "name_ar": "بيريه",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0210"
+   ],
+   "type": "place",
+   "name_en": "Place de l'Opéra",
+   "name_ar": "ميدان الأوبرا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0211"
+   ],
+   "type": "place",
+   "name_en": "Prague",
+   "name_ar": "براغ",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0212"
+   ],
+   "type": "place",
+   "name_en": "Pyramids",
+   "name_ar": "الأهرام",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0213",
+    "e0214",
+    "e0215"
+   ],
+   "type": "place",
+   "name_en": "Qasr El Nil Street",
+   "name_ar": "شارع قصر النيل",
+   "record": null,
+   "action": "keep",
+   "reason": "Three spellings of the same Cairo street."
+  },
+  {
+   "members": [
+    "e0216"
+   ],
+   "type": "place",
+   "name_en": "Qena",
+   "name_ar": "قنا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0217"
+   ],
+   "type": "place",
+   "name_en": "Ramses Square",
+   "name_ar": "ميدان المحطة (رمسيس)",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0218"
+   ],
+   "type": "place",
+   "name_en": "Red Sea",
+   "name_ar": "البحر الأحمر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0220"
+   ],
+   "type": "place",
+   "name_en": "Rhine",
+   "name_ar": "الراين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0221"
+   ],
+   "type": "place",
+   "name_en": "Shubra al-Balad",
+   "name_ar": "شبرا البلد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0222"
+   ],
+   "type": "place",
+   "name_en": "Sidi Abdel Rahman",
+   "name_ar": "سيدي عبد الرحمن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0223"
+   ],
+   "type": "place",
+   "name_en": "Sudan",
+   "name_ar": "السودان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0224"
+   ],
+   "type": "place",
+   "name_en": "Suez Canal",
+   "name_ar": "قناة السويس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0225"
+   ],
+   "type": "place",
+   "name_en": "Susteren",
+   "name_ar": "سوسترين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0226"
+   ],
+   "type": "place",
+   "name_en": "The Hague",
+   "name_ar": "لاهاي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0227"
+   ],
+   "type": "place",
+   "name_en": "Vatican",
+   "name_ar": "الفاتيكان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0228"
+   ],
+   "type": "place",
+   "name_en": "Venice",
+   "name_ar": "فينسيا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0229"
+   ],
+   "type": "place",
+   "name_en": "Wikalat al-Balah",
+   "name_ar": "وكالة البلح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0230"
+   ],
+   "type": "place",
+   "name_en": "Zeitoun",
+   "name_ar": "الزيتون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0231",
+    "e0234"
+   ],
+   "type": "organisation",
+   "name_en": "Hassan Heshmat Museum",
+   "name_ar": "متحف حسن حشمت",
+   "record": "artwork:3",
+   "action": "keep",
+   "reason": "Same museum under several names and forms."
+  },
+  {
+   "members": [
+    "e0232",
+    "e0364"
+   ],
+   "type": "organisation",
+   "name_en": "Ministry of Culture",
+   "name_ar": "وزارة الثقافة",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Egyptian ministry."
+  },
+  {
+   "members": [
+    "e0233"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Ahram",
+   "name_ar": "الأهرام",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0235",
+    "e0300"
+   ],
+   "type": "organisation",
+   "name_en": "Aladdin Hall",
+   "name_ar": "قاعة علاء الدين",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Cairo hall (Aladdin / Alaa El-Din)."
+  },
+  {
+   "members": [
+    "e0236"
+   ],
+   "type": "organisation",
+   "name_en": "BTM",
+   "name_ar": "بي تي إم",
+   "record": null,
+   "action": "keep",
+   "reason": "A company must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0237"
+   ],
+   "type": "organisation",
+   "name_en": "EgyptAir",
+   "name_ar": "مصر للطيران",
+   "record": null,
+   "action": "keep",
+   "reason": "A company must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0238"
+   ],
+   "type": "organisation",
+   "name_en": "Oriental Weavers",
+   "name_ar": "النساجون الشرقيون",
+   "record": null,
+   "action": "keep",
+   "reason": "A company must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0239",
+    "e0243",
+    "e0317",
+    "e0389"
+   ],
+   "type": "organisation",
+   "name_en": "School of Applied Arts, Cairo",
+   "name_ar": "كلية الفنون التطبيقية",
+   "record": null,
+   "action": "keep",
+   "reason": "School, faculty and college of Applied Arts all denote the institution where he graduated in 1938."
+  },
+  {
+   "members": [
+    "e0240"
+   ],
+   "type": "organisation",
+   "name_en": "General Egyptian Book Organization",
+   "name_ar": "الهيئة المصرية العامة للكتاب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0241",
+    "e0267"
+   ],
+   "type": "organisation",
+   "name_en": "Ministry of Education (Egypt)",
+   "name_ar": "وزارة المعارف",
+   "record": null,
+   "action": "keep",
+   "reason": "Same ministry (وزارة المعارف) named in two sections."
+  },
+  {
+   "members": [
+    "e0242"
+   ],
+   "type": "organisation",
+   "name_en": "Cairo International Stadium",
+   "name_ar": "استاد القاهرة الدولي",
+   "record": "artwork:41",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0244"
+   ],
+   "type": "organisation",
+   "name_en": "Groppi",
+   "name_ar": "جروبي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0245",
+    "e0367"
+   ],
+   "type": "organisation",
+   "name_en": "Museum of Egyptian Modern Art",
+   "name_ar": "متحف الفن الحديث بالقاهرة",
+   "record": "artwork:2",
+   "action": "keep",
+   "reason": "Same Cairo museum of modern art."
+  },
+  {
+   "members": [
+    "e0246"
+   ],
+   "type": "organisation",
+   "name_en": "Red Sea Governorate",
+   "name_ar": "محافظة البحر الأحمر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0247"
+   ],
+   "type": "organisation",
+   "name_en": "Academy of Arts",
+   "name_ar": "أكاديمية الفنون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0248"
+   ],
+   "type": "organisation",
+   "name_en": "Agiba Petroleum Company",
+   "name_ar": "شركة عجيبة للبترول",
+   "record": null,
+   "action": "keep",
+   "reason": "A company must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0249"
+   ],
+   "type": "organisation",
+   "name_en": "Akhenaten Hall",
+   "name_ar": "قاعة إخناتون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0250",
+    "e0251"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Akhbar",
+   "name_ar": "جريدة الأخبار",
+   "record": null,
+   "action": "keep",
+   "reason": "Same newspaper."
+  },
+  {
+   "members": [
+    "e0252"
+   ],
+   "type": "organisation",
+   "name_en": "Armed Forces Officers Club",
+   "name_ar": "نادي الضباط بالزمالك",
+   "record": "artwork:13",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0253"
+   ],
+   "type": "organisation",
+   "name_en": "Atelier Hall, Alexandria",
+   "name_ar": "قاعة الأتيليه بالإسكندرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0254"
+   ],
+   "type": "organisation",
+   "name_en": "Beijing Museum",
+   "name_ar": "متحف بكين",
+   "record": "artwork:38",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0255"
+   ],
+   "type": "organisation",
+   "name_en": "British Army",
+   "name_ar": "الجيش الإنجليزي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0256"
+   ],
+   "type": "organisation",
+   "name_en": "Daily Express",
+   "name_ar": "ديلي إكسبريس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0257"
+   ],
+   "type": "organisation",
+   "name_en": "Fine Arts Administration",
+   "name_ar": "مصلحة الفنون الجميلة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0258"
+   ],
+   "type": "organisation",
+   "name_en": "Galleon Hall",
+   "name_ar": "قاعة الغليون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0259"
+   ],
+   "type": "organisation",
+   "name_en": "General Egyptian Book Organization Press",
+   "name_ar": "مطابع الهيئة المصرية العامة للكتاب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0260"
+   ],
+   "type": "organisation",
+   "name_en": "Goldenberg Hall",
+   "name_ar": "قاعة جولدنبرج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0261"
+   ],
+   "type": "organisation",
+   "name_en": "Heilig Kruiskerk",
+   "name_ar": "كنيسة بلجيكا",
+   "record": "artwork:18",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0262"
+   ],
+   "type": "organisation",
+   "name_en": "Heliopolis Sports Club",
+   "name_ar": "نادي هليوبوليس الرياضي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0263"
+   ],
+   "type": "organisation",
+   "name_en": "Higher Institute of Art Education",
+   "name_ar": "المعهد العالي للتربية الفنية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0264"
+   ],
+   "type": "organisation",
+   "name_en": "Hotel St. Georges",
+   "name_ar": "فندق سان جورج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0265"
+   ],
+   "type": "organisation",
+   "name_en": "Le Méridien Heliopolis",
+   "name_ar": "فندق ميريديان هليوبوليس",
+   "record": "artwork:15",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0266"
+   ],
+   "type": "organisation",
+   "name_en": "Manchester Guardian",
+   "name_ar": "مانشستر جارديان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0268"
+   ],
+   "type": "organisation",
+   "name_en": "Museum of Applied Arts, Budapest",
+   "name_ar": "متحف الفن التطبيقي في بودابست",
+   "record": "artwork:36",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0269",
+    "e0369"
+   ],
+   "type": "organisation",
+   "name_en": "Musée de l'Homme",
+   "name_ar": "متحف الإنسان",
+   "record": "artwork:37",
+   "action": "keep",
+   "reason": "Same Paris museum."
+  },
+  {
+   "members": [
+    "e0270",
+    "e0273"
+   ],
+   "type": "organisation",
+   "name_en": "National Museum in Warsaw",
+   "name_ar": "المتحف الأهلي بوارسو",
+   "record": "artwork:22",
+   "action": "keep",
+   "reason": "Same Warsaw museum (Muzeum Narodowe w Warszawie) in two sections."
+  },
+  {
+   "members": [
+    "e0271"
+   ],
+   "type": "organisation",
+   "name_en": "Nasser Military Academy",
+   "name_ar": "أكاديمية ناصر العسكرية",
+   "record": "artwork:33",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0272"
+   ],
+   "type": "organisation",
+   "name_en": "National Energy Control Centre",
+   "name_ar": "المركز القومي للتحكم في الطاقة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0274"
+   ],
+   "type": "organisation",
+   "name_en": "Palace of the Emir of Bahrain",
+   "name_ar": "قصر أمير البحرين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0275",
+    "e0384"
+   ],
+   "type": "organisation",
+   "name_en": "Rivoli (Gift House)",
+   "name_ar": "محل ريفولي (بيت الهدايا)",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Cairo gift shop (Rivoli)."
+  },
+  {
+   "members": [
+    "e0276",
+    "e0388"
+   ],
+   "type": "organisation",
+   "name_en": "Roberts Hughes",
+   "name_ar": "محلات روبرتس هيوز",
+   "record": null,
+   "action": "keep",
+   "reason": "Salon Vert is the present-day name of the Roberts Hughes shop."
+  },
+  {
+   "members": [
+    "e0277"
+   ],
+   "type": "organisation",
+   "name_en": "Rosenthal",
+   "name_ar": "مصنع روزنتال",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0278"
+   ],
+   "type": "organisation",
+   "name_en": "Sector of Fine Arts",
+   "name_ar": "قطاع الفنون التشكيلية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0279",
+    "e0393"
+   ],
+   "type": "organisation",
+   "name_en": "Sheraton Heliopolis",
+   "name_ar": "فندق شيراتون هليوبوليس",
+   "record": "artwork:11",
+   "action": "keep",
+   "reason": "Same hotel in two sections."
+  },
+  {
+   "members": [
+    "e0280"
+   ],
+   "type": "organisation",
+   "name_en": "The Central Administration of Museums and Exhibitions",
+   "name_ar": "الإدارة المركزية للمتاحف والمعارض",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0281"
+   ],
+   "type": "organisation",
+   "name_en": "Abdeen Palace",
+   "name_ar": "قصر عابدين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0282"
+   ],
+   "type": "organisation",
+   "name_en": "Agricultural Museum",
+   "name_ar": "المتحف الزراعي",
+   "record": "artwork:1",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0283"
+   ],
+   "type": "organisation",
+   "name_en": "Ain Shams University",
+   "name_ar": "جامعة عين شمس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0284",
+    "e0363"
+   ],
+   "type": "place",
+   "name_en": "Ain Shams West Metro Station",
+   "name_ar": "محطة مترو أنفاق عين شمس الغربية",
+   "record": "artwork:4",
+   "action": "keep",
+   "reason": "Same Ain Shams metro station; a station is a place rather than an organisation."
+  },
+  {
+   "members": [
+    "e0285"
+   ],
+   "type": "organisation",
+   "name_en": "Ajyal newspaper",
+   "name_ar": "جريدة أجيال",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0286"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Ahram Al-Masai",
+   "name_ar": "الأهرام المسائي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0287"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Ahrar",
+   "name_ar": "جريدة الأحرار",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0288"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Alam magazine",
+   "name_ar": "مجلة العالم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0289"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Gil magazine",
+   "name_ar": "مجلة الجيل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0290",
+    "e0291"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Gomhuria newspaper",
+   "name_ar": "جريدة الجمهورية",
+   "record": null,
+   "action": "keep",
+   "reason": "Same newspaper, two transliterations."
+  },
+  {
+   "members": [
+    "e0292"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Kawakeb magazine",
+   "name_ar": "مجلة الكواكب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0293"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Masaa newspaper",
+   "name_ar": "جريدة المساء",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0294"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Muharrir",
+   "name_ar": "جريدة المحرر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0295"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Musawwar magazine",
+   "name_ar": "مجلة المصور",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0296"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Qahira al-Masaiya newspaper",
+   "name_ar": "جريدة القاهرة المسائية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0297"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Qahira newspaper",
+   "name_ar": "جريدة القاهرة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0298"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Shabaka",
+   "name_ar": "مجلة الشبكة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0299"
+   ],
+   "type": "organisation",
+   "name_en": "Al-Talia magazine",
+   "name_ar": "مجلة الطليعة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0301"
+   ],
+   "type": "organisation",
+   "name_en": "Aleppo newspaper",
+   "name_ar": "جريدة حلبية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0302"
+   ],
+   "type": "organisation",
+   "name_en": "Aluminium Complex, Nag Hammadi",
+   "name_ar": "مجمع الألومنيوم بنجع حمادي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0303"
+   ],
+   "type": "organisation",
+   "name_en": "An-Nahar",
+   "name_ar": "جريدة النهار",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0304"
+   ],
+   "type": "organisation",
+   "name_en": "Arab Airlines company",
+   "name_ar": "شركة الطيران العربية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0305"
+   ],
+   "type": "organisation",
+   "name_en": "Art Gallery",
+   "name_ar": "آرت جاليري",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0306"
+   ],
+   "type": "organisation",
+   "name_en": "Art News",
+   "name_ar": "آرت نيوز",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0307"
+   ],
+   "type": "organisation",
+   "name_en": "Art Review",
+   "name_ar": "آرت ريفيو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0308"
+   ],
+   "type": "organisation",
+   "name_en": "Association of Plastic Art Critics",
+   "name_ar": "جمعية نقاد الفن التشكيلي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0309"
+   ],
+   "type": "organisation",
+   "name_en": "Atelier du Caire",
+   "name_ar": "أتيليه القاهرة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0310"
+   ],
+   "type": "organisation",
+   "name_en": "Beirut University",
+   "name_ar": "جامعة بيروت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0311"
+   ],
+   "type": "organisation",
+   "name_en": "Bengtsson Hall (Stockholm)",
+   "name_ar": "قاعة بنجستون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0312"
+   ],
+   "type": "organisation",
+   "name_en": "Big Money",
+   "name_ar": "بج موني",
+   "record": null,
+   "action": "drop",
+   "reason": "A film title, not an organisation."
+  },
+  {
+   "members": [
+    "e0313"
+   ],
+   "type": "organisation",
+   "name_en": "Blood Bank, Cairo",
+   "name_ar": "بنك الدم بالقاهرة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0314"
+   ],
+   "type": "organisation",
+   "name_en": "British Museum",
+   "name_ar": "المتحف البريطاني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0315"
+   ],
+   "type": "organisation",
+   "name_en": "Cairo Metro stations Ain Shams, Ghamra, Marg",
+   "name_ar": "محطات مترو الأنفاق عين شمس وغمرة والمرج",
+   "record": null,
+   "action": "keep",
+   "reason": "Three stations together; the record covers only the Ain Shams station."
+  },
+  {
+   "members": [
+    "e0316"
+   ],
+   "type": "organisation",
+   "name_en": "Church in Boston",
+   "name_ar": "كنيسة في بوسطن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0318"
+   ],
+   "type": "organisation",
+   "name_en": "Cultural Centre, Bad Godesberg",
+   "name_ar": "المركز الثقافي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0319"
+   ],
+   "type": "organisation",
+   "name_en": "Damascus Television",
+   "name_ar": "تليفزيون دمشق",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0320"
+   ],
+   "type": "organisation",
+   "name_en": "Dar al-Kutub (Egyptian National Library)",
+   "name_ar": "دار الكتب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0321"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Centre for International Cultural Cooperation",
+   "name_ar": "المركز المصري للتعاون الثقافي الدولي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0322"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Embassy in Bonn",
+   "name_ar": "السفارة المصرية في بون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0323"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Embassy in Hungary",
+   "name_ar": "سفارة مصر بالمجر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0324"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Embassy in London",
+   "name_ar": "السفارة المصرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0325"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Embassy in The Hague",
+   "name_ar": "السفارة المصرية في لاهاي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0326",
+    "e0327"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Foreign Exhibitions Authority",
+   "name_ar": "هيئة المعارض الخارجية",
+   "record": null,
+   "action": "keep",
+   "reason": "Both appear to be the body that organises Egyptian shows abroad; please verify."
+  },
+  {
+   "members": [
+    "e0328"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Gazette",
+   "name_ar": "إيجيبشان جازيت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0329"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Museum",
+   "name_ar": "المتحف المصرى",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0330"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Television",
+   "name_ar": "التليفزيون المصري",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0331"
+   ],
+   "type": "organisation",
+   "name_en": "Egyptian Women's Association in Kuwait",
+   "name_ar": "رابطة المرأة المصرية بالكويت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0332"
+   ],
+   "type": "organisation",
+   "name_en": "Eichstätt Museum",
+   "name_ar": "متحف إيتشتات",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0333"
+   ],
+   "type": "organisation",
+   "name_en": "Faculty of Commerce, Alexandria",
+   "name_ar": "كلية التجارة بالإسكندرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0334"
+   ],
+   "type": "organisation",
+   "name_en": "Faculty of Fine Arts, Alexandria",
+   "name_ar": "كلية الفنون الجميلة بالإسكندرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0335"
+   ],
+   "type": "organisation",
+   "name_en": "Faculty of Medicine, Ain Shams University",
+   "name_ar": "كلية طب عين شمس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0336"
+   ],
+   "type": "organisation",
+   "name_en": "Family Planning Centre, Maadi Road",
+   "name_ar": "مركز تنظيم الأسرة بطريق المعادي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0337"
+   ],
+   "type": "organisation",
+   "name_en": "Fine Arts Society",
+   "name_ar": "جمعية الفنون الجميلة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0338",
+    "e0339"
+   ],
+   "type": "organisation",
+   "name_en": "Foreign Diplomats Centre",
+   "name_ar": "مركز الدبلوماسيين الأجانب",
+   "record": null,
+   "action": "keep",
+   "reason": "Centre and hall of the Foreign Diplomats in Cairo are most likely the same venue."
+  },
+  {
+   "members": [
+    "e0340"
+   ],
+   "type": "organisation",
+   "name_en": "Gallery in Bavaria",
+   "name_ar": "جاليرى",
+   "record": null,
+   "action": "drop",
+   "reason": "Only the generic word 'gallery'; no name given."
+  },
+  {
+   "members": [
+    "e0341"
+   ],
+   "type": "organisation",
+   "name_en": "General Motors Egypt",
+   "name_ar": "شركة جنرال موتورز",
+   "record": null,
+   "action": "keep",
+   "reason": "A company must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0342"
+   ],
+   "type": "organisation",
+   "name_en": "Goethe-Institut Cairo",
+   "name_ar": "معهد جوته الألماني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0343"
+   ],
+   "type": "organisation",
+   "name_en": "Higher Applied Arts Section",
+   "name_ar": "الفنون التطبيقية العليا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0344"
+   ],
+   "type": "organisation",
+   "name_en": "Higher Institute of Fine Arts, Damascus",
+   "name_ar": "المعهد العالى للفنون الجميلة بدمشق",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0345"
+   ],
+   "type": "organisation",
+   "name_en": "Impressionist museum",
+   "name_ar": "متحف التأثيريين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0346"
+   ],
+   "type": "organisation",
+   "name_en": "India Museum",
+   "name_ar": "المتحف الهندي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0347",
+    "e0348"
+   ],
+   "type": "organisation",
+   "name_en": "Jollyville Mövenpick Hotel",
+   "name_ar": "فندق جولي فيل بالهرم",
+   "record": "artwork:12",
+   "action": "keep",
+   "reason": "Same Pyramids hotel in two sections."
+  },
+  {
+   "members": [
+    "e0349"
+   ],
+   "type": "organisation",
+   "name_en": "Kafraoui Park",
+   "name_ar": "حديقة الكفراوي",
+   "record": "artwork:9",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0350"
+   ],
+   "type": "organisation",
+   "name_en": "Kuwait Museum",
+   "name_ar": "متحف الكويت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0351"
+   ],
+   "type": "organisation",
+   "name_en": "L'Art magazine",
+   "name_ar": "مجلة لار",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0352"
+   ],
+   "type": "organisation",
+   "name_en": "L'Orient",
+   "name_ar": "لوريان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0353"
+   ],
+   "type": "organisation",
+   "name_en": "La Suisse",
+   "name_ar": "لا سويس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0354"
+   ],
+   "type": "organisation",
+   "name_en": "La Tribune de Genève",
+   "name_ar": "لا تريبيون دي جنيف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0355"
+   ],
+   "type": "organisation",
+   "name_en": "La Voce Repubblicana",
+   "name_ar": "لا فوتشي ريبوبليكانا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0356"
+   ],
+   "type": "organisation",
+   "name_en": "Le Combat magazine",
+   "name_ar": "مجلة لوكومبا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0357"
+   ],
+   "type": "organisation",
+   "name_en": "Le Jour",
+   "name_ar": "جريدة لوجور",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0358"
+   ],
+   "type": "organisation",
+   "name_en": "Le Journal d'Égypte",
+   "name_ar": "الجورنال دى جيبت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0359"
+   ],
+   "type": "organisation",
+   "name_en": "Le Progrès Égyptien",
+   "name_ar": "البروجريه",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0360"
+   ],
+   "type": "organisation",
+   "name_en": "Louvre Museum",
+   "name_ar": "متحف اللوفر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0361"
+   ],
+   "type": "organisation",
+   "name_en": "Martyrs' Cemetery, Abbasiya",
+   "name_ar": "مقابر الشهداء بالعباسية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0362"
+   ],
+   "type": "organisation",
+   "name_en": "Mena House Hotel",
+   "name_ar": "فندق ميناهاوس الهرم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0365"
+   ],
+   "type": "organisation",
+   "name_en": "Ministry of Foreign Affairs (Egypt)",
+   "name_ar": "وزارة الخارجية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0366"
+   ],
+   "type": "organisation",
+   "name_en": "Ministry of War",
+   "name_ar": "وزارة الحربية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0368"
+   ],
+   "type": "organisation",
+   "name_en": "Museum of Modern Art, Rome",
+   "name_ar": "متحف الفن الحديث بروما",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0370"
+   ],
+   "type": "organisation",
+   "name_en": "National Cash Register",
+   "name_ar": "شركة إن سي آر",
+   "record": null,
+   "action": "keep",
+   "reason": "A company must not be linked to an artwork record just because a work stands there."
+  },
+  {
+   "members": [
+    "e0371"
+   ],
+   "type": "organisation",
+   "name_en": "National Center for Fine Arts and Museums",
+   "name_ar": "المركز القومى للفنون التشكيلية والمتاحف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0372"
+   ],
+   "type": "organisation",
+   "name_en": "National Encyclopedia",
+   "name_ar": "الموسوعة القومية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0373"
+   ],
+   "type": "organisation",
+   "name_en": "National Population Centre",
+   "name_ar": "المركز القومي للسكان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0374"
+   ],
+   "type": "organisation",
+   "name_en": "Officers Club, Heliopolis",
+   "name_ar": "نادي الضباط بمصر الجديدة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0375"
+   ],
+   "type": "organisation",
+   "name_en": "Oncology Hospital",
+   "name_ar": "مستشفى الأورام",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0376"
+   ],
+   "type": "organisation",
+   "name_en": "Panorama October",
+   "name_ar": "بانوراما أكتوبر",
+   "record": "artwork:16",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0377"
+   ],
+   "type": "organisation",
+   "name_en": "Pinewood Studios",
+   "name_ar": "باينوود ستوديو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0378",
+    "e0379"
+   ],
+   "type": "organisation",
+   "name_en": "State College of Porcelain, Selb",
+   "name_ar": "أكاديمية البورسلين",
+   "record": "artwork:24",
+   "action": "keep",
+   "reason": "Same porcelain academy in Bavaria where he studied in 1957-58."
+  },
+  {
+   "members": [
+    "e0380"
+   ],
+   "type": "organisation",
+   "name_en": "Presidency of the Republic",
+   "name_ar": "رئاسة الجمهورية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0381"
+   ],
+   "type": "organisation",
+   "name_en": "Qasr Al-Ainy Hospital",
+   "name_ar": "القصر العيني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0382"
+   ],
+   "type": "organisation",
+   "name_en": "Qubba Palace",
+   "name_ar": "قصر القبة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0383"
+   ],
+   "type": "organisation",
+   "name_en": "Red Sea Governorate General Office",
+   "name_ar": "ديوان عام محافظة البحر الأحمر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0385"
+   ],
+   "type": "organisation",
+   "name_en": "Rivoli, Roberts Hughes and Groppi halls",
+   "name_ar": "قاعات العرض السابق ذكرها",
+   "record": null,
+   "action": "drop",
+   "reason": "Collective back-reference to three venues already listed, not a name."
+  },
+  {
+   "members": [
+    "e0386"
+   ],
+   "type": "organisation",
+   "name_en": "Rotary Club of Heliopolis",
+   "name_ar": "جماعة الروتاري بمصر الجديدة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0387"
+   ],
+   "type": "organisation",
+   "name_en": "Royal Marsden Hospital",
+   "name_ar": "مستشفى مارسدن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0390"
+   ],
+   "type": "organisation",
+   "name_en": "Second Programme (Egyptian radio/TV)",
+   "name_ar": "البرنامج الثاني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0391",
+    "e0392"
+   ],
+   "type": "organisation",
+   "name_en": "Sheraton Gezirah Hotel",
+   "name_ar": "فندق شيراتون الجزيرة",
+   "record": "artwork:10",
+   "action": "keep",
+   "reason": "Same hotel in two sections."
+  },
+  {
+   "members": [
+    "e0394"
+   ],
+   "type": "organisation",
+   "name_en": "Small museum in the public park of 10th of Ramadan City",
+   "name_ar": "المتحف الصغير بالحديقة العامة بمدينة العاشر من رمضان",
+   "record": "artwork:9",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0395",
+    "e0396"
+   ],
+   "type": "organisation",
+   "name_en": "Society of Fine Arts Lovers",
+   "name_ar": "جمعية محبي الفنون الجميلة",
+   "record": null,
+   "action": "keep",
+   "reason": "Same society, identical Arabic name."
+  },
+  {
+   "members": [
+    "e0397"
+   ],
+   "type": "organisation",
+   "name_en": "St. Therese Armenian Catholic Church",
+   "name_ar": "كنيسة الأرمن بمصر الجديدة",
+   "record": "artwork:17",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0398"
+   ],
+   "type": "organisation",
+   "name_en": "State Information Service",
+   "name_ar": "هيئة الاستعلامات",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0399"
+   ],
+   "type": "organisation",
+   "name_en": "Syrian Ministry of Culture",
+   "name_ar": "وزارة الثقافة السورية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0400"
+   ],
+   "type": "organisation",
+   "name_en": "The Daily Star",
+   "name_ar": "ديلي ستار",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0401"
+   ],
+   "type": "organisation",
+   "name_en": "The Danish Baron's castle",
+   "name_ar": "قصر البارون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0402"
+   ],
+   "type": "organisation",
+   "name_en": "UNESCO",
+   "name_ar": "اليونسكو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0403"
+   ],
+   "type": "organisation",
+   "name_en": "Victoria Station",
+   "name_ar": "محطة فيكتوريا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0404"
+   ],
+   "type": "organisation",
+   "name_en": "Victoria and Albert Museum",
+   "name_ar": "متحف فيكتوريا وألبرت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0405"
+   ],
+   "type": "organisation",
+   "name_en": "Youth Organisation",
+   "name_ar": "منظمة الشباب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0406",
+    "e0410"
+   ],
+   "type": "artwork",
+   "name_en": "Agiba Statue",
+   "name_ar": "تمثال عجيبة",
+   "record": "artwork:14",
+   "action": "keep",
+   "reason": "Same 4.5 m statue for Agiba Petroleum described in several sections."
+  },
+  {
+   "members": [
+    "e0407",
+    "e0453",
+    "e0454",
+    "e0455"
+   ],
+   "type": "artwork",
+   "name_en": "Memorial for a church in Belgium",
+   "name_ar": "النصب التذكارى لكنيسة بلجيكا",
+   "record": "artwork:18",
+   "action": "keep",
+   "reason": "Same 1970 ceramic memorial for the Belgian church described in several sections."
+  },
+  {
+   "members": [
+    "e0408"
+   ],
+   "type": "artwork",
+   "name_en": "The Dawn of Egypt",
+   "name_ar": "انطلاقة مصر",
+   "record": "artwork:5",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0409"
+   ],
+   "type": "artwork",
+   "name_en": "The Stable Family",
+   "name_ar": "الأسرة المستقرة",
+   "record": "artwork:32",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0411",
+    "e0415"
+   ],
+   "type": "artwork",
+   "name_en": "Mermaid with Wings",
+   "name_ar": "عروس البحر",
+   "record": "artwork:28",
+   "action": "keep",
+   "reason": "Same 8 m mermaid statue, symbol of the Red Sea Governorate."
+  },
+  {
+   "members": [
+    "e0412"
+   ],
+   "type": "artwork",
+   "name_en": "Peasant Woman with Basket",
+   "name_ar": "فلاحة بالمشنة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0413"
+   ],
+   "type": "artwork",
+   "name_en": "Welcome",
+   "name_ar": "الترحيب",
+   "record": "artwork:11",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0414",
+    "e0461"
+   ],
+   "type": "artwork",
+   "name_en": "Female Peasants with Breadbasket",
+   "name_ar": "تمثال الفلاحتين",
+   "record": "artwork:20",
+   "action": "keep",
+   "reason": "Same two-peasant-women statue (Malmö fountain)."
+  },
+  {
+   "members": [
+    "e0416",
+    "e0440"
+   ],
+   "type": "artwork",
+   "name_en": "The Proud Son of the Country",
+   "name_ar": "ابن البلد المعتز",
+   "record": null,
+   "action": "keep",
+   "reason": "Same statue in the main square of 10th of Ramadan City, identical Arabic title."
+  },
+  {
+   "members": [
+    "e0417"
+   ],
+   "type": "artwork",
+   "name_en": "Bedouin Woman Spinning",
+   "name_ar": "البدوية تغزل",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0418"
+   ],
+   "type": "artwork",
+   "name_en": "Crossing the Impossible",
+   "name_ar": "عبور المستحيل",
+   "record": "artwork:16",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0419"
+   ],
+   "type": "artwork",
+   "name_en": "Egypt Rising with Two Wings",
+   "name_ar": "مصر ترتفع بجناحين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0420"
+   ],
+   "type": "artwork",
+   "name_en": "Egypt, a Blooming Rose",
+   "name_ar": "مصر وردة متفتحة",
+   "record": "artwork:1",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0421"
+   ],
+   "type": "artwork",
+   "name_en": "Horus Statue",
+   "name_ar": "تمثال حورس",
+   "record": "artwork:15",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0422",
+    "e0445",
+    "e0446",
+    "e0447",
+    "e0452",
+    "e0467"
+   ],
+   "type": "artwork",
+   "name_en": "Launch of Industry in Egypt",
+   "name_ar": "انطلاق الصناعة بمصر",
+   "record": "artwork:6",
+   "action": "keep",
+   "reason": "Same 8 m statue at the BTM factories described in several sections; the catalogue may hold it under two records (6 and 7), please check."
+  },
+  {
+   "members": [
+    "e0423"
+   ],
+   "type": "artwork",
+   "name_en": "Licorice Drink Seller",
+   "name_ar": "بائع العرقسوس بالبورسلين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0424"
+   ],
+   "type": "artwork",
+   "name_en": "Motherhood Vase",
+   "name_ar": "زهرية الأمومة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0425"
+   ],
+   "type": "artwork",
+   "name_en": "Motherhood on the Shoulder",
+   "name_ar": "أمومة على الكتف",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0426",
+    "e0457"
+   ],
+   "type": "artwork",
+   "name_en": "Mykerinos Triad",
+   "name_ar": "ثلاثي منقرع",
+   "record": "artwork:31",
+   "action": "keep",
+   "reason": "Same statue at the EgyptAir Paris office."
+  },
+  {
+   "members": [
+    "e0427",
+    "e0458"
+   ],
+   "type": "artwork",
+   "name_en": "Nefertiti Statue",
+   "name_ar": "تمثال نفرتيتي",
+   "record": null,
+   "action": "keep",
+   "reason": "Same porcelain Nefertiti statue used as an official gift."
+  },
+  {
+   "members": [
+    "e0428",
+    "e0459"
+   ],
+   "type": "artwork",
+   "name_en": "Obelisk Body of Egypt",
+   "name_ar": "المسلة جسم مصر",
+   "record": "artwork:8",
+   "action": "keep",
+   "reason": "Same 1994 obelisk with 'Egypt' in hieroglyphs at Oriental Weavers."
+  },
+  {
+   "members": [
+    "e0429"
+   ],
+   "type": "artwork",
+   "name_en": "Olive Branch Vase",
+   "name_ar": "زهرية غصن السلام",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0430"
+   ],
+   "type": "artwork",
+   "name_en": "Rababa Player",
+   "name_ar": "تمثال عازف الربابة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0431"
+   ],
+   "type": "artwork",
+   "name_en": "Return of the Spirit",
+   "name_ar": "تمثال عودة الروح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0432"
+   ],
+   "type": "artwork",
+   "name_en": "Statue of Spinning",
+   "name_ar": "تمثال الغزل",
+   "record": "artwork:10",
+   "action": "keep",
+   "reason": "A copy stands at the Sheraton Gezirah, the site of this record."
+  },
+  {
+   "members": [
+    "e0433"
+   ],
+   "type": "artwork",
+   "name_en": "Statue of the Crossing",
+   "name_ar": "تمثال العبور",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0434"
+   ],
+   "type": "artwork",
+   "name_en": "Symbol of Matrouh Governorate",
+   "name_ar": "رمز محافظة مطروح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0435"
+   ],
+   "type": "artwork",
+   "name_en": "The Family like Pyramids",
+   "name_ar": "الأسرة كالأهرام والأب كالهرم الأكبر",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0436"
+   ],
+   "type": "artwork",
+   "name_en": "The Farmer's Family",
+   "name_ar": "أسرة الفلاح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0437",
+    "e0468"
+   ],
+   "type": "artwork",
+   "name_en": "The Gallant Son of the Country",
+   "name_ar": "ابن البلد الشهم",
+   "record": null,
+   "action": "keep",
+   "reason": "Same statue with identical Arabic title (at his museum / on Ain Shams street)."
+  },
+  {
+   "members": [
+    "e0438"
+   ],
+   "type": "artwork",
+   "name_en": "The Lion",
+   "name_ar": "الأسد",
+   "record": "artwork:8",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0439"
+   ],
+   "type": "artwork",
+   "name_en": "The Peasant",
+   "name_ar": "الفلاح",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0441"
+   ],
+   "type": "artwork",
+   "name_en": "The Rooster",
+   "name_ar": "الديك",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0442"
+   ],
+   "type": "artwork",
+   "name_en": "Three Peasant Women Mosaic",
+   "name_ar": "لوحة الثلاث فلاحات",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0443"
+   ],
+   "type": "artwork",
+   "name_en": "Transparency of Love",
+   "name_ar": "شفافية الحب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0444"
+   ],
+   "type": "artwork",
+   "name_en": "Two Doves",
+   "name_ar": "حمامتان",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0448"
+   ],
+   "type": "artwork",
+   "name_en": "Bronze statue of the aluminium complex founder",
+   "name_ar": "تمثال مؤسس مجمع الألومنيوم",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0449"
+   ],
+   "type": "artwork",
+   "name_en": "Ceramic Panels at a Swimming Pool",
+   "name_ar": "لوحات خزفية على حائط حمام سباحة",
+   "record": "artwork:19",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0450"
+   ],
+   "type": "artwork",
+   "name_en": "Ceramic panel, Dayton Ohio",
+   "name_ar": "لوحة خزفية في ديتون أوهايو",
+   "record": "artwork:43",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0451"
+   ],
+   "type": "artwork",
+   "name_en": "Daughter of the Nile",
+   "name_ar": "بنت النيل",
+   "record": "artwork:12",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0456"
+   ],
+   "type": "artwork",
+   "name_en": "Mosaic panel on the achievements of the Revolution",
+   "name_ar": "لوحة موزاييك عن أعمال الثورة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0460"
+   ],
+   "type": "artwork",
+   "name_en": "Open-air sculpture museum, 10th of Ramadan City",
+   "name_ar": "المتحف المفتوح بمدينة العاشر من رمضان",
+   "record": "artwork:9",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0462"
+   ],
+   "type": "artwork",
+   "name_en": "Statues of the creators of the Armenian script",
+   "name_ar": "تمثالان لمبدعي الخط الأرمني",
+   "record": "artwork:17",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0463"
+   ],
+   "type": "artwork",
+   "name_en": "Stone facade and statue at the airline's Paris office",
+   "name_ar": "واجهة حجرية وتمثال حجري لمكتب الشركة بباريس",
+   "record": "artwork:31",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0464"
+   ],
+   "type": "artwork",
+   "name_en": "Stone panel at Nasser Military Academy entrance",
+   "name_ar": "لوحة حجرية بمدخل أكاديمية ناصر العسكرية",
+   "record": "artwork:33",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0465"
+   ],
+   "type": "artwork",
+   "name_en": "Stone panel on the Officers Club theatre, Zamalek",
+   "name_ar": "لوحة حجرية على مسرح نادي الضباط بالزمالك",
+   "record": "artwork:13",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0466"
+   ],
+   "type": "artwork",
+   "name_en": "Stone statue of President Nasser",
+   "name_ar": "تمثال الرئيس جمال عبد الناصر بالغردقة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0469"
+   ],
+   "type": "artwork",
+   "name_en": "The Gift of Motherhood",
+   "name_ar": "عطاء الأمومة",
+   "record": "artwork:34",
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0470"
+   ],
+   "type": "exhibition",
+   "name_en": "Akhenaten Hall, Cairo, 1969",
+   "name_ar": "معرض قاعة إخناتون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0471"
+   ],
+   "type": "exhibition",
+   "name_en": "Belgium, 1970",
+   "name_ar": "معرض مصاحب لافتتاح النصب التذكارى في بلجيكا",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0472"
+   ],
+   "type": "exhibition",
+   "name_en": "Galleon Hall, Cairo, 1959",
+   "name_ar": "معرض قاعة الغليون",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0473"
+   ],
+   "type": "exhibition",
+   "name_en": "London, 1956",
+   "name_ar": "معرض لندن",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0474",
+    "e0500"
+   ],
+   "type": "exhibition",
+   "name_en": "Goldenberg Hall, Cairo, 1938",
+   "name_ar": "معرض دفعة التخرج في قاعة جولدنبرج",
+   "record": null,
+   "action": "keep",
+   "reason": "Same 1938 graduates' group exhibition at Goldenberg Hall."
+  },
+  {
+   "members": [
+    "e0475"
+   ],
+   "type": "exhibition",
+   "name_en": "1967 setback",
+   "name_ar": "نكسة ١٩٦٧",
+   "record": null,
+   "action": "drop",
+   "reason": "A historical event (the 1967 war), not an exhibition."
+  },
+  {
+   "members": [
+    "e0476"
+   ],
+   "type": "exhibition",
+   "name_en": "Alexandria, 1959",
+   "name_ar": "معرض الإسكندرية ١٩٥٩",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0477",
+    "e0496"
+   ],
+   "type": "exhibition",
+   "name_en": "Bavaria, 1958",
+   "name_ar": "معرض بافاريا",
+   "record": null,
+   "action": "keep",
+   "reason": "Same exhibition of his first porcelain works in a Bavarian gallery, January 1958."
+  },
+  {
+   "members": [
+    "e0478"
+   ],
+   "type": "exhibition",
+   "name_en": "Beijing",
+   "name_ar": "معرض بكين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0479"
+   ],
+   "type": "exhibition",
+   "name_en": "Hotel St. Georges, Beirut, 1969",
+   "name_ar": "معرض بيروت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0480"
+   ],
+   "type": "exhibition",
+   "name_en": "Berlin",
+   "name_ar": "معرض برلين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0481",
+    "e0508"
+   ],
+   "type": "exhibition",
+   "name_en": "Budapest, 1957",
+   "name_ar": "معرض بودابست",
+   "record": null,
+   "action": "keep",
+   "reason": "Same 1957 solo exhibition in Budapest, his first of the European trip."
+  },
+  {
+   "members": [
+    "e0482"
+   ],
+   "type": "exhibition",
+   "name_en": "Damascus, 1960",
+   "name_ar": "معرض دمشق",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0483"
+   ],
+   "type": "exhibition",
+   "name_en": "Hungary, 1957 (Egyptian travelling general exhibition)",
+   "name_ar": "المعرض المصرى العام المتجول",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0484",
+    "e0514"
+   ],
+   "type": "exhibition",
+   "name_en": "Kuwait Museum, Kuwait, 1973",
+   "name_ar": "معرض الكويت",
+   "record": null,
+   "action": "keep",
+   "reason": "Same 1973 Kuwait exhibition."
+  },
+  {
+   "members": [
+    "e0485"
+   ],
+   "type": "exhibition",
+   "name_en": "UNESCO, Paris, 1956",
+   "name_ar": "معرض باريس في اليونسكو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0486"
+   ],
+   "type": "exhibition",
+   "name_en": "Hassan Heshmat Museum, Ain Shams, 1967",
+   "name_ar": "معرض متحف عين شمس 1967",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0487"
+   ],
+   "type": "exhibition",
+   "name_en": "Cultural Centre, Bad Godesberg, 1970",
+   "name_ar": "معرض باد جودسبرج",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0488"
+   ],
+   "type": "exhibition",
+   "name_en": "Egyptian Centre for International Cultural Cooperation, Cairo, 1974",
+   "name_ar": "معرض المركز المصري للتعاون الثقافي الدولي",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0489"
+   ],
+   "type": "exhibition",
+   "name_en": "Foreign Diplomats Centre, Cairo, 1980",
+   "name_ar": "معرض مركز الدبلوماسيين الأجانب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0490"
+   ],
+   "type": "exhibition",
+   "name_en": "Foreign Diplomats Hall, Cairo, 1969",
+   "name_ar": "معرض قاعة الدبلوماسيين الأجانب",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0491"
+   ],
+   "type": "exhibition",
+   "name_en": "Goethe-Institut Cairo, 1977",
+   "name_ar": "معرض معهد جوته الألماني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0492"
+   ],
+   "type": "exhibition",
+   "name_en": "Roskilde, 1978",
+   "name_ar": "معرض في روسكيلده",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0493"
+   ],
+   "type": "exhibition",
+   "name_en": "Susteren",
+   "name_ar": "معرض سوسترين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0494"
+   ],
+   "type": "exhibition",
+   "name_en": "Stockholm, 1968",
+   "name_ar": "معرض السويد",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0495",
+    "e0505",
+    "e0521"
+   ],
+   "type": "exhibition",
+   "name_en": "Geneva, 1968",
+   "name_ar": "معرض جنيف",
+   "record": null,
+   "action": "keep",
+   "reason": "Same 1968 Swiss exhibition (Geneva, opened mid-January 1968) described three ways."
+  },
+  {
+   "members": [
+    "e0497"
+   ],
+   "type": "exhibition",
+   "name_en": "Baron's castle, Denmark, 1978",
+   "name_ar": "معرض في القصر بالدانمارك",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0498"
+   ],
+   "type": "exhibition",
+   "name_en": "Exhibitions in Denmark (castle and Roskilde)",
+   "name_ar": "معرضان في الدانمارك",
+   "record": null,
+   "action": "drop",
+   "reason": "Aggregate of the two Denmark exhibitions already listed separately."
+  },
+  {
+   "members": [
+    "e0499"
+   ],
+   "type": "exhibition",
+   "name_en": "Norway, 1970",
+   "name_ar": "معرض النرويج الأول",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0501"
+   ],
+   "type": "exhibition",
+   "name_en": "Aladdin Hall, Cairo, 1953",
+   "name_ar": "المعرض الخاص الأول بقاعة علاء الدين",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0502",
+    "e0510"
+   ],
+   "type": "exhibition",
+   "name_en": "Florence",
+   "name_ar": "المعرض الدولي بفلورنسا",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Florence international exhibition."
+  },
+  {
+   "members": [
+    "e0503"
+   ],
+   "type": "exhibition",
+   "name_en": "Cairo, 1955",
+   "name_ar": "المعرض الرابع",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0504"
+   ],
+   "type": "exhibition",
+   "name_en": "Frankfurt, 1968",
+   "name_ar": "معرض فرانكفورت",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0506"
+   ],
+   "type": "exhibition",
+   "name_en": "Ain Shams University, Cairo, 1975",
+   "name_ar": "معرض جماعي بجامعة عين شمس",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0507"
+   ],
+   "type": "exhibition",
+   "name_en": "Atelier du Caire, Cairo",
+   "name_ar": "معرض جماعي بالأتيليه",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0509"
+   ],
+   "type": "exhibition",
+   "name_en": "Cairo, 1950",
+   "name_ar": "معرض دولي للفنون التطبيقية بالقاهرة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0511",
+    "e0515"
+   ],
+   "type": "exhibition",
+   "name_en": "Palermo",
+   "name_ar": "المعرض الدولي بباليرمو",
+   "record": null,
+   "action": "keep",
+   "reason": "Same Palermo international exhibition."
+  },
+  {
+   "members": [
+    "e0512"
+   ],
+   "type": "exhibition",
+   "name_en": "Cairo, 1946",
+   "name_ar": "معرض دولي بالقاهرة ١٩٤٦",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0513"
+   ],
+   "type": "exhibition",
+   "name_en": "Warsaw, 1955",
+   "name_ar": "مهرجان الشباب الدولي بوارسو",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0516"
+   ],
+   "type": "exhibition",
+   "name_en": "Rome, 1967",
+   "name_ar": "معرض روما",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0517"
+   ],
+   "type": "exhibition",
+   "name_en": "Society of Fine Arts Lovers Salon, Cairo, 1938",
+   "name_ar": "صالون جمعية محبي الفنون الجميلة",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0518"
+   ],
+   "type": "exhibition",
+   "name_en": "Atelier Hall, Alexandria, 1970",
+   "name_ar": "معرض الإسكندرية الثاني بقاعة الأتيليه",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0519"
+   ],
+   "type": "exhibition",
+   "name_en": "Bengtsson Hall, Stockholm, 1970",
+   "name_ar": "معرض ستوكهولم الثاني",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0520"
+   ],
+   "type": "exhibition",
+   "name_en": "Aladdin Hall, Cairo, 1954",
+   "name_ar": "المعرض الثاني (١٩٥٤)",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  },
+  {
+   "members": [
+    "e0522"
+   ],
+   "type": "exhibition",
+   "name_en": "Atelier Hall, Alexandria, 1955",
+   "name_ar": "المعرض الثالث بقاعة الأتيليه بالإسكندرية",
+   "record": null,
+   "action": "keep",
+   "reason": null
+  }
+ ]
+}

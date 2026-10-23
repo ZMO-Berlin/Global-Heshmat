@@ -1,0 +1,59 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s49",
+ "extractedAt": "2026-10-23T14:04:35+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 45,
+  "output_tokens": 301,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0383",
+   "surface": "ثروت عكاشة",
+   "type": "person",
+   "name_ar": "ثروت عكاشة",
+   "name_en": "Tharwat Okasha",
+   "description": "Author of the back-cover text praising Heshmat; former Minister of Culture",
+   "date": null,
+   "place": null,
+   "record": "person:tharwat-okasha",
+   "uncertain": false,
+   "note": null,
+   "section": "s49",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0384",
+   "surface": "مطابع الهيئة المصرية العامة للكتاب",
+   "type": "organisation",
+   "name_ar": "مطابع الهيئة المصرية العامة للكتاب",
+   "name_en": "General Egyptian Book Organization Press",
+   "description": "Printing house of the Egyptian General Book Organization that printed the book",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": "Printer credit on the back cover",
+   "section": "s49",
+   "problems": []
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s39",
+ "extractedAt": "2026-10-23T14:03:58+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 57,
+  "output_tokens": 722,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0212",
+   "surface": "تمثال عجيبة",
+   "type": "artwork",
+   "name_ar": "تمثال عجيبة",
+   "name_en": "Agiba Statue",
+   "description": "Heshmat's last statue, 4.5 m, installed in front of the Agiba Petroleum company building",
+   "date": "1995-06-07",
+   "place": "Cairo",
+   "record": "artwork:14",
+   "uncertain": false,
+   "note": null,
+   "section": "s39",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0212",
+   "surface": "عين شمس",
+   "type": "place",
+   "name_ar": "عين شمس",
+   "name_en": "Ain Shams",
+   "description": "Cairo district where Heshmat's workshop stood, from which the statue was moved",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s39",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0212",
+   "surface": "مدينة نصر",
+   "type": "place",
+   "name_ar": "مدينة نصر",
+   "name_en": "Nasr City",
+   "description": "Cairo district where the Agiba company's new building stands",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s39",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0212",
+   "surface": "الحديقة الدولية",
+   "type": "place",
+   "name_ar": "الحديقة الدولية",
+   "name_en": "International Garden",
+   "description": "Park in Nasr City, behind which the Agiba building stands",
+   "date": null,
+   "place": "Cairo",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s39",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0212",
+   "surface": "حمدى البمبى",
+   "type": "person",
+   "name_ar": "حمدي البمبي",
+   "name_en": "Hamdy El-Bambi",
+   "description": "Minister of Petroleum who unveiled the Agiba statue",
+   "date": "1995-06-07",
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s39",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0212",
+   "surface": "أحمد نوار",
+   "type": "person",
+   "name_ar": "أحمد نوار",
+   "name_en": "Ahmed Nawar",
+   "description": "Head of the National Council for Fine Arts, unveiled the Agiba statue",
+   "date": "1995-06-07",
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s39",
+   "problems": []
+  }
+ ]
+}

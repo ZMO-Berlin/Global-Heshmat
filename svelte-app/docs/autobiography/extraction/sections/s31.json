@@ -1,0 +1,149 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s31",
+ "extractedAt": "2026-10-23T14:03:46+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 47,
+  "output_tokens": 950,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0177",
+   "surface": "قاعة بنجستون",
+   "type": "organisation",
+   "name_ar": "قاعة بنجستون",
+   "name_en": "Bengtsson Hall (Stockholm)",
+   "description": "Stockholm exhibition hall that invited Heshmat to hold his second Swedish exhibition",
+   "date": "1970-11",
+   "place": "Sweden",
+   "record": null,
+   "uncertain": true,
+   "note": "Transliteration of the hall name is uncertain; OCR spelling kept.}",
+   "section": "s31",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0177",
+   "surface": "استكهلم",
+   "type": "place",
+   "name_ar": "ستوكهولم",
+   "name_en": "Stockholm",
+   "description": "Swedish capital where the hall and exhibition were located",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s31",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0177",
+   "surface": "السويد",
+   "type": "place",
+   "name_ar": "السويد",
+   "name_en": "Sweden",
+   "description": "Country that invited Heshmat for a second exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s31",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0177",
+   "surface": "زكريا العدلى",
+   "type": "person",
+   "name_ar": "زكريا العدلى",
+   "name_en": "Zakaria El-Adly",
+   "description": "Egyptian ambassador to Sweden who wrote the opening note for the exhibition",
+   "date": "1970-11",
+   "place": "Sweden",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s31",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0177",
+   "surface": "معرضه الثانى فى استكهلم",
+   "type": "exhibition",
+   "name_ar": "معرض ستوكهولم الثاني",
+   "name_en": "Second Stockholm exhibition",
+   "description": "Heshmat's second exhibition in Stockholm within two years, at Bengtsson Hall",
+   "date": "1970-11",
+   "place": "Sweden",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s31",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0178",
+   "surface": "للأخ حشمت",
+   "type": "person",
+   "name_ar": "حسن حشمت",
+   "name_en": "Hassan Heshmat",
+   "description": "narrator",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "skip",
+   "section": "s31",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0179",
+   "surface": "استكهلم",
+   "type": "place",
+   "name_ar": "ستوكهولم",
+   "name_en": "Stockholm",
+   "description": "City where the Iraqi consul wrote his comment",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s31",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0179",
+   "surface": "القنصل العراقى",
+   "type": "person",
+   "name_ar": "القنصل العراقى",
+   "name_en": "Iraqi consul",
+   "description": "unnamed",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "skip",
+   "section": "s31",
+   "problems": []
+  }
+ ]
+}

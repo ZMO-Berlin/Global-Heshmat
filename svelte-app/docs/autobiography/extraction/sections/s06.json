@@ -1,0 +1,74 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s06",
+ "extractedAt": "2026-10-23T14:02:34+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 45,
+  "output_tokens": 440,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0056",
+   "surface": "الضباط الإنجليز",
+   "type": "organisation",
+   "name_ar": "الجيش الإنجليزي",
+   "name_en": "British Army",
+   "description": "British army officers who bought small statues and contracted for a quarter million plates",
+   "date": "1943",
+   "place": "Egypt",
+   "record": null,
+   "uncertain": true,
+   "note": "Mentioned as English officers and later 'الجيش الإنجليزى'; treated as the British Army, not a named institution.",
+   "section": "s06",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0056",
+   "surface": "عزبة النخل",
+   "type": "place",
+   "name_ar": "عزبة النخل",
+   "name_en": "Ezbet El Nakhl",
+   "description": "Cairo district where Heshmat had his workshop and the English officers visited him",
+   "date": "1943",
+   "place": null,
+   "record": "residence:4",
+   "uncertain": false,
+   "note": "OCR text reads 'بعزبة النخل'; the preposition is attached.",
+   "section": "s06",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0056",
+   "surface": "الجيش الإنجليزى",
+   "type": "organisation",
+   "name_ar": "الجيش الإنجليزي",
+   "name_en": "British Army",
+   "description": "Army that contracted for plates then rejected the deliveries after the war ended",
+   "date": "1945",
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s06",
+   "problems": []
+  }
+ ]
+}

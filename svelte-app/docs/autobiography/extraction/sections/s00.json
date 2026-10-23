@@ -1,0 +1,119 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s00",
+ "extractedAt": "2026-10-23T14:02:15+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 126,
+  "output_tokens": 756,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0003",
+   "surface": "الهيئة المصرية العامة للكتاب",
+   "type": "organisation",
+   "name_ar": "الهيئة المصرية العامة للكتاب",
+   "name_en": "General Egyptian Book Organization",
+   "description": "Publisher of the autobiography",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s00",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0006",
+   "surface": "أحمد حجازي",
+   "type": "person",
+   "name_ar": "د. أحمد حجازي",
+   "name_en": "Ahmed Hegazy",
+   "description": "Dedicatee of the book, addressed as dear brother",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "Catalogue mentions brother-in-law Dr. Ahmed Hegasy, but no person record exists.",
+   "section": "s00",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0013",
+   "surface": "الهيئة المصرية العامة للكتاب",
+   "type": "organisation",
+   "name_ar": "الهيئة المصرية العامة للكتاب",
+   "name_en": "General Egyptian Book Organization",
+   "description": "Publisher named on title page",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s00",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0015",
+   "surface": "محمود الهندى",
+   "type": "person",
+   "name_ar": "محمود الهندي",
+   "name_en": "Mahmoud El-Hindi",
+   "description": "Credited with the book's cover",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s00",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0017",
+   "surface": "هاشم الأشمونى",
+   "type": "person",
+   "name_ar": "هاشم الأشموني",
+   "name_en": "Hashem El-Ashmouni",
+   "description": "Credited with the book's artistic direction",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s00",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0021",
+   "surface": "الهيئة المصرية العامة للكتاب",
+   "type": "organisation",
+   "name_ar": "الهيئة المصرية العامة للكتاب",
+   "name_en": "General Egyptian Book Organization",
+   "description": "Publisher named on title page",
+   "date": "1997",
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s00",
+   "problems": []
+  }
+ ]
+}

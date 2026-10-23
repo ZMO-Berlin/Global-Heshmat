@@ -1,0 +1,134 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s25",
+ "extractedAt": "2026-10-23T14:00:57+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 36,
+  "output_tokens": 830,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0161",
+   "surface": "السويد",
+   "type": "place",
+   "name_ar": "السويد",
+   "name_en": "Sweden",
+   "description": "Country that invited the artist to hold an exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s25",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0161",
+   "surface": "متحفى بعين شمس",
+   "type": "organisation",
+   "name_ar": "متحف حسن حشمت بعين شمس",
+   "name_en": "The Hassan Heshmat Museum",
+   "description": "The artist's own museum where the ambassador visited him",
+   "date": null,
+   "place": "Cairo",
+   "record": "artwork:3",
+   "uncertain": false,
+   "note": null,
+   "section": "s25",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0161",
+   "surface": "عين شمس",
+   "type": "place",
+   "name_ar": "عين شمس",
+   "name_en": "Ain Shams",
+   "description": "Cairo district where the artist's museum is located",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s25",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0161",
+   "surface": "زكريا العدلى",
+   "type": "person",
+   "name_ar": "زكريا العدلي",
+   "name_en": "Zakaria El-Adly",
+   "description": "New Egyptian ambassador to Sweden who commissioned and opened the exhibition",
+   "date": "1968-12-29",
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s25",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0161",
+   "surface": "السويد",
+   "type": "place",
+   "name_ar": "السويد",
+   "name_en": "Sweden",
+   "description": "Country where the ambassador served and the exhibition was held",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s25",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0161",
+   "surface": "معرض",
+   "type": "exhibition",
+   "name_ar": "معرض السويد",
+   "name_en": "Exhibition in Sweden (December 1968)",
+   "description": "Exhibition in Sweden opened by Ambassador Zakaria El-Adly",
+   "date": "1968-12-29",
+   "place": "Sweden",
+   "record": null,
+   "uncertain": true,
+   "note": "Surface is the generic word 'exhibition'; city not named in this paragraph.",
+   "section": "s25",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0161",
+   "surface": "ناجى الحبشى",
+   "type": "person",
+   "name_ar": "ناجي الحبشي",
+   "name_en": "Nagy El-Habashi",
+   "description": "Egyptian cellist who played at the opening",
+   "date": "1968-12-29",
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s25",
+   "problems": []
+  }
+ ]
+}

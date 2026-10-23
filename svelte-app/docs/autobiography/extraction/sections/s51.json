@@ -1,0 +1,149 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s51",
+ "extractedAt": "2026-10-23T14:04:42+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 83,
+  "output_tokens": 1049,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0413",
+   "surface": "وزارة الثقافة",
+   "type": "organisation",
+   "name_ar": "وزارة الثقافة",
+   "name_en": "Ministry of Culture",
+   "description": "Egyptian ministry issuing the museum ticket",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s51",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0414",
+   "surface": "قطاع الفنون التشكيلية",
+   "type": "organisation",
+   "name_ar": "قطاع الفنون التشكيلية",
+   "name_en": "Sector of Fine Arts",
+   "description": "Ministry of Culture sector overseeing the museum",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s51",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0415",
+   "surface": "الإدارة المركزية للمتاحف والمعارض",
+   "type": "organisation",
+   "name_ar": "الإدارة المركزية للمتاحف والمعارض",
+   "name_en": "The Central Administration of Museums and Exhibitions",
+   "description": "Ministry of Culture administration listed on the ticket",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s51",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0416",
+   "surface": "Ministry of Culture",
+   "type": "organisation",
+   "name_ar": "وزارة الثقافة",
+   "name_en": "Ministry of Culture",
+   "description": "English heading of the ministry on the ticket",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s51",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0417",
+   "surface": "Sector of Fine Arts",
+   "type": "organisation",
+   "name_ar": "قطاع الفنون التشكيلية",
+   "name_en": "Sector of Fine Arts",
+   "description": "English heading of the fine arts sector on the ticket",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s51",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0418",
+   "surface": "The Central Administration of Museums and Exhibitions",
+   "type": "organisation",
+   "name_ar": "الإدارة المركزية للمتاحف والمعارض",
+   "name_en": "The Central Administration of Museums and Exhibitions",
+   "description": "English heading of the central administration on the ticket",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s51",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0419",
+   "surface": "متحف حسن حشمت",
+   "type": "organisation",
+   "name_ar": "متحف حسن حشمت",
+   "name_en": "Hassan Heshmat Museum",
+   "description": "Museum named on the ticket, the artist's museum",
+   "date": null,
+   "place": "Cairo",
+   "record": "artwork:3",
+   "uncertain": false,
+   "note": "Ticket for the Ain Shams museum, though the ticket does not name the district.",
+   "section": "s51",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0420",
+   "surface": "Hassan Heshmat Museum",
+   "type": "organisation",
+   "name_ar": "متحف حسن حشمت",
+   "name_en": "Hassan Heshmat Museum",
+   "description": "English name of the museum on the ticket",
+   "date": null,
+   "place": "Cairo",
+   "record": "artwork:3",
+   "uncertain": false,
+   "note": null,
+   "section": "s51",
+   "problems": []
+  }
+ ]
+}

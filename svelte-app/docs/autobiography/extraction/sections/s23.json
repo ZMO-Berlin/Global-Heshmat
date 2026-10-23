@@ -1,0 +1,104 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s23",
+ "extractedAt": "2026-10-23T14:03:17+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 47,
+  "output_tokens": 623,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0157",
+   "surface": "فرانكفورت",
+   "type": "place",
+   "name_ar": "فرانكفورت",
+   "name_en": "Frankfurt",
+   "description": "German city where he flew after Geneva to hold an exhibition",
+   "date": "1968-02-15",
+   "place": "Germany",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s23",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0157",
+   "surface": "مصر للطيران",
+   "type": "organisation",
+   "name_ar": "مصر للطيران",
+   "name_en": "EgyptAir",
+   "description": "Airline whose Frankfurt office hosted the exhibition",
+   "date": null,
+   "place": "Frankfurt",
+   "record": null,
+   "uncertain": false,
+   "note": "Frankfurt office specifically",
+   "section": "s23",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0157",
+   "surface": "ألمانيا",
+   "type": "place",
+   "name_ar": "ألمانيا",
+   "name_en": "Germany",
+   "description": "Country where the Egyptian ambassador wrote the exhibition introduction",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s23",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0157",
+   "surface": "الراين",
+   "type": "place",
+   "name_ar": "الراين",
+   "name_en": "Rhine",
+   "description": "German river region, referred to as 'land of the Rhine'",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s23",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0157",
+   "surface": "معرضى",
+   "type": "exhibition",
+   "name_ar": "معرض فرانكفورت",
+   "name_en": "Frankfurt exhibition at EgyptAir office",
+   "description": "His exhibition in the EgyptAir office in Frankfurt, opened with the ambassador's introduction",
+   "date": "1968-02-15",
+   "place": "Frankfurt",
+   "record": null,
+   "uncertain": true,
+   "note": "Surface is the generic word 'my exhibition'; identified by context",
+   "section": "s23",
+   "problems": []
+  }
+ ]
+}

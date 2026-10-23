@@ -1,0 +1,119 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s02",
+ "extractedAt": "2026-10-23T14:02:22+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 88,
+  "output_tokens": 884,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0033",
+   "surface": "أحمد نوار",
+   "type": "person",
+   "name_ar": "أحمد نوار",
+   "name_en": "Ahmed Nawar",
+   "description": "Author of the foreword; head of the National Center for Fine Arts and Museums",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s02",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0034",
+   "surface": "المركز القومى للفنون التشكيلية والمتاحف",
+   "type": "organisation",
+   "name_ar": "المركز القومى للفنون التشكيلية والمتاحف",
+   "name_en": "National Center for Fine Arts and Museums",
+   "description": "Egyptian state body headed by Ahmed Nawar",
+   "date": null,
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s02",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0039",
+   "surface": "شركة عجيبة للبترول",
+   "type": "organisation",
+   "name_ar": "شركة عجيبة للبترول",
+   "name_en": "Agiba Petroleum Company",
+   "description": "Petroleum company whose building has a large statue unveiled by the author",
+   "date": null,
+   "place": "Egypt",
+   "record": "artwork:14",
+   "uncertain": false,
+   "note": null,
+   "section": "s02",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0039",
+   "surface": "تمثال كبير يقع فى مقدمة مبنى كبير لشركة عجيبة للبترول",
+   "type": "artwork",
+   "name_ar": "تمثال عجيبة",
+   "name_en": "Agiba Statue",
+   "description": "Large statue in front of the Agiba Petroleum building, unveiled by the author",
+   "date": null,
+   "place": "Egypt",
+   "record": "artwork:14",
+   "uncertain": false,
+   "note": null,
+   "section": "s02",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0040",
+   "surface": "مدينة العاشر من رمضان",
+   "type": "place",
+   "name_ar": "مدينة العاشر من رمضان",
+   "name_en": "10th of Ramadan City",
+   "description": "New industrial city where the artist donated works and a small museum",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s02",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0040",
+   "surface": "متحفا صغيرا بالحديقة العامة للمدينة",
+   "type": "organisation",
+   "name_ar": "المتحف الصغير بالحديقة العامة بمدينة العاشر من رمضان",
+   "name_en": "Small museum in the public park of 10th of Ramadan City",
+   "description": "Small museum built for the artist's donated works in the city's public garden",
+   "date": null,
+   "place": "10th of Ramadan City",
+   "record": "artwork:9",
+   "uncertain": true,
+   "note": "Likely the Kafraoui Park museum; the text does not name the park.",
+   "section": "s02",
+   "problems": []
+  }
+ ]
+}

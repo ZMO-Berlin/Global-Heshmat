@@ -1,0 +1,168 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s24",
+ "extractedAt": "2026-10-23T14:03:40+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 42,
+  "output_tokens": 1160,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0160",
+   "surface": "فرانكفورت",
+   "type": "place",
+   "name_ar": "فرانكفورت",
+   "name_en": "Frankfurt",
+   "description": "German city where Heshmat's exhibition was held and a Dutch doctor visited it",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s24",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "هولندا",
+   "type": "place",
+   "name_ar": "هولندا",
+   "name_en": "Netherlands",
+   "description": "Country where the Dutch doctor asked him to hold a similar exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s24",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "القاهرة",
+   "type": "place",
+   "name_ar": "القاهرة",
+   "name_en": "Cairo",
+   "description": "City he returned to, to prepare new works for the Dutch exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s24",
+   "problems": [
+    "surface not found in paragraph"
+   ]
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "سوسترين",
+   "type": "place",
+   "name_ar": "سوسترين",
+   "name_en": "Susteren",
+   "description": "Town in the north of the Netherlands where the exhibition was held",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "Book says north Netherlands; Susteren is in Limburg (south). Spelling as in book.",
+   "section": "s24",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "معرضى الذي أقمته في سوسترين",
+   "type": "exhibition",
+   "name_ar": "معرض سوسترين",
+   "name_en": "Exhibition in Susteren",
+   "description": "Exhibition in a house prepared by the Dutch doctor, opened by the embassy chargé d'affaires",
+   "date": null,
+   "place": "Netherlands",
+   "record": null,
+   "uncertain": true,
+   "note": "Surface not exact text; see place mention for the exact span.",
+   "section": "s24",
+   "problems": [
+    "surface not found in paragraph"
+   ]
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "سفارتنا فى لاهاى",
+   "type": "organisation",
+   "name_ar": "السفارة المصرية في لاهاي",
+   "name_en": "Egyptian Embassy in The Hague",
+   "description": "Embassy whose chargé d'affaires opened the Susteren exhibition",
+   "date": null,
+   "place": "Netherlands",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s24",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "لاهاى",
+   "type": "place",
+   "name_ar": "لاهاي",
+   "name_en": "The Hague",
+   "description": "Dutch city where the Egyptian embassy is located",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s24",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "بلجيكا",
+   "type": "place",
+   "name_ar": "بلجيكا",
+   "name_en": "Belgium",
+   "description": "Country of the priests' church, for which the memorial competition was held",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s24",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0160",
+   "surface": "النصب التذكارى",
+   "type": "artwork",
+   "name_ar": "النصب التذكاري لكنيسة بلجيكا",
+   "name_en": "Memorial for the church in Belgium",
+   "description": "Memorial won in an international competition among priests, commissioned for their Belgian church",
+   "date": null,
+   "place": "Belgium",
+   "record": "artwork:18",
+   "uncertain": false,
+   "note": "Surface 'ذلك النصب التذكارى' appears in the paragraph; the first mention is 'نصب تذكارى'.",
+   "section": "s24",
+   "problems": []
+  }
+ ]
+}

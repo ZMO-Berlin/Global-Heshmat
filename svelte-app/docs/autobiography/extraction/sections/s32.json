@@ -1,0 +1,74 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s32",
+ "extractedAt": "2026-10-23T14:03:42+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 37,
+  "output_tokens": 350,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0180",
+   "surface": "السويد",
+   "type": "place",
+   "name_ar": "السويد",
+   "name_en": "Sweden",
+   "description": "Country where the artist was when the Norwegian invitation arrived",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s32",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0180",
+   "surface": "النرويج",
+   "type": "place",
+   "name_ar": "النرويج",
+   "name_en": "Norway",
+   "description": "Country that invited him and where he held his first exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s32",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0180",
+   "surface": "معرضى الأول",
+   "type": "exhibition",
+   "name_ar": "معرض النرويج الأول",
+   "name_en": "First exhibition in Norway",
+   "description": "Heshmat's first exhibition in Norway, covered by two Norwegian newspapers",
+   "date": "1970-12",
+   "place": "Norway",
+   "record": null,
+   "uncertain": false,
+   "note": "Venue and city not named; identified by country and date.",
+   "section": "s32",
+   "problems": []
+  }
+ ]
+}

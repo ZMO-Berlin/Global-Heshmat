@@ -1,0 +1,149 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s15",
+ "extractedAt": "2026-10-23T14:02:49+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 40,
+  "output_tokens": 1099,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0118",
+   "surface": "المجر",
+   "type": "place",
+   "name_ar": "المجر",
+   "name_en": "Hungary",
+   "description": "Country whose government invited Heshmat for an exhibition in 1957",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "First occurrence: 'حكومة المجر'.",
+   "section": "s15",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0118",
+   "surface": "الدانوب",
+   "type": "place",
+   "name_ar": "الدانوب",
+   "name_en": "Danube",
+   "description": "River in whose midst lay the island hotel where the couple stayed",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s15",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0118",
+   "surface": "ببودابست",
+   "type": "place",
+   "name_ar": "بودابست",
+   "name_en": "Budapest",
+   "description": "Hungarian capital where Heshmat and his wife were hosted",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "Surface includes prefixed preposition ب, which cannot be separated.",
+   "section": "s15",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0118",
+   "surface": "المجر",
+   "type": "place",
+   "name_ar": "المجر",
+   "name_en": "Hungary",
+   "description": "Country where the couple stayed as guests of the government",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "Second occurrence: 'إقامتنا فى المجر'.",
+   "section": "s15",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0119",
+   "surface": "معرضى الخاص",
+   "type": "exhibition",
+   "name_ar": "معرض بودابست",
+   "name_en": "Heshmat's solo exhibition in Budapest, 1957",
+   "description": "Solo exhibition in Hungary, extended from ten days to a month due to success",
+   "date": "1957-09-28",
+   "place": "Hungary",
+   "record": null,
+   "uncertain": true,
+   "note": "Exhibition identified by date and Hungary; Budapest implied from context.",
+   "section": "s15",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0119",
+   "surface": "المعرض المصرى العام المتجول",
+   "type": "exhibition",
+   "name_ar": "المعرض المصرى العام المتجول",
+   "name_en": "Egyptian travelling general exhibition",
+   "description": "Egyptian travelling exhibition that coincided with Heshmat's solo show in Hungary",
+   "date": "1957",
+   "place": "Hungary",
+   "record": null,
+   "uncertain": true,
+   "note": "Heshmat took part only by coincidence; not clearly his exhibition.",
+   "section": "s15",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0119",
+   "surface": "سفارة مصر بالمجر",
+   "type": "organisation",
+   "name_ar": "سفارة مصر بالمجر",
+   "name_en": "Egyptian Embassy in Hungary",
+   "description": "Embassy whose chargé d'affaires opened Heshmat's exhibition on 28 September 1957",
+   "date": "1957-09-28",
+   "place": "Hungary",
+   "record": null,
+   "uncertain": false,
+   "note": "Surface 'بسفارة مصر بالمجر' with prefixed ب in text; shortest span given.",
+   "section": "s15",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0119",
+   "surface": "المجر",
+   "type": "place",
+   "name_ar": "المجر",
+   "name_en": "Hungary",
+   "description": "Country where the embassy and exhibition were located",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": "Within 'سفارة مصر بالمجر'.",
+   "section": "s15",
+   "problems": []
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s35",
+ "extractedAt": "2026-10-23T14:03:53+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 58,
+  "output_tokens": 891,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0186",
+   "surface": "يوسف السباعى",
+   "type": "person",
+   "name_ar": "يوسف السباعي",
+   "name_en": "Youssef El-Sebai",
+   "description": "Minister of Culture who opened the artist's second exhibition in 1974",
+   "date": "1974-03-19",
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s35",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0186",
+   "surface": "المركز المصرى للتعاون الثقافى الدولى",
+   "type": "organisation",
+   "name_ar": "المركز المصري للتعاون الثقافي الدولي",
+   "name_en": "Egyptian Centre for International Cultural Cooperation",
+   "description": "Venue of the artist's second exhibition opened in March 1974",
+   "date": "1974-03-19",
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s35",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0186",
+   "surface": "معرضى الثانى فى المركز المصرى للتعاون الثقافى الدولى",
+   "type": "exhibition",
+   "name_ar": "معرض المركز المصري للتعاون الثقافي الدولي",
+   "name_en": "Exhibition at the Egyptian Centre for International Cultural Cooperation",
+   "description": "Second exhibition, opened by Youssef El-Sebai on 19 March 1974",
+   "date": "1974-03-19",
+   "place": "Egypt",
+   "record": null,
+   "uncertain": false,
+   "note": "Section titled as Diplomats Hall exhibition; venue named in text is the Centre.",
+   "section": "s35",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0186",
+   "surface": "تمثال العبور",
+   "type": "artwork",
+   "name_ar": "تمثال العبور",
+   "name_en": "\"Statue of the Crossing\"",
+   "description": "Statue praised by the minister as meaning crossing of time and despair",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": true,
+   "note": "Possibly related to the 'Crossing the impossible' statue but not clearly the same.",
+   "section": "s35",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0187",
+   "surface": "حسن الشريف",
+   "type": "person",
+   "name_ar": "حسن الشريف",
+   "name_en": "Hassan El-Sherif",
+   "description": "Minister of Insurance who wrote a note praising the exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s35",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0188",
+   "surface": "عبد العزيز القوصى",
+   "type": "person",
+   "name_ar": "عبد العزيز القوصي",
+   "name_en": "Abdel Aziz El-Qousi",
+   "description": "Doctor who wrote that the artist breathed life into ceramics",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s35",
+   "problems": []
+  }
+ ]
+}

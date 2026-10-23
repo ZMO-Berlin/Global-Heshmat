@@ -1,0 +1,149 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s11",
+ "extractedAt": "2026-10-23T14:02:39+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 52,
+  "output_tokens": 1009,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0090",
+   "surface": "جمال عبدالناصر",
+   "type": "person",
+   "name_ar": "جمال عبد الناصر",
+   "name_en": "Gamal Abdel Nasser",
+   "description": "President who placed the 1955 Alexandria exhibition under his patronage",
+   "date": "1955-04-01",
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s11",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0090",
+   "surface": "قاعة الاتيليه بالإسكندرية",
+   "type": "organisation",
+   "name_ar": "قاعة الأتيليه",
+   "name_en": "Atelier Hall, Alexandria",
+   "description": "Hall in Alexandria where the third exhibition was held",
+   "date": "1955-04-01",
+   "place": "Alexandria",
+   "record": null,
+   "uncertain": false,
+   "note": "Surface includes the city; the city is returned separately.",
+   "section": "s11",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0090",
+   "surface": "بالإسكندرية",
+   "type": "place",
+   "name_ar": "الإسكندرية",
+   "name_en": "Alexandria",
+   "description": "Egyptian city where the third exhibition was held",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s11",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0090",
+   "surface": "المعرض",
+   "type": "exhibition",
+   "name_ar": "المعرض الثالث بقاعة الأتيليه بالإسكندرية",
+   "name_en": "Third solo exhibition, Atelier Hall, Alexandria",
+   "description": "Third exhibition, under President Nasser's patronage, opened by his representative",
+   "date": "1955-04-01",
+   "place": "Alexandria",
+   "record": null,
+   "uncertain": true,
+   "note": "Exhibition referred to by a heading and the phrase 'this exhibition'; surface is approximate.",
+   "section": "s11",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0091",
+   "surface": "بالإسكندرية",
+   "type": "place",
+   "name_ar": "الإسكندرية",
+   "name_en": "Alexandria",
+   "description": "City of the exhibition visited by a commenting visitor",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s11",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0092",
+   "surface": "مراكش",
+   "type": "place",
+   "name_ar": "مراكش",
+   "name_en": "Marrakesh",
+   "description": "Moroccan city from which a visitor travelled to Alexandria",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s11",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0092",
+   "surface": "الإسكندرية",
+   "type": "place",
+   "name_ar": "الإسكندرية",
+   "name_en": "Alexandria",
+   "description": "City where the visitor came to see the exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s11",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0093",
+   "surface": "سعيد خطاب",
+   "type": "person",
+   "name_ar": "سعيد خطاب",
+   "name_en": "Saeed Khattab",
+   "description": "Artist who wrote a tribute in the exhibition's visitor book",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s11",
+   "problems": []
+  }
+ ]
+}

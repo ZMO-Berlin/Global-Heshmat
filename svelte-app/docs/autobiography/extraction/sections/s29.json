@@ -1,0 +1,104 @@
+{
+ "fingerprint": {
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "context_sha256": "329e3c092215706f2374eeecb3cdb60d12b6c9680386b6f76ee5d89783eb3f23",
+  "schema_sha256": "d73483c065119d37badd89cd23e2e4c8e6577857d7aa52b5640614bd054e4994"
+ },
+ "section": "s29",
+ "extractedAt": "2026-10-23T14:03:37+00:00",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 84276,
+  "inference_geo": "global",
+  "input_tokens": 35,
+  "output_tokens": 692,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "mentions": [
+  {
+   "paragraph_id": "p0175",
+   "surface": "بون",
+   "type": "place",
+   "name_ar": "بون",
+   "name_en": "Bonn",
+   "description": "German city where the Egyptian embassy invited the artist to hold an exhibition",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s29",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0175",
+   "surface": "سفارتنا فى بون",
+   "type": "organisation",
+   "name_ar": "السفارة المصرية في بون",
+   "name_en": "Egyptian Embassy in Bonn",
+   "description": "Embassy that invited the artist to exhibit at the cultural centre",
+   "date": "1970",
+   "place": "Bonn",
+   "record": null,
+   "uncertain": false,
+   "note": "Surface includes 'سفارتنا' as the name of the organisation.",
+   "section": "s29",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0175",
+   "surface": "المركز الثقافى",
+   "type": "organisation",
+   "name_ar": "المركز الثقافي",
+   "name_en": "Cultural Centre, Bad Godesberg",
+   "description": "Cultural centre in Bad Godesberg hosting the exhibition",
+   "date": "1970",
+   "place": "Germany",
+   "record": null,
+   "uncertain": true,
+   "note": "Name not given beyond 'cultural centre'.",
+   "section": "s29",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0175",
+   "surface": "باد جودسبرج",
+   "type": "place",
+   "name_ar": "باد جودسبرج",
+   "name_en": "Bad Godesberg",
+   "description": "District of Bonn where the exhibition was held",
+   "date": null,
+   "place": null,
+   "record": null,
+   "uncertain": false,
+   "note": null,
+   "section": "s29",
+   "problems": []
+  },
+  {
+   "paragraph_id": "p0175",
+   "surface": "معرض فى المركز الثقافى فى باد جودسبرج",
+   "type": "exhibition",
+   "name_ar": "معرض باد جودسبرج",
+   "name_en": "Exhibition at the Cultural Centre, Bad Godesberg (Bonn)",
+   "description": "Large art festival with press conference, showing his Egyptian ceramic and wooden works",
+   "date": "1970",
+   "place": "Germany",
+   "record": null,
+   "uncertain": false,
+   "note": "Book gives 'early 1970'.",
+   "section": "s29",
+   "problems": []
+  }
+ ]
+}
