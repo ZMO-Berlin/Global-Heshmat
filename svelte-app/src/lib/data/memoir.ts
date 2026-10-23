@@ -52,3 +52,10 @@ export function pageLabel(pages: number[], shown = 5): string {
 	const rest = pages.length - shown;
 	return `${pages.length === 1 ? 'p.' : 'pp.'} ${head}${rest > 0 ? ` and ${rest} more` : ''}`;
 }
+
+/** "3 mentions · pp. 7, 9, 12", without the separator when no printed page is known. */
+export function mentionLabel(entity: Pick<MemoirEntity, 'mentions' | 'pages'>, shown = 5): string {
+	const count = `${entity.mentions} ${entity.mentions === 1 ? 'mention' : 'mentions'}`;
+	const pages = pageLabel(entity.pages, shown);
+	return pages ? `${count} · ${pages}` : count;
+}

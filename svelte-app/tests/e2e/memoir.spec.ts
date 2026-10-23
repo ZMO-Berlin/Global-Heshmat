@@ -45,9 +45,24 @@ test('the memoir view lists what the book names and explains its method', async 
 	const method = page.locator('#method');
 	await expect(method).toContainText('experiment');
 	await expect(method).toContainText(String(memoir.method.mentions));
-	// Every person is listed, the less frequent ones behind a disclosure.
-	await page.getByText(/more people, each named once or twice/).click();
-	await expect(page.locator('#people .people > li')).toHaveCount(ofType('person').length);
+	// People come in pages of 20, most named first; the last page holds the rest.
+	const people = ofType('person').length;
+	const pages = Math.ceil(people / 20);
+	const list = page.locator('#people .people > li');
+	await expect(list).toHaveCount(Math.min(20, people));
+	const pager = page.getByRole('navigation', { name: 'Pages of people' });
+	await expect(pager.getByRole('button', { name: 'Previous', exact: true })).toBeDisabled();
+	await pager.getByRole('button', { name: 'Next', exact: true }).click();
+	await expect(pager.getByRole('button', { name: 'Page 2', exact: true })).toHaveAttribute(
+		'aria-current',
+		'page'
+	);
+	await pager.getByRole('button', { name: `Page ${pages}`, exact: true }).click();
+	await expect(list).toHaveCount(people - (pages - 1) * 20);
+	await expect(page.getByRole('status').filter({ hasText: `of ${people}` })).toContainText(
+		`${(pages - 1) * 20 + 1}–${people} of ${people}`
+	);
+	await expect(pager.getByRole('button', { name: 'Next', exact: true })).toBeDisabled();
 	await accessible(page);
 });
 

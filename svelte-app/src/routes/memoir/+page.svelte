@@ -2,6 +2,7 @@
 	/* eslint-disable svelte/no-navigation-without-resolve -- record links come from the browse store's resolved builders; #ids are in-page anchors; the rest are external. */
 	import Seo from '$lib/components/Seo.svelte';
 	import { onMount } from 'svelte';
+	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import { artworks } from '$lib/data/artworks';
 	import { residences } from '$lib/data/residences';
 	import { resolve } from '$app/paths';
@@ -11,6 +12,7 @@
 		memoirCounts as counts,
 		memoirMethod as method,
 		ofType,
+		mentionLabel,
 		pageLabel,
 		type MemoirEntity
 	} from '$lib/data/memoir';
@@ -30,7 +32,7 @@
 	});
 	const SOURCE_URL =
 		'https://github.com/ZMO-Berlin/Global-Heshmat/tree/main/svelte-app/docs/autobiography';
-	const PEOPLE_SHOWN = 20;
+	const PEOPLE_PER_PAGE = 20;
 
 	const byMentions = (a: MemoirEntity, b: MemoirEntity) =>
 		b.mentions - a.mentions || a.name.localeCompare(b.name);
@@ -60,6 +62,16 @@
 	// People, ranked by how often the book names them.
 	const persons = ofType('person').sort(byMentions);
 	const mostNamed = persons[0].mentions;
+	const peoplePages = Math.ceil(persons.length / PEOPLE_PER_PAGE);
+	let peoplePage = $state(1);
+	const firstShown = $derived((peoplePage - 1) * PEOPLE_PER_PAGE);
+	const shownPeople = $derived(persons.slice(firstShown, firstShown + PEOPLE_PER_PAGE));
+	let peopleHeading: HTMLHeadingElement;
+	function showPeoplePage(page: number) {
+		peoplePage = page;
+		// Back to the top of the list, so the new page is read from its first name.
+		peopleHeading.focus();
+	}
 
 	// Site records the book refers to, with the names it uses for them.
 	const entries = new Map<string, Entry>([...artworks, ...residences].map((e) => [entryKey(e), e]));
@@ -230,37 +242,58 @@
 		</section>
 
 		<section id="people" aria-labelledby="people-heading">
-			<h3 id="people-heading">People</h3>
+			<h3 id="people-heading" bind:this={peopleHeading} tabindex="-1">People</h3>
 			<p>
 				{countLabel(persons.length, 'person', 'people')} named in the book: teachers, critics and fellow
 				artists, ministers, diplomats and patrons. Those with a profile on this site link to it.
 			</p>
-			{#snippet person(entity: MemoirEntity)}
-				<li>
-					<div class="who">
-						<span class="name" dir="auto"
-							>{#if entity.record?.startsWith('person:')}<a href={profileHref(entity.record)}
-									>{entity.name}</a
-								>{:else}{entity.name}{/if}</span
-						>
-						<span class="ar" lang="ar" dir="rtl">{entity.nameAr}</span>
-					</div>
-					<p class="desc">{entity.description}</p>
-					<div class="tally">
-						<span class="bar" style:inline-size="{(entity.mentions / mostNamed) * 100}%"></span>
-						<span>{countLabel(entity.mentions, 'mention')} · {pageLabel(entity.pages)}</span>
-					</div>
-				</li>
-			{/snippet}
-			<ol class="people">
-				{#each persons.slice(0, PEOPLE_SHOWN) as entity (entity.id)}{@render person(entity)}{/each}
+			<p class="pager-status" role="status">
+				{firstShown + 1}–{firstShown + shownPeople.length} of {persons.length}, most named first
+			</p>
+			<ol class="people" start={firstShown + 1}>
+				{#each shownPeople as entity (entity.id)}<li>
+						<div class="who">
+							<span class="name" dir="auto"
+								>{#if entity.record?.startsWith('person:')}<a href={profileHref(entity.record)}
+										>{entity.name}</a
+									>{:else}{entity.name}{/if}</span
+							>
+							<span class="ar" lang="ar" dir="rtl">{entity.nameAr}</span>
+						</div>
+						<p class="desc">{entity.description}</p>
+						<div class="tally">
+							<span class="bar" style:inline-size="{(entity.mentions / mostNamed) * 100}%"></span>
+							<span>{mentionLabel(entity)}</span>
+						</div>
+					</li>{/each}
 			</ol>
-			<details>
-				<summary>{persons.length - PEOPLE_SHOWN} more people, each named once or twice</summary>
-				<ol class="people" start={PEOPLE_SHOWN + 1}>
-					{#each persons.slice(PEOPLE_SHOWN) as entity (entity.id)}{@render person(entity)}{/each}
+			<nav class="pager" aria-label="Pages of people">
+				<button
+					type="button"
+					disabled={!store.ready || peoplePage === 1}
+					onclick={() => showPeoplePage(peoplePage - 1)}
+					><ChevronLeft size={18} aria-hidden="true" />Previous</button
+				>
+				<ol>
+					{#each { length: peoplePages }, index (index)}{@const page = index + 1}
+						<li>
+							<button
+								type="button"
+								class="page"
+								disabled={!store.ready}
+								aria-current={page === peoplePage ? 'page' : undefined}
+								aria-label="Page {page}"
+								onclick={() => showPeoplePage(page)}>{page}</button
+							>
+						</li>{/each}
 				</ol>
-			</details>
+				<button
+					type="button"
+					disabled={!store.ready || peoplePage === peoplePages}
+					onclick={() => showPeoplePage(peoplePage + 1)}
+					>Next<ChevronRight size={18} aria-hidden="true" /></button
+				>
+			</nav>
 		</section>
 
 		<section id="collection" aria-labelledby="collection-heading">
@@ -284,9 +317,7 @@
 				{#each profiled as entity (entity.id)}
 					<li>
 						<a href={profileHref(entity.record!)} dir="auto">{entity.name}</a>
-						<span class="as"
-							>{countLabel(entity.mentions, 'mention')} · {pageLabel(entity.pages)}</span
-						>
+						<span class="as">{mentionLabel(entity)}</span>
 					</li>{/each}
 			</ul>
 		</section>
@@ -462,6 +493,50 @@
 	}
 	details {
 		margin-top: var(--space-5);
+	}
+	#people-heading:focus {
+		outline: none;
+	}
+	.research-inner .pager-status {
+		margin: var(--space-4) 0 0;
+		font-size: var(--text-sm);
+		color: var(--color-text-muted);
+		font-variant-numeric: tabular-nums;
+	}
+	.pager {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2);
+		margin-top: var(--space-6);
+	}
+	.pager ol {
+		display: flex;
+		gap: var(--space-1-5);
+		list-style: none;
+	}
+	.pager button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-1);
+		min-width: 44px;
+		border-radius: var(--radius-pill);
+		font-variant-numeric: tabular-nums;
+	}
+	.pager button:hover:not(:disabled) {
+		border-color: var(--color-accent);
+	}
+	.pager button:disabled:not([aria-current]) {
+		color: var(--color-text-muted);
+		cursor: default;
+		opacity: 0.6;
+	}
+	.pager .page[aria-current='page'] {
+		border-color: var(--color-accent);
+		background: var(--color-accent-light);
+		color: var(--color-accent-text);
+		font-weight: var(--weight-semibold);
 	}
 	summary {
 		min-height: 44px;

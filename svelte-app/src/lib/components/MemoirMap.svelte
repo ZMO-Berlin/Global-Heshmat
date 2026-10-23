@@ -5,8 +5,7 @@
 	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 	import rtlTextPluginUrl from '$rtl-text-plugin?url';
 	import type * as Maplibre from 'maplibre-gl';
-	import { pageLabel, type MemoirEntity } from '$lib/data/memoir';
-	import { countLabel } from '$lib/utils/text';
+	import { mentionLabel, type MemoirEntity } from '$lib/data/memoir';
 	import type { FeatureCollection } from '$lib/utils/geojson';
 	import { X } from '@lucide/svelte';
 
@@ -143,9 +142,7 @@
 					</button>
 				</div>
 				<span class="popup-ar" lang="ar" dir="rtl">{selected.nameAr}</span>
-				<span class="popup-meta"
-					>{countLabel(selected.mentions, 'mention')} · {pageLabel(selected.pages, 8)}</span
-				>
+				<span class="popup-meta">{mentionLabel(selected, 8)}</span>
 			{/if}
 		</div>
 	</div>
