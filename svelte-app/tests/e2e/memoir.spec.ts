@@ -34,7 +34,7 @@ test('the memoir view lists what the book names and explains its method', async 
 		'Exhibitions',
 		'People',
 		'In the collection',
-		'How this page was made'
+		'How this Memoir page was made'
 	]) {
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 	}

@@ -130,8 +130,8 @@
 				exhibitions he held in Egypt and abroad and the public works he built. This page gathers the {counts.person}
 				people, {counts.place} places, {counts.exhibition} exhibitions and {counts.artwork} works it names.
 				The names were read from the book with an experimental, AI-assisted method that has not yet been
-				checked by an editor: see <a href="#method">How this page was made</a>. The book itself is
-				available as an <a href={book.doi} rel="external">open-access scan</a>.
+				checked by an editor: see <a href="#method">How this Memoir page was made</a>. The book
+				itself is available as an <a href={book.doi} rel="external">open-access scan</a>.
 			</p>
 			<nav class="memoir-index" aria-label="On this page">
 				<ul>
@@ -139,7 +139,7 @@
 					<li><a href="#exhibitions">Exhibitions</a></li>
 					<li><a href="#people">People</a></li>
 					<li><a href="#collection">In the collection</a></li>
-					<li><a href="#method">How this page was made</a></li>
+					<li><a href="#method">How this Memoir page was made</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -328,20 +328,25 @@
 		</section>
 
 		<section id="method" class="method" aria-labelledby="method-heading">
-			<h3 id="method-heading">How this page was made</h3>
+			<h3 id="method-heading">How this Memoir page was made</h3>
 			<p class="experimental">
 				This page is an experiment in reading a book with AI tools. Every name above was extracted
 				automatically and has not yet been checked against the book. Until an editor has validated
 				them, expect mistaken or doubled names, approximate spellings and dates, and places shown in
 				the wrong position.
 			</p>
+			<p>
+				Names, places and exhibitions that already have an entry on this platform have been
+				researched and cross-checked with other sources outside the autobiography.
+			</p>
 			<ol class="steps">
 				<li>
 					<h4>The scan</h4>
 					<p>
-						The {book.year} edition published by {book.publisher}, in an
-						<a href={book.doi} rel="external">open-access scan</a>. Its {method.pdfPages} PDF pages hold
-						mostly two-page spreads, which were split into {method.pages} single pages.
+						The {book.year} edition published by {book.publisher} ({book.publisherEn}), in an
+						open-access scan from ZMO’s repository (DOI:
+						<a href={book.doi} rel="external">{book.doi.replace('https://doi.org/', '')}</a>). Its {method.pdfPages}
+						PDF pages hold mostly two-page spreads, which were split into {method.pages} single pages.
 					</p>
 				</li>
 				<li>

@@ -69,6 +69,7 @@ def main() -> None:
             "titleAr": "تجاربى فى الفن والحياة",
             "translation": "My experiences in art and life",
             "publisher": "al-Hayʾa al-Miṣriyya al-ʿĀmma lil-Kitāb",
+            "publisherEn": "Egyptian General Book Organization",
             "year": 1997,
             "doi": "https://doi.org/10.58144/20240607-000",
         },
