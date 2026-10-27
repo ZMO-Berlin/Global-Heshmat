@@ -6,8 +6,22 @@ import { readFileSync } from 'node:fs';
 // editor's validation) does not break these tests.
 const memoir: {
 	method: { mentions: number };
-	entities: { type: string; name: string; years?: number[]; record?: string }[];
+	entities: {
+		id: string;
+		type: string;
+		name: string;
+		mentions: number;
+		pages: number[];
+		years?: number[];
+		record?: string;
+	}[];
 } = JSON.parse(readFileSync(new URL('../../src/lib/data/memoir.json', import.meta.url), 'utf8'));
+const passages: {
+	paragraphs: Record<string, { pages: number[]; text: string }>;
+	entities: Record<string, { p: string; marks: [number, number][] }[]>;
+} = JSON.parse(
+	readFileSync(new URL('../../src/lib/data/memoir-passages.json', import.meta.url), 'utf8')
+);
 const ofType = (type: string) => memoir.entities.filter((e) => e.type === type);
 const years = [...new Set(ofType('exhibition').flatMap((e) => e.years?.slice(0, 1) ?? []))];
 
@@ -71,6 +85,41 @@ test('the memoir view lists what the book names and explains its method', async 
 	await accessible(page);
 });
 
+test('a page number opens the passage naming the person, with the name marked', async ({
+	page
+}) => {
+	// The most named person heads the people list; open the first page that names them.
+	const person = ofType('person').sort(
+		(a, b) => b.mentions - a.mentions || a.name.localeCompare(b.name)
+	)[0];
+	const first = person.pages[0];
+	const list = passages.entities[person.id];
+	const at = list.findIndex((p) => passages.paragraphs[p.p].pages.includes(first));
+	const { text } = passages.paragraphs[list[at].p];
+	const [start, end] = list[at].marks[0];
+
+	await page.goto('/memoir/');
+	const button = page
+		.locator('#people')
+		.getByRole('button', { name: `Page ${first}: passage naming ${person.name}`, exact: true });
+	await button.click();
+	const dialog = page.getByRole('dialog', { name: person.name });
+	await expect(dialog).toBeVisible();
+	await expect(dialog.locator('blockquote mark').first()).toHaveText(text.slice(start, end));
+	await expect(dialog).toContainText('not proofread');
+	if (list.length > 1) {
+		const steps = dialog.getByRole('navigation', { name: `Passages naming ${person.name}` });
+		await expect(steps.getByRole('status')).toHaveText(`Passage ${at + 1} of ${list.length}`);
+		await steps.getByRole('button', { name: 'Next', exact: true }).click();
+		await expect(steps.getByRole('status')).toHaveText(`Passage ${at + 2} of ${list.length}`);
+		await expect(dialog.locator('blockquote mark').first()).toBeVisible();
+	}
+	await accessible(page);
+	await page.keyboard.press('Escape');
+	await expect(dialog).toBeHidden();
+	await expect(button).toBeFocused();
+});
+
 test('records the book mentions lead to their albums and back', async ({ page }) => {
 	await page.goto('/memoir/');
 	const first = page.locator('#collection .records a').first();
@@ -78,6 +127,17 @@ test('records the book mentions lead to their albums and back', async ({ page })
 	await expect(page).toHaveURL(/\/(artworks|residences)\//);
 	await page.getByRole('link', { name: 'Back to memoir', exact: true }).click();
 	await expect(page).toHaveURL(/\/memoir\/?$/);
+});
+
+test('the map loads only once it scrolls into view on phones', async ({ page }) => {
+	// MapLibre is about 1 MB of script; on a phone the map starts below the fold.
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.goto('/memoir/');
+	await expect(page.getByRole('heading', { name: 'Places', exact: true })).toBeVisible();
+	await page.waitForLoadState('networkidle');
+	await expect(page.locator('.memoir-map')).toHaveCount(0);
+	await page.locator('.map-frame').scrollIntoViewIfNeeded();
+	await expect(page.locator('.memoir-map')).toHaveCount(1);
 });
 
 test('the memoir tab is within thumb reach on phones', async ({ page }) => {

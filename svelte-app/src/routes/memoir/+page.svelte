@@ -1,6 +1,8 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- record links come from the browse store's resolved builders; #ids are in-page anchors; the rest are external. */
 	import Seo from '$lib/components/Seo.svelte';
+	import MemoirPages from '$lib/components/MemoirPages.svelte';
+	import MemoirPassage from '$lib/components/MemoirPassage.svelte';
 	import { onMount, tick } from 'svelte';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import { artworks } from '$lib/data/artworks';
@@ -12,8 +14,6 @@
 		memoirCounts as counts,
 		memoirMethod as method,
 		ofType,
-		mentionLabel,
-		pageLabel,
 		type MemoirEntity
 	} from '$lib/data/memoir';
 	import { entryKey, entryTitle, type Entry } from '$lib/utils/collection';
@@ -21,14 +21,27 @@
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 
 	const store = getBrowseStore();
-	// MapLibre is a large optional renderer: like the main map, it loads after the page.
+	// MapLibre is a large optional renderer (about 1 MB of script): it loads only
+	// once the map scrolls into view. On phones the map starts just below the fold,
+	// so no margin ahead: any would load it with the page.
 	type MapConstructor = (typeof import('$lib/components/MemoirMap.svelte'))['default'];
 	let MemoirMap = $state<MapConstructor>();
 	let mapFailed = $state(false);
+	let mapFrame: HTMLDivElement;
 	onMount(() => {
-		import('$lib/components/MemoirMap.svelte')
-			.then((module) => (MemoirMap = module.default))
-			.catch(() => (mapFailed = true));
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (!entries.some((entry) => entry.isIntersecting)) return;
+				observer.disconnect();
+				import('$lib/components/MemoirMap.svelte')
+					.then((module) => (MemoirMap = module.default))
+					.catch(() => (mapFailed = true));
+			},
+			// The page scrolls inside its own container.
+			{ root: mapFrame.closest('.research-page') }
+		);
+		observer.observe(mapFrame);
+		return () => observer.disconnect();
 	});
 	const SOURCE_URL =
 		'https://github.com/ZMO-Berlin/Global-Heshmat/tree/main/svelte-app/docs/autobiography';
@@ -101,6 +114,18 @@
 		);
 	const profiled = persons.filter((p) => p.record?.startsWith('person:'));
 
+	// The passage dialog for a page number; closing it returns focus to that button
+	// (Safari does not focus a clicked button, so the dialog cannot rely on it).
+	let reading = $state<{ entity: MemoirEntity; page: number; opener: HTMLButtonElement }>();
+	const openPassage = (entity: MemoirEntity, page: number, opener: HTMLButtonElement) =>
+		(reading = { entity, page, opener });
+	async function closePassage() {
+		const opener = reading?.opener;
+		reading = undefined;
+		await tick();
+		opener?.focus();
+	}
+
 	const osmUrl = (osm: string) => `https://www.openstreetmap.org/${osm}`;
 	const levelLabel: Record<string, string> = {
 		country: 'country',
@@ -155,7 +180,7 @@
 				the book names, each circle sized by how often. Select one for its pages. Positions are automatic
 				and approximate.
 			</p>
-			<div class="map-frame">
+			<div class="map-frame" bind:this={mapFrame}>
 				{#if MemoirMap}<MemoirMap places={mapped} />{:else if mapFailed}<p class="map-note">
 						The map could not be loaded. Every place is also listed below.
 					</p>{/if}
@@ -188,7 +213,7 @@
 								<td lang="ar" dir="rtl">{place.nameAr}</td>
 								<td>{place.level ? levelLabel[place.level] : 'not located'}</td>
 								<td class="num">{place.mentions}</td>
-								<td>{pageLabel(place.pages, 12)}</td>
+								<td><MemoirPages entity={place} shown={12} onopen={openPassage} /></td>
 							</tr>{/each}
 					</tbody>
 				</table>
@@ -230,7 +255,8 @@
 						<ul>
 							{#each items as exhibition (exhibition.id)}<li>
 									<span class="name" dir="auto">{exhibition.name}</span>
-									<span class="pages">{pageLabel(exhibition.pages)}</span>
+									<span class="pages"><MemoirPages entity={exhibition} onopen={openPassage} /></span
+									>
 								</li>{/each}
 						</ul>
 					</li>{/each}
@@ -239,7 +265,8 @@
 						<ul>
 							{#each undated as exhibition (exhibition.id)}<li>
 									<span class="name" dir="auto">{exhibition.name}</span>
-									<span class="pages">{pageLabel(exhibition.pages)}</span>
+									<span class="pages"><MemoirPages entity={exhibition} onopen={openPassage} /></span
+									>
 								</li>{/each}
 						</ul>
 					</li>{/if}
@@ -268,7 +295,10 @@
 						<p class="desc">{entity.description}</p>
 						<div class="tally">
 							<span class="bar" style:inline-size="{(entity.mentions / mostNamed) * 100}%"></span>
-							<span>{mentionLabel(entity)}</span>
+							<span
+								>{countLabel(entity.mentions, 'mention')}{#if entity.pages.length}
+									· <MemoirPages {entity} onopen={openPassage} />{/if}</span
+							>
 						</div>
 					</li>{/each}
 			</ol>
@@ -322,7 +352,10 @@
 				{#each profiled as entity (entity.id)}
 					<li>
 						<a href={profileHref(entity.record!)} dir="auto">{entity.name}</a>
-						<span class="as">{mentionLabel(entity)}</span>
+						<span class="as"
+							>{countLabel(entity.mentions, 'mention')}{#if entity.pages.length}
+								· <MemoirPages {entity} onopen={openPassage} />{/if}</span
+						>
 					</li>{/each}
 			</ul>
 		</section>
@@ -331,9 +364,10 @@
 			<h3 id="method-heading">How this Memoir page was made</h3>
 			<p class="experimental">
 				This page is an experiment in reading a book with AI tools. Every name above was extracted
-				automatically and has not yet been checked against the book. Until an editor has validated
-				them, expect mistaken or doubled names, approximate spellings and dates, and places shown in
-				the wrong position.
+				automatically and has not yet been checked against the book. The page numbers open the
+				passage that names each one, in the book’s text as transcribed by machine and not proofread.
+				Until an editor has validated them, expect mistaken or doubled names, approximate spellings
+				and dates, and places shown in the wrong position.
 			</p>
 			<p>
 				Names, places and exhibitions that already have an entry on this platform have been
@@ -407,6 +441,11 @@
 		</section>
 	</article>
 </div>
+{#if reading}<MemoirPassage
+		entity={reading.entity}
+		page={reading.page}
+		onclose={closePassage}
+	/>{/if}
 
 <style>
 	.memoir-head {
