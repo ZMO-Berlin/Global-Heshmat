@@ -63,14 +63,16 @@
 			>{about.impressum.ideaResearch.name}</a
 		>, {about.impressum.ideaResearch.affiliation}<br />
 		Configuration:<br />
-		{#each about.impressum.configuration as person (person.name)}
+		{#each about.impressum.configuration as person, i (person.name)}
+			{#if i},
+			{/if}
 			{#if person.url}
 				<a href={person.url} target="_blank" rel="noopener noreferrer external">{person.name}</a>
 			{:else}
 				{person.name}
 			{/if}
-			<br />
 		{/each}
+		<br />
 		Development:
 		<a href={about.impressum.development.url} target="_blank" rel="noopener noreferrer external"
 			>{about.impressum.development.name}</a
