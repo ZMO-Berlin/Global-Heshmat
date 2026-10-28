@@ -9,7 +9,7 @@ const artwork: Artwork = {
     lng: 31.395156,
     country: 'Egypt',
     city: 'Cairo',
-    status: 'search',
+    status: 'located',
     trails: ['industry-everyday'],
     address: 'Airport Rd, Sheraton Al Matar, El Nozha, Cairo Governorate, Egypt',
     desc: 'Nut Bowl for Egypt Air, designed by Hassan Heshmat', 
