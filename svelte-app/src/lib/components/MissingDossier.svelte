@@ -9,7 +9,15 @@
 	import { entryKey, entryTitle, entryImages, coverImage } from '$lib/utils/collection';
 	import { getBrowseStore } from '$lib/stores/browse.svelte';
 	const store = getBrowseStore();
-	const missing = $derived(filterArtworks(artworks, { ...store.filters, status: 'search' }));
+	const missing = $derived.by(() => {
+		const matches = filterArtworks(artworks, { ...store.filters, status: 'search' });
+		const panoramaIndex = matches.findIndex((artwork) => artwork.slug === 'panorama-october');
+		if (panoramaIndex === -1) return matches;
+
+		const [panorama] = matches.splice(panoramaIndex, 1);
+		matches.splice(Math.floor(matches.length / 2), 0, panorama);
+		return matches;
+	});
 	const total = artworks.filter((item) => item.status === 'search').length;
 </script>
 
