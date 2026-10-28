@@ -59,10 +59,7 @@ export const aboutContent = {
 			url: 'https://www.zmo.de/en/people/dr-sonja-hegasy',
 			affiliation: 'ZMO'
 		},
-		configuration: [
-			{ name: 'Jan Purtzel, ZMO' },
-			{ name: 'Rieke Mülstegen, ZMO', url: 'https://www.zmo.de/personen/rieke-muelstegen' }
-		],
+		configuration: [{ name: 'Jan Purtzel, ZMO' },{ name: 'Rieke Mülstegen, ZMO', url: 'https://www.zmo.de/personen/rieke-muelstegen' }],
 		development: {
 			name: 'Dr Fr\u00e9d\u00e9rick Madore',
 			url: 'https://www.frederickmadore.com/',
