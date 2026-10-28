@@ -62,7 +62,7 @@
 		<a href={about.impressum.ideaResearch.url} target="_blank" rel="noopener noreferrer external"
 			>{about.impressum.ideaResearch.name}</a
 		>, {about.impressum.ideaResearch.affiliation}<br />
-		Configuration:<br />
+		Configuration:
 		{#each about.impressum.configuration as person, i (person.name)}
 			{#if i},
 			{/if}
