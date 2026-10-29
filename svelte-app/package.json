@@ -93,6 +93,6 @@
 	"overrides": {
 		"brace-expansion": "^5.0.12",
 		"cookie": "^0.7.0",
-		"fast-uri": "^4.2.1"
+		"fast-uri": "^4.2.3"
 	}
 }
