@@ -1,6 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Source and contribution URLs are external, validated editorial links. */
-	import type { ArtworkImage } from '$lib/data/types';
+	import type { ArtworkImage } from '#lib/data/types.js';
 	let { image, fallback = '' }: { image: ArtworkImage; fallback?: string } = $props();
 </script>
 

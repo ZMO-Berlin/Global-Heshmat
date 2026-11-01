@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildEntryGeoJSON, buildGhostGeoJSON, buildRelocationGeoJSON } from './geojson';
-import type { Artwork, IndexedArtwork, IndexedResidence } from '$lib/data/types';
+import type { Artwork, IndexedArtwork, IndexedResidence } from '#lib/data/types.js';
 
 const artwork = (overrides: Partial<Artwork>): Artwork => ({
 	id: 1,

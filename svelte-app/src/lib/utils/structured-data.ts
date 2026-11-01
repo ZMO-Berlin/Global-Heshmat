@@ -1,4 +1,4 @@
-import { ARTIST, SITE_NAME, SITE_URL } from '$lib/config';
+import { ARTIST, SITE_NAME, SITE_URL } from '#lib/config.js';
 import { leadImage, webUrl } from './image';
 import { recordUrl } from './exports';
 import type { Entry } from './collection';

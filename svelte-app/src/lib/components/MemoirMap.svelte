@@ -5,8 +5,8 @@
 	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 	import rtlTextPluginUrl from '$rtl-text-plugin?url';
 	import type * as Maplibre from 'maplibre-gl';
-	import { mentionLabel, type MemoirEntity } from '$lib/data/memoir';
-	import type { FeatureCollection } from '$lib/utils/geojson';
+	import { mentionLabel, type MemoirEntity } from '#lib/data/memoir.js';
+	import type { FeatureCollection } from '#lib/utils/geojson.js';
 	import { X } from '@lucide/svelte';
 
 	let { places }: { places: MemoirEntity[] } = $props();

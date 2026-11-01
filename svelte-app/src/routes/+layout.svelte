@@ -11,39 +11,41 @@
 	import { page } from '$app/state';
 	import { goto, afterNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import Header from '$lib/components/Header.svelte';
-	import FilterBar from '$lib/components/FilterBar.svelte';
-	import CollectionView from '$lib/components/CollectionView.svelte';
-	import MissingDossier from '$lib/components/MissingDossier.svelte';
-	import CollectionPanel from '$lib/components/CollectionPanel.svelte';
-	import Legend from '$lib/components/Legend.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-	import AboutModal from '$lib/components/AboutModal.svelte';
-	import { createFieldbook } from '$lib/stores/fieldbook.svelte';
-	import { createBrowseStore } from '$lib/stores/browse.svelte';
-	import { isRecordPath } from '$lib/offline/keys';
+	import Header from '#lib/components/Header.svelte';
+	import FilterBar from '#lib/components/FilterBar.svelte';
+	import CollectionView from '#lib/components/CollectionView.svelte';
+	import MissingDossier from '#lib/components/MissingDossier.svelte';
+	import CollectionPanel from '#lib/components/CollectionPanel.svelte';
+	import Legend from '#lib/components/Legend.svelte';
+	import Footer from '#lib/components/Footer.svelte';
+	import AboutModal from '#lib/components/AboutModal.svelte';
+	import { createFieldbook } from '#lib/stores/fieldbook.svelte.js';
+	import { createBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { isRecordPath } from '#lib/offline/keys.js';
 	let { children }: { children: Snippet } = $props();
 	const store = createBrowseStore();
 	$effect(() => {
 		if (store.ready && !store.peopleView && store.filters.type === 'person')
-			void goto(store.peopleHref(), { replaceState: true });
+			void goto(store.peopleHref(), { replace: true });
 	});
 	createFieldbook();
 	// SvelteKit card clicks do not fetch an HTML document. Save it explicitly,
 	// including a first visit that happens before the service worker activates.
-	afterNavigate(({ to }) => {
+	afterNavigate(({ to, shallow, type }) => {
+		// Shallow updates only change the query string of a page already saved.
+		if (shallow && type === 'goto') return;
 		const path = to?.url.pathname;
 		if (!path || !isRecordPath(path) || !('serviceWorker' in navigator)) return;
 		void navigator.serviceWorker.ready
 			.then(async () => {
-				const { cacheEntryDocument } = await import('$lib/offline/client');
+				const { cacheEntryDocument } = await import('#lib/offline/client.js');
 				await cacheEntryDocument(path);
 			})
 			.catch(() => {});
 	});
-	type MapConstructor = (typeof import('$lib/components/MapView.svelte'))['default'];
+	type MapConstructor = (typeof import('#lib/components/MapView.svelte'))['default'];
 	let MapComponent = $state<MapConstructor>();
-	let mapView: import('$lib/components/MapView.svelte').default | undefined = $state();
+	let mapView: import('#lib/components/MapView.svelte').default | undefined = $state();
 	let mapFailed = $state(false);
 	let importing = false;
 	let wasSelected = false;
@@ -63,7 +65,7 @@
 		importing = true;
 		mapFailed = false;
 		try {
-			MapComponent = (await import('$lib/components/MapView.svelte')).default;
+			MapComponent = (await import('#lib/components/MapView.svelte')).default;
 		} catch {
 			mapFailed = true;
 		} finally {
@@ -89,7 +91,7 @@
 		const register = () => {
 			timer = setTimeout(
 				() =>
-					void import('virtual:pwa-register')
+					void import('#lib/offline/register.js')
 						.then(({ registerSW }) => registerSW())
 						.catch(() => {}),
 				3000
@@ -135,7 +137,7 @@
 		if (event.key !== 'Escape') return;
 		if (store.aboutOpen) store.aboutOpen = false;
 		else if (store.browseOpen) store.browseOpen = false;
-		else if (store.selection && !store.photo) void goto(store.closeHref, { noScroll: true });
+		else if (store.selection && !store.photo) void goto(store.closeHref, { reset: false });
 	}}
 />
 <a class="skip-link" href="#main-content">Skip to the collection</a>

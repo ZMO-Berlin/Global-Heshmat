@@ -10,9 +10,9 @@ import {
 	validateEntry,
 	validatePerson,
 	validDate
-} from '$lib/editorial/validate';
-import { artworks } from '$lib/data/artworks';
-import { people } from '$lib/data/people';
+} from '#lib/editorial/validate.js';
+import { artworks } from '#lib/data/artworks.js';
+import { people } from '#lib/data/people.js';
 const fixture: Entry = {
 	id: 1,
 	name: 'Research & archive',

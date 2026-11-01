@@ -1,6 +1,6 @@
 import { SvelteSet } from 'svelte/reactivity';
 import { getContext, setContext, onMount } from 'svelte';
-import { entryKey, type Entry } from '$lib/utils/collection';
+import { entryKey, type Entry } from '#lib/utils/collection.js';
 const CONTEXT = Symbol('fieldbook');
 const STORAGE_KEY = 'global-heshmat-fieldbook-v1';
 export function createFieldbook() {

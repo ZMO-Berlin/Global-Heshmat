@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { allSlugs, getArtworkBySlug } from '$lib/data/artworks';
+import { allSlugs, getArtworkBySlug } from '#lib/data/artworks.js';
 import type { EntryGenerator, PageLoad } from './$types';
 
 // Tell the prerenderer the full set of valid slugs so every artwork gets

@@ -1,4 +1,4 @@
-import type { DocumentaryMetadata } from '$lib/data/types';
+import type { DocumentaryMetadata } from '#lib/data/types.js';
 export function locationZoom(item: DocumentaryMetadata): number {
 	return item.locationPrecision === 'exact'
 		? 14

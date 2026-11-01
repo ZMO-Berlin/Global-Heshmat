@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { ChevronDown } from '@lucide/svelte';
-	import type { Entry } from '$lib/utils/collection';
-	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { csv, exportRecords, download } from '$lib/utils/exports';
-	import { countLabel } from '$lib/utils/text';
+	import type { Entry } from '#lib/utils/collection.js';
+	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { csv, exportRecords, download } from '#lib/utils/exports.js';
+	import { countLabel } from '#lib/utils/text.js';
 	let { items }: { items: Entry[] } = $props();
 	const fieldbook = getFieldbook();
 	const browse = getBrowseStore();

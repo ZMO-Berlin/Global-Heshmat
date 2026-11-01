@@ -4,13 +4,13 @@
  *
  * Uses Vite's import.meta.glob to eagerly load all .ts files in this folder,
  * excluding the template and this index file. The slug-derivation and
- * collision check live in `$lib/utils/build-index.ts` (shared with the
+ * collision check live in `#lib/utils/build-index.ts` (shared with the
  * residences collection) so they can be unit-tested independently of the
  * live filesystem.
  */
 
 import type { Artwork } from '../types';
-import { buildIndex } from '$lib/utils/build-index';
+import { buildIndex } from '#lib/utils/build-index.js';
 
 // Negative patterns exclude the template and this index at glob time —
 // unlike a substring filter, a future data file that happens to contain

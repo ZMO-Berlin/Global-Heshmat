@@ -2,15 +2,15 @@
 	/* eslint-disable svelte/no-navigation-without-resolve -- entryHref is the shared resolved route builder. */
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
-	import { artworks } from '$lib/data/artworks';
-	import { residences } from '$lib/data/residences';
-	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { entryKey, entryTitle } from '$lib/utils/collection';
-	import { albumBytes, albumAvailable, saveAlbum, removeAlbum } from '$lib/offline/client';
-	import { csv, exportRecords, download } from '$lib/utils/exports';
-	import { countLabel } from '$lib/utils/text';
-	import Seo from '$lib/components/Seo.svelte';
+	import { artworks } from '#lib/data/artworks.js';
+	import { residences } from '#lib/data/residences.js';
+	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { entryKey, entryTitle } from '#lib/utils/collection.js';
+	import { albumBytes, albumAvailable, saveAlbum, removeAlbum } from '#lib/offline/client.js';
+	import { csv, exportRecords, download } from '#lib/utils/exports.js';
+	import { countLabel } from '#lib/utils/text.js';
+	import Seo from '#lib/components/Seo.svelte';
 	const fieldbook = getFieldbook();
 	const browse = getBrowseStore();
 	const all = [...artworks, ...residences];

@@ -1,7 +1,7 @@
 import { artworks } from './artworks';
 import { residences } from './residences';
 import { trailThemes } from './trail-themes';
-import type { Entry } from '$lib/utils/collection';
+import type { Entry } from '#lib/utils/collection.js';
 
 export interface Trail {
 	id: string;

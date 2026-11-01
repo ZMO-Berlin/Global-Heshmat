@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { allResidenceSlugs, getResidenceBySlug } from '$lib/data/residences';
+import { allResidenceSlugs, getResidenceBySlug } from '#lib/data/residences.js';
 import type { EntryGenerator, PageLoad } from './$types';
 
 // Tell the prerenderer the full set of valid slugs so every residence gets

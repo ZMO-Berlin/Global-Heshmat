@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildIndex, buildPeopleIndex } from './build-index';
-import type { Artwork, PeopleContext, PersonRecord, Residence } from '$lib/data/types';
+import type { Artwork, PeopleContext, PersonRecord, Residence } from '#lib/data/types.js';
 
 const artwork = (overrides: Partial<Artwork>): Artwork => ({
 	id: 1,

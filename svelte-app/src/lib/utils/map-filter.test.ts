@@ -7,7 +7,7 @@ import {
 	filterArtworks,
 	filterResidences
 } from './map-filter';
-import type { Artwork, Residence } from '$lib/data/types';
+import type { Artwork, Residence } from '#lib/data/types.js';
 
 const artwork = (overrides: Partial<Artwork>): Artwork => ({
 	id: 1,

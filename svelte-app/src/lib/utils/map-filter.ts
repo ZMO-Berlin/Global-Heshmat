@@ -1,4 +1,4 @@
-import type { Artwork, Residence } from '$lib/data/types';
+import type { Artwork, Residence } from '#lib/data/types.js';
 import { normalizeSearchText } from './search';
 import { plainText } from './text';
 export const FILTER_ALL = 'all';

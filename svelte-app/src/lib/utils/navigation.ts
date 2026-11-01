@@ -1,5 +1,5 @@
 import { resolve } from '$app/paths';
-import type { getBrowseStore } from '$lib/stores/browse.svelte';
+import type { getBrowseStore } from '#lib/stores/browse.svelte.js';
 
 export type NavId = 'map' | 'gallery' | 'list' | 'people' | 'trails' | 'memoir' | 'fieldbook';
 

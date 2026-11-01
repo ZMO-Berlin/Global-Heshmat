@@ -1,4 +1,4 @@
-import { peoplePlaces } from '$lib/data/people';
+import { peoplePlaces } from '#lib/data/people.js';
 import type { LayoutLoad } from './$types';
 
 // The "Place mentioned" facet lives in the site-wide filter bar, but only the

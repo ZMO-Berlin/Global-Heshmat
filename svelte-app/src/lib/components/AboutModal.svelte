@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Modal from '$lib/components/Modal.svelte';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { aboutContent as about } from '$lib/data/about';
-	import zmoLogo from '$lib/assets/logo-zmo-small.webp';
+	import Modal from '#lib/components/Modal.svelte';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { aboutContent as about } from '#lib/data/about.js';
+	import zmoLogo from '#lib/assets/logo-zmo-small.webp';
 
 	const store = getBrowseStore();
 </script>

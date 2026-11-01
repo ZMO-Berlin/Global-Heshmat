@@ -1,13 +1,13 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
-	import { countLabel } from '$lib/utils/text';
-	import MediaImage from '$lib/components/MediaImage.svelte';
-	import { imageDimensions } from '$lib/utils/image';
-	import { artworks } from '$lib/data/artworks';
-	import { aboutContent } from '$lib/data/about';
-	import { filterArtworks } from '$lib/utils/map-filter';
-	import { entryKey, entryTitle, entryImages, coverImage } from '$lib/utils/collection';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import { countLabel } from '#lib/utils/text.js';
+	import MediaImage from '#lib/components/MediaImage.svelte';
+	import { imageDimensions } from '#lib/utils/image.js';
+	import { artworks } from '#lib/data/artworks.js';
+	import { aboutContent } from '#lib/data/about.js';
+	import { filterArtworks } from '#lib/utils/map-filter.js';
+	import { entryKey, entryTitle, entryImages, coverImage } from '#lib/utils/collection.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	const store = getBrowseStore();
 	const missing = $derived(filterArtworks(artworks, { ...store.filters, status: 'search' }));
 	const total = artworks.filter((item) => item.status === 'search').length;

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { countLabel } from '$lib/utils/text';
-	import Seo from '$lib/components/Seo.svelte';
-	import PeopleList from '$lib/components/PeopleList.svelte';
-	import { people } from '$lib/data/people';
-	import { filterPeople, groupPeople, sortPeople } from '$lib/utils/people';
-	import type { PeopleSort } from '$lib/utils/url-facets';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import { countLabel } from '#lib/utils/text.js';
+	import Seo from '#lib/components/Seo.svelte';
+	import PeopleList from '#lib/components/PeopleList.svelte';
+	import { people } from '#lib/data/people.js';
+	import { filterPeople, groupPeople, sortPeople } from '#lib/utils/people.js';
+	import type { PeopleSort } from '#lib/utils/url-facets.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	const store = getBrowseStore();
 	const matches = $derived(sortPeople(filterPeople(people, store.filters), store.peopleSort));
 	const sections = $derived(store.peopleSort === 'group' ? groupPeople(matches) : []);

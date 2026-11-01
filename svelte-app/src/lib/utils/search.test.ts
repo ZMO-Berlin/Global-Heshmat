@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { IndexedArtwork } from '$lib/data/types';
+import type { IndexedArtwork } from '#lib/data/types.js';
 import { normalizeSearchText } from './search';
 import { filterArtworks, DEFAULT_FILTERS } from './map-filter';
 const searchArtworks = (items: IndexedArtwork[], query: string) =>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import { resolve } from '$app/paths';
 	import SiteNav from './SiteNav.svelte';
 

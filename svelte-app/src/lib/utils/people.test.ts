@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { readdirSync } from 'node:fs';
-import { people, peopleGroups, peopleContexts } from '$lib/data/people';
-import { artworks } from '$lib/data/artworks';
-import { residences } from '$lib/data/residences';
+import { people, peopleGroups, peopleContexts } from '#lib/data/people.js';
+import { artworks } from '#lib/data/artworks.js';
+import { residences } from '#lib/data/residences.js';
 import { entryKey } from './collection';
 import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './map-filter';
 import { readFilters, writeFilters } from './url-facets';
-import { canonicalEntryPath } from '$lib/offline/keys';
+import { canonicalEntryPath } from '#lib/offline/keys.js';
 
 // Integrity checks on the published profiles. Search, sorting, grouping and
 // excerpts are tested on fixtures in people-search.test.ts, so that an editor's

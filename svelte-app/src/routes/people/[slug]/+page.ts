@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { people, getPersonBySlug } from '$lib/data/people';
+import { people, getPersonBySlug } from '#lib/data/people.js';
 import type { EntryGenerator, PageLoad } from './$types';
 
 export const prerender = true;

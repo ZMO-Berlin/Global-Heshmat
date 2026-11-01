@@ -12,14 +12,18 @@
 	// so the service worker can keep it across deployments.
 	import rtlTextPluginUrl from '$rtl-text-plugin?url';
 	import type * as Maplibre from 'maplibre-gl';
-	import { artworks } from '$lib/data/artworks';
-	import { residences } from '$lib/data/residences';
-	import { installMapContent, MAP_SOURCES, type MapPalette } from '$lib/map/map-content';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { buildEntryGeoJSON, buildGhostGeoJSON, buildRelocationGeoJSON } from '$lib/utils/geojson';
-	import { locationZoom } from '$lib/utils/evidence';
-	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
-	import { entryKey, type Entry } from '$lib/utils/collection';
+	import { artworks } from '#lib/data/artworks.js';
+	import { residences } from '#lib/data/residences.js';
+	import { installMapContent, MAP_SOURCES, type MapPalette } from '#lib/map/map-content.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import {
+		buildEntryGeoJSON,
+		buildGhostGeoJSON,
+		buildRelocationGeoJSON
+	} from '#lib/utils/geojson.js';
+	import { locationZoom } from '#lib/utils/evidence.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { entryKey, type Entry } from '#lib/utils/collection.js';
 
 	let { showStatus = true }: { showStatus?: boolean } = $props();
 	const store = getBrowseStore();

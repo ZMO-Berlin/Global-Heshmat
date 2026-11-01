@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { artworks } from '$lib/data/artworks';
-import { residences } from '$lib/data/residences';
-import { people } from '$lib/data/people';
+import { artworks } from '#lib/data/artworks.js';
+import { residences } from '#lib/data/residences.js';
+import { people } from '#lib/data/people.js';
 import {
 	entryImages,
 	entryKey,
@@ -14,7 +14,7 @@ import {
 import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './map-filter';
 import { readFilters, writeFilters } from './url-facets';
 import { buildGhostGeoJSON, buildRelocationGeoJSON } from './geojson';
-import manifest from '$lib/data/image-manifest.json';
+import manifest from '#lib/data/image-manifest.json';
 import sharp from 'sharp';
 import { fileURLToPath } from 'node:url';
 

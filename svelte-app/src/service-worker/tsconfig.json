@@ -1,0 +1,8 @@
+{
+	"extends": "$app/tsconfig/service-worker",
+	"compilerOptions": {
+		"strict": true
+	},
+	// app.d.ts declares the build constants that Vite defines for the worker too.
+	"include": [".", "../app.d.ts"]
+}

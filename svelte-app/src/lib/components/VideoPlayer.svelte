@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { videoUrl } from '$lib/utils/video';
+	import { videoUrl } from '#lib/utils/video.js';
 
 	// Self-hosted clip played inline with the browser's native controls. Kept
 	// deliberately small and orientation-agnostic: the CSS caps the height so a

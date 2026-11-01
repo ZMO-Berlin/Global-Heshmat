@@ -105,7 +105,9 @@ function pages(directory = BUILD_DIR) {
 		return file.name === 'index.html' ? [path] : [];
 	});
 }
-const JS_BUDGET_KB = { shell: 110, record: 130 };
+// SvelteKit 3's client router is about 4 KB gzipped larger than 2.x's; the shell
+// budget absorbs that once, leaving the same headroom for the app's own code.
+const JS_BUDGET_KB = { shell: 115, record: 130 };
 const overBudget = [];
 const measured = pages();
 for (const path of measured) {
@@ -241,11 +243,11 @@ if (existsSync(serviceWorkerPath)) {
 	}
 	check(
 		'self-hosted RTL plugin is not precached',
-		!/(?:^|[{,])url:["'][^"']*mapbox-gl-rtl-text[^"']*\.js["']/.test(serviceWorker)
+		!/(?:^|[{,])url:["'`][^"'`]*mapbox-gl-rtl-text[^"'`]*\.js["'`]/.test(serviceWorker)
 	);
 	check(
 		'service worker precache URLs target deployed paths',
-		!/(?:^|[{,])url:["'](?:client|prerendered)\//.test(serviceWorker),
+		!/(?:^|[{,])url:["'`](?:client|prerendered)\//.test(serviceWorker),
 		'intermediate SvelteKit build paths must be rewritten before deployment'
 	);
 }

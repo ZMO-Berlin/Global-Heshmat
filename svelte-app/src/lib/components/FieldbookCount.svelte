@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
+	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
 	const fieldbook = getFieldbook();
 	const count = $derived(fieldbook.keys.length);
 </script>

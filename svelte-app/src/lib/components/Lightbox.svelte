@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
-	import type { ArtworkImage } from '$lib/data/types';
-	import { thumbUrl } from '$lib/utils/image';
+	import type { ArtworkImage } from '#lib/data/types.js';
+	import { thumbUrl } from '#lib/utils/image.js';
 	import MediaCaption from './MediaCaption.svelte';
 	import MediaImage from './MediaImage.svelte';
-	import { imageAlt } from '$lib/utils/collection';
-	import { hideParentOnError } from '$lib/utils/hide-on-error';
-	import { trapFocus } from '$lib/utils/focus-trap';
+	import { imageAlt } from '#lib/utils/collection.js';
+	import { hideParentOnError } from '#lib/utils/hide-on-error.js';
+	import { trapFocus } from '#lib/utils/focus-trap.js';
 	import { onMount, onDestroy } from 'svelte';
 
 	let {

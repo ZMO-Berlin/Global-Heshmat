@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { plainText } from '$lib/utils/text';
-	import type { IndexedArtwork, IndexedResidence } from '$lib/data/types';
-	import { entryStructuredData } from '$lib/utils/structured-data';
-	import { webUrl, leadImage } from '$lib/utils/image';
+	import { plainText } from '#lib/utils/text.js';
+	import type { IndexedArtwork, IndexedResidence } from '#lib/data/types.js';
+	import { entryStructuredData } from '#lib/utils/structured-data.js';
+	import { webUrl, leadImage } from '#lib/utils/image.js';
 	import {
 		SITE_URL,
 		SITE_NAME,
@@ -11,8 +11,8 @@
 		PUBLISHER,
 		ARTIST,
 		absoluteUrl
-	} from '$lib/config';
-	import { entryPath } from '$lib/utils/collection';
+	} from '#lib/config.js';
+	import { entryPath } from '#lib/utils/collection.js';
 
 	interface Props {
 		/** When provided, render artwork-specific metadata (title, OG, JSON-LD). */

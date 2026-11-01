@@ -4,12 +4,12 @@ import type { Person } from './types';
 // Re-exported so the People routes (and scripts/verify-build.mjs) have one entry point.
 export { peopleGroups } from './people/_groups';
 export { peopleContexts } from './people/_contexts';
-export { contextsFor, groupName } from '$lib/utils/people';
+export { contextsFor, groupName } from '#lib/utils/people.js';
 
 /**
  * All People profiles in source-document order, each with every list present.
  * Importing this module bundles every profile: the layout-level search uses
- * `$lib/data/people-lazy.svelte.ts` instead.
+ * `#lib/data/people-lazy.svelte.ts` instead.
  */
 export const people: Person[] = allPeople;
 

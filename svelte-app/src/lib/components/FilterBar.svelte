@@ -5,10 +5,10 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { FunnelX, PanelLeftOpen, SlidersHorizontal } from '@lucide/svelte';
-	import { peopleGroups } from '$lib/data/people/_groups';
-	import type { CollectionFilters } from '$lib/utils/map-filter';
-	import { countries } from '$lib/data/countries';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import { peopleGroups } from '#lib/data/people/_groups.js';
+	import type { CollectionFilters } from '#lib/utils/map-filter.js';
+	import { countries } from '#lib/data/countries.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import ArtworkSearch from './ArtworkSearch.svelte';
 	const store = getBrowseStore();
 	// Phones fold the facets behind a Filters button; on wider screens the

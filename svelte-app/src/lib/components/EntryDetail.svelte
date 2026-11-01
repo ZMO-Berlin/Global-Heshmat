@@ -2,15 +2,15 @@
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { ImageOff, X } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
-	import { entryImages, entryKey, entryTitle } from '$lib/utils/collection';
+	import { entryImages, entryKey, entryTitle } from '#lib/utils/collection.js';
 	import EntryTools from './EntryTools.svelte';
 	import EvidencePanel from './EvidencePanel.svelte';
-	import { people } from '$lib/data/people';
+	import { people } from '#lib/data/people.js';
 	import Gallery from './Gallery.svelte';
 	import VideoPlayer from './VideoPlayer.svelte';
-	import { aboutContent as about } from '$lib/data/about';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { youTubeId } from '$lib/utils/video';
+	import { aboutContent as about } from '#lib/data/about.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { youTubeId } from '#lib/utils/video.js';
 
 	let { galleryView = false }: { galleryView?: boolean } = $props();
 	const store = getBrowseStore();
@@ -61,7 +61,7 @@
 	function close() {
 		// Artworks and residences both own a route, so navigating home clears
 		// the URL and the sidebar (the home page resets the selection on mount).
-		void goto(store.closeHref, { noScroll: true });
+		void goto(store.closeHref, { reset: false });
 	}
 </script>
 

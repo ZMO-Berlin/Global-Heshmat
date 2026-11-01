@@ -1,13 +1,13 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
-	import { countLabel } from '$lib/utils/text';
-	import { artworks } from '$lib/data/artworks';
-	import { residences } from '$lib/data/residences';
-	import { lazyPeople } from '$lib/data/people-lazy.svelte';
-	import { filterPeople } from '$lib/utils/people';
+	import { countLabel } from '#lib/utils/text.js';
+	import { artworks } from '#lib/data/artworks.js';
+	import { residences } from '#lib/data/residences.js';
+	import { lazyPeople } from '#lib/data/people-lazy.svelte.js';
+	import { filterPeople } from '#lib/utils/people.js';
 	import PeopleList from './PeopleList.svelte';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
 	import {
 		entryKey,
 		entryStatus,
@@ -16,8 +16,8 @@
 		mediaId,
 		imageAlt,
 		STATUS_LABELS
-	} from '$lib/utils/collection';
-	import { imageDimensions } from '$lib/utils/image';
+	} from '#lib/utils/collection.js';
+	import { imageDimensions } from '#lib/utils/image.js';
 	import CollectionTools from './CollectionTools.svelte';
 	import CollectionCard from './CollectionCard.svelte';
 	import MediaImage from './MediaImage.svelte';

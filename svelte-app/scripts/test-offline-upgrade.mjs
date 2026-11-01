@@ -24,7 +24,6 @@ try {
 		'package.json',
 		'package-lock.json',
 		'vite.config.ts',
-		'svelte.config.js',
 		'tsconfig.json'
 	]) {
 		await cp(join(root, path), join(temporary, path), { recursive: true });

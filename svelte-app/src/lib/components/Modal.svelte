@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { X } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
-	import { trapFocus } from '$lib/utils/focus-trap';
+	import { trapFocus } from '#lib/utils/focus-trap.js';
 
 	// Generic modal chrome: backdrop, centered card, title bar + close button,
 	// and a scrollable body slot. Open state lives in the caller (e.g. the map

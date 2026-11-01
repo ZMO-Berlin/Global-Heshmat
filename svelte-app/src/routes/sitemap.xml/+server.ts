@@ -1,10 +1,10 @@
-import { artworks } from '$lib/data/artworks';
-import { residences } from '$lib/data/residences';
-import { people } from '$lib/data/people';
-import { SITE_URL } from '$lib/config';
-import { entryPath } from '$lib/utils/collection';
-import { personPath } from '$lib/utils/people';
-import { escapeXml } from '$lib/utils/xml';
+import { artworks } from '#lib/data/artworks.js';
+import { residences } from '#lib/data/residences.js';
+import { people } from '#lib/data/people.js';
+import { SITE_URL } from '#lib/config.js';
+import { entryPath } from '#lib/utils/collection.js';
+import { personPath } from '#lib/utils/people.js';
+import { escapeXml } from '#lib/utils/xml.js';
 
 // Prerender so the file is written once at build time and served as a
 // static asset, not regenerated per request.
