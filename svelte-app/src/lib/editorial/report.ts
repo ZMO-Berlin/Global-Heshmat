@@ -1,6 +1,6 @@
-import { artworks } from '$lib/data/artworks';
-import { residences } from '$lib/data/residences';
-import { people } from '$lib/data/people';
+import { artworks } from '#lib/data/artworks.js';
+import { residences } from '#lib/data/residences.js';
+import { people } from '#lib/data/people.js';
 import { validateEntry, validatePerson } from './validate';
 export function editorialReport() {
 	const entries = [...artworks, ...residences];

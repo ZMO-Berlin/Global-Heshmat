@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { Person } from '$lib/data/types';
+import type { Person } from '#lib/data/types.js';
 import { excerptParts, filterPeople, groupPeople, personExcerpt, sortPeople } from './people';
 import { DEFAULT_FILTERS } from './map-filter';
 
 // Behaviour is tested on fixtures, not on the published profiles: editors
 // correct those passages directly on main, and a correction must not fail a test.
-vi.mock('$lib/data/people/_contexts', () => ({
+vi.mock('#lib/data/people/_contexts.js', () => ({
 	peopleContexts: [
 		{
 			id: 'warsaw',

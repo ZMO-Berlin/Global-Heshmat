@@ -1,4 +1,4 @@
-import { SITE_URL, SITE_NAME, PUBLISHER } from '$lib/config';
+import { SITE_URL, SITE_NAME, PUBLISHER } from '#lib/config.js';
 import {
 	entryKey,
 	entryPath,

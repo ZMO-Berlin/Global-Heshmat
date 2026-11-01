@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MemoirEntity } from '$lib/data/memoir';
+	import type { MemoirEntity } from '#lib/data/memoir.js';
 
 	// A name's book pages, each a button that opens the passage on that page
 	// (the dialog's previous / next buttons reach the pages not shown).

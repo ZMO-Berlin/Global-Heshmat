@@ -1,9 +1,9 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Source and contribution URLs are external, validated editorial links. */
-	import type { Entry } from '$lib/utils/collection';
-	import { precisionLabel } from '$lib/utils/evidence';
-	import { entryKey, isToBeFound } from '$lib/utils/collection';
-	import { recordUrl } from '$lib/utils/exports';
+	import type { Entry } from '#lib/utils/collection.js';
+	import { precisionLabel } from '#lib/utils/evidence.js';
+	import { entryKey, isToBeFound } from '#lib/utils/collection.js';
+	import { recordUrl } from '#lib/utils/exports.js';
 	let { item }: { item: Entry } = $props();
 	const precision = $derived(precisionLabel(item));
 	const contributionUrl = $derived(

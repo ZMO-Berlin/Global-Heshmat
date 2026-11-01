@@ -8,7 +8,7 @@
  * so they stay assignable to MapLibre's own literal-typed interfaces.
  */
 
-import type { Artwork } from '$lib/data/types';
+import type { Artwork } from '#lib/data/types.js';
 import { entryStatus, type Entry, type EntryStatus } from './collection';
 
 export interface FeatureCollection<G, P> {

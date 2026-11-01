@@ -10,9 +10,9 @@
 		BookMarked
 	} from '@lucide/svelte';
 	import { page } from '$app/state';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
-	import { navItems, type NavItem } from '$lib/utils/navigation';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
+	import { navItems, type NavItem } from '#lib/utils/navigation.js';
 	import FieldbookCount from './FieldbookCount.svelte';
 	const store = getBrowseStore();
 	const fieldbook = getFieldbook();

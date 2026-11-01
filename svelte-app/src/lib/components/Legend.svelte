@@ -9,7 +9,7 @@
 	import { onMount } from 'svelte';
 	import { ChevronDown } from '@lucide/svelte';
 	import MarkerGlyph from './MarkerGlyph.svelte';
-	import { MARKER_SPECS } from '$lib/utils/marker-icons';
+	import { MARKER_SPECS } from '#lib/utils/marker-icons.js';
 
 	// Collapsible so it can be folded away on a phone, where five rows plus the
 	// footer eat most of an already short map. Open by default on larger

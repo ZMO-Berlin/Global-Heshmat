@@ -1,9 +1,9 @@
-// Deliberately not '$lib/data/people': these helpers serve the layout-level
+// Deliberately not '#lib/data/people.js': these helpers serve the layout-level
 // search too, which must not pull every profile into each page's bundle
-// (see '$lib/data/people-lazy.svelte.ts'). Groups and shared passages are small.
-import { peopleGroups } from '$lib/data/people/_groups';
-import { peopleContexts as rawContexts } from '$lib/data/people/_contexts';
-import type { PeopleContext, Person } from '$lib/data/types';
+// (see '#lib/data/people-lazy.svelte.ts'). Groups and shared passages are small.
+import { peopleGroups } from '#lib/data/people/_groups.js';
+import { peopleContexts as rawContexts } from '#lib/data/people/_contexts.js';
+import type { PeopleContext, Person } from '#lib/data/types.js';
 import type { CollectionFilters } from './map-filter';
 import { normalizeSearchText } from './search';
 import { typeset } from './typography';

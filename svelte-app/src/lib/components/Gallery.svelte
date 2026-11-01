@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Maximize2, ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import type { ArtworkImage } from '$lib/data/types';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { mediaId, imageAlt, matchesMediaId } from '$lib/utils/collection';
+	import type { ArtworkImage } from '#lib/data/types.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { mediaId, imageAlt, matchesMediaId } from '#lib/utils/collection.js';
 	import MediaImage from './MediaImage.svelte';
 	import MediaCaption from './MediaCaption.svelte';
 	import ImageComparison from './ImageComparison.svelte';

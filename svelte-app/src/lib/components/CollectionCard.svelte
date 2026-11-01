@@ -1,8 +1,8 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
-	import { countLabel } from '$lib/utils/text';
+	import { countLabel } from '#lib/utils/text.js';
 	import { ImageOff } from '@lucide/svelte';
-	import type { Entry } from '$lib/utils/collection';
+	import type { Entry } from '#lib/utils/collection.js';
 	import {
 		entryTitle,
 		entryKey,
@@ -11,10 +11,10 @@
 		entryImages,
 		coverImage,
 		mediaId
-	} from '$lib/utils/collection';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	} from '#lib/utils/collection.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import MediaImage from './MediaImage.svelte';
-	import { imageDimensions } from '$lib/utils/image';
+	import { imageDimensions } from '#lib/utils/image.js';
 	import MarkerGlyph from './MarkerGlyph.svelte';
 	let { item, priority = false }: { item: Entry; priority?: boolean } = $props();
 	const store = getBrowseStore();

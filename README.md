@@ -36,7 +36,7 @@ A project by the [Leibniz-Zentrum Moderner Orient (ZMO)](http://www.zmo.de), Ber
 | `svelte-app/src/lib/media/` | Shared derivative definitions and filename normalization |
 | `svelte-app/src/lib/utils/` | Indexing, search, GeoJSON, citations/exports, structured data and accessibility helpers |
 | `svelte-app/src/routes/` | Static record pages, collection, missing dossier, fieldbook, trails, metadata export and sitemap |
-| `svelte-app/src/service-worker.ts` | Workbox precache and version-aware runtime caching |
+| `svelte-app/src/service-worker/index.ts` | Workbox precache and version-aware runtime caching |
 | `svelte-app/originals/` | Preserved masters; never deployed |
 | `svelte-app/static/images/{thumb,preview,web,full}/` | Committed WebP derivatives |
 | `svelte-app/scripts/` | Image generation, validation, build assertions, upgrade and performance checks |
@@ -100,7 +100,7 @@ npx playwright install chromium
 npm run dev
 ```
 
-Use Node.js 22.13+ or Node.js 24. Node 20 is end-of-life and is no longer supported.
+Use Node.js 22.17+, 24 or 26 (SvelteKit 3 requires 22.17). Node 20 is end-of-life and is no longer supported.
 
 ## Scripts
 
@@ -342,7 +342,7 @@ Use **Add to fieldbook** on a record, or **Use these entries** above filtered co
 
 Ordinary album navigation explicitly caches its canonical HTML after service-worker readiness, including clicks before first activation. UI parameters do not create separate document keys. Reading-size images explicitly saved in the fieldbook are retained separately from the evictable browsing cache; offline requests for larger or intermediate variants fall back to that saved reading copy. Videos, external references and uncached map regions are not included. Browser storage eviction remains possible, so availability checks inspect the actual cached document and media rather than a local-storage flag.
 
-The Workbox worker is authored in `src/service-worker.ts`. HTML caches are tied to a content-derived build ID (it includes the git revision, which is compiled into the client) and retired on activation of a different build; old HTML is never served against a new app shell. Everything else is keyed by content and survives a deployment: hashed `/_app/immutable/` files (including the map renderer and the RTL plugin) share one cache, images are cached by their `?v=` version, and saved albums keep their images in one shared cache. On activation the new worker re-fetches each saved album's page for its own build, so albums stay available offline across updates; an image whose content changed reads as missing until the album is saved again, which downloads only what changed. The shell includes first-party fonts. An unseen uncached record has an explicit offline fallback.
+The Workbox worker is authored in `src/service-worker/index.ts`; SvelteKit builds it, and a small plugin in `vite.config.ts` injects the precache list and publishes it at `/sw.js`, which `src/lib/offline/register.ts` registers. HTML caches are tied to a content-derived build ID (it includes the git revision, which is compiled into the client) and retired on activation of a different build; old HTML is never served against a new app shell. Everything else is keyed by content and survives a deployment: hashed `/_app/immutable/` files (including the map renderer and the RTL plugin) share one cache, images are cached by their `?v=` version, and saved albums keep their images in one shared cache. On activation the new worker re-fetches each saved album's page for its own build, so albums stay available offline across updates; an image whose content changed reads as missing until the album is saved again, which downloads only what changed. The shell includes first-party fonts. An unseen uncached record has an explicit offline fallback.
 
 **Trails** offer reading sequences by theme (industry and everyday life, state and army commissions, East and West, faith and remembrance, museums) and by place (Selb, 10th of Ramadan City). An artwork joins a themed trail through its `trails` field (ids in `src/lib/data/trail-themes.ts`). They are not verified walking routes. **Compare two images** preserves dates, captions and credits where documented without asserting chronology.
 

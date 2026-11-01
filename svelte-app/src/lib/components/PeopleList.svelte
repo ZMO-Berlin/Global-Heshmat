@@ -1,8 +1,8 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- The browse store resolves internal routes. */
-	import type { Person } from '$lib/data/types';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { excerptParts, groupName } from '$lib/utils/people';
+	import type { Person } from '#lib/data/types.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { excerptParts, groupName } from '#lib/utils/people.js';
 	let { items }: { items: Person[] } = $props();
 	const store = getBrowseStore();
 </script>

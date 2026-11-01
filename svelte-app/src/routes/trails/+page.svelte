@@ -1,11 +1,11 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- entryHref is the shared resolved route builder; #ids are in-page anchors. */
 	import { resolve } from '$app/paths';
-	import { themeTrails, placeTrails } from '$lib/data/trails';
-	import { entryKey, entryTitle } from '$lib/utils/collection';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
-	import Seo from '$lib/components/Seo.svelte';
+	import { themeTrails, placeTrails } from '#lib/data/trails.js';
+	import { entryKey, entryTitle } from '#lib/utils/collection.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
+	import Seo from '#lib/components/Seo.svelte';
 	const browse = getBrowseStore();
 	const fieldbook = getFieldbook();
 	let message = $state('');

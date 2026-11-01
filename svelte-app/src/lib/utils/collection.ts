@@ -1,5 +1,5 @@
-import { imageStem } from '$lib/media/variants.js';
-import type { IndexedArtwork, IndexedResidence, ArtworkImage, EntryKey } from '$lib/data/types';
+import { imageStem } from '#lib/media/variants.js';
+import type { IndexedArtwork, IndexedResidence, ArtworkImage, EntryKey } from '#lib/data/types.js';
 import type { MarkerKind } from './marker-icons';
 
 /** A collection record. Switch on `kind`; never infer it from optional fields. */

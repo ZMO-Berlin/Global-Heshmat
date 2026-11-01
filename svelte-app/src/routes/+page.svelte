@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import Seo from '$lib/components/Seo.svelte';
-	import { artworks } from '$lib/data/artworks';
+	import Seo from '#lib/components/Seo.svelte';
+	import { artworks } from '#lib/data/artworks.js';
 
 	// Backwards compatibility: redirect legacy /?artwork=<id> deep links to
 	// the new /artworks/<slug>/ canonical URLs.
@@ -17,7 +17,7 @@
 
 		const match = artworks.find((a) => a.id === id);
 		if (match) {
-			goto(resolve('/artworks/[slug]', { slug: match.slug }), { replaceState: true });
+			goto(resolve('/artworks/[slug]', { slug: match.slug }), { replace: true });
 		}
 	});
 </script>

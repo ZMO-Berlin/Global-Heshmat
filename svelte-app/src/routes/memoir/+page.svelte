@@ -1,12 +1,12 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- record links come from the browse store's resolved builders; #ids are in-page anchors; the rest are external. */
-	import Seo from '$lib/components/Seo.svelte';
-	import MemoirPages from '$lib/components/MemoirPages.svelte';
-	import MemoirPassage from '$lib/components/MemoirPassage.svelte';
+	import Seo from '#lib/components/Seo.svelte';
+	import MemoirPages from '#lib/components/MemoirPages.svelte';
+	import MemoirPassage from '#lib/components/MemoirPassage.svelte';
 	import { onMount, tick } from 'svelte';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import { artworks } from '$lib/data/artworks';
-	import { residences } from '$lib/data/residences';
+	import { artworks } from '#lib/data/artworks.js';
+	import { residences } from '#lib/data/residences.js';
 	import { resolve } from '$app/paths';
 	import {
 		MAPPED_LEVELS,
@@ -15,16 +15,16 @@
 		memoirMethod as method,
 		ofType,
 		type MemoirEntity
-	} from '$lib/data/memoir';
-	import { entryKey, entryTitle, type Entry } from '$lib/utils/collection';
-	import { countLabel } from '$lib/utils/text';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	} from '#lib/data/memoir.js';
+	import { entryKey, entryTitle, type Entry } from '#lib/utils/collection.js';
+	import { countLabel } from '#lib/utils/text.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 
 	const store = getBrowseStore();
 	// MapLibre is a large optional renderer (about 1 MB of script): it loads only
 	// once the map scrolls into view. On phones the map starts just below the fold,
 	// so no margin ahead: any would load it with the page.
-	type MapConstructor = (typeof import('$lib/components/MemoirMap.svelte'))['default'];
+	type MapConstructor = (typeof import('#lib/components/MemoirMap.svelte'))['default'];
 	let MemoirMap = $state<MapConstructor>();
 	let mapFailed = $state(false);
 	let mapFrame: HTMLDivElement;
@@ -33,7 +33,7 @@
 			(entries) => {
 				if (!entries.some((entry) => entry.isIntersecting)) return;
 				observer.disconnect();
-				import('$lib/components/MemoirMap.svelte')
+				import('#lib/components/MemoirMap.svelte')
 					.then((module) => (MemoirMap = module.default))
 					.catch(() => (mapFailed = true));
 			},

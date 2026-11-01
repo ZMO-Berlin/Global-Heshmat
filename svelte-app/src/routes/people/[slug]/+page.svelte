@@ -1,14 +1,14 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- The browse store resolves internal routes. */
 	import { page } from '$app/state';
-	import Seo from '$lib/components/Seo.svelte';
-	import SourceParagraph from '$lib/components/SourceParagraph.svelte';
-	import { getPersonBySlug } from '$lib/data/people';
-	import { artworks } from '$lib/data/artworks';
-	import { residences } from '$lib/data/residences';
-	import { entryKey, entryTitle } from '$lib/utils/collection';
-	import { contextsFor, groupName, personExcerpt, personPath } from '$lib/utils/people';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import Seo from '#lib/components/Seo.svelte';
+	import SourceParagraph from '#lib/components/SourceParagraph.svelte';
+	import { getPersonBySlug } from '#lib/data/people.js';
+	import { artworks } from '#lib/data/artworks.js';
+	import { residences } from '#lib/data/residences.js';
+	import { entryKey, entryTitle } from '#lib/utils/collection.js';
+	import { contextsFor, groupName, personExcerpt, personPath } from '#lib/utils/people.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	const person = $derived(data.person);

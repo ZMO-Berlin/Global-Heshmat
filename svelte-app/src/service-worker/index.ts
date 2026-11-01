@@ -15,7 +15,7 @@ import {
 	IMMUTABLE_CACHE,
 	SAVED_ALBUMS,
 	type AlbumRecord
-} from './lib/offline/keys';
+} from '#lib/offline/keys.js';
 
 declare const self: ServiceWorkerGlobalScope & {
 	__WB_MANIFEST: Array<{ url: string; revision: string | null }>;

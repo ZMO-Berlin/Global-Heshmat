@@ -1,14 +1,14 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
-	import { countLabel } from '$lib/utils/text';
+	import { countLabel } from '#lib/utils/text.js';
 	import { MapPin, Search as SearchIcon, X } from '@lucide/svelte';
 	import { page } from '$app/state';
 
-	import { artworks } from '$lib/data/artworks';
-	import { residences } from '$lib/data/residences';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import { entryPath, entryStatus } from '$lib/utils/collection';
-	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
+	import { artworks } from '#lib/data/artworks.js';
+	import { residences } from '#lib/data/residences.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { entryPath, entryStatus } from '#lib/utils/collection.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
 	import MarkerGlyph from './MarkerGlyph.svelte';
 
 	/**

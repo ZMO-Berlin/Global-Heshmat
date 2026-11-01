@@ -1,0 +1,29 @@
+{
+	"id": "/",
+	"name": "Global Heshmat",
+	"short_name": "Heshmat",
+	"description": "Interactive map tracing the public artworks of Egyptian sculptor Hassan Heshmat (1920–2006) across Egypt, Europe, and beyond. A project by ZMO Berlin.",
+	"lang": "en",
+	"dir": "ltr",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"theme_color": "#16192e",
+	"background_color": "#ffffff",
+	"icons": [
+		{ "src": "/pwa-192x192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "/pwa-512x512.png", "sizes": "512x512", "type": "image/png" },
+		{
+			"src": "/pwa-maskable-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/pwa-maskable-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}

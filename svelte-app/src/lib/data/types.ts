@@ -1,4 +1,4 @@
-import type { Indexed } from '$lib/utils/build-index';
+import type { Indexed } from '#lib/utils/build-index.js';
 import type { PeopleGroupId } from './people/_groups';
 import type { TrailThemeId } from './trail-themes';
 
@@ -90,7 +90,7 @@ export interface Artwork extends DocumentaryMetadata {
 }
 
 /**
- * An artwork after indexing (see `$lib/utils/build-index.ts`): the slug is
+ * An artwork after indexing (see `#lib/utils/build-index.ts`): the slug is
  * resolved and guaranteed, so consumers can build URLs without assertions.
  */
 export type IndexedArtwork = Indexed<Artwork, 'artwork'>;

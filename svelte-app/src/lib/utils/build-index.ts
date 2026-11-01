@@ -1,6 +1,6 @@
 import { slugify } from './slug';
 import { typeset } from './typography';
-import type { PeopleContext, Person, PersonRecord } from '$lib/data/types';
+import type { PeopleContext, Person, PersonRecord } from '#lib/data/types.js';
 
 const SAFE_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 

@@ -1,8 +1,8 @@
-import type { Entry } from '$lib/utils/collection';
+import type { Entry } from '#lib/utils/collection.js';
 import type * as Maplibre from 'maplibre-gl';
-import { artworks } from '$lib/data/artworks';
-import { residences } from '$lib/data/residences';
-import { MARKER_IMAGE_IDS, registerMarkerIcons } from '$lib/utils/marker-icons';
+import { artworks } from '#lib/data/artworks.js';
+import { residences } from '#lib/data/residences.js';
+import { MARKER_IMAGE_IDS, registerMarkerIcons } from '#lib/utils/marker-icons.js';
 
 export interface MapPalette {
 	primary: string;

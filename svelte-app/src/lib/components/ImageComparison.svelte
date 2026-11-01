@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ArtworkImage } from '$lib/data/types';
-	import { mediaId, imageAlt } from '$lib/utils/collection';
+	import type { ArtworkImage } from '#lib/data/types.js';
+	import { mediaId, imageAlt } from '#lib/utils/collection.js';
 	import MediaImage from './MediaImage.svelte';
 	import MediaCaption from './MediaCaption.svelte';
 	let { images, name }: { images: ArtworkImage[]; name: string } = $props();

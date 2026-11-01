@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { aboutContent as about } from '$lib/data/about';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
-	import logo from '$lib/assets/logo-zmo-white-small.webp';
+	import { aboutContent as about } from '#lib/data/about.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import logo from '#lib/assets/logo-zmo-white-small.webp';
 	const store = getBrowseStore();
 </script>
 

@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { ImageOff } from '@lucide/svelte';
-	import { thumbUrl, webUrl, fullUrl, cardSrcSet, srcSet, imageDimensions } from '$lib/utils/image';
+	import {
+		thumbUrl,
+		webUrl,
+		fullUrl,
+		cardSrcSet,
+		srcSet,
+		imageDimensions
+	} from '#lib/utils/image.js';
 	let {
 		src,
 		alt = '',

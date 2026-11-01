@@ -1,7 +1,7 @@
 /**
  * The People profiles, loaded on first use by the layout-level search and
  * collection results, so the map, gallery and dossier pages don't ship every
- * profile to every visitor. The People routes import `$lib/data/people`
+ * profile to every visitor. The People routes import `#lib/data/people`
  * statically; there the dynamic import resolves from the module cache.
  *
  * `load()` is only called from effects and event handlers, so the module

@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, TriangleAlert } from '@lucide/svelte';
 	import { tick } from 'svelte';
-	import Modal from '$lib/components/Modal.svelte';
+	import Modal from '#lib/components/Modal.svelte';
 	import {
 		loadPassages,
 		memoirBook as book,
 		type MemoirEntity,
 		type MemoirPassages
-	} from '$lib/data/memoir';
-	import { excerptRanges, segments } from '$lib/utils/passage';
+	} from '#lib/data/memoir.js';
+	import { excerptRanges, segments } from '#lib/utils/passage.js';
 
 	// The passages of the autobiography that name one entity, opened at the first
 	// one on the page the reader chose; previous / next walk through the rest.

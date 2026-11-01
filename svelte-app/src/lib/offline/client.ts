@@ -7,8 +7,8 @@ import {
 	SAVED_ALBUMS,
 	type AlbumRecord
 } from './keys';
-import { entryImages, entryKey, entryPath, type Entry } from '$lib/utils/collection';
-import { imageDimensions, thumbUrl, webUrl } from '$lib/utils/image';
+import { entryImages, entryKey, entryPath, type Entry } from '#lib/utils/collection.js';
+import { imageDimensions, thumbUrl, webUrl } from '#lib/utils/image.js';
 
 export const offlineSupported = () =>
 	typeof window !== 'undefined' && 'serviceWorker' in navigator && 'caches' in window;
@@ -79,7 +79,7 @@ export async function saveAlbum(
 ): Promise<void> {
 	if (!offlineSupported()) throw new Error('Offline saving is unavailable in this browser.');
 	// Register immediately when explicitly requested, instead of waiting for idle registration.
-	const { registerSW } = await import('virtual:pwa-register');
+	const { registerSW } = await import('#lib/offline/register.js');
 	registerSW({ immediate: true });
 	let timeout: ReturnType<typeof setTimeout> | undefined;
 	try {

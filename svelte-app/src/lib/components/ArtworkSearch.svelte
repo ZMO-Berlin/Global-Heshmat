@@ -2,14 +2,14 @@
 	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { goto } from '$app/navigation';
 	import { Search } from '@lucide/svelte';
-	import { artworks } from '$lib/data/artworks';
-	import { residences } from '$lib/data/residences';
-	import { lazyPeople } from '$lib/data/people-lazy.svelte';
-	import type { Person } from '$lib/data/types';
-	import { filterPeople } from '$lib/utils/people';
-	import { filterArtworks, filterResidences } from '$lib/utils/map-filter';
-	import { entryKey, entryTitle, type Entry } from '$lib/utils/collection';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import { artworks } from '#lib/data/artworks.js';
+	import { residences } from '#lib/data/residences.js';
+	import { lazyPeople } from '#lib/data/people-lazy.svelte.js';
+	import type { Person } from '#lib/data/types.js';
+	import { filterPeople } from '#lib/utils/people.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { entryKey, entryTitle, type Entry } from '#lib/utils/collection.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	const store = getBrowseStore();
 	const searchId = $props.id();
 	let searchOpen = $state(false);

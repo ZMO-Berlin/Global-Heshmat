@@ -1,4 +1,4 @@
-import { countryFacets } from '$lib/utils/map-filter';
+import { countryFacets } from '#lib/utils/map-filter.js';
 import { artworks } from './artworks';
 import { residences } from './residences';
 

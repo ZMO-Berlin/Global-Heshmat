@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MARKER_SPECS, type MarkerKind } from '$lib/utils/marker-icons';
+	import { MARKER_SPECS, type MarkerKind } from '#lib/utils/marker-icons.js';
 
 	/**
 	 * The SVG twin of the shapes MapView paints onto the map canvas. Both read

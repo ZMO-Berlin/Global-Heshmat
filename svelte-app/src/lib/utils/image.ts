@@ -1,5 +1,5 @@
-import { imageStem } from '$lib/media/variants.js';
-import manifest from '$lib/data/image-manifest.json';
+import { imageStem } from '#lib/media/variants.js';
+import manifest from '#lib/data/image-manifest.json';
 import { coverImage } from './collection';
 type Variant = 'thumb' | 'preview' | 'web' | 'full';
 type Dimensions = { width: number; height: number; bytes: number };

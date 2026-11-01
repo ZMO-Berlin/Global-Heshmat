@@ -1,11 +1,11 @@
 /* eslint-disable svelte/no-navigation-without-resolve -- All route builders use resolve(); shallow updates preserve the current resolved pathname. */
 import { getContext, setContext, onMount } from 'svelte';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import { page } from '$app/state';
-import { pushState, replaceState } from '$app/navigation';
+import { goto } from '$app/navigation';
 import { resolve } from '$app/paths';
-import { entryImages, matchesMediaId, type Entry, type Selection } from '$lib/utils/collection';
+import { entryImages, matchesMediaId, type Entry, type Selection } from '#lib/utils/collection.js';
 import {
 	readFilters,
 	writeFilters,
@@ -14,9 +14,9 @@ import {
 	DEFAULT_FILTERS,
 	type PeopleSort,
 	type GalleryMode
-} from '$lib/utils/url-facets';
-import type { CollectionFilters } from '$lib/utils/map-filter';
-import type { Person } from '$lib/data/types';
+} from '#lib/utils/url-facets.js';
+import type { CollectionFilters } from '#lib/utils/map-filter.js';
+import type { Person } from '#lib/data/types.js';
 const CONTEXT = Symbol('collection-browser');
 /**
  * Pages an entry can be opened from and should close back to. The route
@@ -71,16 +71,15 @@ export function createBrowseStore() {
 	);
 	const filters: CollectionFilters = $derived(JSON.parse(filterKey));
 	const filterParams = $derived(writeFilters(new SvelteURLSearchParams(), filters));
-	function patch(patch: Record<string, string | null>, push = false) {
+	function patch(patch: Record<string, string | null>, push = false, extra: App.PageState = {}) {
 		const next = new SvelteURLSearchParams(params());
 		for (const [key, value] of Object.entries(patch)) {
 			if (value === null) next.delete(key);
 			else next.set(key, value);
 		}
 		const target = page.url.pathname + (next.size ? `?${next}` : '') + page.url.hash;
-		const state = { ...page.state, browseSearch: next.toString() };
-		if (push) pushState(target, state);
-		else replaceState(target, state);
+		const state = { ...page.state, browseSearch: next.toString(), ...extra };
+		void goto(target, { shallow: true, replace: !push, state });
 	}
 	function modal(key: 'photo' | 'about', value: string | null, push = false) {
 		if (value === null) {
@@ -101,8 +100,9 @@ export function createBrowseStore() {
 			}
 		}
 		if (push && value !== null && !params().has(key)) {
-			patch({ [key]: value }, true);
-			replaceState('', { ...page.state, browseModal: { key, session: modalSession } });
+			// One history entry: shallow updates resolve asynchronously, so a
+			// follow-up replace would still see the URL from before this push.
+			patch({ [key]: value }, true, { browseModal: { key, session: modalSession } });
 		} else patch({ [key]: value });
 	}
 	const store = {
@@ -123,9 +123,10 @@ export function createBrowseStore() {
 		},
 		setFilters(value: Partial<CollectionFilters>) {
 			const next = writeFilters(params(), { ...readFilters(params()), ...value });
-			replaceState(page.url.pathname + (next.size ? `?${next}` : '') + page.url.hash, {
-				...page.state,
-				browseSearch: next.toString()
+			void goto(page.url.pathname + (next.size ? `?${next}` : '') + page.url.hash, {
+				shallow: true,
+				replace: true,
+				state: { ...page.state, browseSearch: next.toString() }
 			});
 		},
 		resetFilters() {

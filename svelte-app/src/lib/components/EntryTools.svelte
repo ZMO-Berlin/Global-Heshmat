@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
-	import { type Entry, entryKey } from '$lib/utils/collection';
-	import { citation, bibtex, ris, csv, exportRecords, download } from '$lib/utils/exports';
-	import { getFieldbook } from '$lib/stores/fieldbook.svelte';
-	import { getBrowseStore } from '$lib/stores/browse.svelte';
+	import { type Entry, entryKey } from '#lib/utils/collection.js';
+	import { citation, bibtex, ris, csv, exportRecords, download } from '#lib/utils/exports.js';
+	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
+	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import {
 		albumAvailable,
 		albumBytes,
 		saveAlbum,
 		removeAlbum,
 		offlineSupported
-	} from '$lib/offline/client';
+	} from '#lib/offline/client.js';
 	let { item }: { item: Entry } = $props();
 	const fieldbook = getFieldbook();
 	const browse = getBrowseStore();

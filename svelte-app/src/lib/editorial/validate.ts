@@ -7,9 +7,9 @@ import {
 	entryKey,
 	isToBeFound,
 	type Entry
-} from '$lib/utils/collection';
-import type { Person, SourceReference } from '$lib/data/types';
-import { typographyIssues } from '$lib/utils/typography';
+} from '#lib/utils/collection.js';
+import type { Person, SourceReference } from '#lib/data/types.js';
+import { typographyIssues } from '#lib/utils/typography.js';
 export interface DataIssue {
 	record: string;
 	severity: 'error' | 'warning';
