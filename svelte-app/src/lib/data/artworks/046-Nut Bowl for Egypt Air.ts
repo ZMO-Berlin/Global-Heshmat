@@ -16,7 +16,7 @@ const artwork: Artwork = {
         images: [
         {
             src: 'Schale für EgyptAir.jpeg',
-            caption: 'Nut Bowl for Egypt Air, designed by Hassan Heshmat',
+            caption: 'Nut Bowl for Egypt Air, designed by Hassan Heshmat (Courtesy of Magda Heshmat).',
         }
 
 

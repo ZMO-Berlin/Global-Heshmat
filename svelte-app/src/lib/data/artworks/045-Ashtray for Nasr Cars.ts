@@ -16,15 +16,15 @@ const artwork: Artwork = {
         images: [
         {
             src: 'Aschenbecher Nasr 1.jpeg',
-            caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat',
+            caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat (Courtesy of Yasser Hegazy).',
         },
         {
             src: 'Aschenbecher Nasr 2.jpeg',
-            caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat',
+            caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat (Courtesy of Yasser Hegazy).',
          },  
          {
             src: 'Aschenbecher Nasr 3.jpeg',
-            caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat',
+            caption: 'Ashtray for Nasr Cars, designed by Hassan Heshmat (Courtesy of Yasser Hegazy).',
          }
 
 

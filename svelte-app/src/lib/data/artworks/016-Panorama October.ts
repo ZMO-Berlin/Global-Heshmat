@@ -14,7 +14,7 @@ const artwork: Artwork = {
 	status: 'search',
 	trails: ['state-army', 'faith-remembrance'],
 	address: 'Al Estad, Qesm Than Madinet Nasr, Gouvernement Al-Qahira 4436011',
-	desc: 'Made out of metal with a size of ca. two metres, the statue ‘Crossing the impossible – the Bar Lev Line and the Suez Canal’ was erected in front of the Panorama October in 1979. It symbolizes the surprise victory of the Egyptian forces against the Israeli army at the beginning of the 1973 war, when crossing the strategically important Suez Canal. The state later removed the statue, and its present whereabouts are unknown.',
+	desc: 'Made out of metal with a size of ca. two metres, the statue ‘Crossing the impossible – the Bar Lev Line and the Suez Canal’ was erected in front of the Panorama October in 1979. It symbolizes the surprise victory of the Egyptian forces against the Israeli army at the beginning of the 1973 war, when crossing the strategically important Suez Canal. The statue was later removed and its current location is unknown.',
 	image: 'panorama_II.jpg',
 	imageCaption: '6th of October Panorama'
 
