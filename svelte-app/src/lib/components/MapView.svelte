@@ -8,9 +8,6 @@
 	// bundlers cannot statically analyse. Vite emits the worker as an asset here and
 	// `setWorkerUrl` points MapLibre at it; without this the worker 404s in the build.
 	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
-	// Self-hosted Arabic shaping, emitted with a content hash under /_app/immutable/
-	// so the service worker can keep it across deployments.
-	import rtlTextPluginUrl from '$rtl-text-plugin?url';
 	import type * as Maplibre from 'maplibre-gl';
 	import { artworks } from '#lib/data/artworks.js';
 	import { residences } from '#lib/data/residences.js';
@@ -106,13 +103,9 @@
 		try {
 			maplibregl = await import('maplibre-gl');
 			if (destroyed) return;
+			// MapLibre shapes Arabic and orders right-to-left labels itself, so no RTL
+			// text plugin is registered.
 			maplibregl.setWorkerUrl(workerUrl);
-
-			if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
-				void maplibregl.setRTLTextPlugin(rtlTextPluginUrl, true).catch(() => {
-					// The basemap remains usable if optional RTL shaping cannot initialise.
-				});
-			}
 
 			const instance = new maplibregl.Map({
 				container: mapContainer,

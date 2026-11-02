@@ -16,7 +16,7 @@ export function canonicalEntryPath(
  * deployments that don't change it.
  */
 export const entryCacheName = (version: string) => `entry-pages-${version}`;
-/** Content-hashed /_app/immutable/ files (map renderer, worker, RTL plugin). */
+/** Content-hashed /_app/immutable/ files (map renderer, worker). */
 export const IMMUTABLE_CACHE = 'immutable-assets-v1';
 /** Viewed images; their URLs carry a content version (?v=), so CacheFirst is safe. */
 export const IMAGE_CACHE = 'artwork-images-v3';

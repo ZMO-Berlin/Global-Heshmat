@@ -38,12 +38,11 @@ const PRECACHED_PAGES = ['', 'collection', 'people', 'missing', 'fieldbook', 'tr
 const PRECACHE_FILE = /\.(js|css|webmanifest|woff2)$/;
 const PRECACHE_EXCLUDED = [
 	/(^|\/)images\//,
-	// The map is an optional view. Keep its renderer and RTL worker out of the
+	// The map is an optional view. Keep its renderer and worker out of the
 	// install-time app shell and cache them on demand.
 	/(^|\/)maplibre-[^/]*\.js$/,
 	/(^|\/)maplibre\.[^/]*\.css$/,
 	/\/immutable\/workers\//,
-	/(^|\/)mapbox-gl-rtl-text[^/]*\.js$/,
 	// No rendered text falls in these subsets (unicode-range means pages never
 	// request them); precaching them cost ~114 KB per install. Should such text
 	// appear, it is still fetched on demand.
@@ -103,21 +102,6 @@ function serviceWorkerPrecache(): Plugin {
 
 export default defineConfig({
 	define: { __BUILD_ID__: JSON.stringify(buildId), __REVISION__: JSON.stringify(revision) },
-	resolve: {
-		alias: [
-			// The package exports only its source entry; MapView imports the
-			// prebuilt worker script with ?url so it is emitted with a content hash.
-			{
-				find: /^\$rtl-text-plugin(?=\?|$)/,
-				replacement: fileURLToPath(
-					new URL(
-						'./node_modules/@mapbox/mapbox-gl-rtl-text/dist/mapbox-gl-rtl-text.js',
-						import.meta.url
-					)
-				)
-			}
-		]
-	},
 	plugins: [
 		{
 			name: 'watch-image-originals',
