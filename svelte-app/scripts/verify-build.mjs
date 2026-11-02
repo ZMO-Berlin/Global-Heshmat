@@ -213,17 +213,8 @@ check('404.html present', existsSync(join(BUILD_DIR, '404.html')));
 check('og-image.png present', existsSync(join(BUILD_DIR, 'og-image.png')));
 
 // The optional map renderer is intentionally fetched only when the map view
-// mounts. Guard both pieces of that contract: the self-hosted RTL worker ships,
-// and oversized optional chunks do not silently return to the PWA app shell.
-const assetsDir = join(BUILD_DIR, '_app', 'immutable', 'assets');
-const rtlPlugin = existsSync(assetsDir)
-	? readdirSync(assetsDir).find((file) => /^mapbox-gl-rtl-text.*\.js$/.test(file))
-	: undefined;
-check(
-	'self-hosted RTL text plugin emitted with a content hash',
-	!!rtlPlugin,
-	'expected _app/immutable/assets/mapbox-gl-rtl-text.<hash>.js'
-);
+// mounts. Guard that contract: oversized optional chunks do not silently return
+// to the PWA app shell.
 const serviceWorkerPath = join(BUILD_DIR, 'sw.js');
 check('service worker present', existsSync(serviceWorkerPath));
 if (existsSync(serviceWorkerPath)) {
@@ -241,10 +232,6 @@ if (existsSync(serviceWorkerPath)) {
 			'large optional JavaScript should be cached only after its view is opened'
 		);
 	}
-	check(
-		'self-hosted RTL plugin is not precached',
-		!/(?:^|[{,])url:["'`][^"'`]*mapbox-gl-rtl-text[^"'`]*\.js["'`]/.test(serviceWorker)
-	);
 	check(
 		'service worker precache URLs target deployed paths',
 		!/(?:^|[{,])url:["'`](?:client|prerendered)\//.test(serviceWorker),

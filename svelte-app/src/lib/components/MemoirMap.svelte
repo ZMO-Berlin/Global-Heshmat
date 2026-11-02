@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import 'maplibre-gl/dist/maplibre-gl.css';
-	// The same worker and Arabic shaping set-up as MapView (see the comments there).
+	// The same worker set-up as MapView (see the comments there).
 	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
-	import rtlTextPluginUrl from '$rtl-text-plugin?url';
 	import type * as Maplibre from 'maplibre-gl';
 	import { mentionLabel, type MemoirEntity } from '#lib/data/memoir.js';
 	import type { FeatureCollection } from '#lib/utils/geojson.js';
@@ -47,9 +46,6 @@
 			const maplibregl = await import('maplibre-gl');
 			if (destroyed) return;
 			maplibregl.setWorkerUrl(workerUrl);
-			if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
-				void maplibregl.setRTLTextPlugin(rtlTextPluginUrl, true).catch(() => {});
-			}
 			const instance = new maplibregl.Map({
 				container,
 				style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
