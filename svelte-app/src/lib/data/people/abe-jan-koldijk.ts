@@ -3,7 +3,7 @@ import type { PersonRecord } from '../types';
 const person: PersonRecord = {
 	slug: 'abe-jan-koldijk',
 	name: 'Dr. Abe Jan Koldijk',
-	groups: ['cairo-crossroads'],
+	groups: ['collectors'],
 	places: ['Cairo', 'Susteren', 'Netherlands', 'Brügge'],
 	sourceParagraphs: [23],
 	paragraphs: [
