@@ -2529,6 +2529,75 @@
 		},
 		"v": "3b8fefbc"
 	},
+	"Paar küssend neu": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 20302
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 83028
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 264104
+		},
+		"full": {
+			"width": 2000,
+			"height": 1500,
+			"bytes": 673784
+		},
+		"v": "e64efa77"
+	},
+	"Paar liegend neu": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 18950
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 87314
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 270432
+		},
+		"full": {
+			"width": 2000,
+			"height": 1500,
+			"bytes": 695214
+		},
+		"v": "216c6d90"
+	},
+	"Paar stehend neu": {
+		"thumb": {
+			"width": 300,
+			"height": 400,
+			"bytes": 22270
+		},
+		"preview": {
+			"width": 600,
+			"height": 800,
+			"bytes": 99722
+		},
+		"web": {
+			"width": 900,
+			"height": 1200,
+			"bytes": 283512
+		},
+		"full": {
+			"width": 1500,
+			"height": 2000,
+			"bytes": 664654
+		},
+		"v": "f11fd4fe"
+	},
 	"Paar_Schwimmbad": {
 		"thumb": {
 			"width": 300,
@@ -3057,6 +3126,29 @@
 			"bytes": 330976
 		},
 		"v": "c99368ad"
+	},
+	"Tanzende Figuren neu": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 28350
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 104872
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 284060
+		},
+		"full": {
+			"width": 2000,
+			"height": 1500,
+			"bytes": 657154
+		},
+		"v": "371d8deb"
 	},
 	"Tanzende_Gruppe_III": {
 		"thumb": {
