@@ -38,7 +38,16 @@ test('gallery is map-free, exposes albums and is accessible', async ({ page }) =
 	page.on('request', (req) => requests.push(req.url()));
 	await page.goto('/collection/');
 	await expect(page.locator('.card')).toHaveCount(corpus.length);
-	await expect(page.locator('.photo-count').filter({ hasText: '17 photos' })).toBeVisible();
+	const museumRecord = corpus.find((record) => record.slug === 'the-hassan-heshmat-museum')!;
+	const susterenRecord = corpus.find(
+		(record) => record.slug === 'mosaics-in-private-swimming-pool'
+	)!;
+	await expect(page.locator('[data-entry-key="artwork:3"] .photo-count')).toHaveText(
+		`${museumRecord.images.length} photos`
+	);
+	await expect(page.locator('[data-entry-key="artwork:19"] .photo-count')).toHaveText(
+		`${susterenRecord.images.length} photos`
+	);
 	await expect(page.locator('main .collection-page')).toBeVisible();
 	await expect(page.getByRole('button', { name: 'Entries', exact: true })).toBeEnabled();
 	await expect(page.locator('canvas')).toHaveCount(0);
