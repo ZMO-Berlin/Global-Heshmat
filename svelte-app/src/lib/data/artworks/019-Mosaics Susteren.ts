@@ -17,12 +17,12 @@ const artwork: Artwork = {
 	images: [	
 			{src: "Paar küssend neu.jpg",
 			 	caption: 'Photo: Sonja Hegasy, October 2026	'},
-	 		{src: "Küssende_Schwimmbad.jpg"},
-		{src: "Küssende_Schwimmbad_II.jpg"},
+	 		{src: "Küssende_Schwimmbad.jpg"},	
 		{src: "Paar liegend neu.jpg",
-			caption: 'Photo: Sonja Hegasy, October 2026'},
-		{src: "Paar stehend neu.jpg"},
+			caption: 'Photo: Sonja Hegasy, October 2026'},	
 		{src: "Schwimmbad_3.jpg"},
+		{src: "Paar stehend neu.jpg",
+			 caption: 'Photo: Sonja Hegasy, October 2026'},	
 		  	{src: "Schwimmbad_4.jpg"},
 		   	{src: "Tanzende_Gruppe_III.jpg"},
 			{src: "Tanzende Figuren neu.jpg",
@@ -39,8 +39,6 @@ const artwork: Artwork = {
 			 	caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
 		   {src: "Paar_Schwimmbad_2.jpeg",
 			caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
-		   {src: "Paar_Schwimmbad_3.jpeg", 
-				caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
 		   {src: "Tanzende_Schwimmbad_2.jpeg",
 			 	caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"}
 		   

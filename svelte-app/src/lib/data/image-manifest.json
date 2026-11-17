@@ -2092,29 +2092,6 @@
 		},
 		"v": "43701a56"
 	},
-	"Küssende_Schwimmbad_II": {
-		"thumb": {
-			"width": 400,
-			"height": 299,
-			"bytes": 11820
-		},
-		"preview": {
-			"width": 800,
-			"height": 598,
-			"bytes": 36260
-		},
-		"web": {
-			"width": 1150,
-			"height": 859,
-			"bytes": 95888
-		},
-		"full": {
-			"width": 1150,
-			"height": 859,
-			"bytes": 95888
-		},
-		"v": "f0ebcc4d"
-	},
 	"Leverkusen_I": {
 		"thumb": {
 			"width": 400,
@@ -2643,29 +2620,6 @@
 			"bytes": 110778
 		},
 		"v": "69f46995"
-	},
-	"Paar_Schwimmbad_3": {
-		"thumb": {
-			"width": 400,
-			"height": 300,
-			"bytes": 33034
-		},
-		"preview": {
-			"width": 640,
-			"height": 480,
-			"bytes": 87952
-		},
-		"web": {
-			"width": 640,
-			"height": 480,
-			"bytes": 104282
-		},
-		"full": {
-			"width": 640,
-			"height": 480,
-			"bytes": 104282
-		},
-		"v": "91f82321"
 	},
 	"Papeterie Khodeir": {
 		"thumb": {
