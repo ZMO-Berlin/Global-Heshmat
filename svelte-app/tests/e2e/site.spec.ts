@@ -83,13 +83,14 @@ test('album returns to the same gallery scroll and focus', async ({ page }) => {
 	await page.goto('/collection/');
 	await expect(page.getByRole('button', { name: 'Entries', exact: true })).toBeEnabled();
 	const link = page.locator('[data-entry-key="artwork:19"]');
+	const susteren = corpus.find((record) => record.slug === 'mosaics-in-private-swimming-pool')!;
 	// Scroll the rendered container: off-screen card contents have deferred layout.
 	await page.locator('.entry-grid li').filter({ has: link }).scrollIntoViewIfNeeded();
 	await expect(link).toBeInViewport();
 	await link.click({ trial: true });
 	const before = (await link.boundingBox())!.y;
 	await link.click();
-	await expect(page.locator('.gallery-counter')).toHaveText('1 / 13');
+	await expect(page.locator('.gallery-counter')).toHaveText(`1 / ${susteren.images.length}`);
 	await expect(page.locator('canvas')).toHaveCount(0);
 	await page.getByRole('link', { name: 'Back to collection' }).click();
 	await expect(link).toBeFocused();
