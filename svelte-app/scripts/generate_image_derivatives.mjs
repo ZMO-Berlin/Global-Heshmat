@@ -8,7 +8,7 @@
  *
  *   thumb/   400px — thumbnail strips in the gallery and lightbox
  *   preview/ 800px — mobile album and collection intermediate candidate
- *   web/    1200px — the sidebar gallery, and the small srcset candidate
+ *   web/    1200px — the entry detail gallery, and the small srcset candidate
  *   full/   2000px — the lightbox on large and high-DPI displays
  *
  * Content and encoder fingerprints avoid rebuilding unchanged sources.

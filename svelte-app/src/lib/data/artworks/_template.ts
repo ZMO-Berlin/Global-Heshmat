@@ -22,7 +22,7 @@
  *  lat           Latitude  (decimal degrees, e.g. 30.038).
  *  lng           Longitude (decimal degrees, e.g. 31.213).
  *  country       Country name — used for filter chips in the UI.
- *  city          City or locality — displayed in the sidebar.
+ *  city          City or locality — displayed in the entry detail panel.
  *  status        Either "located" (confirmed location) or "search" (to be found).
  *  address       Street address or Google Plus Code.
  *  desc          Description text. HTML tags are allowed (e.g. <em>, <a href="">).

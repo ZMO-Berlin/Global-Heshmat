@@ -1,4 +1,4 @@
-import { DEFAULT_FILTERS, normalizeFilters, type CollectionFilters } from './map-filter';
+import { DEFAULT_FILTERS, legacyFilter, type CollectionFilters } from './collection-filter';
 export type GalleryMode = 'entries' | 'photos' | 'list';
 export type PeopleSort = 'name-asc' | 'name-desc' | 'group';
 export function peopleSort(params: URLSearchParams): PeopleSort {
@@ -6,7 +6,7 @@ export function peopleSort(params: URLSearchParams): PeopleSort {
 	return sort === 'name-desc' || sort === 'group' ? sort : 'name-asc';
 }
 export function readFilters(params: URLSearchParams): CollectionFilters {
-	const legacy = normalizeFilters(params.get('filter') ?? 'all');
+	const legacy = legacyFilter(params.get('filter') ?? 'all');
 	const status = params.get('status');
 	const type = params.get('type');
 	return {

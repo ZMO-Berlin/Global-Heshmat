@@ -25,10 +25,10 @@ it('lists an image used twice once', () => {
 		webUrl(second.src)
 	]);
 });
-it('falls back to the single legacy image', () => {
-	const legacy = { ...entry, images: undefined, image: first.src } as Entry;
-	expect(albumAssets(legacy)).toEqual([thumbUrl(first.src), webUrl(first.src)]);
-	expect(albumBytes(legacy)).toBe(sized(first.src));
+it('saves a single-image album', () => {
+	const single = { ...entry, images: [first] } as Entry;
+	expect(albumAssets(single)).toEqual([thumbUrl(first.src), webUrl(first.src)]);
+	expect(albumBytes(single)).toBe(sized(first.src));
 });
 it('is empty for an entry without images', () => {
 	const bare = { ...entry, images: [], image: undefined } as Entry;

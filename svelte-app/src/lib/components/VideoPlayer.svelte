@@ -3,7 +3,7 @@
 
 	// Self-hosted clip played inline with the browser's native controls. Kept
 	// deliberately small and orientation-agnostic: the CSS caps the height so a
-	// portrait (9:16 phone) clip doesn't dominate the sidebar, and the browser
+	// portrait (9:16 phone) clip doesn't dominate the entry detail panel, and the browser
 	// preserves the source's intrinsic aspect ratio.
 	let { src, caption }: { src: string; caption?: string } = $props();
 </script>
@@ -16,7 +16,6 @@
 		     at the domain root), not a SvelteKit route, so resolve() doesn't apply. -->
 		<p>
 			Your browser can’t play this video.
-			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 			<a href={videoUrl(src)} download>Download it instead</a>.
 		</p>
 	</video>
@@ -35,7 +34,7 @@
 	.video-player video {
 		max-width: 100%;
 		/* Cap the height so a portrait (9:16 phone) clip doesn't dominate the narrow
-		   sidebar; the browser preserves the clip's intrinsic aspect ratio within
+		   entry detail panel; the browser preserves the clip's intrinsic aspect ratio within
 		   the max-width / max-height box. */
 		max-height: 60vh;
 		border-radius: var(--radius-md);

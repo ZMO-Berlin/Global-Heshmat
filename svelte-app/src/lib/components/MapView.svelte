@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { onDestroy, onMount, untrack } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
@@ -15,10 +14,11 @@
 		buildRelocationGeoJSON
 	} from '#lib/utils/geojson.js';
 	import { locationZoom } from '#lib/utils/evidence.js';
-	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/collection-filter.js';
 	import { entryKey, type Entry } from '#lib/utils/collection.js';
 
-	let { showStatus = true }: { showStatus?: boolean } = $props();
+	/** This map is the visible view: only then does it show its status, update its sources and move the camera. */
+	let { active = true }: { active?: boolean } = $props();
 	/** The width at which the legend folds on hydration (see Legend.svelte). */
 	const PHONE_WIDTH = 600;
 	const store = getBrowseStore();
@@ -62,7 +62,7 @@
 
 	/** The only writer of the map's sources (installMapContent creates them empty). */
 	function updateMapSource() {
-		if (!showStatus || !map || !map.getSource(MAP_SOURCES.entries)) return;
+		if (!active || !map || !map.getSource(MAP_SOURCES.entries)) return;
 		const visibleArtworks = filterArtworks(artworks, store.filters);
 		const visible: Entry[] = [...visibleArtworks, ...filterResidences(residences, store.filters)];
 		// Search changes the filters on every keystroke; the sources (and the
@@ -95,16 +95,16 @@
 
 	$effect(() => {
 		void store.filters;
-		void showStatus;
+		void active;
 		untrack(updateMapSource);
 	});
 	$effect(() => {
 		const artwork = store.selectedArtwork;
-		if (artwork && showStatus) moveTo([artwork.lng, artwork.lat], locationZoom(artwork));
+		if (artwork && active) moveTo([artwork.lng, artwork.lat], locationZoom(artwork));
 	});
 	$effect(() => {
 		const residence = store.selectedResidence;
-		if (residence && showStatus) moveTo([residence.lng, residence.lat], locationZoom(residence));
+		if (residence && active) moveTo([residence.lng, residence.lat], locationZoom(residence));
 	});
 
 	async function initialize() {
@@ -152,7 +152,7 @@
 
 <div bind:this={mapContainer} class="map-container"></div>
 
-{#if showStatus && status !== 'ready'}
+{#if active && status !== 'ready'}
 	<div
 		class="map-status"
 		class:map-status-failed={status === 'failed'}

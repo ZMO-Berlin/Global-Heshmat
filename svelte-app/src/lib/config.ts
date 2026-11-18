@@ -9,6 +9,9 @@ export const SITE_URL = 'https://heshmat.zmo.de';
 
 export const SITE_NAME = 'Global Heshmat';
 
+/** The public source repository; package.json `repository` names the same one. */
+export const REPOSITORY_URL = 'https://github.com/ZMO-Berlin/Global-Heshmat';
+
 export const SITE_TAGLINE = 'Following Hassan Heshmat around the world';
 
 export const SITE_DESCRIPTION =

@@ -24,7 +24,8 @@ const fixture: Entry = {
 	country: 'Egypt',
 	status: 'located',
 	address: '',
-	desc: ''
+	desc: '',
+	images: []
 };
 describe('media resolution', () => {
 	const images = [{ src: 'first.jpg' }, { src: 'second.jpg', id: 'permanent-second' }];

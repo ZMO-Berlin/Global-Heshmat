@@ -62,9 +62,8 @@ body {
 .skip-link:focus-visible {
 	transform: translateY(0);
 }
-/* Shared circular close button. Previously named .sidebar-close and reused by
-   Modal.svelte, which meant the modal's chrome was styled by a class named for
-   a different component. */
+/* Shared circular close button: the entry detail panel, the browse panel and
+   Modal.svelte use the same chrome. */
 .btn-close {
 	width: 44px;
 	height: 44px;

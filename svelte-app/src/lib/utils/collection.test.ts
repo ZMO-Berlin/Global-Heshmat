@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { artworks } from '#lib/data/artworks.js';
 import { residences } from '#lib/data/residences.js';
+import { entries } from '#lib/data/entries.js';
 import { people } from '#lib/data/people.js';
 import {
 	entryImages,
@@ -11,7 +12,12 @@ import {
 	mediaId,
 	coverImage
 } from './collection';
-import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './map-filter';
+import {
+	DEFAULT_FILTERS,
+	filterArtworks,
+	filterResidences,
+	legacyFilter
+} from './collection-filter';
 import { readFilters, writeFilters } from './url-facets';
 import { buildGhostGeoJSON, buildRelocationGeoJSON } from './geojson';
 import manifest from '#lib/data/image-manifest.json';
@@ -20,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 
 describe('collection browsing', () => {
 	it('entries have unique, valid media references', () => {
-		for (const item of [...artworks, ...residences]) {
+		for (const item of entries) {
 			const images = entryImages(item);
 			expect(new Set(images.map(mediaId)).size, item.name).toBe(images.length);
 			if (item.coverImage)
@@ -82,11 +88,13 @@ describe('collection browsing', () => {
 	});
 	it('excludes displacement context when its artwork is filtered out', () => {
 		for (const f of ['Germany', 'search', 'residence']) {
-			const selected = filterArtworks(artworks, f);
+			const selected = filterArtworks(artworks, legacyFilter(f));
 			expect(buildGhostGeoJSON(selected).features).toHaveLength(0);
 			expect(buildRelocationGeoJSON(selected).features).toHaveLength(0);
 		}
-		expect(buildRelocationGeoJSON(filterArtworks(artworks, 'Egypt')).features).toHaveLength(1);
+		expect(
+			buildRelocationGeoJSON(filterArtworks(artworks, legacyFilter('Egypt'))).features
+		).toHaveLength(1);
 	});
 	it('all declared media dimensions match the decoded served images', async () => {
 		for (const [stem, variants] of Object.entries(manifest))

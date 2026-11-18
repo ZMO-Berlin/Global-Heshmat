@@ -9,6 +9,7 @@ import {
 	type Entry
 } from './collection';
 import { webUrl } from './image';
+import { isoToday } from './date';
 export const EDITORIAL_LICENSE = 'https://creativecommons.org/licenses/by/4.0/';
 export const MEDIA_RIGHTS =
 	'Photographs and videos are separately copyrighted; permission may be required. See individual credits.';
@@ -133,6 +134,14 @@ export function csv(items: Entry[], accessed: string): string {
 		MEDIA_RIGHTS
 	]);
 	return [fields, ...rows].map((row) => row.map(csvCell).join(',')).join('\r\n') + '\r\n';
+}
+/** Save `items` as the JSON export, accessed `accessed` (default today). */
+export function downloadRecordsJson(items: Entry[], filename: string, accessed = isoToday()) {
+	download(JSON.stringify(exportRecords(items, accessed), null, 2), filename, 'application/json');
+}
+/** Save `items` as the CSV export, accessed `accessed` (default today). */
+export function downloadRecordsCsv(items: Entry[], filename: string, accessed = isoToday()) {
+	download(csv(items, accessed), filename, 'text/csv;charset=utf-8');
 }
 export function download(text: string, filename: string, type = 'text/plain;charset=utf-8') {
 	const url = URL.createObjectURL(new Blob([text], { type }));

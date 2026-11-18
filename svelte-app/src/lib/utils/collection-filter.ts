@@ -1,10 +1,6 @@
 import type { Artwork, Residence } from '#lib/data/types.js';
 import { normalizeSearchText } from './search';
 import { plainText } from './text';
-export const FILTER_ALL = 'all';
-export const FILTER_SEARCH = 'search';
-export const FILTER_RESIDENCE = 'residence';
-export type MapFilter = string;
 export interface CollectionFilters {
 	country: string;
 	status: 'all' | 'located' | 'search';
@@ -19,8 +15,11 @@ export const DEFAULT_FILTERS: CollectionFilters = {
 	type: 'all',
 	query: ''
 };
-export function normalizeFilters(filter: MapFilter | CollectionFilters): CollectionFilters {
-	if (typeof filter !== 'string') return filter;
+/**
+ * Decode the single-valued `?filter=` parameter of older shared links: "search"
+ * (to be found), "residence", "all", or a country name.
+ */
+export function legacyFilter(filter: string): CollectionFilters {
 	return {
 		...DEFAULT_FILTERS,
 		...(filter === 'search'
@@ -61,11 +60,7 @@ export function matchesQuery(item: Artwork | Residence, query: string): boolean 
 	const words = normalizeSearchText(query).split(/\s+/).filter(Boolean);
 	return words.length === 0 || words.every((word) => searchableText(item).includes(word));
 }
-export function filterArtworks<T extends Artwork>(
-	items: readonly T[],
-	filter: MapFilter | CollectionFilters
-): T[] {
-	const f = normalizeFilters(filter);
+export function filterArtworks<T extends Artwork>(items: readonly T[], f: CollectionFilters): T[] {
 	return items.filter(
 		(item) =>
 			(f.type === 'all' || f.type === 'artwork') &&
@@ -76,9 +71,8 @@ export function filterArtworks<T extends Artwork>(
 }
 export function filterResidences<T extends Residence>(
 	items: readonly T[],
-	filter: MapFilter | CollectionFilters
+	f: CollectionFilters
 ): T[] {
-	const f = normalizeFilters(filter);
 	return items.filter(
 		(item) =>
 			(f.type === 'all' || f.type === 'residence') &&

@@ -18,7 +18,8 @@ const artwork = (overrides: Partial<Artwork>): Artwork => ({
 const indexed = (overrides: Partial<Artwork>): IndexedArtwork => ({
 	...artwork(overrides),
 	slug: 'untitled',
-	kind: 'artwork'
+	kind: 'artwork',
+	images: []
 });
 const residence: IndexedResidence = {
 	id: 1,
@@ -30,7 +31,8 @@ const residence: IndexedResidence = {
 	years: '1957',
 	desc: '',
 	slug: 'selb',
-	kind: 'residence'
+	kind: 'residence',
+	images: []
 };
 
 describe('buildEntryGeoJSON', () => {

@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { goto } from '$app/navigation';
 	import { Search } from '@lucide/svelte';
 	import { artworks } from '#lib/data/artworks.js';
@@ -7,13 +6,20 @@
 	import { lazyPeople } from '#lib/data/people-lazy.svelte.js';
 	import type { Person } from '#lib/data/types.js';
 	import { filterPeople } from '#lib/utils/people.js';
-	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/collection-filter.js';
 	import { entryKey, entryTitle, type Entry } from '#lib/utils/collection.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { popoverDismissal } from '#lib/utils/dismiss.js';
 	const store = getBrowseStore();
 	const searchId = $props.id();
 	let searchOpen = $state(false);
 	let activeIndex = $state(-1);
+	let wrapper = $state<HTMLDivElement>();
+	const dismissal = popoverDismissal({
+		isOpen: () => searchOpen,
+		close: () => (searchOpen = false),
+		inside: () => [wrapper]
+	});
 	const all = $derived([
 		...filterArtworks(artworks, store.filters),
 		...filterResidences(residences, store.filters),
@@ -61,12 +67,9 @@
 	}
 </script>
 
-<svelte:window
-	onclick={(event) => {
-		if (!(event.target as HTMLElement)?.closest('.search-wrapper')) searchOpen = false;
-	}}
-/>
-<div class="search-wrapper">
+<!-- Escape is handled on the input, so only an outside click closes the results here. -->
+<svelte:window onclick={dismissal.onclick} />
+<div class="search-wrapper" bind:this={wrapper}>
 	<Search size={17} class="search-icon" aria-hidden="true" />
 	<input
 		disabled={!store.ready}

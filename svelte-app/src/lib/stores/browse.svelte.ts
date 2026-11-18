@@ -1,4 +1,3 @@
-/* eslint-disable svelte/no-navigation-without-resolve -- Route builders (browse-hrefs.ts) use resolve(); shallow updates preserve the current resolved pathname. */
 import { getContext, setContext, onMount } from 'svelte';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
 import { browser } from '$app/env';
@@ -14,7 +13,7 @@ import {
 	type PeopleSort,
 	type GalleryMode
 } from '#lib/utils/url-facets.js';
-import type { CollectionFilters } from '#lib/utils/map-filter.js';
+import type { CollectionFilters } from '#lib/utils/collection-filter.js';
 import * as hrefs from '#lib/utils/browse-hrefs.js';
 const CONTEXT = Symbol('collection-browser');
 export function createBrowseStore() {

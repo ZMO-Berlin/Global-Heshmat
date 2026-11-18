@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- entryHref is the shared resolved route builder. */
 	import { entryStatus, entryTitle, STATUS_LABELS, type Entry } from '#lib/utils/collection.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import MarkerGlyph from './MarkerGlyph.svelte';

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { IndexedArtwork } from '#lib/data/types.js';
 import { normalizeSearchText } from './search';
-import { filterArtworks, DEFAULT_FILTERS } from './map-filter';
+import { filterArtworks, DEFAULT_FILTERS } from './collection-filter';
 const searchArtworks = (items: IndexedArtwork[], query: string) =>
 	filterArtworks(items, { ...DEFAULT_FILTERS, query });
 
@@ -17,7 +17,8 @@ function artwork(id: number, name: string, city = 'Cairo', country = 'Egypt'): I
 		status: 'located',
 		desc: '',
 		slug: `artwork-${id}`,
-		kind: 'artwork'
+		kind: 'artwork',
+		images: []
 	};
 }
 

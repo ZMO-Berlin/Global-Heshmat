@@ -87,7 +87,7 @@
 	--header-height: 68px;
 	--filter-height: 60px;
 	--footer-height: 48px;
-	--sidebar-width: 460px;
+	--detail-width: 460px;
 	--prose-width: 62ch; /* readable measure for long-form text */
 
 	/* ───── Typography ───── */
@@ -167,7 +167,7 @@
 	--shadow-lg:
 		0 12px 40px rgb(var(--color-header-bg-rgb) / 0.12),
 		0 4px 12px rgb(var(--color-header-bg-rgb) / 0.06);
-	--shadow-sidebar:
+	--shadow-detail:
 		-6px 0 32px rgb(var(--color-header-bg-rgb) / 0.1),
 		-1px 0 0 rgb(var(--color-header-bg-rgb) / 0.04);
 	--shadow-bar-dark: 0 2px 12px rgb(var(--color-header-bg-rgb) / 0.18), 0 1px 3px rgb(0 0 0 / 0.12);
@@ -199,7 +199,7 @@
 	   the map and its loading veil, below the sliding panels so the list can
 	   still open over it. */
 	--z-page: 25;
-	--z-sidebar: 30;
+	--z-detail: 30;
 	--z-filter: 40;
 	--z-header: 50;
 	--z-search-results: 60;

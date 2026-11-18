@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { countLabel } from '#lib/utils/text.js';
 	import { artworks } from '#lib/data/artworks.js';
 	import { residences } from '#lib/data/residences.js';
@@ -7,7 +6,7 @@
 	import { filterPeople } from '#lib/utils/people.js';
 	import PeopleList from './PeopleList.svelte';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
-	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/collection-filter.js';
 	import {
 		entryKey,
 		entryStatus,

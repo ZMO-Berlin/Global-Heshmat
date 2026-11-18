@@ -1,7 +1,7 @@
 import { resolve } from '$app/paths';
 import type { Entry } from './collection';
 import { readFilters, writeFilters, galleryMode, peopleSort, type GalleryMode } from './url-facets';
-import type { CollectionFilters } from './map-filter';
+import type { CollectionFilters } from './collection-filter';
 
 /**
  * Pages an entry can be opened from and should close back to. The route

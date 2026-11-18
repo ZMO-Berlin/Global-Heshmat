@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { artworks } from './artworks.js';
-import { residences } from './residences.js';
+import { entryByKey } from './entries.js';
 import { memoirCounts, ofType, pageLabel, mentionLabel, type MemoirEntity } from './memoir.js';
 import {
 	exhibitionTimeline,
@@ -11,7 +10,7 @@ import {
 	rankPeople,
 	splitPlaces
 } from './memoir-view.js';
-import { entryKey, type Entry } from '#lib/utils/collection.js';
+import type { Entry } from '#lib/utils/collection.js';
 
 let next = 0;
 const entity = (fields: Partial<MemoirEntity>): MemoirEntity => ({
@@ -119,7 +118,7 @@ describe('linkedRecords', () => {
 				entity({ type: 'place', name: 'Mermaid fountain', record: 'artwork:1', mentions: 1 }),
 				entity({ type: 'place', name: 'No record', mentions: 40 })
 			],
-			entries
+			(key) => entries.get(key)
 		);
 		expect(records.map((r) => [r.key, names(r.names), r.mentions])).toEqual([
 			['artwork:2', ['Atfih statue'], 3],
@@ -148,15 +147,12 @@ describe('the extracted data', () => {
 	});
 
 	it('links only to records that exist on the site', () => {
-		const entries = new Map<string, Entry>(
-			[...artworks, ...residences].map((e) => [entryKey(e), e])
-		);
 		const records = linkedRecords(
 			ofType('artwork').concat(ofType('organisation'), ofType('place')),
-			entries
+			entryByKey
 		);
 		expect(records.length).toBeGreaterThan(0);
-		for (const record of records) expect(entries.get(record.key)).toBe(record.entry);
+		for (const record of records) expect(entryByKey(record.key)).toBe(record.entry);
 	});
 });
 

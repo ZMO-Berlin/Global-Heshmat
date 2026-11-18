@@ -1,6 +1,5 @@
 <script lang="ts">
 	// Render source prose as text, allowing only literal http(s) links from the DOCX.
-	/* eslint-disable svelte/no-navigation-without-resolve -- URLs here are external source citations. */
 	let { text, referenceHref }: { text: string; referenceHref?: string } = $props();
 	const parts = $derived(text.split(/(https?:\/\/[^\s)]+|see above)/g));
 </script>

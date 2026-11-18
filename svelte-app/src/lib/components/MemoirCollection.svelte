@@ -1,12 +1,10 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- record and profile links come from the browse store's resolved builders and resolve(). */
 	import { resolve } from '$app/paths';
 	import MemoirPages from './MemoirPages.svelte';
-	import { artworks } from '#lib/data/artworks.js';
-	import { residences } from '#lib/data/residences.js';
+	import { entryByKey } from '#lib/data/entries.js';
 	import { ofType, type MemoirEntity } from '#lib/data/memoir.js';
 	import { linkedRecords, profiledPeople, rankPeople } from '#lib/data/memoir-view.js';
-	import { entryKey, entryTitle, type Entry } from '#lib/utils/collection.js';
+	import { entryTitle } from '#lib/utils/collection.js';
 	import { countLabel } from '#lib/utils/text.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 
@@ -16,10 +14,9 @@
 
 	const store = getBrowseStore();
 	// Site records the book refers to, with the names it uses for them.
-	const entries = new Map<string, Entry>([...artworks, ...residences].map((e) => [entryKey(e), e]));
 	const records = linkedRecords(
 		ofType('artwork').concat(ofType('organisation'), ofType('place')),
-		entries
+		entryByKey
 	);
 	const profiled = profiledPeople(rankPeople(ofType('person')).persons);
 	const profileHref = (record: string) =>

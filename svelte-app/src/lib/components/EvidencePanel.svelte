@@ -1,13 +1,14 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Source and contribution URLs are external, validated editorial links. */
+	import SourceLink from './SourceLink.svelte';
 	import type { Entry } from '#lib/utils/collection.js';
 	import { precisionLabel } from '#lib/utils/evidence.js';
 	import { entryKey, isToBeFound } from '#lib/utils/collection.js';
 	import { recordUrl } from '#lib/utils/exports.js';
+	import { REPOSITORY_URL } from '#lib/config.js';
 	let { item }: { item: Entry } = $props();
 	const precision = $derived(precisionLabel(item));
 	const contributionUrl = $derived(
-		'https://github.com/ZMO-Berlin/Global-Heshmat/issues/new?' +
+		`${REPOSITORY_URL}/issues/new?` +
 			new URLSearchParams({
 				template: 'artwork-location.yml',
 				title: `Information about ${item.name}`,
@@ -28,9 +29,7 @@
 	{#if item.sources?.length}
 		<ul>
 			{#each item.sources as source, index (index)}<li>
-					{#if source.url}<a href={source.url} target="_blank" rel="noopener noreferrer"
-							>{source.label}</a
-						>{:else}{source.label}{/if}
+					<SourceLink {source} />
 					{#if source.checkedOn}
 						· Checked <time datetime={source.checkedOn}>{source.checkedOn}</time>{/if}
 				</li>{/each}
@@ -48,9 +47,7 @@
 					{#if event.description}<p>{event.description}</p>{/if}
 					<ul>
 						{#each event.sources as source, index (index)}<li>
-								{#if source.url}<a href={source.url} target="_blank" rel="noopener noreferrer"
-										>{source.label}</a
-									>{:else}{source.label}{/if}
+								<SourceLink {source} />
 							</li>{/each}
 					</ul>
 				</li>{/each}
@@ -82,7 +79,8 @@
 	ol {
 		padding-inline-start: var(--space-5);
 	}
-	a {
+	/* Global so the source links rendered by SourceLink share the style. */
+	.evidence :global(a) {
 		color: var(--color-primary-text);
 		overflow-wrap: anywhere;
 	}

@@ -325,6 +325,21 @@ for (const slug of profiles) {
 	);
 }
 
+const memoirHtml = join(BUILD_DIR, 'memoir', 'index.html');
+check('memoir/index.html present', existsSync(memoirHtml));
+if (existsSync(memoirHtml)) {
+	const { book } = JSON.parse(
+		readFileSync(new URL('../src/lib/data/memoir.json', import.meta.url), 'utf8')
+	);
+	const structured = jsonLd(readFileSync(memoirHtml, 'utf8'));
+	check('memoir describes a Book', structured['@type'] === 'Book');
+	check(
+		'memoir Book carries the DOI',
+		structured.sameAs === book.doi && book.doi.endsWith(`/${structured.identifier?.value}`),
+		`saw ${structured.sameAs} / ${structured.identifier?.value}`
+	);
+}
+
 // ── Home page SEO ───────────────────────────────────────────────────
 check('index.html present', existsSync(join(BUILD_DIR, 'index.html')));
 

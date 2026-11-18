@@ -29,6 +29,16 @@ export default ts.config(
 		}
 	},
 	{
+		// Internal links are built by src/lib/utils/browse-hrefs.ts (through the
+		// browse store) and resolve(); the rule cannot follow a href through those
+		// builders, and has no option to accept them. scripts/verify-build.mjs and
+		// the e2e suite check the built links instead.
+		files: ['**/*.svelte', '**/*.svelte.ts'],
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off'
+		}
+	},
+	{
 		ignores: [
 			'build/',
 			'.svelte-kit/',

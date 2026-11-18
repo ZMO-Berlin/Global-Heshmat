@@ -1,14 +1,14 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- The browse store and resolve() below build internal routes. */
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { FunnelX, PanelLeftOpen, SlidersHorizontal } from '@lucide/svelte';
 	import { peopleGroups } from '#lib/data/people/_groups.js';
-	import type { CollectionFilters } from '#lib/utils/map-filter.js';
+	import type { CollectionFilters } from '#lib/utils/collection-filter.js';
 	import { countries } from '#lib/data/countries.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { popoverDismissal } from '#lib/utils/dismiss.js';
 	import ArtworkSearch from './ArtworkSearch.svelte';
 	const store = getBrowseStore();
 	// Routes whose content the facets narrow. Elsewhere a facet would only
@@ -28,6 +28,12 @@
 	let facetsOpen = $state(false);
 	let toggle = $state<HTMLButtonElement>();
 	let panel = $state<HTMLDivElement>();
+	const dismissal = popoverDismissal({
+		isOpen: () => facetsOpen,
+		close: () => (facetsOpen = false),
+		inside: () => [panel, toggle],
+		returnFocus: () => toggle
+	});
 	const active = $derived(
 		store.peopleView
 			? Number(!!store.filters.group) + Number(!!store.filters.place)
@@ -57,19 +63,7 @@
 	}
 </script>
 
-<!-- Capture phase: Escape folds the facets before the layout's own Escape handling sees it. -->
-<svelte:window
-	onkeydowncapture={(event) => {
-		if (event.key !== 'Escape' || !facetsOpen) return;
-		event.stopPropagation();
-		facetsOpen = false;
-		toggle?.focus();
-	}}
-	onclick={(event) => {
-		const target = event.target as Node;
-		if (facetsOpen && !panel?.contains(target) && !toggle?.contains(target)) facetsOpen = false;
-	}}
-/>
+<svelte:window onkeydowncapture={dismissal.onkeydown} onclick={dismissal.onclick} />
 
 <div
 	class="filters"

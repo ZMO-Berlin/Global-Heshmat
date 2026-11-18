@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- closeHref is built from resolve() in the browse store. */
 	import '../app.css';
 	import '@fontsource-variable/cormorant-garamond/wght.css';
 	import '@fontsource-variable/cormorant-garamond/wght-italic.css';
@@ -150,7 +149,7 @@
 			<CollectionView />
 		</div>{/if}
 	{#if MapComponent}<div hidden={!isMap} inert={!isMap}>
-			<MapComponent bind:this={mapView} showStatus={isMap} />
+			<MapComponent bind:this={mapView} active={isMap} />
 		</div>{/if}
 	{#if isMap && mapFailed}<div class="map-import-error" role="status">
 			<p>The map could not be loaded.</p>

@@ -4,9 +4,9 @@
 		memoirCounts as counts,
 		memoirMethod as method
 	} from '#lib/data/memoir.js';
+	import { REPOSITORY_URL } from '#lib/config.js';
 
-	const SOURCE_URL =
-		'https://github.com/ZMO-Berlin/Global-Heshmat/tree/main/svelte-app/docs/autobiography';
+	const SOURCE_URL = `${REPOSITORY_URL}/tree/main/svelte-app/docs/autobiography`;
 </script>
 
 <section id="method" class="method" aria-labelledby="method-heading">

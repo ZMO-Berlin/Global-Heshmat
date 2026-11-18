@@ -81,19 +81,19 @@ export interface LinkedRecord {
 
 /**
  * Collection records the book refers to, each with every name it uses for it,
- * most mentioned first. Names whose record is not in `entries` are left out.
+ * most mentioned first. Names whose record `lookup` does not find are left out.
  */
 export function linkedRecords(
 	entities: MemoirEntity[],
-	entries: ReadonlyMap<string, Entry>
+	lookup: (key: string) => Entry | undefined
 ): LinkedRecord[] {
-	const linked = entities.filter((e) => e.record && entries.has(e.record));
+	const linked = entities.filter((e) => e.record && lookup(e.record));
 	return [...new Set(linked.map((e) => e.record!))]
 		.map((key) => {
 			const names = linked.filter((e) => e.record === key);
 			return {
 				key,
-				entry: entries.get(key)!,
+				entry: lookup(key)!,
 				names,
 				mentions: names.reduce((sum, e) => sum + e.mentions, 0)
 			};

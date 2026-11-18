@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- profile links are built with resolve() in profileHref. */
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';

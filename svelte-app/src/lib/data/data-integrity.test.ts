@@ -3,6 +3,7 @@ import { readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { artworks } from './artworks';
 import { residences } from './residences';
+import { entries as allItems } from './entries';
 import { themeTrails, placeTrails } from './trails';
 
 /**
@@ -51,7 +52,6 @@ function videoRefs(items: ReadonlyArray<(typeof artworks)[number]>) {
 		.map((item) => ({ owner: item.name, file: item.videoFile! }));
 }
 
-const allItems = [...artworks, ...residences];
 const allImageRefs = [...imageRefs(artworks), ...imageRefs(residences)];
 const allVideoRefs = videoRefs(artworks);
 

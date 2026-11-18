@@ -1,26 +1,23 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
-	import { artworks } from '#lib/data/artworks.js';
-	import { residences } from '#lib/data/residences.js';
+	import { entries } from '#lib/data/entries.js';
 	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
-	import { entryKey, entryTitle } from '#lib/utils/collection.js';
+	import { entryKey, entryTitle, type Entry } from '#lib/utils/collection.js';
 	import { albumBytes, albumAvailable, saveAlbum, removeAlbum } from '#lib/offline/client.js';
-	import { csv, exportRecords, download } from '#lib/utils/exports.js';
-	import { countLabel } from '#lib/utils/text.js';
+	import { downloadRecordsCsv, downloadRecordsJson } from '#lib/utils/exports.js';
+	import { countLabel, megabytes } from '#lib/utils/text.js';
 	import Seo from '#lib/components/Seo.svelte';
 	import FieldbookEntry from '#lib/components/FieldbookEntry.svelte';
 	const fieldbook = getFieldbook();
 	const browse = getBrowseStore();
-	const all = [...artworks, ...residences];
-	const items = $derived(all.filter((item) => fieldbook.has(item)));
+	const items = $derived(entries.filter((item) => fieldbook.has(item)));
 	const bytes = $derived(items.reduce((sum, item) => sum + albumBytes(item), 0));
 	let availability = $state<Record<string, boolean>>({});
 	let busy = $state(false);
 	let message = $state('');
 	let cancelled = false;
-	const today = () => new Date().toISOString().slice(0, 10);
 	async function refresh(list = items) {
 		availability = Object.fromEntries(
 			await Promise.all(list.map(async (item) => [entryKey(item), await albumAvailable(item)]))
@@ -61,7 +58,7 @@
 			busy = false;
 		}
 	}
-	async function remove(item: (typeof all)[number]) {
+	async function remove(item: Entry) {
 		await removeAlbum(item);
 		availability[entryKey(item)] = false;
 		fieldbook.toggle(item);
@@ -98,7 +95,7 @@
 			<div class="toolbar">
 				<p class="summary">
 					{countLabel(items.length, 'selected entry', 'selected entries')} · estimated image download
-					<span class="nowrap">{(bytes / 1048576).toFixed(1)} MB</span>
+					<span class="nowrap">{megabytes(bytes)}</span>
 				</p>
 				<div class="actions">
 					<div class="group" role="group" aria-label="Offline use">
@@ -114,21 +111,11 @@
 						<button disabled={busy} onclick={() => void refresh()}>Check availability</button>
 					</div>
 					<div class="group" role="group" aria-label="Export records">
-						<button
-							onclick={() =>
-								download(
-									JSON.stringify(exportRecords(items, today()), null, 2),
-									'global-heshmat-fieldbook.json',
-									'application/json'
-								)}>Export JSON</button
+						<button onclick={() => downloadRecordsJson(items, 'global-heshmat-fieldbook.json')}
+							>Export JSON</button
 						>
-						<button
-							onclick={() =>
-								download(
-									csv(items, today()),
-									'global-heshmat-fieldbook.csv',
-									'text/csv;charset=utf-8'
-								)}>Export CSV</button
+						<button onclick={() => downloadRecordsCsv(items, 'global-heshmat-fieldbook.csv')}
+							>Export CSV</button
 						>
 					</div>
 				</div>

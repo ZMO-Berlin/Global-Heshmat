@@ -10,6 +10,7 @@ import {
 } from '#lib/utils/collection.js';
 import type { Person, SourceReference } from '#lib/data/types.js';
 import { typographyIssues } from '#lib/utils/typography.js';
+import { isoToday } from '#lib/utils/date.js';
 export interface DataIssue {
 	record: string;
 	severity: 'error' | 'warning';
@@ -59,10 +60,7 @@ function checkSource(source: SourceReference, issue: Report, today: string) {
 	)
 		issue(`Source last checked more than two years ago: ${source.label}`, 'warning');
 }
-export function validatePerson(
-	person: Person,
-	today = new Date().toISOString().slice(0, 10)
-): DataIssue[] {
+export function validatePerson(person: Person, today = isoToday()): DataIssue[] {
 	const issues: DataIssue[] = [];
 	const issue: Report = (message, severity = 'error') =>
 		issues.push({ record: `person:${person.slug}`, severity, message });
@@ -78,10 +76,7 @@ export function validatePerson(
 	for (const problem of typographyIssues(person)) issue(`Typography — ${problem}`, 'warning');
 	return issues;
 }
-export function validateEntry(
-	item: Entry,
-	today = new Date().toISOString().slice(0, 10)
-): DataIssue[] {
+export function validateEntry(item: Entry, today = isoToday()): DataIssue[] {
 	const issues: DataIssue[] = [];
 	const issue = (message: string, severity: DataIssue['severity'] = 'error') =>
 		issues.push({ record: entryKey(item), severity, message });

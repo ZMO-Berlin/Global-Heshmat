@@ -33,14 +33,9 @@ export function isToBeFound(item: Entry): item is IndexedArtwork & { status: 'se
 export function entryTitle(item: Entry): string {
 	return item.displayTitle || item.name;
 }
-export function entryImages(
-	item: Pick<Entry, 'images' | 'image' | 'imageCaption'>
-): ArtworkImage[] {
-	return item.images?.length
-		? item.images
-		: item.image
-			? [{ src: item.image, caption: item.imageCaption }]
-			: [];
+/** The album of an indexed record (buildIndex folds a legacy single `image` into it). */
+export function entryImages(item: Pick<Entry, 'images'>): ArtworkImage[] {
+	return item.images;
 }
 /** Stable across reordering; an explicit id also survives a filename change. */
 export function mediaId(image: ArtworkImage): string {
@@ -53,9 +48,7 @@ export function legacyMediaId(image: ArtworkImage): string {
 export function matchesMediaId(image: ArtworkImage, id: string | null): boolean {
 	return id !== null && (mediaId(image) === id || legacyMediaId(image) === id);
 }
-export function coverImage(
-	item: Pick<Entry, 'images' | 'image' | 'imageCaption' | 'coverImage'>
-): ArtworkImage | undefined {
+export function coverImage(item: Pick<Entry, 'images' | 'coverImage'>): ArtworkImage | undefined {
 	const images = entryImages(item);
 	return (
 		images.find(

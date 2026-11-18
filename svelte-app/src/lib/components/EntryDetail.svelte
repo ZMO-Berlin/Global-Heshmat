@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { ImageOff, X } from '@lucide/svelte';
 	import { goto } from '$app/navigation';
 	import { entryImages, entryKey, entryTitle } from '#lib/utils/collection.js';
@@ -276,12 +275,12 @@
 		top: calc(var(--header-height) + var(--filter-height));
 		right: 0;
 		bottom: var(--footer-height);
-		width: var(--sidebar-width);
+		width: var(--detail-width);
 		background: var(--color-surface);
-		z-index: var(--z-sidebar);
+		z-index: var(--z-detail);
 		transform: translateX(100%);
 		transition: transform var(--duration-slower) var(--ease-out);
-		box-shadow: var(--shadow-sidebar);
+		box-shadow: var(--shadow-detail);
 		display: flex;
 		flex-direction: column;
 	}

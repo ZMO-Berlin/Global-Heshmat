@@ -12,6 +12,7 @@
 		memoirCounts as counts,
 		type MemoirEntity
 	} from '#lib/data/memoir.js';
+	import { bookStructuredData } from '#lib/utils/structured-data.js';
 
 	// The passage dialog for a page number; closing it returns focus to that button
 	// (Safari does not focus a clicked button, so the dialog cannot rely on it).
@@ -30,6 +31,7 @@
 	title="Memoir — Global Heshmat"
 	description="The people, places, exhibitions and works named in Hassan Heshmat’s autobiography Tajārubī fī al-fann wa-al-ḥayāh (1997), extracted with an experimental AI-assisted method."
 	path="/memoir/"
+	structuredData={bookStructuredData(book)}
 />
 <div class="research-page">
 	<article class="research-inner memoir" aria-labelledby="memoir-heading">
