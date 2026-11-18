@@ -11,6 +11,7 @@ import {
 	validatePerson,
 	validDate
 } from '#lib/editorial/validate.js';
+import { buildIndex } from './build-index';
 import { artworks } from '#lib/data/artworks.js';
 import { people } from '#lib/data/people.js';
 const fixture: Entry = {
@@ -124,6 +125,18 @@ describe('editorial validation', () => {
 		expect(issues.map((issue) => issue.message).join(' ')).toMatch(
 			/Source: ….*"utm_source".*"fbclid"/s
 		);
+	});
+	it('reports a legacy single-image caption problem once, not again for its derived album', () => {
+		const [legacy] = buildIndex(
+			[{ ...fixture, image: 'Foo_bar.jpg', imageCaption: 'Foo_bar.jpg caption' }],
+			'artwork'
+		);
+		const typography = validateEntry(legacy).filter((issue) =>
+			issue.message.startsWith('Typography')
+		);
+		expect(typography.map((issue) => issue.message)).toEqual([
+			'Typography — imageCaption: the caption looks like a filename'
+		]);
 	});
 	it('accepts every published People profile', () => {
 		for (const person of people)

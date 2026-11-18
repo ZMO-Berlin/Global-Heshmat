@@ -76,6 +76,21 @@ export function validatePerson(person: Person, today = isoToday()): DataIssue[] 
 	for (const problem of typographyIssues(person)) issue(`Typography — ${problem}`, 'warning');
 	return issues;
 }
+/**
+ * The entry as the editor wrote it: buildIndex derives a legacy record's album
+ * from `image` + `imageCaption`, which the entry keeps too, so that caption is
+ * checked once, under the field the editor typed.
+ */
+function typographyFields(item: Entry): Entry {
+	const [first, ...rest] = item.images;
+	const derived =
+		'image' in item &&
+		!rest.length &&
+		first?.src === item.image &&
+		first.caption === item.imageCaption &&
+		Object.keys(first).every((key) => key === 'src' || key === 'caption');
+	return derived ? { ...item, images: [] } : item;
+}
 export function validateEntry(item: Entry, today = isoToday()): DataIssue[] {
 	const issues: DataIssue[] = [];
 	const issue = (message: string, severity: DataIssue['severity'] = 'error') =>
@@ -138,7 +153,8 @@ export function validateEntry(item: Entry, today = isoToday()): DataIssue[] {
 		for (const link of item.links ?? []) checkUrl(link.url, 'external URL', issue);
 	if ('video' in item && item.video && !safeUrl(item.video)) issue('Unsafe video URL');
 	// Straight quotes and backtick apostrophes are converted at load; these need an editor.
-	for (const problem of typographyIssues(item)) issue(`Typography — ${problem}`, 'warning');
+	for (const problem of typographyIssues(typographyFields(item)))
+		issue(`Typography — ${problem}`, 'warning');
 	const eventIds = new Set();
 	for (const event of item.events ?? []) {
 		if (!event.id.trim() || eventIds.has(event.id))

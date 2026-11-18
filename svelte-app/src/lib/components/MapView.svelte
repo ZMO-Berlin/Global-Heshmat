@@ -11,7 +11,8 @@
 	import {
 		buildEntryGeoJSON,
 		buildGhostGeoJSON,
-		buildRelocationGeoJSON
+		buildRelocationGeoJSON,
+		coreExtent
 	} from '#lib/utils/geojson.js';
 	import { locationZoom } from '#lib/utils/evidence.js';
 	import { filterArtworks, filterResidences } from '#lib/utils/collection-filter.js';
@@ -50,14 +51,36 @@
 	}
 
 	/**
-	 * Room the camera leaves around the entries. On a phone the whole collection
-	 * is wider than the screen even at the lowest zoom the map's height allows, so
-	 * the sides keep a narrow margin (equal ones, which keep the camera centred)
-	 * and the bottom clears the folded legend and the attribution above it.
+	 * Room the camera leaves around the entries. On a phone the sides keep enough
+	 * for a cluster's radius (equal ones, which keep the camera centred when a
+	 * spread is wider than the map can show) and the bottom clears the folded
+	 * legend and the attribution above it.
 	 */
 	function framePadding(): number | Maplibre.PaddingOptions {
 		if (mapContainer.clientWidth > PHONE_WIDTH) return 60;
-		return { top: 32, right: 24, bottom: 96, left: 24 };
+		return { top: 40, right: 44, bottom: 96, left: 44 };
+	}
+
+	/**
+	 * Fit the camera to the entries. On a phone the whole collection, from the
+	 * United States to Beijing, is wider than the map even at the lowest zoom its
+	 * height allows, which left the markers in the top of an otherwise empty
+	 * ocean. Unfiltered, a phone frames the largest group instead (Europe and
+	 * Egypt) and the few far-off entries stay a pan away and in Browse; a
+	 * filtered view always fits all its results.
+	 */
+	function fitEntries(entries: readonly Entry[], unfiltered: boolean) {
+		if (!map) return;
+		const phone = mapContainer.clientWidth <= PHONE_WIDTH;
+		const core = phone && unfiltered ? coreExtent(entries) : undefined;
+		const bounds = new maplibregl.LngLatBounds();
+		if (core) bounds.extend(core);
+		else for (const item of entries) bounds.extend([item.lng, item.lat]);
+		map.fitBounds(bounds, {
+			padding: framePadding(),
+			maxZoom: 10,
+			duration: reducedMotion() ? 0 : 500
+		});
 	}
 
 	/** The only writer of the map's sources (installMapContent creates them empty). */
@@ -77,13 +100,7 @@
 		if (untrack(() => store.selectedArtwork || store.selectedResidence)) return;
 
 		if (visible.length === 0) return;
-		const bounds = new maplibregl.LngLatBounds();
-		for (const item of visible) bounds.extend([item.lng, item.lat]);
-		map.fitBounds(bounds, {
-			padding: framePadding(),
-			maxZoom: 10,
-			duration: reducedMotion() ? 0 : 500
-		});
+		fitEntries(visible, visible.length === artworks.length + residences.length);
 	}
 
 	function moveTo(center: [number, number], zoom: number) {
@@ -145,8 +162,11 @@
 		handle?.remove();
 	});
 
+	/** On a phone this lands on the same framing as the unfiltered first view. */
 	export function resetView() {
-		moveTo([20, 35], 3);
+		if (map && mapContainer.clientWidth <= PHONE_WIDTH)
+			fitEntries([...artworks, ...residences], true);
+		else moveTo([20, 35], 3);
 	}
 </script>
 

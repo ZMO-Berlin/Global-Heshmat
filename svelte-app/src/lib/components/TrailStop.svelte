@@ -10,9 +10,9 @@
 
 <li class="stop">
 	<span class="figure">
-		<TrailThumb {item} sizes="(max-width: 599px) 96px, (max-width: 999px) 300px, 240px" />
 		<!-- The list already announces each position; the numeral is for sighted readers. -->
 		<span class="step" aria-hidden="true">{step}</span>
+		<TrailThumb {item} sizes="(max-width: 599px) 96px, (max-width: 999px) 300px, 240px" />
 	</span>
 	<span class="text">
 		<a href={browse.entryHref(item, { view: 'gallery' })} dir="auto">{entryTitle(item)}</a>
@@ -25,7 +25,7 @@
 	.stop {
 		position: relative;
 		display: grid;
-		grid-template-columns: 96px 1fr;
+		grid-template-columns: auto 96px 1fr;
 		gap: var(--space-3);
 		align-items: start;
 		padding: var(--space-2);
@@ -44,24 +44,38 @@
 		outline: var(--focus-ring-width) solid var(--focus-ring-color);
 		outline-offset: var(--focus-ring-offset);
 	}
+	/* On a phone the numeral takes a column of its own, so it never covers the
+	   small thumbnail; from 600px it sits on the corner of the larger photo. */
 	.figure {
-		position: relative;
-		display: block;
+		display: contents;
 	}
 	.step {
-		position: absolute;
-		top: var(--space-1);
-		left: var(--space-1);
-		min-width: 24px;
-		height: 24px;
-		padding-inline: var(--space-1-5);
-		border-radius: var(--radius-pill);
-		background: var(--color-surface);
-		color: var(--color-ink);
-		box-shadow: var(--shadow-sm);
-		font: var(--weight-semibold) var(--text-xs) / 24px var(--font-body);
-		font-variant-numeric: tabular-nums;
+		min-width: 1.5rem;
+		color: var(--color-accent-text);
+		font: var(--weight-semibold) var(--text-xl) / var(--leading-tight) var(--font-display);
+		font-variant-numeric: lining-nums tabular-nums;
 		text-align: center;
+		padding-top: var(--space-1);
+	}
+	@media (min-width: 600px) {
+		.figure {
+			position: relative;
+			display: block;
+		}
+		.step {
+			position: absolute;
+			top: var(--space-1);
+			left: var(--space-1);
+			min-width: 24px;
+			height: 24px;
+			padding-inline: var(--space-1-5);
+			border-radius: var(--radius-pill);
+			background: var(--color-surface);
+			color: var(--color-ink);
+			box-shadow: var(--shadow-sm);
+			font: var(--weight-semibold) var(--text-xs) / 24px var(--font-body);
+			padding-top: 0;
+		}
 	}
 	.text {
 		display: flex;

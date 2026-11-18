@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ChevronDown } from '@lucide/svelte';
 	import { countLabel } from '#lib/utils/text.js';
 	import Seo from '#lib/components/Seo.svelte';
 	import PeopleList from '#lib/components/PeopleList.svelte';
@@ -36,7 +37,7 @@
 				<summary
 					><span class="closed">Read the full introduction</span><span class="opened"
 						>Show less</span
-					></summary
+					><ChevronDown class="chevron" size={16} aria-hidden="true" /></summary
 				>
 				<p>{@render rest()}</p>
 			</details>
@@ -92,21 +93,45 @@
 	.intro-more {
 		display: none;
 	}
+	/* The look of the Save or export disclosure in CollectionTools.svelte. */
 	summary {
 		display: inline-flex;
 		align-items: center;
+		gap: var(--space-2);
 		min-height: 44px;
+		padding: var(--space-2) var(--space-3);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		background: var(--color-surface);
 		color: var(--color-primary-text);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		list-style: none;
 		cursor: pointer;
-		text-decoration: underline;
-		text-underline-offset: 3px;
+		transition:
+			border-color var(--duration-fast) var(--ease-out),
+			background-color var(--duration-fast) var(--ease-out);
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	summary:hover,
+	.intro-more[open] summary {
+		border-color: var(--color-primary-text);
+		background: var(--color-primary-light);
+	}
+	summary :global(.chevron) {
+		transition: transform var(--duration-fast) var(--ease-out);
+	}
+	.intro-more[open] summary :global(.chevron) {
+		transform: rotate(180deg);
 	}
 	.intro-more[open] .closed,
 	.intro-more:not([open]) .opened {
 		display: none;
 	}
 	.intro-more p {
-		margin-top: 0;
+		margin-top: var(--space-3);
 	}
 	.people-toolbar {
 		display: flex;

@@ -154,4 +154,13 @@
 			);
 		}
 	}
+	/* Narrower than 320px (a folded phone's cover screen) the attribution wraps
+	   onto a second 20px line. */
+	@media (max-width: 319px) {
+		.legend:not(.collapsed) {
+			bottom: calc(
+				var(--footer-height) + var(--space-3-5) + 47px + var(--space-2) + 54px + var(--space-2)
+			);
+		}
+	}
 </style>
