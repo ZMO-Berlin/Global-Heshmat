@@ -10,6 +10,7 @@ import {
 } from '#lib/utils/collection.js';
 import type { Person, SourceReference } from '#lib/data/types.js';
 import { typographyIssues } from '#lib/utils/typography.js';
+import { isoToday } from '#lib/utils/date.js';
 export interface DataIssue {
 	record: string;
 	severity: 'error' | 'warning';
@@ -59,10 +60,7 @@ function checkSource(source: SourceReference, issue: Report, today: string) {
 	)
 		issue(`Source last checked more than two years ago: ${source.label}`, 'warning');
 }
-export function validatePerson(
-	person: Person,
-	today = new Date().toISOString().slice(0, 10)
-): DataIssue[] {
+export function validatePerson(person: Person, today = isoToday()): DataIssue[] {
 	const issues: DataIssue[] = [];
 	const issue: Report = (message, severity = 'error') =>
 		issues.push({ record: `person:${person.slug}`, severity, message });
@@ -78,10 +76,22 @@ export function validatePerson(
 	for (const problem of typographyIssues(person)) issue(`Typography — ${problem}`, 'warning');
 	return issues;
 }
-export function validateEntry(
-	item: Entry,
-	today = new Date().toISOString().slice(0, 10)
-): DataIssue[] {
+/**
+ * The entry as the editor wrote it: buildIndex derives a legacy record's album
+ * from `image` + `imageCaption`, which the entry keeps too, so that caption is
+ * checked once, under the field the editor typed.
+ */
+function typographyFields(item: Entry): Entry {
+	const [first, ...rest] = item.images;
+	const derived =
+		'image' in item &&
+		!rest.length &&
+		first?.src === item.image &&
+		first.caption === item.imageCaption &&
+		Object.keys(first).every((key) => key === 'src' || key === 'caption');
+	return derived ? { ...item, images: [] } : item;
+}
+export function validateEntry(item: Entry, today = isoToday()): DataIssue[] {
 	const issues: DataIssue[] = [];
 	const issue = (message: string, severity: DataIssue['severity'] = 'error') =>
 		issues.push({ record: entryKey(item), severity, message });
@@ -143,7 +153,8 @@ export function validateEntry(
 		for (const link of item.links ?? []) checkUrl(link.url, 'external URL', issue);
 	if ('video' in item && item.video && !safeUrl(item.video)) issue('Unsafe video URL');
 	// Straight quotes and backtick apostrophes are converted at load; these need an editor.
-	for (const problem of typographyIssues(item)) issue(`Typography — ${problem}`, 'warning');
+	for (const problem of typographyIssues(typographyFields(item)))
+		issue(`Typography — ${problem}`, 'warning');
 	const eventIds = new Set();
 	for (const event of item.events ?? []) {
 		if (!event.id.trim() || eventIds.has(event.id))

@@ -87,6 +87,12 @@ export interface Artwork extends DocumentaryMetadata {
 	/** Optional credit / caption shown beneath the local video. */
 	videoCaption?: string;
 	movement?: ArtworkMovement;
+	/**
+	 * Editorial placement in the "Works still to be found" dossier (/missing).
+	 * `'middle'` moves the entry from its id order to the middle of whatever
+	 * list the current filters produce. Only meaningful for `status: 'search'`.
+	 */
+	dossierPosition?: 'middle';
 }
 
 /**

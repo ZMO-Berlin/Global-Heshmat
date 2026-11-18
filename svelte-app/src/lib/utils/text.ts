@@ -13,3 +13,8 @@ export function plainText(html: string): string {
 		.replace(/\s+/g, ' ')
 		.trim();
 }
+
+/** A download size in mebibytes to one decimal, e.g. "3.2 MB". */
+export function megabytes(bytes: number): string {
+	return `${(bytes / 1048576).toFixed(1)} MB`;
+}

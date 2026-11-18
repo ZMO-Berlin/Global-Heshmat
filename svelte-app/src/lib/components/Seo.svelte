@@ -28,6 +28,8 @@
 		description?: string;
 		/** Site-relative path used for the canonical URL, e.g. "/collection/". */
 		path?: string;
+		/** JSON-LD for the page's subject (a person, the memoir), replacing the WebSite payload. */
+		structuredData?: Record<string, unknown> | null;
 	}
 
 	const {
@@ -35,7 +37,8 @@
 		residence = null,
 		title: titleOverride,
 		description: descriptionOverride,
-		path
+		path,
+		structuredData = null
 	}: Props = $props();
 
 	const OG_IMAGE = $derived(
@@ -84,7 +87,7 @@
 	const jsonLd = $derived(
 		(artwork ?? residence)
 			? entryStructuredData((artwork ?? residence)!)
-			: {
+			: (structuredData ?? {
 					'@context': 'https://schema.org',
 					'@type': 'WebSite',
 					name: SITE_NAME,
@@ -105,7 +108,7 @@
 						name: PUBLISHER.name,
 						url: PUBLISHER.url
 					}
-				}
+				})
 	);
 
 	const ogType = $derived(artwork || residence ? 'article' : 'website');

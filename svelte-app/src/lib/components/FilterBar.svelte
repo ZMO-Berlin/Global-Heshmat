@@ -1,21 +1,39 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- The browse store and resolve() below build internal routes. */
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { FunnelX, PanelLeftOpen, SlidersHorizontal } from '@lucide/svelte';
 	import { peopleGroups } from '#lib/data/people/_groups.js';
-	import type { CollectionFilters } from '#lib/utils/map-filter.js';
+	import type { CollectionFilters } from '#lib/utils/collection-filter.js';
 	import { countries } from '#lib/data/countries.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { popoverDismissal } from '#lib/utils/dismiss.js';
 	import ArtworkSearch from './ArtworkSearch.svelte';
 	const store = getBrowseStore();
+	// Routes whose content the facets narrow. Elsewhere a facet would only
+	// rewrite the URL and then leak into the entry links the store builds.
+	const FACET_ROUTES = new Set([
+		'/',
+		'/collection',
+		'/missing',
+		'/artworks/[slug]',
+		'/residences/[slug]',
+		'/people',
+		'/people/[slug]'
+	]);
+	const facets = $derived(!page.error && FACET_ROUTES.has(page.route.id ?? ''));
 	// Phones fold the facets behind a Filters button; on wider screens the
 	// panel is always inline and this state is ignored.
 	let facetsOpen = $state(false);
 	let toggle = $state<HTMLButtonElement>();
 	let panel = $state<HTMLDivElement>();
+	const dismissal = popoverDismissal({
+		isOpen: () => facetsOpen,
+		close: () => (facetsOpen = false),
+		inside: () => [panel, toggle],
+		returnFocus: () => toggle
+	});
 	const active = $derived(
 		store.peopleView
 			? Number(!!store.filters.group) + Number(!!store.filters.place)
@@ -45,21 +63,13 @@
 	}
 </script>
 
-<!-- Capture phase: Escape folds the facets before the layout's own Escape handling sees it. -->
-<svelte:window
-	onkeydowncapture={(event) => {
-		if (event.key !== 'Escape' || !facetsOpen) return;
-		event.stopPropagation();
-		facetsOpen = false;
-		toggle?.focus();
-	}}
-	onclick={(event) => {
-		const target = event.target as Node;
-		if (facetsOpen && !panel?.contains(target) && !toggle?.contains(target)) facetsOpen = false;
-	}}
-/>
+<svelte:window onkeydowncapture={dismissal.onkeydown} onclick={dismissal.onclick} />
 
-<div class="filters" role="search" aria-label="Filter the collection">
+<div
+	class="filters"
+	role="search"
+	aria-label={facets ? 'Filter the collection' : 'Search the collection'}
+>
 	<ArtworkSearch />
 	{#if store.view === 'map'}<button
 			disabled={!store.ready}
@@ -69,89 +79,94 @@
 			aria-expanded={store.browseOpen}
 			><PanelLeftOpen size={18} aria-hidden="true" /><span class="button-text">Browse</span></button
 		>{/if}
-	<button
-		bind:this={toggle}
-		class="facets-toggle"
-		class:open={facetsOpen}
-		disabled={!store.ready}
-		aria-expanded={facetsOpen}
-		aria-controls="facet-panel"
-		onclick={() => (facetsOpen = !facetsOpen)}
-		><SlidersHorizontal size={17} aria-hidden="true" />Filters{#if active}<span
-				class="active-count"
-				aria-hidden="true">{active}</span
-			><span class="sr-only">, {active} active</span>{/if}</button
-	>
-	<div class="facet-controls" class:open={facetsOpen} id="facet-panel" bind:this={panel}>
-		{#if store.peopleView}
-			<label
-				><span class="sr-only">Group</span><select
-					aria-label="Group"
-					disabled={!store.ready}
-					value={store.filters.group ?? ''}
-					onchange={(event) => peopleFacet({ group: event.currentTarget.value })}
-				>
-					<option value="">Group</option>
-					{#each peopleGroups as group (group.id)}<option value={group.id}>{group.name}</option
-						>{/each}
-				</select></label
-			>
-			<label
-				><span class="sr-only">Place mentioned</span><select
-					aria-label="Place mentioned"
-					disabled={!store.ready}
-					value={store.filters.place ?? ''}
-					onchange={(event) => peopleFacet({ place: event.currentTarget.value })}
-				>
-					<option value="">Place</option>
-					{#each page.data.peoplePlaces ?? [] as place (place)}<option value={place}>{place}</option
-						>{/each}
-				</select></label
-			>
-		{:else}
-			<label
-				><span class="sr-only">Country</span><select
-					aria-label="Country"
-					disabled={!store.ready}
-					value={store.filters.country}
-					onchange={(event) => store.setFilters({ country: event.currentTarget.value })}
-					><option value="">Country</option>{#each countries as country (country.name)}<option
-							value={country.name}>{country.name}</option
-						>{/each}</select
-				></label
-			>
-			<label
-				><span class="sr-only">Status</span><select
-					aria-label="Status"
-					disabled={!store.ready || page.route.id === '/missing'}
-					value={store.filters.status}
-					onchange={(event) =>
-						store.setFilters({ status: event.currentTarget.value as 'all' | 'located' | 'search' })}
-					><option value="all">Status</option><option value="located">Located</option><option
-						value="search">To be found</option
-					></select
-				></label
-			>
-		{/if}
-		<label
-			><span class="sr-only">Entry type</span><select
-				aria-label="Entry type"
-				disabled={!store.ready}
-				value={store.filters.type}
-				onchange={(event) => changeType(event.currentTarget.value as CollectionFilters['type'])}
-				><option value="all">Type</option><option value="artwork">Artworks / sites</option><option
-					value="residence">Residences</option
-				><option value="person">People</option></select
-			></label
-		>
+	{#if facets}
 		<button
+			bind:this={toggle}
+			class="facets-toggle"
+			class:open={facetsOpen}
 			disabled={!store.ready}
-			class="clear"
-			onclick={() => store.resetFilters()}
-			aria-label="Clear all filters"
-			><FunnelX size={18} aria-hidden="true" /><span class="button-text">Clear</span></button
+			aria-expanded={facetsOpen}
+			aria-controls="facet-panel"
+			onclick={() => (facetsOpen = !facetsOpen)}
+			><SlidersHorizontal size={17} aria-hidden="true" />Filters{#if active}<span
+					class="active-count"
+					aria-hidden="true">{active}</span
+				><span class="sr-only">, {active} active</span>{/if}</button
 		>
-	</div>
+		<div class="facet-controls" class:open={facetsOpen} id="facet-panel" bind:this={panel}>
+			{#if store.peopleView}
+				<label
+					><span class="sr-only">Group</span><select
+						aria-label="Group"
+						disabled={!store.ready}
+						value={store.filters.group ?? ''}
+						onchange={(event) => peopleFacet({ group: event.currentTarget.value })}
+					>
+						<option value="">Group</option>
+						{#each peopleGroups as group (group.id)}<option value={group.id}>{group.name}</option
+							>{/each}
+					</select></label
+				>
+				<label
+					><span class="sr-only">Place mentioned</span><select
+						aria-label="Place mentioned"
+						disabled={!store.ready}
+						value={store.filters.place ?? ''}
+						onchange={(event) => peopleFacet({ place: event.currentTarget.value })}
+					>
+						<option value="">Place</option>
+						{#each page.data.peoplePlaces ?? [] as place (place)}<option value={place}
+								>{place}</option
+							>{/each}
+					</select></label
+				>
+			{:else}
+				<label
+					><span class="sr-only">Country</span><select
+						aria-label="Country"
+						disabled={!store.ready}
+						value={store.filters.country}
+						onchange={(event) => store.setFilters({ country: event.currentTarget.value })}
+						><option value="">Country</option>{#each countries as country (country.name)}<option
+								value={country.name}>{country.name}</option
+							>{/each}</select
+					></label
+				>
+				<label
+					><span class="sr-only">Status</span><select
+						aria-label="Status"
+						disabled={!store.ready || page.route.id === '/missing'}
+						value={store.filters.status}
+						onchange={(event) =>
+							store.setFilters({
+								status: event.currentTarget.value as 'all' | 'located' | 'search'
+							})}
+						><option value="all">Status</option><option value="located">Located</option><option
+							value="search">To be found</option
+						></select
+					></label
+				>
+			{/if}
+			<label
+				><span class="sr-only">Entry type</span><select
+					aria-label="Entry type"
+					disabled={!store.ready}
+					value={store.filters.type}
+					onchange={(event) => changeType(event.currentTarget.value as CollectionFilters['type'])}
+					><option value="all">Type</option><option value="artwork">Artworks / sites</option><option
+						value="residence">Residences</option
+					><option value="person">People</option></select
+				></label
+			>
+			<button
+				disabled={!store.ready}
+				class="clear"
+				onclick={() => store.resetFilters()}
+				aria-label="Clear all filters"
+				><FunnelX size={18} aria-hidden="true" /><span class="button-text">Clear</span></button
+			>
+		</div>
+	{/if}
 </div>
 
 <style>

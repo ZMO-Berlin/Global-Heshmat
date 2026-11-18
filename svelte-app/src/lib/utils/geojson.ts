@@ -95,3 +95,25 @@ export function buildGhostGeoJSON(
 			}))
 	};
 }
+
+/**
+ * The [west, south, east, north] extent of the largest run of points whose
+ * longitudes, in order, lie no more than `maxGap` degrees apart, so that a few
+ * far-off points do not decide the frame. Undefined for no points.
+ */
+export function coreExtent(
+	points: readonly { lng: number; lat: number }[],
+	maxGap = 30
+): [number, number, number, number] | undefined {
+	const sorted = [...points].sort((a, b) => a.lng - b.lng);
+	let run: typeof sorted = [];
+	let best = run;
+	for (const point of sorted) {
+		if (run.length && point.lng - run[run.length - 1].lng > maxGap) run = [];
+		run.push(point);
+		if (run.length > best.length) best = run;
+	}
+	if (!best.length) return undefined;
+	const lats = best.map((point) => point.lat);
+	return [best[0].lng, Math.min(...lats), best[best.length - 1].lng, Math.max(...lats)];
+}

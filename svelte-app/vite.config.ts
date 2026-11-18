@@ -181,6 +181,24 @@ export default defineConfig({
 		// (no browser environment needed) and import via the `#lib/*` alias
 		// that the SvelteKit plugin sets up automatically.
 		environment: 'node',
-		include: ['src/**/*.{test,spec}.ts']
+		include: ['src/**/*.{test,spec}.ts'],
+		// `npm run test:coverage`. Components (*.svelte) are left out: they only
+		// run in the browser suites, so the node environment cannot measure them.
+		// No thresholds yet; the summary is informational.
+		coverage: {
+			provider: 'v8',
+			include: ['src/lib/**/*.{ts,js}'],
+			exclude: [
+				'src/**/*.{test,spec}.ts',
+				'src/lib/data/artworks/[0-9]*.ts',
+				'src/lib/data/residences/Residence*.ts',
+				'src/lib/data/people/!(index).ts',
+				'src/lib/data/*/_template.ts',
+				'src/**/*.d.ts'
+			],
+			// Fully covered files are left out of the terminal table to keep it short.
+			reporter: ['text-summary', ['text', { skipFull: true }], 'html'],
+			reportsDirectory: 'coverage'
+		}
 	}
 });

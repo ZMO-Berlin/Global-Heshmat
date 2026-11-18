@@ -17,6 +17,8 @@ The scan used is `Hassan_Heshmat_Autobiogriofie.pdf` (66 PDF pages, SHA-256 `f07
 | `build_review.py`     | Groups mentions into entities: `extraction/entities.json` and the review sheet `extraction/review.csv`   |
 | `geocode.py`          | Search queries by Claude and coordinates from OpenStreetMap Nominatim: `extraction/geocoding.json`       |
 | `build_site_data.py`  | The website's data: `src/lib/data/memoir.json` and `memoir-passages.json`, shown at `/memoir/`           |
+| `requirements.txt`    | Third-party packages the scripts import                                                                  |
+| `test_pipeline.py`    | Unit tests for the scripts' pure helpers (`python -m unittest`)                                          |
 
 ## How the text was made
 
@@ -26,7 +28,7 @@ The scan used is `Hassan_Heshmat_Autobiogriofie.pdf` (66 PDF pages, SHA-256 `f07
 
 ## Entity extraction
 
-Run in order with Python 3.11+ and the `anthropic` package (`extract_entities.py` needs `ANTHROPIC_API_KEY`):
+Run in order with Python 3.11+ and the packages in `requirements.txt` (`pip install -r requirements.txt`; `anthropic` for the Claude steps, `pymupdf` for `split_spreads.py` only). `extract_entities.py`, `consolidate.py` and `geocode.py` need `ANTHROPIC_API_KEY`:
 
 ```bash
 python segment.py
@@ -36,6 +38,8 @@ python build_review.py
 python geocode.py
 python build_site_data.py
 ```
+
+`test_pipeline.py` tests the pure helpers (segmentation, record-field parsing, mention checks, grouping, consolidation checks, Arabic form matching and passage building) with the standard library only: no package, network, API key or PDF, and nothing is written to `extraction/` or the site's data. It also re-segments `tajaribi-ocr.txt` into a temporary file and compares it with the committed `paragraphs.json`. Run it from this directory with `python -m unittest`.
 
 1. **Segmentation.** Lines holding only a number are the book's printed pages and become paragraph metadata. The front and back matter open at fixed blocks (`OPENERS` in `segment.py`): cover and dedication, Tharwat Okasha's preface, Ahmed Nawar's essay, the plates, the caption index, the press statistics, the back cover and the typed CV of January 1999 inserted in this copy, which continues after the museum ticket. In the author's own account (OCR pages 10–63), a short line ending in a colon opens a section and a paragraph cut by a page break is joined to the next page. Result: 53 sections, 451 paragraphs.
 2. **Extraction.** `claude-sonnet-5-5`, effort `medium`, structured JSON output. Each request carries the whole segmented book and the site's catalogue (artworks, residences, People) in a cached system prompt and asks for one section, so names stay consistent and references across sections resolve. Every mention gives its paragraph, its exact form in the text, Arabic and English names, a short description from the book, date, place, a catalogue link and an uncertainty flag. No refusal fallback is configured: a section another model would have answered is recorded as failed instead. Each mention is checked: the paragraph must belong to the section, the quoted form must occur in it, a link must name an existing record. Run of 23 October 2026: 53 sections, 989 mentions, 7 forms not found in the text, about US$2.30.

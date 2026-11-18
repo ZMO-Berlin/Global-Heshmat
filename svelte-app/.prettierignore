@@ -32,3 +32,6 @@ docs/autobiography/paragraphs.json
 docs/autobiography/extraction/
 src/lib/data/memoir.json
 src/lib/data/memoir-passages.json
+
+# Coverage report (npm run test:coverage)
+coverage

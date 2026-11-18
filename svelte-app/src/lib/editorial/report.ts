@@ -1,9 +1,7 @@
-import { artworks } from '#lib/data/artworks.js';
-import { residences } from '#lib/data/residences.js';
+import { entries } from '#lib/data/entries.js';
 import { people } from '#lib/data/people.js';
 import { validateEntry, validatePerson } from './validate';
 export function editorialReport() {
-	const entries = [...artworks, ...residences];
 	const issues = [
 		...entries.flatMap((item) => validateEntry(item)),
 		...people.flatMap((person) => validatePerson(person))

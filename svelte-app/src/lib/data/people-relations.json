@@ -1,0 +1,16 @@
+{
+	"artwork:11": [{ "slug": "eugen-auer", "name": "Eugen Auer" }],
+	"artwork:19": [{ "slug": "abe-jan-koldijk", "name": "Dr. Abe Jan Koldijk" }],
+	"artwork:3": [
+		{ "slug": "tharwat-okasha", "name": "Tharwat Okasha" },
+		{ "slug": "emad-abu-ghazi", "name": "Emad Abu Ghazi" }
+	],
+	"artwork:40": [{ "slug": "marie-bishara", "name": "Marie L. Bishara" }],
+	"artwork:41": [{ "slug": "sabry-ragheb", "name": "Sabry Ragheb" }],
+	"artwork:5": [{ "slug": "marie-bishara", "name": "Marie L. Bishara" }],
+	"artwork:6": [{ "slug": "louis-bishara", "name": "Louis Bishara" }],
+	"artwork:7": [{ "slug": "louis-bishara", "name": "Louis Bishara" }],
+	"artwork:8": [{ "slug": "farid-khamis", "name": "Farid Khamis" }],
+	"artwork:9": [{ "slug": "louis-bishara", "name": "Louis Bishara" }],
+	"residence:3": [{ "slug": "frieda-adolf-haude", "name": "Frieda and Adolf Haude" }]
+}

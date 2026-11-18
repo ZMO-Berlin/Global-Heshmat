@@ -143,4 +143,24 @@
 			font-size: var(--text-sm);
 		}
 	}
+	/* On a phone the map attribution has its own row above the folded legend
+	   (see MapView.svelte): the 47px legend, a --space-2 gap, then the 24px
+	   attribution with its 10px control margin. The open legend rises above
+	   that row instead of covering it. */
+	@media (max-width: 600px) {
+		.legend:not(.collapsed) {
+			bottom: calc(
+				var(--footer-height) + var(--space-3-5) + 47px + var(--space-2) + 34px + var(--space-2)
+			);
+		}
+	}
+	/* Narrower than 320px (a folded phone's cover screen) the attribution wraps
+	   onto a second 20px line. */
+	@media (max-width: 319px) {
+		.legend:not(.collapsed) {
+			bottom: calc(
+				var(--footer-height) + var(--space-3-5) + 47px + var(--space-2) + 54px + var(--space-2)
+			);
+		}
+	}
 </style>

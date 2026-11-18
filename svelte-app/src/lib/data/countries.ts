@@ -1,6 +1,5 @@
-import { countryFacets } from '#lib/utils/map-filter.js';
-import { artworks } from './artworks';
-import { residences } from './residences';
+import { countryFacets } from '#lib/utils/collection-filter.js';
+import { entries } from './entries';
 
 /**
  * Country filter chips: alphabetical, each with the number of entries that
@@ -10,4 +9,4 @@ import { residences } from './residences';
  * shows both. Lives here rather than in `artworks.ts` for exactly that reason —
  * the facet spans the two collections, so it belongs to neither.
  */
-export const countries = countryFacets([...artworks, ...residences]);
+export const countries = countryFacets(entries);

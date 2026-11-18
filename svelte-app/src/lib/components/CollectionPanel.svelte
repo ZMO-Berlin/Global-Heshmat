@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { countLabel } from '#lib/utils/text.js';
 	import { MapPin, Search as SearchIcon, X } from '@lucide/svelte';
 	import { page } from '$app/state';
@@ -8,7 +7,7 @@
 	import { residences } from '#lib/data/residences.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import { entryPath, entryStatus } from '#lib/utils/collection.js';
-	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/collection-filter.js';
 	import MarkerGlyph from './MarkerGlyph.svelte';
 
 	/**
@@ -22,9 +21,9 @@
 	 *
 	 * It also contributes internal linking. The panel's markup is always
 	 * rendered (hidden with a transform, not `{#if}`), so every prerendered page
-	 * ships real <a href> links to all 39 artworks and 4 residences. Before this,
-	 * the home page's entire link graph was four ZMO credits in the footer, and
-	 * crawlers could only reach artwork pages through sitemap.xml.
+	 * ships real <a href> links to every artwork and place of residence, so
+	 * crawlers reach the record pages from the home page and not only through
+	 * sitemap.xml.
 	 *
 	 * Entries follow the active filter, so the list and the map always agree.
 	 */
@@ -73,7 +72,7 @@
 
 	/**
 	 * Dismiss because the visitor followed an entry. Focus belongs to the
-	 * destination — the sidebar moves it to the item's heading — so drop the
+	 * destination — the entry detail panel moves it to the item's heading — so drop the
 	 * opener rather than yanking focus back up to the header button.
 	 */
 	function closeForNavigation() {
@@ -81,7 +80,7 @@
 		store.browseOpen = false;
 	}
 
-	/** The entry for the item currently open in the sidebar, if any. */
+	/** The entry for the item currently open in the entry detail panel, if any. */
 	const currentPath = $derived(page.url.pathname);
 </script>
 
@@ -180,7 +179,7 @@
 		left: 0;
 		width: 380px;
 		max-width: 100%;
-		z-index: var(--z-sidebar);
+		z-index: var(--z-detail);
 		background: var(--color-surface);
 		box-shadow: 6px 0 32px rgb(var(--color-header-bg-rgb) / 0.1);
 		display: flex;

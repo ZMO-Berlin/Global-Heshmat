@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight, X } from '@lucide/svelte';
 	import type { ArtworkImage } from '#lib/data/types.js';
-	import { thumbUrl } from '#lib/utils/image.js';
 	import MediaCaption from './MediaCaption.svelte';
 	import MediaImage from './MediaImage.svelte';
-	import { imageAlt } from '#lib/utils/collection.js';
-	import { hideParentOnError } from '#lib/utils/hide-on-error.js';
+	import { imageAlt, mediaId } from '#lib/utils/collection.js';
 	import { trapFocus } from '#lib/utils/focus-trap.js';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -44,12 +42,47 @@
 		else if (e.key === 'ArrowLeft') prev();
 	}
 
+	// Swipe: one touch or pen contact moving mostly sideways. A second contact
+	// (a pinch) cancels it, and the thumbnail strip keeps its own horizontal
+	// scrolling. Mouse users have the arrow buttons and keys.
+	const SWIPE_MIN_PX = 50;
+	let contacts = 0;
+	let swipe: { id: number; x: number; y: number } | null = null;
+	let swiped = false;
+
+	function handlePointerDown(e: PointerEvent) {
+		swiped = false;
+		if (e.pointerType === 'mouse') return;
+		contacts++;
+		swipe =
+			multi && contacts === 1 && !(e.target as Element).closest('.lightbox-thumbs')
+				? { id: e.pointerId, x: e.clientX, y: e.clientY }
+				: null;
+	}
+	function handlePointerUp(e: PointerEvent) {
+		if (e.pointerType !== 'mouse') contacts = Math.max(0, contacts - 1);
+		if (swipe?.id !== e.pointerId) return;
+		const dx = e.clientX - swipe.x;
+		const dy = e.clientY - swipe.y;
+		swipe = null;
+		if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dx) < 2 * Math.abs(dy)) return;
+		swiped = true;
+		if (dx < 0) next();
+		else prev();
+	}
+	function handlePointerCancel(e: PointerEvent) {
+		if (e.pointerType !== 'mouse') contacts = Math.max(0, contacts - 1);
+		if (swipe?.id === e.pointerId) swipe = null;
+	}
+
 	function handleOverlayClick(e: MouseEvent) {
-		if (e.target === overlayEl) onclose();
+		// A swipe that starts and ends on the backdrop must not also close it.
+		if (swiped) swiped = false;
+		else if (e.target === overlayEl) onclose();
 	}
 
 	onMount(() => {
-		// Teleport to document.body so that the sidebar's CSS transform
+		// Teleport to document.body so that the entry panel's CSS transform
 		// does not create a containing block that breaks position:fixed.
 		document.body.appendChild(overlayEl);
 		document.addEventListener('keydown', handleKeydown);
@@ -75,6 +108,9 @@
 	class:has-thumbs={multi}
 	bind:this={overlayEl}
 	onclick={handleOverlayClick}
+	onpointerdown={handlePointerDown}
+	onpointerup={handlePointerUp}
+	onpointercancel={handlePointerCancel}
 	role="dialog"
 	aria-modal="true"
 	aria-label="Image viewer: {name}"
@@ -115,7 +151,7 @@
 		</button>
 
 		<div class="lightbox-thumbs">
-			{#each images as img, i (img.src)}
+			{#each images as img, i (mediaId(img))}
 				<button
 					type="button"
 					class="lightbox-thumb"
@@ -127,13 +163,7 @@
 						onchange?.(i);
 					}}
 				>
-					<img
-						src={thumbUrl(img.src)}
-						alt=""
-						loading="lazy"
-						decoding="async"
-						use:hideParentOnError
-					/>
+					<MediaImage src={img.src} alt="" sizes="60px" fit="cover" low />
 				</button>
 			{/each}
 		</div>
@@ -162,6 +192,8 @@
 		overflow-y: auto;
 		padding: var(--space-5) 0 var(--space-3);
 		animation: fadeIn var(--duration-slow) var(--ease-out);
+		/* Horizontal drags reach the swipe handlers instead of panning the page. */
+		touch-action: pan-y pinch-zoom;
 	}
 
 	.lightbox-close {
@@ -343,11 +375,13 @@
 		transform: translateY(-2px);
 	}
 
-	.lightbox-thumb img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
+	/* A thumbnail that fails to load keeps MediaImage's icon, without the label
+	   that would not fit in the strip. */
+	.lightbox-thumb :global(.media-error) {
+		padding: 0;
+	}
+	.lightbox-thumb :global(.media-error span) {
+		display: none;
 	}
 
 	@media (max-width: 768px) {

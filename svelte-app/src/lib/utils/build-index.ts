@@ -1,6 +1,6 @@
 import { slugify } from './slug';
 import { typeset } from './typography';
-import type { PeopleContext, Person, PersonRecord } from '#lib/data/types.js';
+import type { ArtworkImage, PeopleContext, Person, PersonRecord } from '#lib/data/types.js';
 
 const SAFE_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -13,14 +13,28 @@ export interface Indexable {
 	id: number;
 	name: string;
 	slug?: string;
+	image?: string;
+	imageCaption?: string;
+	images?: ArtworkImage[];
 }
 
 /**
- * An indexed entry: same fields, with the slug resolved and guaranteed, and
- * an explicit `kind` — consumers switch on it instead of guessing the entity
- * type from which optional fields happen to be present.
+ * An indexed entry: same fields, with the slug resolved and guaranteed, an
+ * explicit `kind` — consumers switch on it instead of guessing the entity
+ * type from which optional fields happen to be present — and an `images`
+ * album that also holds a legacy single `image`.
  */
-export type Indexed<T extends Indexable, K extends string> = T & { slug: string; kind: K };
+export type Indexed<T extends Indexable, K extends string> = T & {
+	slug: string;
+	kind: K;
+	images: ArtworkImage[];
+};
+
+/** The album of a raw record: its `images`, else the legacy `image` + `imageCaption` pair. */
+function album(item: Indexable): ArtworkImage[] {
+	if (item.images?.length) return item.images;
+	return item.image ? [{ src: item.image, caption: item.imageCaption }] : [];
+}
 
 /**
  * Take a raw collection (typically loaded by Vite's import.meta.glob) and
@@ -30,6 +44,9 @@ export type Indexed<T extends Indexable, K extends string> = T & { slug: string;
  * Throws on duplicate slugs, duplicate ids, or a slug that resolves to the
  * empty string (e.g. a name with no ASCII alphanumerics), so URL and identity
  * collisions are caught at build time rather than in production.
+ *
+ * Every entry gets an `images` array (possibly empty), so readers never
+ * branch on the legacy single-image fields.
  *
  * `kind` is stamped on every entry and names the collection in those error
  * messages ("artwork", "residence"). Artworks and residences share this
@@ -42,7 +59,11 @@ export function buildIndex<T extends Indexable, K extends string>(
 ): Indexed<T, K>[] {
 	const indexed = raw
 		// Prose gets typographic quotes; the slug still comes from the name as typed.
-		.map((item) => ({ ...typeset(item), slug: item.slug ?? slugify(item.name), kind }))
+		.map((item) => {
+			const typeset_ = typeset(item);
+			// `image` and `imageCaption` stay on the entry: the JSON export keeps them.
+			return { ...typeset_, slug: item.slug ?? slugify(item.name), kind, images: album(typeset_) };
+		})
 		.sort((a, b) => a.id - b.id);
 
 	const seenSlugs = new Map<string, number>();

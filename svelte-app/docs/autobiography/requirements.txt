@@ -1,0 +1,11 @@
+# Third-party packages imported by the scripts in this directory; everything
+# else is the Python standard library (3.11+). No lower bounds are pinned:
+# the versions used for the October 2026 run were not recorded.
+#
+# anthropic: extract_entities.py, consolidate.py, geocode.py. They call
+# messages.stream with `output_config` (effort and JSON-schema output), so an
+# SDK release recent enough to accept that parameter is needed.
+anthropic
+# pymupdf: split_spreads.py only. Imported as `pymupdf`, the module name
+# PyMuPDF uses since its 1.24 series (older releases only provide `fitz`).
+pymupdf

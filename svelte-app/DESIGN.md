@@ -120,7 +120,7 @@ Typography establishes clear editorial hierarchy through two complementary typef
 
 - **Fixed Chrome Receding**: Header (68px), Filter Bar (60px, one row at every width) and Footer (48px, desktop) or Tab Bar (60px, below 1024px) frame the central canvas with light ambient borders, avoiding heavy visual weight. Phones held sideways (height 500px or less) slim them to 52, 52 and 48px. All fixed layers position themselves from the `--header-height`, `--filter-height` and `--footer-height` tokens.
 - **Map Viewport**: Full-bleed spatial presentation where markers and vector tiles command attention.
-- **Drawer Panels**: The Sidebar (460px desktop, full-width mobile) slides smoothly over the map without jarring layout shifts.
+- **Drawer Panels**: The entry detail panel (460px desktop, full-width mobile) slides smoothly over the map without jarring layout shifts.
 - **Grid Layout**: Responsive multi-column grid for `/collection` adapting from 1 column on phones to 4 columns on large displays.
 
 ## Elevation & Depth
@@ -128,7 +128,7 @@ Typography establishes clear editorial hierarchy through two complementary typef
 - Ambient rather than dramatic shadows. Depth is communicated primarily through crisp 1px borders (`#e8e3da`) and subtle warm tints.
 - `--shadow-sm`: Subtle button and chip resting state.
 - `--shadow-md`: Floating controls (Legend, ViewSwitcher) and card hover.
-- `--shadow-sidebar`: Directional soft drop-shadow separating details from the map.
+- `--shadow-detail`: Directional soft drop-shadow separating details from the map.
 - Lightbox and Modals use deep ink scrims (`rgba(22, 25, 46, 0.55)` and `0.94`) with backdrop blur (`4px` to `8px`).
 
 ## Shapes
@@ -147,7 +147,7 @@ Typography establishes clear editorial hierarchy through two complementary typef
 - **Thumbnail strips** (album contact sheets, card previews) load at low fetch priority, so on phones they never compete with the main photo, the page’s largest paint.
 - **Collection Cards**: Fixed-height (280px) contain-fit figure on warm background matting, album thumbnails and a photo count, then the title and place.
 - **Legend**: Floating, collapsible translucent box at bottom-left of the map with dashed relocation indicator.
-- **Artwork Detail Sidebar**: Editorial article presentation with gold rule accent under title, gallery viewer, provenance badges, and expandable descriptions.
+- **Entry Detail Panel**: Editorial article presentation with gold rule accent under title, gallery viewer, provenance badges, and expandable descriptions.
 
 ## Do's and Don'ts
 

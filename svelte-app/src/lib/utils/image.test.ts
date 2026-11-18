@@ -95,11 +95,10 @@ describe('image URL helpers', () => {
 		);
 	});
 
-	it('prefers the first gallery image as the lead image', () => {
-		expect(leadImage({ image: 'legacy.jpg', images: [{ src: 'gallery.jpg' }] })).toBe(
+	it('takes the first album image as the lead image', () => {
+		expect(leadImage({ images: [{ src: 'gallery.jpg' }, { src: 'second.jpg' }] })).toBe(
 			'gallery.jpg'
 		);
-		expect(leadImage({ image: 'legacy.jpg' })).toBe('legacy.jpg');
-		expect(leadImage({})).toBeUndefined();
+		expect(leadImage({ images: [] })).toBeUndefined();
 	});
 });

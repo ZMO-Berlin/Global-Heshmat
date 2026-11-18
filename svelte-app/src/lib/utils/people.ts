@@ -4,7 +4,7 @@
 import { peopleGroups } from '#lib/data/people/_groups.js';
 import { peopleContexts as rawContexts } from '#lib/data/people/_contexts.js';
 import type { PeopleContext, Person } from '#lib/data/types.js';
-import type { CollectionFilters } from './map-filter';
+import type { CollectionFilters } from './collection-filter';
 import { normalizeSearchText } from './search';
 import { typeset } from './typography';
 import type { PeopleSort } from './url-facets';
