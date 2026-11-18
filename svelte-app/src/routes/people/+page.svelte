@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ChevronDown } from '@lucide/svelte';
 	import { countLabel } from '#lib/utils/text.js';
 	import Seo from '#lib/components/Seo.svelte';
 	import PeopleList from '#lib/components/PeopleList.svelte';
@@ -19,15 +20,28 @@
 <section class="research-page" aria-labelledby="people-heading">
 	<div class="research-inner people-inner">
 		<h2 id="people-heading">People</h2>
-		<p class="people-intro">
-			In the course of her research on Hassan Heshmat, Sonja Hegasy identified the following group
-			of individuals. Many are connected to one another and collectively represent important social
-			and institutional constituencies. The illustration has already revealed an interesting cluster
-			that had previously gone unnoticed, namely Heshmat’s contacts to the Armenian community in
-			Cairo. It also brings into clearer focus the role played by political sponsors, curators, and
-			private collectors as well as the connections to Germany, the Netherlands and Belgium. Hegasy
-			has met and interviewed several of the individuals listed below.
-		</p>
+		<!-- On phones the rest of the introduction folds away so the first profile shows sooner;
+		     wider screens show it as running text. -->
+		{#snippet rest()}The illustration has already revealed an interesting cluster that had
+			previously gone unnoticed, namely Heshmat’s contacts to the Armenian community in Cairo. It
+			also brings into clearer focus the role played by political sponsors, curators, and private
+			collectors as well as the connections to Germany, the Netherlands and Belgium. Hegasy has met
+			and interviewed several of the individuals listed below.{/snippet}
+		<div class="people-intro">
+			<p>
+				In the course of her research on Hassan Heshmat, Sonja Hegasy identified the following group
+				of individuals. Many are connected to one another and collectively represent important
+				social and institutional constituencies. <span class="intro-wide">{@render rest()}</span>
+			</p>
+			<details class="intro-more">
+				<summary
+					><span class="closed">Read the full introduction</span><span class="opened"
+						>Show less</span
+					><ChevronDown class="chevron" size={16} aria-hidden="true" /></summary
+				>
+				<p>{@render rest()}</p>
+			</details>
+		</div>
 		<div class="people-toolbar">
 			<p role="status">{countLabel(matches.length, 'profile')}</p>
 			<label
@@ -76,6 +90,49 @@
 		max-width: 75ch;
 		margin-bottom: var(--space-6);
 	}
+	.intro-more {
+		display: none;
+	}
+	/* The look of the Save or export disclosure in CollectionTools.svelte. */
+	summary {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		min-height: 44px;
+		padding: var(--space-2) var(--space-3);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-sm);
+		background: var(--color-surface);
+		color: var(--color-primary-text);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		list-style: none;
+		cursor: pointer;
+		transition:
+			border-color var(--duration-fast) var(--ease-out),
+			background-color var(--duration-fast) var(--ease-out);
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	summary:hover,
+	.intro-more[open] summary {
+		border-color: var(--color-primary-text);
+		background: var(--color-primary-light);
+	}
+	summary :global(.chevron) {
+		transition: transform var(--duration-fast) var(--ease-out);
+	}
+	.intro-more[open] summary :global(.chevron) {
+		transform: rotate(180deg);
+	}
+	.intro-more[open] .closed,
+	.intro-more:not([open]) .opened {
+		display: none;
+	}
+	.intro-more p {
+		margin-top: var(--space-3);
+	}
 	.people-toolbar {
 		display: flex;
 		flex-wrap: wrap;
@@ -103,6 +160,15 @@
 	@media (max-width: 600px) {
 		.people-inner {
 			padding: var(--space-4);
+		}
+		.people-intro {
+			margin-bottom: var(--space-4);
+		}
+		.intro-wide {
+			display: none;
+		}
+		.intro-more {
+			display: block;
 		}
 	}
 </style>

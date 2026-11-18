@@ -28,6 +28,23 @@ const residence = (overrides: Partial<Residence>): Residence => ({
 });
 
 describe('buildIndex', () => {
+	it('gives every entry an album, folding in a legacy single image', () => {
+		const [legacy, gallery, both, none] = buildIndex(
+			[
+				artwork({ id: 1, name: 'A', image: 'legacy.jpg', imageCaption: 'Board' }),
+				artwork({ id: 2, name: 'B', images: [{ src: 'gallery.jpg' }] }),
+				artwork({ id: 3, name: 'C', image: 'legacy.jpg', images: [{ src: 'gallery.jpg' }] }),
+				residence({ id: 4, name: 'D' })
+			],
+			'artwork'
+		);
+		expect(legacy.images).toEqual([{ src: 'legacy.jpg', caption: 'Board' }]);
+		expect(legacy).toMatchObject({ image: 'legacy.jpg', imageCaption: 'Board' });
+		expect(gallery.images).toEqual([{ src: 'gallery.jpg' }]);
+		expect(both.images).toEqual([{ src: 'gallery.jpg' }]);
+		expect(none.images).toEqual([]);
+	});
+
 	it('derives slug from name when no explicit slug is set', () => {
 		const result = buildIndex([artwork({ id: 1, name: 'Sphinx Avenue Relief' })], 'artwork');
 		expect(result[0].slug).toBe('sphinx-avenue-relief');

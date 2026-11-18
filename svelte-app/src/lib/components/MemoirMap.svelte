@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import 'maplibre-gl/dist/maplibre-gl.css';
-	// The same worker set-up as MapView (see the comments there).
-	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 	import type * as Maplibre from 'maplibre-gl';
+	import { createMap, type MapHandle, type MapStatus } from '#lib/map/create-map.js';
 	import { mentionLabel, type MemoirEntity } from '#lib/data/memoir.js';
 	import type { FeatureCollection } from '#lib/utils/geojson.js';
 	import { X } from '@lucide/svelte';
@@ -11,10 +9,9 @@
 	let { places }: { places: MemoirEntity[] } = $props();
 
 	let container: HTMLDivElement;
-	let map: Maplibre.Map | undefined;
+	let handle: MapHandle | undefined;
 	let destroyed = false;
-	let loadTimeout: ReturnType<typeof setTimeout> | undefined;
-	let status = $state<'loading' | 'ready' | 'failed'>('loading');
+	let status = $state<MapStatus>('loading');
 	// The popup's content is this component's own markup (with the site's close
 	// button), handed to MapLibre, which only positions it.
 	let popupContent = $state<HTMLDivElement>();
@@ -38,86 +35,60 @@
 		};
 	}
 
-	async function initialize() {
-		status = 'loading';
-		map?.remove();
-		map = undefined;
-		try {
-			const maplibregl = await import('maplibre-gl');
-			if (destroyed) return;
-			maplibregl.setWorkerUrl(workerUrl);
-			const instance = new maplibregl.Map({
-				container,
-				style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-				center: [20, 32],
-				zoom: 1.6,
-				attributionControl: false,
-				cooperativeGestures: true
-			});
-			map = instance;
-			instance.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-			instance.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
-			loadTimeout = setTimeout(() => {
-				if (!instance.isStyleLoaded()) status = 'failed';
-			}, 15_000);
-			instance.on('error', () => {
-				if (!instance.isStyleLoaded()) {
-					status = 'failed';
-					if (loadTimeout) clearTimeout(loadTimeout);
-				}
-			});
-			instance.on('load', () => {
-				if (loadTimeout) clearTimeout(loadTimeout);
-				status = 'ready';
-				instance.addSource('places', { type: 'geojson', data: geojson() });
-				instance.addLayer({
-					id: 'places',
-					type: 'circle',
-					source: 'places',
-					paint: {
-						// Area, not radius, follows the number of mentions.
-						'circle-radius': [
-							'interpolate',
-							['linear'],
-							['sqrt', ['get', 'mentions']],
-							1,
-							5,
-							5,
-							18
-						],
-						'circle-color': css('--color-header-bg'),
-						'circle-opacity': 0.72,
-						'circle-stroke-color': css('--color-accent'),
-						'circle-stroke-width': 1.5
-					}
-				});
-				const bounds = new maplibregl.LngLatBounds();
-				for (const place of places) bounds.extend([place.lng!, place.lat!]);
-				instance.fitBounds(bounds, { padding: 40, duration: 0 });
+	function install(instance: Maplibre.Map, maplibregl: typeof Maplibre) {
+		instance.addSource('places', { type: 'geojson', data: geojson() });
+		instance.addLayer({
+			id: 'places',
+			type: 'circle',
+			source: 'places',
+			paint: {
+				// Area, not radius, follows the number of mentions.
+				'circle-radius': ['interpolate', ['linear'], ['sqrt', ['get', 'mentions']], 1, 5, 5, 18],
+				'circle-color': css('--color-header-bg'),
+				'circle-opacity': 0.72,
+				'circle-stroke-color': css('--color-accent'),
+				'circle-stroke-width': 1.5
+			}
+		});
+		const bounds = new maplibregl.LngLatBounds();
+		for (const place of places) bounds.extend([place.lng!, place.lat!]);
+		instance.fitBounds(bounds, { padding: 40, duration: 0 });
 
-				const byId = new Map(places.map((place) => [place.id, place]));
-				popup = new maplibregl.Popup({ closeButton: false, maxWidth: '280px' });
-				popup.on('close', () => (selected = undefined));
-				instance.on('click', 'places', (event) => {
-					const feature = event.features?.[0];
-					const place = feature && byId.get(String(feature.properties.id));
-					if (!place) return;
-					selected = place;
-					popup!.setLngLat([place.lng!, place.lat!]).setDOMContent(popupContent!).addTo(instance);
-				});
-				instance.on('mouseenter', 'places', () => (instance.getCanvas().style.cursor = 'pointer'));
-				instance.on('mouseleave', 'places', () => (instance.getCanvas().style.cursor = ''));
-			});
-		} catch {
-			if (!destroyed) status = 'failed';
-		}
+		const byId = new Map(places.map((place) => [place.id, place]));
+		popup = new maplibregl.Popup({ closeButton: false, maxWidth: '280px' });
+		popup.on('close', () => (selected = undefined));
+		instance.on('click', 'places', (event) => {
+			const feature = event.features?.[0];
+			const place = feature && byId.get(String(feature.properties.id));
+			if (!place) return;
+			selected = place;
+			popup!.setLngLat([place.lng!, place.lat!]).setDOMContent(popupContent!).addTo(instance);
+		});
+		instance.on('mouseenter', 'places', () => (instance.getCanvas().style.cursor = 'pointer'));
+		instance.on('mouseleave', 'places', () => (instance.getCanvas().style.cursor = ''));
+	}
+
+	async function initialize() {
+		handle?.remove();
+		handle = await createMap({
+			container,
+			options: { center: [20, 32], zoom: 1.6, cooperativeGestures: true },
+			isDestroyed: () => destroyed,
+			onStatus: (next) => (status = next),
+			onLoad: install
+		});
+		if (!handle) return;
+		if (destroyed) return handle.remove();
+		handle.map.addControl(
+			new handle.maplibregl.NavigationControl({ showCompass: false }),
+			'top-right'
+		);
 	}
 
 	onMount(() => void initialize());
 	onDestroy(() => {
 		destroyed = true;
-		if (loadTimeout) clearTimeout(loadTimeout);
-		map?.remove();
+		handle?.remove();
 	});
 </script>
 

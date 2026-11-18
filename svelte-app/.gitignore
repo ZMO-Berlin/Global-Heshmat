@@ -32,3 +32,9 @@ vite.config.ts.timestamp-*
 .image-build-cache.json
 
 /editorial-report.json
+
+# Unit test coverage (npm run test:coverage)
+/coverage
+
+# Python bytecode (docs/autobiography scripts and tests)
+__pycache__/

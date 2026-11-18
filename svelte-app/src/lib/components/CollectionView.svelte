@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { countLabel } from '#lib/utils/text.js';
 	import { artworks } from '#lib/data/artworks.js';
 	import { residences } from '#lib/data/residences.js';
@@ -7,7 +6,7 @@
 	import { filterPeople } from '#lib/utils/people.js';
 	import PeopleList from './PeopleList.svelte';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
-	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/collection-filter.js';
 	import {
 		entryKey,
 		entryStatus,
@@ -51,14 +50,12 @@
 	</svg>
 	<div class="collection-inner">
 		<header class="collection-head">
-			<div>
-				<h2>{store.mode === 'list' ? 'Collection index' : 'The collection'}</h2>
-				<p class="page-count" role="status">
-					{countLabel(items.length, 'entry', 'entries')} · {countLabel(photoCount, 'photograph')}
-					{#if peopleMatches.length}
-						· {countLabel(peopleMatches.length, 'profile')}{/if}
-				</p>
-			</div>
+			<h2>{store.mode === 'list' ? 'Collection index' : 'The collection'}</h2>
+			<p class="page-count" role="status">
+				{countLabel(items.length, 'entry', 'entries')} · {countLabel(photoCount, 'photograph')}
+				{#if peopleMatches.length}
+					· {countLabel(peopleMatches.length, 'profile')}{/if}
+			</p>
 			<div class="gallery-modes" role="group" aria-label="Gallery display">
 				<button
 					disabled={!store.ready}
@@ -75,8 +72,8 @@
 					onclick={() => store.setMode('list')}>List</button
 				>
 			</div>
+			<div class="head-tools"><CollectionTools {items} /></div>
 		</header>
-		<CollectionTools {items} />
 		{#if peopleMatches.length}<section class="people-results" aria-label="People results">
 				<h3>People</h3>
 				<PeopleList items={peopleMatches} />
@@ -170,12 +167,27 @@
 		padding: var(--space-6) var(--space-7) var(--space-8);
 	}
 	.collection-head {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		grid-template-areas:
+			'title modes'
+			'count modes'
+			'tools tools';
 		align-items: center;
-		gap: var(--space-4);
-		margin-bottom: var(--space-6);
-		flex-wrap: wrap;
+		column-gap: var(--space-4);
+	}
+	.collection-head h2 {
+		grid-area: title;
+	}
+	.page-count {
+		grid-area: count;
+	}
+	.gallery-modes {
+		grid-area: modes;
+	}
+	.head-tools {
+		grid-area: tools;
+		margin-top: var(--space-6);
 	}
 	h2 {
 		font-family: var(--font-display);
@@ -299,13 +311,30 @@
 		.collection-inner {
 			padding: var(--space-4);
 		}
-		.collection-head {
-			flex-direction: column;
-			align-items: flex-start;
-			margin-bottom: var(--space-4);
+		/* Title and display switch share the first row and the export menu sits
+		   right under the count, so the first card starts high on a phone. */
+		.collection-inner {
+			padding-top: var(--space-3);
 		}
-		h2 {
-			font-size: var(--text-3xl);
+		.collection-head {
+			grid-template-areas:
+				'title modes'
+				'count count'
+				'tools tools';
+			column-gap: var(--space-3);
+		}
+		.collection-head h2 {
+			font-size: var(--text-2xl);
+		}
+		.page-count {
+			margin-top: var(--space-1);
+		}
+		.head-tools {
+			margin-top: var(--space-3);
+		}
+		.gallery-modes button {
+			padding-inline: var(--space-3);
+			font-size: var(--text-sm);
 		}
 		.entry-grid {
 			grid-template-columns: 1fr;
@@ -323,6 +352,17 @@
 		}
 		figcaption {
 			font-size: var(--text-xs);
+		}
+	}
+	/* Too narrow for the title and the switch side by side. */
+	@media (max-width: 379px) {
+		.collection-head {
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-areas: 'title' 'count' 'modes' 'tools';
+		}
+		.gallery-modes {
+			justify-self: start;
+			margin-top: var(--space-3);
 		}
 	}
 </style>

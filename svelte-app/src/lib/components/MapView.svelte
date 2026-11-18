@@ -1,14 +1,9 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { onDestroy, onMount, untrack } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import 'maplibre-gl/dist/maplibre-gl.css';
-	// MapLibre v6 is ESM-only and resolves its worker from `import.meta.url`, which
-	// bundlers cannot statically analyse. Vite emits the worker as an asset here and
-	// `setWorkerUrl` points MapLibre at it; without this the worker 404s in the build.
-	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 	import type * as Maplibre from 'maplibre-gl';
+	import { createMap, type MapHandle, type MapStatus } from '#lib/map/create-map.js';
 	import { artworks } from '#lib/data/artworks.js';
 	import { residences } from '#lib/data/residences.js';
 	import { installMapContent, MAP_SOURCES, type MapPalette } from '#lib/map/map-content.js';
@@ -16,22 +11,26 @@
 	import {
 		buildEntryGeoJSON,
 		buildGhostGeoJSON,
-		buildRelocationGeoJSON
+		buildRelocationGeoJSON,
+		coreExtent
 	} from '#lib/utils/geojson.js';
 	import { locationZoom } from '#lib/utils/evidence.js';
-	import { filterArtworks, filterResidences } from '#lib/utils/map-filter.js';
+	import { filterArtworks, filterResidences } from '#lib/utils/collection-filter.js';
 	import { entryKey, type Entry } from '#lib/utils/collection.js';
 
-	let { showStatus = true }: { showStatus?: boolean } = $props();
+	/** This map is the visible view: only then does it show its status, update its sources and move the camera. */
+	let { active = true }: { active?: boolean } = $props();
+	/** The width at which the legend folds on hydration (see Legend.svelte). */
+	const PHONE_WIDTH = 600;
 	const store = getBrowseStore();
 
 	let maplibregl: typeof Maplibre;
 	let mapContainer: HTMLDivElement;
+	let handle: MapHandle | undefined;
 	let map = $state<Maplibre.Map>();
 	let destroyed = false;
 	let lastVisibleKey: string | undefined;
-	let loadTimeout: ReturnType<typeof setTimeout> | undefined;
-	let status = $state<'loading' | 'ready' | 'failed'>('loading');
+	let status = $state<MapStatus>('loading');
 
 	function reducedMotion(): boolean {
 		return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -51,9 +50,42 @@
 		};
 	}
 
+	/**
+	 * Room the camera leaves around the entries. On a phone the sides keep enough
+	 * for a cluster's radius (equal ones, which keep the camera centred when a
+	 * spread is wider than the map can show) and the bottom clears the folded
+	 * legend and the attribution above it.
+	 */
+	function framePadding(): number | Maplibre.PaddingOptions {
+		if (mapContainer.clientWidth > PHONE_WIDTH) return 60;
+		return { top: 40, right: 44, bottom: 96, left: 44 };
+	}
+
+	/**
+	 * Fit the camera to the entries. On a phone the whole collection, from the
+	 * United States to Beijing, is wider than the map even at the lowest zoom its
+	 * height allows, which left the markers in the top of an otherwise empty
+	 * ocean. Unfiltered, a phone frames the largest group instead (Europe and
+	 * Egypt) and the few far-off entries stay a pan away and in Browse; a
+	 * filtered view always fits all its results.
+	 */
+	function fitEntries(entries: readonly Entry[], unfiltered: boolean) {
+		if (!map) return;
+		const phone = mapContainer.clientWidth <= PHONE_WIDTH;
+		const core = phone && unfiltered ? coreExtent(entries) : undefined;
+		const bounds = new maplibregl.LngLatBounds();
+		if (core) bounds.extend(core);
+		else for (const item of entries) bounds.extend([item.lng, item.lat]);
+		map.fitBounds(bounds, {
+			padding: framePadding(),
+			maxZoom: 10,
+			duration: reducedMotion() ? 0 : 500
+		});
+	}
+
 	/** The only writer of the map's sources (installMapContent creates them empty). */
 	function updateMapSource() {
-		if (!showStatus || !map || !map.getSource(MAP_SOURCES.entries)) return;
+		if (!active || !map || !map.getSource(MAP_SOURCES.entries)) return;
 		const visibleArtworks = filterArtworks(artworks, store.filters);
 		const visible: Entry[] = [...visibleArtworks, ...filterResidences(residences, store.filters)];
 		// Search changes the filters on every keystroke; the sources (and the
@@ -68,9 +100,7 @@
 		if (untrack(() => store.selectedArtwork || store.selectedResidence)) return;
 
 		if (visible.length === 0) return;
-		const bounds = new maplibregl.LngLatBounds();
-		for (const item of visible) bounds.extend([item.lng, item.lat]);
-		map.fitBounds(bounds, { padding: 60, maxZoom: 10, duration: reducedMotion() ? 0 : 500 });
+		fitEntries(visible, visible.length === artworks.length + residences.length);
 	}
 
 	function moveTo(center: [number, number], zoom: number) {
@@ -82,72 +112,46 @@
 
 	$effect(() => {
 		void store.filters;
-		void showStatus;
+		void active;
 		untrack(updateMapSource);
 	});
 	$effect(() => {
 		const artwork = store.selectedArtwork;
-		if (artwork && showStatus) moveTo([artwork.lng, artwork.lat], locationZoom(artwork));
+		if (artwork && active) moveTo([artwork.lng, artwork.lat], locationZoom(artwork));
 	});
 	$effect(() => {
 		const residence = store.selectedResidence;
-		if (residence && showStatus) moveTo([residence.lng, residence.lat], locationZoom(residence));
+		if (residence && active) moveTo([residence.lng, residence.lat], locationZoom(residence));
 	});
 
 	async function initialize() {
-		status = 'loading';
 		lastVisibleKey = undefined;
-		if (loadTimeout) clearTimeout(loadTimeout);
-		map?.remove();
+		handle?.remove();
 		map = undefined;
-		try {
-			maplibregl = await import('maplibre-gl');
-			if (destroyed) return;
-			// MapLibre shapes Arabic and orders right-to-left labels itself, so no RTL
-			// text plugin is registered.
-			maplibregl.setWorkerUrl(workerUrl);
-
-			const instance = new maplibregl.Map({
-				container: mapContainer,
-				style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-				center: [20, 35],
-				zoom: 3,
-				attributionControl: false
-			});
-			map = instance;
-			instance.addControl(new maplibregl.NavigationControl(), 'top-right');
-			instance.addControl(new maplibregl.GlobeControl(), 'top-right');
-			instance.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
-			// Some network failures stall before MapLibre emits an error. Do not
-			// leave visitors behind an indefinite spinner when the external style
-			// endpoint is unavailable.
-			loadTimeout = setTimeout(() => {
-				if (!instance.isStyleLoaded()) status = 'failed';
-			}, 15_000);
-
-			instance.on('error', (event) => {
-				if (!instance.isStyleLoaded()) {
-					status = 'failed';
-					if (loadTimeout) clearTimeout(loadTimeout);
-				}
-				console.error('MapLibre:', event.error?.message ?? event);
-			});
-			instance.on('load', () => {
-				if (loadTimeout) clearTimeout(loadTimeout);
-				status = 'ready';
+		handle = await createMap({
+			container: mapContainer,
+			options: { center: [20, 35], zoom: 3 },
+			isDestroyed: () => destroyed,
+			onStatus: (next) => (status = next),
+			onError: (event) => console.error('MapLibre:', event.error?.message ?? event),
+			onLoad: (instance, library) => {
 				installMapContent({
 					map: instance,
-					maplibregl,
+					maplibregl: library,
 					onSelect: (item) => void goto(store.entryHref(item, { view: 'map' })),
 					palette: readPalette(),
 					reducedMotion,
 					isDestroyed: () => destroyed
 				});
 				updateMapSource();
-			});
-		} catch {
-			if (!destroyed) status = 'failed';
-		}
+			}
+		});
+		if (!handle) return;
+		if (destroyed) return handle.remove();
+		maplibregl = handle.maplibregl;
+		map = handle.map;
+		handle.map.addControl(new maplibregl.NavigationControl(), 'top-right');
+		handle.map.addControl(new maplibregl.GlobeControl(), 'top-right');
 	}
 	onMount(() => {
 		void initialize();
@@ -155,18 +159,20 @@
 
 	onDestroy(() => {
 		destroyed = true;
-		if (loadTimeout) clearTimeout(loadTimeout);
-		map?.remove();
+		handle?.remove();
 	});
 
+	/** On a phone this lands on the same framing as the unfiltered first view. */
 	export function resetView() {
-		moveTo([20, 35], 3);
+		if (map && mapContainer.clientWidth <= PHONE_WIDTH)
+			fitEntries([...artworks, ...residences], true);
+		else moveTo([20, 35], 3);
 	}
 </script>
 
 <div bind:this={mapContainer} class="map-container"></div>
 
-{#if showStatus && status !== 'ready'}
+{#if active && status !== 'ready'}
 	<div
 		class="map-status"
 		class:map-status-failed={status === 'failed'}
@@ -263,6 +269,14 @@
 		.map-container :global(.maplibregl-ctrl-group button) {
 			width: 44px;
 			height: 44px;
+		}
+	}
+	/* The folded legend (about 47px tall, 14px up from the bottom edge) takes
+	   the bottom-left corner, and on a phone the expanded attribution runs into
+	   it, so the attribution sits on a row of its own above. */
+	@media (max-width: 600px) {
+		.map-container :global(.maplibregl-ctrl-bottom-right) {
+			bottom: calc(var(--space-3-5) + 47px + var(--space-2));
 		}
 	}
 </style>

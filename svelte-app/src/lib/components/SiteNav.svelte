@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- hrefs come from the browse store and resolve() in navItems. */
 	import {
 		Map as MapIcon,
 		LayoutGrid,

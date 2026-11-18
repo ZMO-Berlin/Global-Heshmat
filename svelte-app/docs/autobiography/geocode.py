@@ -27,8 +27,6 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
-import anthropic
-
 from build_review import OUT
 from extract_entities import MODEL
 
@@ -83,6 +81,9 @@ SCHEMA = {
 
 
 def queries(places: list[dict]) -> dict[str, dict]:
+    # Imported where it is used, so the pure helpers can be imported (and tested) without the SDK.
+    import anthropic
+
     listing = [
         {"id": p["id"], "name_en": p["name_en"], "name_ar": p["name_ar"], "descriptions": p["descriptions"][:3]}
         for p in places

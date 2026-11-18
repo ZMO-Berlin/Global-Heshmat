@@ -3,12 +3,12 @@
 	import type { Entry } from '#lib/utils/collection.js';
 	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
-	import { csv, exportRecords, download } from '#lib/utils/exports.js';
+	import { downloadRecordsCsv, downloadRecordsJson } from '#lib/utils/exports.js';
 	import { countLabel } from '#lib/utils/text.js';
+	import { popoverDismissal } from '#lib/utils/dismiss.js';
 	let { items }: { items: Entry[] } = $props();
 	const fieldbook = getFieldbook();
 	const browse = getBrowseStore();
-	const today = () => new Date().toISOString().slice(0, 10);
 	const scope = $derived(countLabel(items.length, 'entry', 'entries'));
 	let menu = $state<HTMLDetailsElement>();
 	let summary = $state<HTMLElement>();
@@ -18,21 +18,17 @@
 		action();
 		if (menu) menu.open = false;
 	}
-	function closeOnEscape(event: KeyboardEvent) {
-		if (event.key !== 'Escape' || !menu?.open) return;
-		event.stopPropagation();
-		menu.open = false;
-		summary?.focus();
-	}
+	const dismissal = popoverDismissal({
+		isOpen: () => !!menu?.open,
+		close: () => {
+			if (menu) menu.open = false;
+		},
+		inside: () => [menu],
+		returnFocus: () => summary
+	});
 </script>
 
-<!-- Capture phase: Escape folds the menu before the layout's own Escape handling sees it. -->
-<svelte:window
-	onkeydowncapture={closeOnEscape}
-	onclick={(event) => {
-		if (menu?.open && !menu.contains(event.target as Node)) menu.open = false;
-	}}
-/>
+<svelte:window onkeydowncapture={dismissal.onkeydown} onclick={dismissal.onclick} />
 
 <div class="collection-tools">
 	<!-- A disclosure, not a link: it acts on the entries currently shown. -->
@@ -47,21 +43,13 @@
 			>
 			<button
 				disabled={!browse.ready || !items.length}
-				onclick={() =>
-					run(() =>
-						download(
-							JSON.stringify(exportRecords(items, today()), null, 2),
-							'global-heshmat-selection.json',
-							'application/json'
-						)
-					)}>Download JSON</button
+				onclick={() => run(() => downloadRecordsJson(items, 'global-heshmat-selection.json'))}
+				>Download JSON</button
 			>
 			<button
 				disabled={!browse.ready || !items.length}
-				onclick={() =>
-					run(() =>
-						download(csv(items, today()), 'global-heshmat-selection.csv', 'text/csv;charset=utf-8')
-					)}>Download CSV</button
+				onclick={() => run(() => downloadRecordsCsv(items, 'global-heshmat-selection.csv'))}
+				>Download CSV</button
 			>
 		</div>
 	</details>

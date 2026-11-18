@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { buildEntryGeoJSON, buildGhostGeoJSON, buildRelocationGeoJSON } from './geojson';
+import {
+	buildEntryGeoJSON,
+	buildGhostGeoJSON,
+	buildRelocationGeoJSON,
+	coreExtent
+} from './geojson';
 import type { Artwork, IndexedArtwork, IndexedResidence } from '#lib/data/types.js';
 
 const artwork = (overrides: Partial<Artwork>): Artwork => ({
@@ -18,7 +23,8 @@ const artwork = (overrides: Partial<Artwork>): Artwork => ({
 const indexed = (overrides: Partial<Artwork>): IndexedArtwork => ({
 	...artwork(overrides),
 	slug: 'untitled',
-	kind: 'artwork'
+	kind: 'artwork',
+	images: []
 });
 const residence: IndexedResidence = {
 	id: 1,
@@ -30,7 +36,8 @@ const residence: IndexedResidence = {
 	years: '1957',
 	desc: '',
 	slug: 'selb',
-	kind: 'residence'
+	kind: 'residence',
+	images: []
 };
 
 describe('buildEntryGeoJSON', () => {
@@ -107,5 +114,25 @@ describe('buildGhostGeoJSON', () => {
 
 	it('skips artworks that were never relocated', () => {
 		expect(buildGhostGeoJSON([artwork({})]).features).toEqual([]);
+	});
+});
+
+describe('coreExtent', () => {
+	it('frames the largest run of points and leaves far-off outliers out', () => {
+		const points = [
+			{ lng: -84, lat: 40 },
+			{ lng: -71, lat: 42 },
+			{ lng: 2, lat: 49 },
+			{ lng: 21, lat: 52 },
+			{ lng: 31, lat: 30 },
+			{ lng: 34, lat: 27 },
+			{ lng: 116, lat: 40 }
+		];
+		expect(coreExtent(points)).toEqual([2, 27, 34, 52]);
+	});
+
+	it('keeps every point when none is far off, and is undefined for none', () => {
+		expect(coreExtent([{ lng: 31, lat: 30 }])).toEqual([31, 30, 31, 30]);
+		expect(coreExtent([])).toBeUndefined();
 	});
 });

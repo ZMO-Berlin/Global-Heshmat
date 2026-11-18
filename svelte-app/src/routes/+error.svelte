@@ -4,6 +4,9 @@
 	import { resolve } from '$app/paths';
 
 	/**
+	 * The heading is an h2 like every page title: the Header wordmark is the
+	 * document's one h1.
+	 *
 	 * Rendered in place of the page content when a route errors — in practice
 	 * almost always a 404 from adapter-static's 404.html fallback, e.g. a stale
 	 * link to an artwork whose slug has since changed.
@@ -25,7 +28,7 @@
 	<div class="error-card" role="alert">
 		<Compass size={36} strokeWidth={1.5} aria-hidden="true" />
 		<p class="error-status">Error {page.status}</p>
-		<h1>{heading}</h1>
+		<h2>{heading}</h2>
 		<p class="error-body">
 			{#if isNotFound}
 				The address <code>{page.url.pathname}</code> doesn't match any artwork, place of residence or
@@ -43,7 +46,7 @@
 
 <style>
 	/* Above the map and its loading veil (both at --z-legend) and above the
-	   sidebar, but below modals — the message must not be obscured, while the
+	   entry detail panel, but below modals — the message must not be obscured, while the
 	   header, filter bar and footer stay usable so the visitor can navigate
 	   straight out. */
 	.error-screen {
@@ -77,7 +80,7 @@
 		color: var(--color-text-muted);
 		margin-top: var(--space-3);
 	}
-	.error-card h1 {
+	.error-card h2 {
 		font-family: var(--font-display);
 		font-size: var(--text-3xl);
 		font-weight: var(--weight-semibold);

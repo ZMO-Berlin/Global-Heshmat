@@ -1,12 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
-	FILTER_ALL,
-	FILTER_RESIDENCE,
-	FILTER_SEARCH,
+	DEFAULT_FILTERS,
 	countryFacets,
 	filterArtworks,
-	filterResidences
-} from './map-filter';
+	filterResidences,
+	legacyFilter
+} from './collection-filter';
 import type { Artwork, Residence } from '#lib/data/types.js';
 
 const artwork = (overrides: Partial<Artwork>): Artwork => ({
@@ -43,28 +42,34 @@ const items = [
 
 describe('filterArtworks', () => {
 	it('returns every artwork under the default "all" filter', () => {
-		expect(filterArtworks(items, FILTER_ALL).map((a) => a.id)).toEqual([1, 2, 3, 4]);
+		expect(filterArtworks(items, DEFAULT_FILTERS).map((a) => a.id)).toEqual([1, 2, 3, 4]);
 	});
 
 	it('returns only unlocated works under the "to be found" filter', () => {
-		expect(filterArtworks(items, FILTER_SEARCH).map((a) => a.id)).toEqual([2, 4]);
+		expect(
+			filterArtworks(items, { ...DEFAULT_FILTERS, status: 'search' }).map((a) => a.id)
+		).toEqual([2, 4]);
 	});
 
 	it('returns no artworks under the residence filter — that view is residences only', () => {
-		expect(filterArtworks(items, FILTER_RESIDENCE)).toEqual([]);
+		expect(filterArtworks(items, { ...DEFAULT_FILTERS, type: 'residence' })).toEqual([]);
 	});
 
-	it('matches any other value against the country field', () => {
-		expect(filterArtworks(items, 'Egypt').map((a) => a.id)).toEqual([1, 2]);
-		expect(filterArtworks(items, 'Germany').map((a) => a.id)).toEqual([3]);
+	it('matches the country field', () => {
+		expect(
+			filterArtworks(items, { ...DEFAULT_FILTERS, country: 'Egypt' }).map((a) => a.id)
+		).toEqual([1, 2]);
+		expect(
+			filterArtworks(items, { ...DEFAULT_FILTERS, country: 'Germany' }).map((a) => a.id)
+		).toEqual([3]);
 	});
 
 	it('returns an empty list for an unknown country rather than throwing', () => {
-		expect(filterArtworks(items, 'Atlantis')).toEqual([]);
+		expect(filterArtworks(items, { ...DEFAULT_FILTERS, country: 'Atlantis' })).toEqual([]);
 	});
 
 	it('does not mutate or alias the input array', () => {
-		const result = filterArtworks(items, FILTER_ALL);
+		const result = filterArtworks(items, DEFAULT_FILTERS);
 		expect(result).not.toBe(items);
 		expect(items).toHaveLength(4);
 	});
@@ -78,30 +83,43 @@ describe('filterResidences', () => {
 	];
 
 	it('shows residences on the default view', () => {
-		expect(filterResidences(places, FILTER_ALL)).toHaveLength(3);
+		expect(filterResidences(places, DEFAULT_FILTERS)).toHaveLength(3);
 	});
 
 	it('shows residences under their own category', () => {
-		expect(filterResidences(places, FILTER_RESIDENCE)).toHaveLength(3);
+		expect(filterResidences(places, { ...DEFAULT_FILTERS, type: 'residence' })).toHaveLength(3);
 	});
 
 	it('shows the residences of a country under that country filter', () => {
-		expect(filterResidences(places, 'Germany').map((r) => r.id)).toEqual([1, 2]);
-		expect(filterResidences(places, 'Egypt').map((r) => r.id)).toEqual([3]);
+		expect(
+			filterResidences(places, { ...DEFAULT_FILTERS, country: 'Germany' }).map((r) => r.id)
+		).toEqual([1, 2]);
+		expect(
+			filterResidences(places, { ...DEFAULT_FILTERS, country: 'Egypt' }).map((r) => r.id)
+		).toEqual([3]);
 	});
 
 	it('returns an empty list for a country with no residences', () => {
-		expect(filterResidences(places, 'Sweden')).toEqual([]);
+		expect(filterResidences(places, { ...DEFAULT_FILTERS, country: 'Sweden' })).toEqual([]);
 	});
 
 	it('hides residences under the "to be found" filter — that status is artwork-only', () => {
-		expect(filterResidences(places, FILTER_SEARCH)).toEqual([]);
+		expect(filterResidences(places, { ...DEFAULT_FILTERS, status: 'search' })).toEqual([]);
 	});
 
 	it('does not mutate or alias the input array', () => {
-		const result = filterResidences(places, FILTER_ALL);
+		const result = filterResidences(places, DEFAULT_FILTERS);
 		expect(result).not.toBe(places);
 		expect(places).toHaveLength(3);
+	});
+});
+
+describe('legacyFilter', () => {
+	it('decodes the single-valued filter of older links', () => {
+		expect(legacyFilter('all')).toEqual(DEFAULT_FILTERS);
+		expect(legacyFilter('search')).toEqual({ ...DEFAULT_FILTERS, status: 'search' });
+		expect(legacyFilter('residence')).toEqual({ ...DEFAULT_FILTERS, type: 'residence' });
+		expect(legacyFilter('Egypt')).toEqual({ ...DEFAULT_FILTERS, country: 'Egypt' });
 	});
 });
 

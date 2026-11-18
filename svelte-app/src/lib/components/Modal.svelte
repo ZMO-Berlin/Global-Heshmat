@@ -131,7 +131,7 @@
 	}
 
 	/* Editorial section heading: serif h3 with a short accent rule below,
-	   echoing the sidebar h2 treatment so the modal feels like the same artefact. */
+	   echoing the entry detail panel's h2 treatment so the modal feels like the same artefact. */
 	.modal-body :global(h3) {
 		font-family: var(--font-display);
 		color: var(--color-ink);

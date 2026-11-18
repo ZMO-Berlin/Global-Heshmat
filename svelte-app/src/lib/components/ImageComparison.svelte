@@ -17,6 +17,7 @@
 	<div class="comparison-grid">
 		{#each ['First', 'Second'] as label, column (label)}
 			{@const index = column === 0 ? first : second}
+			{@const other = column === 0 ? second : first}
 			{@const selected = images[index]}
 			<figure>
 				<label
@@ -29,7 +30,8 @@
 							else second = Number(event.currentTarget.value);
 						}}
 					>
-						{#each images as image, i (mediaId(image))}<option value={i}
+						<!-- The photo shown on the other side is disabled: comparing a photo with itself shows nothing. -->
+						{#each images as image, i (mediaId(image))}<option value={i} disabled={i === other}
 								>{i + 1}: {image.caption || name}</option
 							>{/each}
 					</select>

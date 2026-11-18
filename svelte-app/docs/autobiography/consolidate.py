@@ -25,8 +25,6 @@ import json
 import sys
 from datetime import datetime, timezone
 
-import anthropic
-
 from build_review import OUT, first_pass, fingerprint, load
 from extract_entities import MODEL, TYPES, catalogue
 
@@ -144,6 +142,9 @@ def checked(groups: list[dict], entities: list[dict], keys: set[str]) -> tuple[l
 
 
 def main() -> None:
+    # Imported where it is used, so the pure helpers can be imported (and tested) without the SDK.
+    import anthropic
+
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--effort", default="high", choices=["low", "medium", "high", "xhigh"])
     args = parser.parse_args()

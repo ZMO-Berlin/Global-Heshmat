@@ -1,6 +1,8 @@
 # Implantation des recommandations — 8 septembre 2026
 
-Ce document complète l’audit initial, qui décrit l’état avant modification.
+> **Document historique**, archivé en novembre 2026 : il décrit le dépôt tel qu’il était en septembre 2026, pas son état actuel.
+
+Ce document complète [l’audit initial](AUDIT-2026-09-08.md), qui décrit l’état avant modification.
 
 ## Fonctionnalités livrées dans le code
 

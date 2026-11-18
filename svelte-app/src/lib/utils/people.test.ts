@@ -3,8 +3,9 @@ import { readdirSync } from 'node:fs';
 import { people, peopleGroups, peopleContexts } from '#lib/data/people.js';
 import { artworks } from '#lib/data/artworks.js';
 import { residences } from '#lib/data/residences.js';
+import { entries } from '#lib/data/entries.js';
 import { entryKey } from './collection';
-import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './map-filter';
+import { DEFAULT_FILTERS, filterArtworks, filterResidences } from './collection-filter';
 import { readFilters, writeFilters } from './url-facets';
 import { canonicalEntryPath } from '#lib/offline/keys.js';
 
@@ -19,12 +20,12 @@ describe('document-based People records', () => {
 		expect(people.map((p) => p.slug).sort()).toEqual(files.sort());
 	});
 	it('has valid source groups, cross-references and collection links', () => {
-		const entries = [...artworks, ...residences].map(entryKey);
+		const keys = entries.map(entryKey);
 		for (const person of people) {
 			expect(person.paragraphs.length).toBeGreaterThan(0);
 			for (const group of person.groups)
 				expect(peopleGroups.some((g) => g.id === group)).toBe(true);
-			for (const key of person.relatedEntries) expect(entries).toContain(key);
+			for (const key of person.relatedEntries) expect(keys).toContain(key);
 			for (const slug of person.seeAlso) expect(people.some((p) => p.slug === slug)).toBe(true);
 		}
 		for (const context of peopleContexts)

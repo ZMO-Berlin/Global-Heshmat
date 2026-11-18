@@ -2,7 +2,16 @@
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { type Entry, entryKey } from '#lib/utils/collection.js';
-	import { citation, bibtex, ris, csv, exportRecords, download } from '#lib/utils/exports.js';
+	import {
+		citation,
+		bibtex,
+		ris,
+		download,
+		downloadRecordsCsv,
+		downloadRecordsJson
+	} from '#lib/utils/exports.js';
+	import { isoToday } from '#lib/utils/date.js';
+	import { megabytes } from '#lib/utils/text.js';
 	import { getFieldbook } from '#lib/stores/fieldbook.svelte.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import {
@@ -21,7 +30,7 @@
 	let message = $state('');
 	let citationText = $derived(citation(item, accessed || 'YYYY-MM-DD'));
 	onMount(() => {
-		accessed = new Date().toISOString().slice(0, 10);
+		accessed = isoToday();
 		const refresh = () =>
 			void albumAvailable(item)
 				.then((value) => {
@@ -104,26 +113,20 @@
 			>
 			<button
 				disabled={!browse.ready}
-				onclick={() =>
-					download(
-						JSON.stringify(exportRecords([item], accessed), null, 2),
-						`${item.slug}.json`,
-						'application/json'
-					)}>JSON</button
+				onclick={() => downloadRecordsJson([item], `${item.slug}.json`, accessed)}>JSON</button
 			>
 			<button
 				disabled={!browse.ready}
-				onclick={() =>
-					download(csv([item], accessed), `${item.slug}.csv`, 'text/csv;charset=utf-8')}>CSV</button
+				onclick={() => downloadRecordsCsv([item], `${item.slug}.csv`, accessed)}>CSV</button
 			>
 		</div>
 	</details>
 	<details>
 		<summary>Use this album offline</summary>
 		<p class="tool-note">
-			Save the entry and reading-size images (about {(albumBytes(item) / 1048576).toFixed(1)} MB). Videos,
-			full-resolution images, external links and new map regions need a connection. Browser storage can
-			be cleared; check availability before travelling. Site updates require a new download.
+			Save the entry and reading-size images (about {megabytes(albumBytes(item))}). Videos,
+			full-resolution images, external links and new map regions need a connection. Browser storage
+			can be cleared; check availability before travelling. Site updates require a new download.
 		</p>
 		{#if available}<p>Available offline on this device.</p>
 			<button disabled={busy} onclick={() => void remove()}>Remove saved album</button>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- Internal links are resolved centrally by browse.svelte.ts; source links are external. */
 	import { countLabel } from '#lib/utils/text.js';
 	import { ImageOff } from '@lucide/svelte';
 	import type { Entry } from '#lib/utils/collection.js';
