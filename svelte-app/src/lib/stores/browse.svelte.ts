@@ -1,10 +1,9 @@
-/* eslint-disable svelte/no-navigation-without-resolve -- All route builders use resolve(); shallow updates preserve the current resolved pathname. */
+/* eslint-disable svelte/no-navigation-without-resolve -- Route builders (browse-hrefs.ts) use resolve(); shallow updates preserve the current resolved pathname. */
 import { getContext, setContext, onMount } from 'svelte';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
 import { browser } from '$app/env';
 import { page } from '$app/state';
 import { goto } from '$app/navigation';
-import { resolve } from '$app/paths';
 import { entryImages, matchesMediaId, type Entry, type Selection } from '#lib/utils/collection.js';
 import {
 	readFilters,
@@ -16,28 +15,8 @@ import {
 	type GalleryMode
 } from '#lib/utils/url-facets.js';
 import type { CollectionFilters } from '#lib/utils/map-filter.js';
-import type { Person } from '#lib/data/types.js';
+import * as hrefs from '#lib/utils/browse-hrefs.js';
 const CONTEXT = Symbol('collection-browser');
-/**
- * Pages an entry can be opened from and should close back to. The route
- * that sets the origin, the close link's accessible name and its target
- * all come from this one table, so they cannot disagree.
- */
-const ORIGIN_LABELS = {
-	missing: 'Back to missing works',
-	fieldbook: 'Back to fieldbook',
-	trails: 'Back to trails',
-	memoir: 'Back to memoir'
-} as const;
-type Origin = keyof typeof ORIGIN_LABELS;
-const ROUTE_ORIGINS: Partial<Record<string, Origin>> = {
-	'/missing': 'missing',
-	'/fieldbook': 'fieldbook',
-	'/trails': 'trails',
-	'/memoir': 'memoir'
-};
-const isOrigin = (value: string | null | undefined): value is Origin =>
-	!!value && Object.hasOwn(ORIGIN_LABELS, value);
 export function createBrowseStore() {
 	let ready = $state(false);
 	onMount(() => {
@@ -60,17 +39,19 @@ export function createBrowseStore() {
 			: page.data.residence
 				? { kind: 'residence', item: page.data.residence }
 				: null;
-	const filterKey = $derived(
-		JSON.stringify({
-			...readFilters(params()),
-			...(page.route.id === '/missing' ? { status: 'search' as const } : {}),
-			...(page.route.id?.startsWith('/people')
-				? { type: 'person' as const, country: '', status: 'all' as const }
-				: {})
-		})
-	);
+	// Serialised so that the derived filters object only changes when a value does.
+	const filterKey = $derived(JSON.stringify(hrefs.routeFilters(params(), page.route.id)));
 	const filters: CollectionFilters = $derived(JSON.parse(filterKey));
-	const filterParams = $derived(writeFilters(new SvelteURLSearchParams(), filters));
+	const view = () => hrefs.browseView(params(), page.route.id, selection() !== null);
+	// The view getter is lazy so links that never read it do not depend on page.data.
+	const context = (): hrefs.BrowseContext => ({
+		params: params(),
+		routeId: page.route.id,
+		filters,
+		get view() {
+			return view();
+		}
+	});
 	function patch(patch: Record<string, string | null>, push = false, extra: App.PageState = {}) {
 		const next = new SvelteURLSearchParams(params());
 		for (const [key, value] of Object.entries(patch)) {
@@ -133,7 +114,7 @@ export function createBrowseStore() {
 			this.setFilters({ ...DEFAULT_FILTERS, group: '', place: '' });
 		},
 		get peopleView() {
-			return page.route.id?.startsWith('/people') ?? false;
+			return hrefs.isPeopleRoute(page.route.id);
 		},
 		get peopleSort() {
 			return peopleSort(params());
@@ -142,25 +123,11 @@ export function createBrowseStore() {
 			patch({ sort: sort === 'name-asc' ? null : sort }, true);
 		},
 		peopleHref(patch: Partial<CollectionFilters> = {}) {
-			const next = writeFilters(new SvelteURLSearchParams(), {
-				...filters,
-				country: '',
-				status: 'all',
-				type: 'all',
-				...patch
-			});
-			if (this.peopleSort !== 'name-asc') next.set('sort', this.peopleSort);
-			return resolve('/people') + (next.size ? `?${next}` : '');
+			return hrefs.peopleHref(context(), patch);
 		},
-		personHref(person: Person) {
-			const next = writeFilters(new SvelteURLSearchParams(), {
-				...filters,
-				country: '',
-				status: 'all',
-				type: 'all'
-			});
-			if (this.peopleSort !== 'name-asc') next.set('sort', this.peopleSort);
-			return resolve('/people/[slug]', { slug: person.slug }) + (next.size ? `?${next}` : '');
+		/** Accepts any object with a slug, so a profile can be linked without loading it. */
+		personHref(person: { slug: string }) {
+			return hrefs.personHref(context(), person);
 		},
 		searchHref() {
 			return this.peopleView || filters.type === 'person'
@@ -173,10 +140,8 @@ export function createBrowseStore() {
 		setMode(mode: GalleryMode) {
 			patch({ mode: mode === 'entries' ? null : mode });
 		},
-		get view(): 'map' | 'gallery' {
-			return page.route.id === '/' || (selection() && params().get('view') === 'map')
-				? 'map'
-				: 'gallery';
+		get view(): hrefs.BrowseView {
+			return view();
 		},
 		get photo() {
 			const id = params().get('photo');
@@ -206,45 +171,18 @@ export function createBrowseStore() {
 		},
 		entryHref(
 			item: Entry,
-			options: { view?: 'map' | 'gallery'; photo?: string; origin?: Origin } = {}
+			options: { view?: hrefs.BrowseView; photo?: string; origin?: hrefs.Origin } = {}
 		) {
-			const path =
-				item.kind === 'artwork'
-					? resolve('/artworks/[slug]', { slug: item.slug })
-					: resolve('/residences/[slug]', { slug: item.slug });
-			const next = new SvelteURLSearchParams(filterParams);
-			if (this.peopleView || filters.type === 'person') {
-				for (const key of ['type', 'group', 'place', 'q']) next.delete(key);
-			}
-			next.set('view', options.view ?? this.view);
-			if (this.mode !== 'entries') next.set('mode', this.mode);
-			if (options.photo) next.set('photo', options.photo);
-			const origin = options.origin ?? ROUTE_ORIGINS[page.route.id ?? ''] ?? params().get('origin');
-			if (isOrigin(origin)) next.set('origin', origin);
-			return path + (next.size ? `?${next}` : '');
+			return hrefs.entryHref(context(), item, options);
 		},
-		collectionHref(mode: GalleryMode = galleryMode(params()), view: 'map' | 'gallery' = 'gallery') {
-			const next = new SvelteURLSearchParams(filterParams);
-			if (this.peopleView || filters.type === 'person') {
-				for (const key of ['type', 'group', 'place']) next.delete(key);
-			}
-			if (mode !== 'entries' && view !== 'map') next.set('mode', mode);
-			return resolve(view === 'map' ? '/' : '/collection') + (next.size ? `?${next}` : '');
+		collectionHref(mode?: GalleryMode, view?: hrefs.BrowseView) {
+			return hrefs.collectionHref(context(), mode, view);
 		},
 		get closeLabel() {
-			const origin = params().get('origin');
-			return isOrigin(origin) ? ORIGIN_LABELS[origin] : 'Back to collection';
+			return hrefs.closeLabel(params());
 		},
 		get closeHref() {
-			const origin = params().get('origin');
-			if (origin === 'fieldbook') return resolve('/fieldbook');
-			if (origin === 'trails') return resolve('/trails');
-			if (origin === 'memoir') return resolve('/memoir');
-			if (origin === 'missing') {
-				const next = writeFilters(new SvelteURLSearchParams(), { ...this.filters, status: 'all' });
-				return resolve('/missing') + (next.size ? `?${next}` : '');
-			}
-			return this.collectionHref(this.mode, this.view);
+			return hrefs.closeHref(context());
 		}
 	};
 	setContext(CONTEXT, store);

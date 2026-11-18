@@ -85,6 +85,26 @@ test('the memoir view lists what the book names and explains its method', async 
 	await accessible(page);
 });
 
+test('a direct visit pages the people once the page is interactive', async ({ page }) => {
+	await page.goto('/memoir/');
+	const pager = page.getByRole('navigation', { name: 'Pages of people' });
+	await expect(pager.getByRole('button', { name: 'Page 2', exact: true })).toBeEnabled();
+	await expect(page.locator('#people .people > li')).toHaveCount(
+		Math.min(20, ofType('person').length)
+	);
+});
+
+test.describe('without JavaScript', () => {
+	test.use({ javaScriptEnabled: false });
+	test('every person the book names is in the page', async ({ page }) => {
+		const people = ofType('person');
+		await page.goto('/memoir/');
+		await expect(page.locator('#people .people > li')).toHaveCount(people.length);
+		await expect(page.locator('#people')).toContainText(`All ${people.length}, most named first`);
+		await expect(page.getByRole('navigation', { name: 'Pages of people' })).toHaveCount(0);
+	});
+});
+
 test('a page number opens the passage naming the person, with the name marked', async ({
 	page
 }) => {
@@ -99,6 +119,8 @@ test('a page number opens the passage naming the person, with the name marked', 
 	const [start, end] = list[at].marks[0];
 
 	await page.goto('/memoir/');
+	// The pager appears once the page is hydrated and the page buttons work.
+	await expect(page.getByRole('navigation', { name: 'Pages of people' })).toBeVisible();
 	const button = page
 		.locator('#people')
 		.getByRole('button', { name: `Page ${first}: passage naming ${person.name}`, exact: true });

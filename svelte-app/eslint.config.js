@@ -36,6 +36,7 @@ export default ts.config(
 			'node_modules/',
 			'.npm-cache/',
 			'.lighthouse/',
+			'coverage/',
 			'test-results/',
 			'playwright-report/',
 			'.impeccable/'

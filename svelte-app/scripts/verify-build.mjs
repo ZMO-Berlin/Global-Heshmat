@@ -156,6 +156,32 @@ try {
 	await vite.close();
 }
 check('People index prerendered', existsSync(join(BUILD_DIR, 'people/index.html')));
+// Entry pages link related profiles through people-relations.json; the profiles' prose
+// must not reach their chunk graph through a static import.
+{
+	const clientDir = join(__dirname, '..', '.svelte-kit/output/client');
+	const manifestFile = join(clientDir, '.vite/manifest.json');
+	const manifest = existsSync(manifestFile) ? JSON.parse(readFileSync(manifestFile, 'utf8')) : {};
+	const detailKey = Object.keys(manifest).find((key) => manifest[key].name === 'EntryDetail');
+	const reached = new Set();
+	const visit = (key) => {
+		if (reached.has(key) || !manifest[key]) return;
+		reached.add(key);
+		for (const next of manifest[key].imports ?? []) visit(next);
+	};
+	if (detailKey) visit(detailKey);
+	const code = [...reached].map((key) => readFileSync(join(clientDir, manifest[key].file), 'utf8'));
+	// A quote- and escape-free stretch of each profile's first paragraph.
+	const samples = peopleData.people
+		.map((person) => person.paragraphs[0]?.match(/[\p{L} ,.]{40,}/u)?.[0].slice(0, 40))
+		.filter(Boolean);
+	const leaked = samples.find((sample) => code.some((text) => text.includes(sample)));
+	check(
+		'entry detail chunk does not statically import the People profiles',
+		!!detailKey && samples.length > 0 && !leaked,
+		detailKey ? `profile text found: "${leaked}"` : 'EntryDetail chunk not found in the manifest'
+	);
+}
 function findClass(node, name) {
 	if (node.attrs?.some((attr) => attr.name === 'class' && attr.value.split(' ').includes(name)))
 		return node;
@@ -247,7 +273,7 @@ for (const kind of ['artworks', 'residences']) {
 		const html = readFileSync(file, 'utf8');
 		check(
 			kind + '/' + slug + ' contains its server-rendered detail body',
-			html.includes('sidebar-body') && html.includes('sidebar-content')
+			html.includes('entry-body') && html.includes('entry-content')
 		);
 		const record = records.get(`/${kind}/${slug}/`);
 		const structured = jsonLd(html);
@@ -271,6 +297,32 @@ for (const kind of ['artworks', 'residences']) {
 			);
 		}
 	}
+}
+
+const peopleFolder = join(BUILD_DIR, 'people');
+const profiles = existsSync(peopleFolder)
+	? readdirSync(peopleFolder).filter((slug) => existsSync(join(peopleFolder, slug, 'index.html')))
+	: [];
+check('people profiles are prerendered', profiles.length > 0);
+for (const slug of profiles) {
+	const html = readFileSync(join(peopleFolder, slug, 'index.html'), 'utf8');
+	const structured = jsonLd(html);
+	const heading = html
+		.match(/<h2 id="person-heading"[^>]*>([^<]*)<\/h2>/)?.[1]
+		?.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'")
+		.replace(/&lt;/g, '<')
+		.replace(/&amp;/g, '&');
+	check(`people/${slug} describes a Person`, structured['@type'] === 'Person');
+	check(
+		`people/${slug} Person names its profile and canonical page`,
+		structured.name === heading && structured.url === `${SITE_URL}/people/${slug}/`,
+		`saw ${structured.name} at ${structured.url}`
+	);
+	check(
+		`people/${slug} Person adds no life dates the profile lacks`,
+		!('birthDate' in structured) && !('deathDate' in structured)
+	);
 }
 
 // ── Home page SEO ───────────────────────────────────────────────────

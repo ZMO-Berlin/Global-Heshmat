@@ -37,7 +37,7 @@ test('ordinary card navigation before activation saves a canonical offline docum
 	await documentSaved(page, museum);
 	await context.setOffline(true);
 	await page.goto(museum);
-	await expect(page.locator('.sidebar h2')).toHaveText('The Hassan Heshmat Museum');
+	await expect(page.locator('.entry-detail h2')).toHaveText('The Hassan Heshmat Museum');
 	await expect(page.getByRole('button', { name: 'View image full screen' })).toBeEnabled();
 	await page.reload();
 	await expect(page.locator('.gallery-counter')).toHaveText('1 / 17');
@@ -249,7 +249,7 @@ test('healthy local map supports marker selection and preserves a panned camera 
 		.toBe(true);
 	await canvas.click({ position: { x: box.width / 2, y: box.height / 2 } });
 	await expect(page).toHaveURL(/residences\/haus-der-familie-haude/);
-	await expect(page.locator('.sidebar h2')).toContainText('Haude');
+	await expect(page.locator('.entry-detail h2')).toContainText('Haude');
 	await page.getByRole('link', { name: 'Back to collection', exact: true }).click();
 	await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
 	await page.mouse.down();

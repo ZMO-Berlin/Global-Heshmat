@@ -5,25 +5,25 @@
 	import { entryImages, entryKey, entryTitle } from '#lib/utils/collection.js';
 	import EntryTools from './EntryTools.svelte';
 	import EvidencePanel from './EvidencePanel.svelte';
-	import { people } from '#lib/data/people.js';
+	import { relatedPeople as peopleFor } from '#lib/data/people-relations.js';
 	import Gallery from './Gallery.svelte';
 	import VideoPlayer from './VideoPlayer.svelte';
 	import { aboutContent as about } from '#lib/data/about.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
 	import { youTubeId } from '#lib/utils/video.js';
+	import { artworkInfoSubject, mailtoHref } from '#lib/utils/mailto.js';
 
 	let { galleryView = false }: { galleryView?: boolean } = $props();
 	const store = getBrowseStore();
 
-	// The sidebar shows either an artwork or a place of residence (never both —
-	// the store enforces that). The header (name) and image gallery are shared;
-	// only the body details differ between the two.
+	// The entry detail shows either an artwork or a place of residence (never
+	// both — the store enforces that). The header (name) and image gallery are
+	// shared; only the body details differ between the two. It is a panel over
+	// the map in map view and the full album page in gallery view.
 	const artwork = $derived(store.selectedArtwork);
 	const residence = $derived(store.selectedResidence);
 	const item = $derived(artwork ?? residence);
-	const relatedPeople = $derived(
-		item ? people.filter((person) => person.relatedEntries.includes(entryKey(item))) : []
-	);
+	const relatedPeople = $derived(item ? peopleFor(entryKey(item)) : []);
 
 	const isSearch = $derived(artwork?.status === 'search');
 	const tagClass = $derived(
@@ -32,11 +32,11 @@
 	const tagText = $derived(isSearch ? 'To be found' : artwork?.movement ? 'Relocated' : 'Located');
 	const images = $derived(item ? entryImages(item) : []);
 
-	// Focus the panel heading when an item opens. Both routes into the sidebar
+	// Focus the entry heading when an item opens. Both routes into an entry
 	// unmount whatever the user was on — a search result unmounts the input
 	// they typed in, a collection-panel link unmounts the link itself — and
 	// SvelteKit then resets focus to <body>, stranding a keyboard user at the
-	// top of the document while the panel they opened sits below.
+	// top of the document while the entry they opened sits below.
 	//
 	// Deferred to the next frame precisely because of that reset: focusing
 	// synchronously in the effect happens first and gets overwritten.
@@ -59,21 +59,21 @@
 	});
 
 	function close() {
-		// Artworks and residences both own a route, so navigating home clears
-		// the URL and the sidebar (the home page resets the selection on mount).
+		// The selection is derived from the entry route's page data, so leaving
+		// the route for the origin page closes the entry.
 		void goto(store.closeHref, { reset: false });
 	}
 </script>
 
 <aside
-	class="sidebar"
+	class="entry-detail"
 	class:gallery-view={galleryView}
 	class:open={item !== null}
 	aria-label={item ? `Details: ${item.name}` : 'Details'}
 	inert={item === null}
 >
 	{#if item}
-		<div class="sidebar-header">
+		<div class="entry-header">
 			<h2 dir="auto" tabindex="-1" bind:this={headingEl}>{entryTitle(item)}</h2>
 			<a
 				class="btn-close"
@@ -87,7 +87,7 @@
 				<X size={20} strokeWidth={2.25} />
 			</a>
 		</div>
-		<div class="sidebar-body">
+		<div class="entry-body">
 			{#if images.length > 0}
 				<!-- Keyed so switching items rebuilds the gallery from image 0
 				     instead of reusing the instance (whose index could point
@@ -102,15 +102,15 @@
 					/>
 				{/key}
 			{:else}
-				<div class="sidebar-image">
-					<div class="sidebar-image-placeholder">
+				<div class="entry-image">
+					<div class="entry-image-placeholder">
 						<ImageOff size={44} strokeWidth={1.75} />
 						<span>Image coming soon</span>
 					</div>
 				</div>
 			{/if}
 
-			<div class="sidebar-content" id="details">
+			<div class="entry-content" id="details">
 				{#if item.displayTitle}<p class="full-title" dir="auto">{item.name}</p>{/if}
 				<a
 					class="detail-map-link"
@@ -118,16 +118,16 @@
 					>{galleryView ? 'View on map' : 'View album'}</a
 				>
 				{#if artwork}
-					<div class="sidebar-meta">
+					<div class="entry-meta">
 						<span class="tag {tagClass}">{tagText}</span>
 						<span dir="auto">{artwork.city}, {artwork.country}</span>
 					</div>
-					<div class="sidebar-address" dir="auto">{artwork.address}</div>
+					<div class="entry-address" dir="auto">{artwork.address}</div>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -- content is from our own data files, not user input -->
-					<div class="sidebar-desc" dir="auto">{@html artwork.desc}</div>
+					<div class="entry-desc" dir="auto">{@html artwork.desc}</div>
 
 					{#if artwork.movement}
-						<div class="sidebar-movement">
+						<div class="entry-movement">
 							<strong>Relocated {artwork.movement.year}</strong><br />
 							From: {artwork.movement.fromName}<br />
 							To: {artwork.city}
@@ -137,7 +137,7 @@
 					{#if artwork.video}
 						{@const videoId = youTubeId(artwork.video)}
 						{#if videoId}
-							<div class="sidebar-video">
+							<div class="entry-video">
 								<iframe
 									src="https://www.youtube.com/embed/{videoId}"
 									allowfullscreen
@@ -153,7 +153,7 @@
 					{/if}
 
 					{#if artwork.links && artwork.links.length > 0}
-						<div class="sidebar-links">
+						<div class="entry-links">
 							{#each artwork.links as link (link.url)}
 								<a href={link.url} target="_blank" rel="noopener noreferrer external"
 									>{link.label} &rarr;</a
@@ -164,24 +164,23 @@
 
 					{#if isSearch}
 						<!-- The "location unconfirmed" statement lives in EvidencePanel below. -->
-						<div class="sidebar-contact">
+						<div class="entry-contact">
 							Do you know where this artwork is? Please contact
-							<a
-								href={`mailto:${about.contactEmail}?subject=${encodeURIComponent(`Global Heshmat — information about ${artwork.name} (artwork ${artwork.id})`)}`}
+							<a href={mailtoHref(about.contactEmail, artworkInfoSubject(artwork))}
 								>{about.contactEmail}</a
 							>
 						</div>
 					{/if}
 				{:else if residence}
-					<div class="sidebar-meta">
+					<div class="entry-meta">
 						<span class="tag tag-residence">Place of residence</span>
 						<span dir="auto">{residence.city}, {residence.country}</span>
 					</div>
 					{#if residence.years}
-						<div class="sidebar-address" dir="auto">{residence.years}</div>
+						<div class="entry-address" dir="auto">{residence.years}</div>
 					{/if}
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -- content is from our own data files, not user input -->
-					<div class="sidebar-desc" dir="auto">{@html residence.desc}</div>
+					<div class="entry-desc" dir="auto">{@html residence.desc}</div>
 				{/if}
 				{#if relatedPeople.length}<section class="related-people">
 						<h3>People</h3>
@@ -231,18 +230,18 @@
 		text-underline-offset: 3px;
 		margin-bottom: var(--space-3);
 	}
-	.sidebar.gallery-view {
+	.entry-detail.gallery-view {
 		--gallery-content-inset: 0px;
 		width: 100%;
 		box-shadow: none;
 		background: var(--color-surface-warm);
 	}
-	.gallery-view .sidebar-header {
+	.gallery-view .entry-header {
 		max-width: 1320px;
 		width: 100%;
 		margin: auto;
 	}
-	.gallery-view .sidebar-body {
+	.gallery-view .entry-body {
 		display: grid;
 		grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
 		align-items: start;
@@ -252,26 +251,26 @@
 		margin: auto;
 		padding: var(--space-5) var(--space-7) var(--space-8);
 	}
-	.gallery-view .sidebar-content {
+	.gallery-view .entry-content {
 		padding: 0;
 	}
 	@media (max-width: 768px) {
-		.gallery-view .sidebar-body {
+		.gallery-view .entry-body {
 			display: block;
 			padding: var(--space-4);
 		}
-		.gallery-view .sidebar-content {
+		.gallery-view .entry-content {
 			padding: var(--space-6) 0;
 		}
 	}
 
-	/* Detail panel for the selected artwork or place of residence.
-	   Rules reaching into .sidebar-desc are :global() because that block holds
+	/* Detail for the selected artwork or place of residence.
+	   Rules reaching into .entry-desc are :global() because that block holds
 	   {@html} from the data files, which Svelte's scoping class never touches. */
 	/* ═══════════════════════════════════════════
-	   Sidebar
+	   Entry detail
 	   ═══════════════════════════════════════════ */
-	.sidebar {
+	.entry-detail {
 		--gallery-content-inset: var(--space-7);
 		position: fixed;
 		top: calc(var(--header-height) + var(--filter-height));
@@ -287,11 +286,11 @@
 		flex-direction: column;
 	}
 
-	.sidebar.open {
+	.entry-detail.open {
 		transform: translateX(0);
 	}
 
-	.sidebar-header {
+	.entry-header {
 		padding: var(--space-5-5) var(--space-7) var(--space-4-5);
 		border-bottom: 1px solid var(--color-border);
 		display: flex;
@@ -302,7 +301,7 @@
 
 	/* Editorial accent rule under the title — a small museum-catalogue flourish
 	   that visually anchors the article that follows. */
-	.sidebar-header h2 {
+	.entry-header h2 {
 		font-family: var(--font-display);
 		font-size: var(--text-3xl);
 		font-weight: var(--weight-semibold);
@@ -314,7 +313,7 @@
 		outline: none;
 	}
 
-	.sidebar-header h2::after {
+	.entry-header h2::after {
 		content: '';
 		display: block;
 		width: 40px;
@@ -324,7 +323,7 @@
 		border-radius: 1px;
 	}
 
-	.sidebar-body {
+	.entry-body {
 		padding: 0 0 var(--space-7);
 		overflow-y: auto;
 		flex: 1;
@@ -332,7 +331,7 @@
 		scrollbar-color: var(--color-border) transparent;
 	}
 
-	.sidebar-image {
+	.entry-image {
 		width: 100%;
 		aspect-ratio: 16 / 10;
 		overflow: hidden;
@@ -340,7 +339,7 @@
 		position: relative;
 	}
 
-	.sidebar-image-placeholder {
+	.entry-image-placeholder {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -352,24 +351,24 @@
 
 	/* The icon is a Lucide component, so its <svg> is compiled in that
 	   component's scope, not ours — the selector must be :global(). */
-	.sidebar-image-placeholder :global(svg) {
+	.entry-image-placeholder :global(svg) {
 		width: 44px;
 		height: 44px;
 		margin-bottom: var(--space-2-5);
 		opacity: 0.75;
 	}
 
-	.sidebar-image-placeholder span {
+	.entry-image-placeholder span {
 		font-family: var(--font-display);
 		font-size: var(--text-md);
 		font-style: italic;
 	}
 
-	.sidebar-content {
+	.entry-content {
 		padding: var(--space-5-5) var(--space-7);
 	}
 
-	.sidebar-meta {
+	.entry-meta {
 		font-size: var(--text-base);
 		color: var(--color-text-muted);
 		margin-bottom: var(--space-4-5);
@@ -379,7 +378,7 @@
 		align-items: center;
 	}
 
-	.sidebar-meta .tag {
+	.entry-meta .tag {
 		padding: 3px var(--space-2-5);
 		border-radius: var(--radius-sm);
 		font-size: var(--text-xs);
@@ -410,28 +409,28 @@
 		color: var(--color-residence);
 	}
 
-	.sidebar-desc {
+	.entry-desc {
 		font-size: var(--text-md);
 		line-height: var(--leading-prose);
 		color: var(--color-text);
 		margin-bottom: var(--space-5-5);
 	}
 
-	.sidebar-desc :global(a) {
+	.entry-desc :global(a) {
 		color: var(--color-primary-text);
 		text-decoration-color: rgb(var(--color-primary-rgb) / 0.3);
 		text-underline-offset: 2px;
 		transition: text-decoration-color var(--duration-fast) var(--ease-out);
 	}
 
-	.sidebar-desc :global(a:hover) {
+	.entry-desc :global(a:hover) {
 		text-decoration-color: var(--color-primary-text);
 	}
 
 	/* Addresses, Plus Codes and periods are reference data: upright in the UI
 	   face, so street names and postcodes stay legible (the display italic
 	   set them small, with old-style figures). */
-	.sidebar-address {
+	.entry-address {
 		font-family: var(--font-body);
 		font-size: var(--text-sm);
 		color: var(--color-text-secondary);
@@ -439,27 +438,27 @@
 		line-height: var(--leading-normal);
 	}
 
-	.sidebar-video {
+	.entry-video {
 		margin: var(--space-4-5) 0;
 		border-radius: var(--radius-md);
 		overflow: hidden;
 		box-shadow: var(--shadow-sm);
 	}
 
-	.sidebar-video iframe {
+	.entry-video iframe {
 		width: 100%;
 		aspect-ratio: 16 / 9;
 		border: none;
 	}
 
-	.sidebar-links {
+	.entry-links {
 		margin-top: var(--space-4-5);
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--space-1-5);
 	}
 
-	.sidebar-links a {
+	.entry-links a {
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
@@ -477,13 +476,13 @@
 			color var(--duration-base) var(--ease-out);
 	}
 
-	.sidebar-links a:hover {
+	.entry-links a:hover {
 		background: var(--color-accent-light);
 		border-color: var(--color-accent);
 		color: var(--color-accent-text);
 	}
 
-	.sidebar-movement {
+	.entry-movement {
 		margin: var(--space-4-5) 0;
 		padding: var(--space-3-5) var(--space-4-5);
 		background: var(--color-moved-light);
@@ -493,7 +492,7 @@
 		line-height: var(--leading-relaxed);
 	}
 
-	.sidebar-contact {
+	.entry-contact {
 		margin-top: var(--space-5-5);
 		padding: var(--space-3-5) var(--space-4-5);
 		background: var(--color-search-light);
@@ -503,13 +502,13 @@
 		border: 1px solid rgb(var(--color-search-rgb) / 0.15);
 	}
 
-	.sidebar-contact a {
+	.entry-contact a {
 		color: var(--color-primary-text);
 		font-weight: var(--weight-medium);
 	}
 
 	@media (max-width: 768px) {
-		.sidebar {
+		.entry-detail {
 			width: 100%;
 		}
 	}

@@ -1,6 +1,7 @@
 import { SvelteSet } from 'svelte/reactivity';
 import { getContext, setContext, onMount } from 'svelte';
 import { entryKey, type Entry } from '#lib/utils/collection.js';
+import { parseFieldbookKeys } from '#lib/utils/fieldbook-keys.js';
 const CONTEXT = Symbol('fieldbook');
 const STORAGE_KEY = 'global-heshmat-fieldbook-v1';
 export function createFieldbook() {
@@ -12,14 +13,8 @@ export function createFieldbook() {
 	onMount(() => {
 		function restore() {
 			try {
-				const stored: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
-				if (Array.isArray(stored))
-					keys = stored
-						.filter(
-							(key): key is string =>
-								typeof key === 'string' && /^(artwork|residence):\d+$/.test(key)
-						)
-						.slice(0, 1000);
+				const stored = parseFieldbookKeys(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]'));
+				if (stored) keys = stored;
 			} catch {
 				storageMessage =
 					'Selections are available for this visit; this browser could not restore saved selections.';

@@ -19,6 +19,10 @@ export default defineConfig({
 	},
 	projects: [
 		...(process.env.CI ? [{ name: 'webkit', use: { ...devices['Desktop Safari'] } }] : []),
+		// Opt-in: run with PLAYWRIGHT_FIREFOX=1 and --project=firefox (the advisory CI job does).
+		...(process.env.PLAYWRIGHT_FIREFOX
+			? [{ name: 'firefox', use: { ...devices['Desktop Firefox'] } }]
+			: []),
 		{
 			name: 'chromium',
 			use: {

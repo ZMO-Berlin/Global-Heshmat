@@ -23,12 +23,32 @@ export const MAP_SOURCES = {
 
 /** Cluster circle radius steps by entry count; the residence badge sits on this rim. */
 const CLUSTER_RADII = [18, 24, 30] as const;
+/**
+ * The same steps at world zoom. On a phone the whole collection only fits at
+ * zoom 0 to 1, where Europe and Egypt stand about 50 px apart: full-size circles
+ * overlapped there and a badge landed on the neighbouring cluster.
+ */
+const WORLD_CLUSTER_RADII = [13, 16, 19] as const;
+/** Zooms between which clusters grow from the world size to the full size. */
+const WORLD_ZOOM = 1;
+const FULL_ZOOM = 2;
 const BADGE_SIZE = 0.75;
+const CLUSTER_STEPS = [5, 10] as const;
+/** A value per cluster size, stepped by entry count. */
+function bySize<T>([small, medium, large]: readonly [T, T, T]) {
+	return ['step', ['get', 'point_count'], small, CLUSTER_STEPS[0], medium, CLUSTER_STEPS[1], large];
+}
+/** Grows a per-size value from its world-zoom to its full-zoom form. */
+function byZoom<T>(world: readonly [T, T, T], full: readonly [T, T, T]) {
+	return ['interpolate', ['linear'], ['zoom'], WORLD_ZOOM, bySize(world), FULL_ZOOM, bySize(full)];
+}
 /** Upper-right point of the rim (45°), in icon units: icon-offset scales with icon-size. */
 function rim(radius: number): ['literal', [number, number]] {
 	const offset = Math.round((radius * Math.SQRT1_2) / BADGE_SIZE);
 	return ['literal', [offset, -offset]];
 }
+const rims = (radii: readonly [number, number, number]) =>
+	radii.map(rim) as [ReturnType<typeof rim>, ReturnType<typeof rim>, ReturnType<typeof rim>];
 /** Unclustered points of one marker status. */
 function unclustered(status: 'located' | 'search' | 'residence'): Maplibre.FilterSpecification {
 	return ['all', ['!', ['has', 'point_count']], ['==', ['get', 'status'], status]];
@@ -127,15 +147,10 @@ export function installMapContent({
 				palette.residence,
 				palette.primary
 			],
-			'circle-radius': [
-				'step',
-				['get', 'point_count'],
-				CLUSTER_RADII[0],
-				5,
-				CLUSTER_RADII[1],
-				10,
-				CLUSTER_RADII[2]
-			],
+			'circle-radius': byZoom(
+				WORLD_CLUSTER_RADII,
+				CLUSTER_RADII
+			) as Maplibre.DataDrivenPropertyValueSpecification<number>,
 			'circle-opacity': 0.85,
 			'circle-stroke-width': 3,
 			'circle-stroke-color': `rgba(${palette.primaryRgb.replace(/\s+/g, ',')},0.25)`
@@ -161,15 +176,10 @@ export function installMapContent({
 		layout: {
 			'icon-image': MARKER_IMAGE_IDS.residence,
 			'icon-size': BADGE_SIZE,
-			'icon-offset': [
-				'step',
-				['get', 'point_count'],
-				rim(CLUSTER_RADII[0]),
-				5,
-				rim(CLUSTER_RADII[1]),
-				10,
-				rim(CLUSTER_RADII[2])
-			],
+			'icon-offset': byZoom(
+				rims(WORLD_CLUSTER_RADII),
+				rims(CLUSTER_RADII)
+			) as Maplibre.DataDrivenPropertyValueSpecification<[number, number]>,
 			'icon-allow-overlap': true,
 			'icon-ignore-placement': true
 		}

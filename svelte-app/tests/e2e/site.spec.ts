@@ -85,7 +85,7 @@ test('search includes residences and descriptions and exposes all results', asyn
 	await search.press('ArrowDown');
 	await search.press('Enter');
 	await expect(page).toHaveURL(/\/residences\/haus-der-familie-haude/);
-	await expect(page.locator('.sidebar h2')).toBeFocused();
+	await expect(page.locator('.entry-detail h2')).toBeFocused();
 	await expect(page.locator('.gallery-counter')).toHaveText(`1 / ${residence.images.length}`);
 });
 test('album returns to the same gallery scroll and focus', async ({ page }) => {
@@ -121,7 +121,7 @@ test('photo links are shareable and lightbox navigation respects the URL', async
 	expect(page.url()).not.toBe(shared);
 	await page.keyboard.press('Escape');
 	await expect(viewer).toHaveCount(0);
-	await expect(page.locator('.sidebar')).toBeVisible();
+	await expect(page.locator('.entry-detail')).toBeVisible();
 	await expect(page).not.toHaveURL(/photo=/);
 });
 test('Photos mode groups documents and survives detail navigation', async ({ page }) => {
@@ -138,7 +138,7 @@ test('detail HTML works without JavaScript', async ({ browser }) => {
 	const context = await browser.newContext({ javaScriptEnabled: false });
 	const page = await context.newPage();
 	await page.goto('http://127.0.0.1:' + (process.env.PLAYWRIGHT_PORT ?? 4178) + museum);
-	await expect(page.locator('.sidebar-desc')).toContainText('Ministry of Culture');
+	await expect(page.locator('.entry-desc')).toContainText('Ministry of Culture');
 	await expect(page.locator('.gallery')).toBeVisible();
 	await expect(page.locator('.gallery img').first()).toBeVisible();
 	await context.close();
@@ -172,6 +172,11 @@ test('trails link leads to every thematic trail and stays reachable on phones', 
 	await page.goto('/collection/');
 	await page.locator('header').getByRole('link', { name: 'Trails', exact: true }).click();
 	await expect(page).toHaveURL(/\/trails\/?$/);
+	// Trails are not filtered: only the search stays in the bar.
+	await expect(
+		page.getByRole('combobox', { name: 'Search the collection', exact: true })
+	).toBeVisible();
+	await expect(page.getByRole('combobox', { name: 'Country', exact: true })).toHaveCount(0);
 	for (const theme of trailThemes) {
 		await expect(page.getByRole('heading', { name: theme.title, exact: true })).toBeVisible();
 	}
@@ -277,7 +282,7 @@ test('offline entries use cached documents and uncached entries show an honest f
 		.toBeGreaterThan(0);
 	await context.setOffline(true);
 	await page.reload();
-	await expect(page.locator('.sidebar-desc')).toContainText('Ministry of Culture');
+	await expect(page.locator('.entry-desc')).toContainText('Ministry of Culture');
 	await page.goto('/artworks/the-stable-family/');
 	await expect(
 		page.getByRole('heading', { name: 'This entry is not available offline yet' })
@@ -294,7 +299,7 @@ test('same numeric artwork and residence ids reset the album and focus', async (
 	await search.fill('Haude');
 	await search.press('ArrowDown');
 	await search.press('Enter');
-	await expect(page.locator('.sidebar h2')).toBeFocused();
+	await expect(page.locator('.entry-detail h2')).toBeFocused();
 	await expect(page.locator('.gallery-counter')).toHaveText('1 / 11');
 	const commaImage = page.locator('.gallery-thumb img').filter({ visible: true }).nth(1);
 	await commaImage.scrollIntoViewIfNeeded();

@@ -9,6 +9,7 @@
 	import { entryKey, entryTitle } from '#lib/utils/collection.js';
 	import { contextsFor, groupName, personExcerpt, personPath } from '#lib/utils/people.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { personStructuredData } from '#lib/utils/structured-data.js';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	const person = $derived(data.person);
@@ -18,12 +19,15 @@
 	);
 	const contexts = $derived(contextsFor(person.slug));
 	const reference = $derived(getPersonBySlug(person.seeAlso[0] ?? ''));
+	const excerpt = $derived(personExcerpt(person));
+	const path = $derived(personPath(person.slug));
 </script>
 
 <Seo
 	title={`${person.name} — Global Heshmat`}
-	description={personExcerpt(person)}
-	path={personPath(person.slug)}
+	description={excerpt}
+	{path}
+	structuredData={personStructuredData({ name: person.name, path, excerpt })}
 />
 {#key page.url.pathname}
 	<article class="research-page" aria-labelledby="person-heading">

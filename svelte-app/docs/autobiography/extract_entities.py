@@ -26,8 +26,6 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
-import anthropic
-
 HERE = Path(__file__).parent
 DATA = HERE.parent.parent / "src" / "lib" / "data"
 OUT = HERE / "extraction"
@@ -211,6 +209,9 @@ def extract(client, system, section, effort) -> dict:
 
 
 def main() -> None:
+    # Imported where it is used, so the pure helpers can be imported (and tested) without the SDK.
+    import anthropic
+
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--sections", nargs="*", help="section ids (default: all)")
     parser.add_argument("--effort", default="medium", choices=["low", "medium", "high", "xhigh"])

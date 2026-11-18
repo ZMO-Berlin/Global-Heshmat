@@ -8,15 +8,15 @@
 	import { filterArtworks } from '#lib/utils/map-filter.js';
 	import { entryKey, entryTitle, entryImages, coverImage } from '#lib/utils/collection.js';
 	import { getBrowseStore } from '#lib/stores/browse.svelte.js';
+	import { artworkInfoSubject, mailtoHref } from '#lib/utils/mailto.js';
 	const store = getBrowseStore();
 	const missing = $derived.by(() => {
 		const matches = filterArtworks(artworks, { ...store.filters, status: 'search' });
-		const panoramaIndex = matches.findIndex((artwork) => artwork.slug === 'panorama-october');
-		if (panoramaIndex === -1) return matches;
-
-		const [panorama] = matches.splice(panoramaIndex, 1);
-		matches.splice(Math.floor(matches.length / 2), 0, panorama);
-		return matches;
+		const middle = matches.filter((artwork) => artwork.dossierPosition === 'middle');
+		if (!middle.length) return matches;
+		const rest = matches.filter((artwork) => artwork.dossierPosition !== 'middle');
+		rest.splice(Math.floor(rest.length / 2), 0, ...middle);
+		return rest;
 	});
 	const total = artworks.filter((item) => item.status === 'search').length;
 </script>
@@ -36,8 +36,10 @@
 				collection in Selb in 2025. If you recognise a work below, or if your museum, archive or
 				collection holds works or documents by Heshmat, please write to
 				<a
-					href={`mailto:${aboutContent.contactEmail}?subject=${encodeURIComponent('Global Heshmat — works or documents by Hassan Heshmat')}`}
-					>{aboutContent.contactEmail}</a
+					href={mailtoHref(
+						aboutContent.contactEmail,
+						'Global Heshmat — works or documents by Hassan Heshmat'
+					)}>{aboutContent.contactEmail}</a
 				>.
 			</p>
 			<p class="missing-count" role="status">{missing.length} of {total} entries shown</p>
@@ -88,8 +90,11 @@
 							and where it was recorded and the source.
 						</p>
 						<a
-							href={`mailto:${aboutContent.contactEmail}?subject=${encodeURIComponent(`Global Heshmat — information about ${artwork.name} (artwork ${artwork.id})`)}&body=${encodeURIComponent(`Entry: ${artwork.name}\nReference: artwork ${artwork.id}\n\nPlace and date:\n\nInformation and source:\n`)}`}
-							>Contact the research team</a
+							href={mailtoHref(
+								aboutContent.contactEmail,
+								artworkInfoSubject(artwork),
+								`Entry: ${artwork.name}\nReference: artwork ${artwork.id}\n\nPlace and date:\n\nInformation and source:\n`
+							)}>Contact the research team</a
 						>
 					</div>
 				</div>
