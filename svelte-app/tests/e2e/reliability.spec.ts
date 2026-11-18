@@ -174,8 +174,18 @@ test('lightbox traps full Tab cycles, isolates the background and restores focus
 	const close = viewer.getByRole('button', { name: 'Close', exact: true });
 	await expect(close).toBeFocused();
 	const count = await viewer.locator('button, a[href]').count();
-	for (let i = 0; i < count; i++) await page.keyboard.press('Tab');
+	// One stop per control, plus the scrollable regions Firefox also stops on.
+	let stops = 0;
+	do {
+		await page.keyboard.press('Tab');
+		stops++;
+		expect(await viewer.evaluate((element) => element.contains(document.activeElement))).toBe(true);
+	} while (
+		stops < count + 4 &&
+		!(await close.evaluate((element) => element === document.activeElement))
+	);
 	await expect(close).toBeFocused();
+	expect(stops).toBeGreaterThanOrEqual(count);
 	await page.keyboard.press('Shift+Tab');
 	await expect(viewer.locator('.lightbox-thumb').last()).toBeFocused();
 	expect(

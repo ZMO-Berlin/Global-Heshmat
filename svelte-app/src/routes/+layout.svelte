@@ -8,7 +8,7 @@
 	import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 	import { onMount, type Snippet } from 'svelte';
 	import { page } from '$app/state';
-	import { goto, afterNavigate } from '$app/navigation';
+	import { goto, afterNavigate, beforeNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import Header from '#lib/components/Header.svelte';
 	import FilterBar from '#lib/components/FilterBar.svelte';
@@ -58,6 +58,28 @@
 	let keepCollection = $state(page.route.id === '/collection');
 	$effect(() => {
 		if (isCollection) keepCollection = true;
+	});
+	// Firefox resets the scroll position of a hidden scroll container, so a kept
+	// view would reopen at its top. Record it on the way out and put it back.
+	let missingFrame = $state<HTMLDivElement>();
+	let collectionFrame = $state<HTMLDivElement>();
+	const scrollTops = new WeakMap<HTMLElement, number>();
+	beforeNavigate(() => {
+		for (const frame of [missingFrame, collectionFrame]) {
+			const scroller = frame?.firstElementChild;
+			if (frame && !frame.hidden && scroller) scrollTops.set(frame, scroller.scrollTop);
+		}
+	});
+	function restoreScroll(frame: HTMLDivElement | undefined) {
+		const scroller = frame?.firstElementChild;
+		const top = frame && scrollTops.get(frame);
+		if (scroller && top !== undefined && scroller.scrollTop !== top) scroller.scrollTop = top;
+	}
+	$effect(() => {
+		if (isMissing) restoreScroll(missingFrame);
+	});
+	$effect(() => {
+		if (isCollection) restoreScroll(collectionFrame);
 	});
 	async function loadMap() {
 		if (importing || MapComponent) return;
@@ -144,8 +166,10 @@
 <FilterBar />
 <main id="main-content" tabindex="-1">
 	{@render children()}
-	{#if keepMissing}<div hidden={!isMissing} inert={!isMissing}><MissingDossier /></div>{/if}
-	{#if keepCollection}<div hidden={!isCollection} inert={!isCollection}>
+	{#if keepMissing}<div bind:this={missingFrame} hidden={!isMissing} inert={!isMissing}>
+			<MissingDossier />
+		</div>{/if}
+	{#if keepCollection}<div bind:this={collectionFrame} hidden={!isCollection} inert={!isCollection}>
 			<CollectionView />
 		</div>{/if}
 	{#if MapComponent}<div hidden={!isMap} inert={!isMap}>
