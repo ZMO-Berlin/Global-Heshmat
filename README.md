@@ -205,12 +205,11 @@ The script is incremental (only new or changed files are processed), reuses each
 git lfs install
 ```
 
-**This is a forward-only arrangement.** Images added or replaced from now on are stored as LFS
-objects. The 139 files committed before the switch remain ordinary git blobs in history, so the
-existing ~283 MB is still there and a fresh clone is unchanged in size. Converting those too means
-rewriting history (`git lfs migrate import`) and force-pushing `main`, which changes every commit
-hash and invalidates every existing clone and open pull request — a deliberate, coordinated
-operation, not something to do casually.
+**Every file in `originals/` is an LFS object at the tip of the branch.** Files committed before
+the switch still exist as ordinary git blobs in earlier commits, so the repository's history has
+not shrunk. Removing them from history means rewriting it (`git lfs migrate import`) and
+force-pushing `main`, which changes every commit hash and invalidates every existing clone and open
+pull request — a deliberate, coordinated operation, not something to do casually.
 
 Two things to know before leaning on it further:
 
