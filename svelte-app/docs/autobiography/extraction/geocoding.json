@@ -356,8 +356,8 @@
    "query": "Berlin, Germany",
    "level": "city",
    "result": {
-    "lat": 52.31026,
-    "lng": 13.32425,
+    "lat": 52.504933,
+    "lng": 13.337123,
     "osm": "relation/62422",
     "displayName": "Berlin, Deutschland"
    },
