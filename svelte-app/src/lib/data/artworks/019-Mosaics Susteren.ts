@@ -39,8 +39,8 @@ const artwork: Artwork = {
 			 	caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
 		   {src: "Paar_Schwimmbad_2.jpeg",
 			caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
-		   {src: "Tanzende_Schwimmbad_2.jpeg",
-			 	caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"}
+		   {src: "Tanzende Figuren Groß neu.jpg",
+			 	caption: "Photo: Sonja Hegasy, October 2026"}
 		   
 		]
 

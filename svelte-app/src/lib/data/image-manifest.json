@@ -3081,6 +3081,29 @@
 		},
 		"v": "c99368ad"
 	},
+	"Tanzende Figuren Groß neu": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 18452
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 84624
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 266896
+		},
+		"full": {
+			"width": 2000,
+			"height": 1500,
+			"bytes": 718068
+		},
+		"v": "f0de5d20"
+	},
 	"Tanzende Figuren neu": {
 		"thumb": {
 			"width": 400,
@@ -3126,29 +3149,6 @@
 			"bytes": 154238
 		},
 		"v": "193c9e5a"
-	},
-	"Tanzende_Schwimmbad_2": {
-		"thumb": {
-			"width": 400,
-			"height": 300,
-			"bytes": 27994
-		},
-		"preview": {
-			"width": 640,
-			"height": 480,
-			"bytes": 72844
-		},
-		"web": {
-			"width": 640,
-			"height": 480,
-			"bytes": 90360
-		},
-		"full": {
-			"width": 640,
-			"height": 480,
-			"bytes": 90360
-		},
-		"v": "1a4acac2"
 	},
 	"Technikerbau_Plan": {
 		"thumb": {
