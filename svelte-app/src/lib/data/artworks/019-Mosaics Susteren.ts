@@ -33,12 +33,6 @@ const artwork: Artwork = {
      	   		caption: "Backside of a Photo: Part of a 30-square-metre ceramic panel surrounding a swimming pool in the Netherlands, 1970. By Hassan Heshmat"},
 		   {src: "Gans.jpeg", 
 				caption: "Photo: Sonja Hegasy, October 2026"},
-		   {src: "KleineFigur_Schwimmbad.jpeg",
-				caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
-		   {src: "Paar_Schwimmbad.jpeg",
-			 	caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
-		   {src: "Paar_Schwimmbad_2.jpeg",
-			caption: "Photo: Hanneke Dahlmans-Laugs, July 2026"},
 		   {src: "Tanzende Figuren Groß neu.jpg",
 			 	caption: "Photo: Sonja Hegasy, October 2026"}
 		   

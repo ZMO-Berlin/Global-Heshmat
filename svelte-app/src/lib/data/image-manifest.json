@@ -2046,29 +2046,6 @@
 		},
 		"v": "d54ae128"
 	},
-	"KleineFigur_Schwimmbad": {
-		"thumb": {
-			"width": 300,
-			"height": 400,
-			"bytes": 15066
-		},
-		"preview": {
-			"width": 480,
-			"height": 640,
-			"bytes": 34182
-		},
-		"web": {
-			"width": 480,
-			"height": 640,
-			"bytes": 45934
-		},
-		"full": {
-			"width": 480,
-			"height": 640,
-			"bytes": 45934
-		},
-		"v": "76cd8bed"
-	},
 	"Küssende_Schwimmbad": {
 		"thumb": {
 			"width": 400,
@@ -2574,52 +2551,6 @@
 			"bytes": 664654
 		},
 		"v": "f11fd4fe"
-	},
-	"Paar_Schwimmbad": {
-		"thumb": {
-			"width": 300,
-			"height": 400,
-			"bytes": 38852
-		},
-		"preview": {
-			"width": 480,
-			"height": 640,
-			"bytes": 93580
-		},
-		"web": {
-			"width": 480,
-			"height": 640,
-			"bytes": 111290
-		},
-		"full": {
-			"width": 480,
-			"height": 640,
-			"bytes": 111290
-		},
-		"v": "e3456d55"
-	},
-	"Paar_Schwimmbad_2": {
-		"thumb": {
-			"width": 400,
-			"height": 300,
-			"bytes": 34612
-		},
-		"preview": {
-			"width": 640,
-			"height": 480,
-			"bytes": 93368
-		},
-		"web": {
-			"width": 640,
-			"height": 480,
-			"bytes": 110778
-		},
-		"full": {
-			"width": 640,
-			"height": 480,
-			"bytes": 110778
-		},
-		"v": "69f46995"
 	},
 	"Papeterie Khodeir": {
 		"thumb": {
