@@ -574,6 +574,29 @@
 		},
 		"v": "728f498c"
 	},
+	"BTM Figur Eröffnung 1993_palmenwedel_Family archive": {
+		"thumb": {
+			"width": 300,
+			"height": 400,
+			"bytes": 16944
+		},
+		"preview": {
+			"width": 600,
+			"height": 800,
+			"bytes": 57860
+		},
+		"web": {
+			"width": 900,
+			"height": 1200,
+			"bytes": 136778
+		},
+		"full": {
+			"width": 1500,
+			"height": 2000,
+			"bytes": 289680
+		},
+		"v": "71641770"
+	},
 	"BTM Statue_männl. Seite_Torso Kopie_A_Kamel": {
 		"thumb": {
 			"width": 267,
@@ -1149,6 +1172,29 @@
 		},
 		"v": "24dd1fc1"
 	},
+	"Gans": {
+		"thumb": {
+			"width": 400,
+			"height": 300,
+			"bytes": 18244
+		},
+		"preview": {
+			"width": 800,
+			"height": 600,
+			"bytes": 70650
+		},
+		"web": {
+			"width": 1200,
+			"height": 900,
+			"bytes": 209232
+		},
+		"full": {
+			"width": 2000,
+			"height": 1500,
+			"bytes": 500848
+		},
+		"v": "f8efe748"
+	},
 	"Gastgeschenk Heshmat 3": {
 		"thumb": {
 			"width": 400,
@@ -1240,29 +1286,6 @@
 			"bytes": 12770
 		},
 		"v": "bd6040be"
-	},
-	"Gänse_Schwimmbad": {
-		"thumb": {
-			"width": 400,
-			"height": 300,
-			"bytes": 29630
-		},
-		"preview": {
-			"width": 640,
-			"height": 480,
-			"bytes": 74868
-		},
-		"web": {
-			"width": 640,
-			"height": 480,
-			"bytes": 93308
-		},
-		"full": {
-			"width": 640,
-			"height": 480,
-			"bytes": 93308
-		},
-		"v": "ab5dc67d"
 	},
 	"Hasan_Heshmat_House Entrance": {
 		"thumb": {
