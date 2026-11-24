@@ -18,11 +18,7 @@ const residence: Residence = {
 			caption: 'Hotel Schmidt Selb' },
 		{ src: 'Schmidt_Selb_I.jpg',
 			 caption: 'Entry in the address book of Ahmed Hegazy' },
-		{ src: 'Schmidt_Selb_II.jpg' },
-		{src: 'Weihnachtskarte 1958 Vorderseite.jpeg',
-			 caption: 'Christmas card by Hassan and Zeinab to the Haude family, 1958'}, 
-		{src: 'Weihnachtskarte 1958 Rückseite.jpeg', 
-			caption: 'Christmas card by Hassan and Zeinab to the Haude family, 1958'}
+		{ src: 'Schmidt_Selb_II.jpg' }
 		]
 };
 
