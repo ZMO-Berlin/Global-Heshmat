@@ -17,7 +17,7 @@ const artwork: Artwork = {
 	         caption: "Transport of the Statue from workshop in Ain Shams "},
 		{ 		src: "Heshmat_Inauguration_BTM.jpeg",
          		caption: "Inauguration at BTM"},
-	   {	src: "BTM Figur Eröffnung 1993_palmenwedel_Family archive.jpeg",
+	   {	src: "BTM Figur Eröffnung 1993_palmenwedel_Family archive.jpg",
      	   caption: "Launch of the Statue in 1993"},
 		   {	src: "BTM Statue_männl. Seite_ganz Kopie_A_Kamel.jpg",
      	   caption: "Photo: Ahmed Kamel, 2025"},
