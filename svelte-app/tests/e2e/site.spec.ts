@@ -11,6 +11,8 @@ const corpus: {
 }[] = JSON.parse(
 	readFileSync(new URL('../../build/collection.json', import.meta.url), 'utf8')
 ).records;
+const haude = corpus.find((item) => item.slug === 'haus-der-familie-haude');
+if (!haude) throw new Error('Haude residence is missing from the built collection.');
 const missingCount = corpus.filter((item) => item.status === 'search').length;
 const germanyCount = corpus.filter((item) => item.country === 'Germany').length;
 const clientManifest: Record<string, { name: string; file: string }> = JSON.parse(
@@ -300,7 +302,7 @@ test('same numeric artwork and residence ids reset the album and focus', async (
 	await search.press('ArrowDown');
 	await search.press('Enter');
 	await expect(page.locator('.entry-detail h2')).toBeFocused();
-	await expect(page.locator('.gallery-counter')).toHaveText('1 / 11');
+	await expect(page.locator('.gallery-counter')).toHaveText(`1 / ${haude.images.length}`);
 	const commaImage = page.locator('.gallery-thumb img').filter({ visible: true }).nth(1);
 	await commaImage.scrollIntoViewIfNeeded();
 	await expect
