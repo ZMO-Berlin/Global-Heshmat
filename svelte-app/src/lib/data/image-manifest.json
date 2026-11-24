@@ -3311,6 +3311,52 @@
 		},
 		"v": "dcc8454b"
 	},
+	"Weihnachtskarte 1958 Rückseite": {
+		"thumb": {
+			"width": 184,
+			"height": 400,
+			"bytes": 6172
+		},
+		"preview": {
+			"width": 369,
+			"height": 800,
+			"bytes": 19552
+		},
+		"web": {
+			"width": 554,
+			"height": 1200,
+			"bytes": 44290
+		},
+		"full": {
+			"width": 591,
+			"height": 1280,
+			"bytes": 48722
+		},
+		"v": "ac34b0ff"
+	},
+	"Weihnachtskarte 1958 Vorderseite": {
+		"thumb": {
+			"width": 400,
+			"height": 184,
+			"bytes": 8496
+		},
+		"preview": {
+			"width": 800,
+			"height": 369,
+			"bytes": 28716
+		},
+		"web": {
+			"width": 1200,
+			"height": 554,
+			"bytes": 64980
+		},
+		"full": {
+			"width": 1280,
+			"height": 591,
+			"bytes": 71526
+		},
+		"v": "e389f955"
+	},
 	"Wärmetechnisches_Labor": {
 		"thumb": {
 			"width": 400,

@@ -14,10 +14,16 @@ const residence: Residence = {
 	years: '1977',
 	desc: 'According to an entry in Ahmed Hegazy’s address book, Hassan Heshmat later stayed at Hotel Schmidt in Selb. The hotel, which opened in the 1930s, is located between the railway station and the town centre. The State College of Porcelain is approximately 750 metres away.',
 	images: [
-		{ src: 'Hotel Schmidt Selb.jpeg', caption: 'Hotel Schmidt Selb' },
-		{ src: 'Schmidt_Selb_I.jpg', caption: 'Entry in the address book of Ahmed Hegazy' },
-		{ src: 'Schmidt_Selb_II.jpg' }
-	]
+		{ src: 'Hotel Schmidt Selb.jpeg', 
+			caption: 'Hotel Schmidt Selb' },
+		{ src: 'Schmidt_Selb_I.jpg',
+			 caption: 'Entry in the address book of Ahmed Hegazy' },
+		{ src: 'Schmidt_Selb_II.jpg' },
+		{src: 'Weihnachtskarte 1958 Vorderseite.jpeg',
+			 caption: 'Christmas card by Hassan and Zeinab to the Haude family, 1958'}, 
+		{src: 'Weihnachtskarte 1958 Rückseite.jpeg', 
+			caption: 'Christmas card by Hassan and Zeinab to the Haude family, 1958'}
+		]
 };
 
 export default residence;
